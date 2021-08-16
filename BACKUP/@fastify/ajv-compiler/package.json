@@ -38,11 +38,11 @@
   "deprecated": false,
   "description": "Build and manage the AJV instances for the fastify framework",
   "devDependencies": {
-    "ajv-errors": "^1.0.1",
-    "ajv-merge-patch": "^4.1.0",
-    "standard": "^16.0.3",
-    "tap": "^15.0.1",
-    "tsd": "^0.14.0"
+    "ajv-errors": "1.0.1",
+    "ajv-merge-patch": "4.1.0",
+    "standard": "16.0.3",
+    "tap": "15.0.9",
+    "tsd": "0.14.0"
   },
   "directories": {
     "test": "test"

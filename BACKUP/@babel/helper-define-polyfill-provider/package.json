@@ -51,10 +51,10 @@
     "@babel/generator": "^7.11.5",
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "babel-loader": "^8.1.0",
-    "rollup": "^2.3.2",
-    "rollup-plugin-babel": "^4.4.0",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "rollup": "2.56.2",
+    "rollup-plugin-babel": "4.4.0",
+    "webpack": "4.46.0",
+    "webpack-cli": "3.3.12"
   },
   "exports": {
     ".": [

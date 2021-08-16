@@ -32,8 +32,8 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "core-js-pure": "^3.16.0",
-    "regenerator-runtime": "^0.13.4"
+    "core-js-pure": "3.16.1",
+    "regenerator-runtime": "0.13.9"
   },
   "deprecated": false,
   "description": "babel's modular runtime helpers with core-js@3 polyfilling",

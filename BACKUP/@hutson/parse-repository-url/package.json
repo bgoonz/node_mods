@@ -35,16 +35,16 @@
   "deprecated": false,
   "description": "Parse repository URLs to extract, SCM platform, domain, user, and project information.",
   "devDependencies": {
-    "@hutson/conventional-changelog-config": "^2.0.0",
-    "@hutson/nyc-config": "^2.0.0",
-    "chai": "^4.2.0",
-    "codecov": "^3.1.0",
-    "debug": "^4.1.0",
-    "mocha": "^5.2.0",
-    "npm-publish-git-tag": "^3.0.0",
-    "nyc": "^13.1.0",
-    "semantic-release-gitlab": "^7.0.10",
-    "semistandard": "^13.0.1"
+    "@hutson/conventional-changelog-config": "2.0.6",
+    "@hutson/nyc-config": "2.0.2",
+    "chai": "4.3.4",
+    "codecov": "3.8.3",
+    "debug": "4.3.2",
+    "mocha": "5.2.0",
+    "npm-publish-git-tag": "3.0.4",
+    "nyc": "13.3.0",
+    "semantic-release-gitlab": "7.1.4",
+    "semistandard": "13.0.1"
   },
   "engines": {
     "node": ">=6.9.0"

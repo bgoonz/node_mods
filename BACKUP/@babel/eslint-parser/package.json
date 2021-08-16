@@ -40,8 +40,8 @@
   "description": "ESLint parser that allows for linting of experimental syntax transformed by Babel",
   "devDependencies": {
     "@babel/core": "7.15.0",
-    "dedent": "^0.7.0",
-    "eslint": "^7.27.0"
+    "dedent": "0.7.0",
+    "eslint": "7.32.0"
   },
   "engines": {
     "node": "^10.13.0 || ^12.13.0 || >=14.0.0"

@@ -36,8 +36,8 @@
   "deprecated": false,
   "description": "Validate identifier/keywords name",
   "devDependencies": {
-    "@unicode/unicode-13.0.0": "^1.0.6",
-    "charcodes": "^0.2.0"
+    "@unicode/unicode-13.0.0": "1.2.0",
+    "charcodes": "0.2.0"
   },
   "engines": {
     "node": ">=6.9.0"

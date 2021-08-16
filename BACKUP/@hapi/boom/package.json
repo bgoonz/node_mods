@@ -35,7 +35,7 @@
   "devDependencies": {
     "@hapi/code": "8.x.x",
     "@hapi/lab": "24.x.x",
-    "typescript": "~4.0.2"
+    "typescript": "4.0.8"
   },
   "files": [
     "lib"

@@ -38,16 +38,16 @@
   "deprecated": false,
   "description": "Glob-based configuration matching.",
   "devDependencies": {
-    "@nitpik/javascript": "^0.3.3",
+    "@nitpik/javascript": "0.3.4",
     "@nitpik/node": "0.0.5",
-    "chai": "^4.2.0",
-    "eslint": "^6.7.1",
-    "esm": "^3.2.25",
-    "lint-staged": "^10.2.8",
-    "mocha": "^6.1.4",
-    "nyc": "^14.1.1",
-    "rollup": "^1.12.3",
-    "yorkie": "^2.0.0"
+    "chai": "4.3.4",
+    "eslint": "6.8.0",
+    "esm": "3.2.25",
+    "lint-staged": "10.5.4",
+    "mocha": "6.2.3",
+    "nyc": "14.1.1",
+    "rollup": "1.32.1",
+    "yorkie": "2.0.0"
   },
   "engines": {
     "node": ">=10.10.0"

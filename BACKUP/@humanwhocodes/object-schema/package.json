@@ -33,9 +33,9 @@
   "deprecated": false,
   "description": "An object schema merger/validator",
   "devDependencies": {
-    "chai": "^4.2.0",
-    "eslint": "^5.13.0",
-    "mocha": "^5.2.0"
+    "chai": "4.3.4",
+    "eslint": "5.16.0",
+    "mocha": "5.2.0"
   },
   "directories": {
     "test": "tests"

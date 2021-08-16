@@ -46,8 +46,8 @@
   "deprecated": false,
   "description": "Syntax highlight JavaScript strings for output in terminals.",
   "devDependencies": {
-    "@types/chalk": "^2.0.0",
-    "strip-ansi": "^4.0.0"
+    "@types/chalk": "2.2.0",
+    "strip-ansi": "4.0.0"
   },
   "engines": {
     "node": ">=6.9.0"

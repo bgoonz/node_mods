@@ -40,10 +40,10 @@
   "deprecated": false,
   "description": "Utility function to load nyc configuration",
   "devDependencies": {
-    "semver": "^6.3.0",
-    "standard-version": "^7.0.0",
-    "tap": "^14.10.5",
-    "xo": "^0.25.3"
+    "semver": "6.3.0",
+    "standard-version": "7.1.0",
+    "tap": "14.11.0",
+    "xo": "0.25.4"
   },
   "engines": {
     "node": ">=8"
