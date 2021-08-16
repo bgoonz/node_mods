@@ -1,0 +1,56 @@
+{
+  "_from": "automatic-updates@^1.0.4",
+  "_id": "automatic-updates@1.0.4",
+  "_inBundle": false,
+  "_integrity": "sha512-9e5z7mjzOkng8G6VRGAS18in6A8XWxn0966XDrZvWLdSZas/FlHqC7mZb6SCpWc2zd6JiTF3wjz6OgxvSGwttg==",
+  "_location": "/automatic-updates",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "automatic-updates@^1.0.4",
+    "name": "automatic-updates",
+    "escapedName": "automatic-updates",
+    "rawSpec": "^1.0.4",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.4"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/automatic-updates/-/automatic-updates-1.0.4.tgz",
+  "_shasum": "4f39197ea58b261c060fc1d7b3fb2b50917d5f9f",
+  "_spec": "automatic-updates@^1.0.4",
+  "_where": "/workspace/node_mods",
+  "author": {
+    "name": "Brian Onang'o"
+  },
+  "bugs": {
+    "url": "https://github.com/csymapp/automatic-updates/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "etc": "^1.1.0",
+    "mocha": "^8.3.0",
+    "node-etc": "^1.1.3",
+    "shelljs": "^0.8.4"
+  },
+  "deprecated": false,
+  "description": "Tools to automatically update nodejs programs installed as modules from npm/github.",
+  "homepage": "https://github.com/csymapp/automatic-updates#readme",
+  "keywords": [
+    "scheduled",
+    "updates"
+  ],
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "name": "automatic-updates",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csymapp/automatic-updates.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "version": "1.0.4"
+}
