@@ -10,7 +10,7 @@ exports.createDescriptor = createDescriptor;
 function _gensync() {
   const data = require("gensync");
 
-  _gensync = function () {
+  _gensync = () => {
     return data;
   };
 

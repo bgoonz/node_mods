@@ -10,7 +10,7 @@ exports.buildPresetChainWalker = void 0;
 function _path() {
   const data = require("path");
 
-  _path = function () {
+  _path = () => {
     return data;
   };
 
@@ -20,7 +20,7 @@ function _path() {
 function _debug() {
   const data = require("debug");
 
-  _debug = function () {
+  _debug = () => {
     return data;
   };
 

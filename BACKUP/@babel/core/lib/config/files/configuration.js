@@ -13,7 +13,7 @@ exports.ROOT_CONFIG_FILENAMES = void 0;
 function _debug() {
   const data = require("debug");
 
-  _debug = function () {
+  _debug = () => {
     return data;
   };
 
@@ -23,7 +23,7 @@ function _debug() {
 function _fs() {
   const data = require("fs");
 
-  _fs = function () {
+  _fs = () => {
     return data;
   };
 
@@ -33,7 +33,7 @@ function _fs() {
 function _path() {
   const data = require("path");
 
-  _path = function () {
+  _path = () => {
     return data;
   };
 
@@ -43,7 +43,7 @@ function _path() {
 function _json() {
   const data = require("json5");
 
-  _json = function () {
+  _json = () => {
     return data;
   };
 
@@ -53,7 +53,7 @@ function _json() {
 function _gensync() {
   const data = require("gensync");
 
-  _gensync = function () {
+  _gensync = () => {
     return data;
   };
 
@@ -75,7 +75,7 @@ var fs = require("../../gensync-utils/fs");
 function _module() {
   const data = require("module");
 
-  _module = function () {
+  _module = () => {
     return data;
   };
 
