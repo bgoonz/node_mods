@@ -1,4 +1,4 @@
-import { ExecutionParams } from "@graphql-tools/utils";
+import { ExecutionParams } from '@graphql-tools/utils';
 /**
  * Merge multiple queries into a single query in such a way that query results
  * can be split and transformed as if they were obtained by running original queries.
@@ -33,10 +33,4 @@ import { ExecutionParams } from "@graphql-tools/utils";
  *     }
  *   }
  */
-export declare function mergeExecutionParams(
-  execs: Array<ExecutionParams>,
-  extensionsReducer: (
-    mergedExtensions: Record<string, any>,
-    executionParams: ExecutionParams
-  ) => Record<string, any>
-): ExecutionParams;
+export declare function mergeExecutionParams(execs: Array<ExecutionParams>, extensionsReducer: (mergedExtensions: Record<string, any>, executionParams: ExecutionParams) => Record<string, any>): ExecutionParams;

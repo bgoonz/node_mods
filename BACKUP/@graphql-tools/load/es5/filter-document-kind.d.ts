@@ -1,8 +1,5 @@
-import { DocumentNode } from "graphql";
+import { DocumentNode } from 'graphql';
 /**
  * @internal
  */
-export declare const filterKind: (
-  content: DocumentNode,
-  filterKinds: null | string[]
-) => DocumentNode;
+export declare const filterKind: (content: DocumentNode, filterKinds: null | string[]) => DocumentNode;

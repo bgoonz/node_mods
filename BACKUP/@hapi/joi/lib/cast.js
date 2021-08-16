@@ -1,53 +1,59 @@
-"use strict";
+'use strict';
 
-const Hoek = require("@hapi/hoek");
+const Hoek = require('@hapi/hoek');
 
-const Ref = require("./ref");
+const Ref = require('./ref');
+
 
 const internals = {};
 
+
 exports.schema = function (Joi, config) {
-  if (config !== undefined && config !== null && typeof config === "object") {
-    if (config.isJoi) {
-      return config;
+
+    if (config !== undefined && config !== null && typeof config === 'object') {
+
+        if (config.isJoi) {
+            return config;
+        }
+
+        if (Array.isArray(config)) {
+            return Joi.alternatives().try(config);
+        }
+
+        if (config instanceof RegExp) {
+            return Joi.string().regex(config);
+        }
+
+        if (config instanceof Date) {
+            return Joi.date().valid(config);
+        }
+
+        return Joi.object().keys(config);
     }
 
-    if (Array.isArray(config)) {
-      return Joi.alternatives().try(config);
+    if (typeof config === 'string') {
+        return Joi.string().valid(config);
     }
 
-    if (config instanceof RegExp) {
-      return Joi.string().regex(config);
+    if (typeof config === 'number') {
+        return Joi.number().valid(config);
     }
 
-    if (config instanceof Date) {
-      return Joi.date().valid(config);
+    if (typeof config === 'boolean') {
+        return Joi.boolean().valid(config);
     }
 
-    return Joi.object().keys(config);
-  }
+    if (Ref.isRef(config)) {
+        return Joi.valid(config);
+    }
 
-  if (typeof config === "string") {
-    return Joi.string().valid(config);
-  }
+    Hoek.assert(config === null, 'Invalid schema content:', config);
 
-  if (typeof config === "number") {
-    return Joi.number().valid(config);
-  }
-
-  if (typeof config === "boolean") {
-    return Joi.boolean().valid(config);
-  }
-
-  if (Ref.isRef(config)) {
-    return Joi.valid(config);
-  }
-
-  Hoek.assert(config === null, "Invalid schema content:", config);
-
-  return Joi.valid(null);
+    return Joi.valid(null);
 };
 
+
 exports.ref = function (id) {
-  return Ref.isRef(id) ? id : Ref.create(id);
+
+    return Ref.isRef(id) ? id : Ref.create(id);
 };

@@ -1,9 +1,11 @@
-"use strict";
+'use strict';
 
 const internals = {};
 
-module.exports = function (string) {
-  // Escape ^$.*+-?=!:|\/()[]{},
 
-  return string.replace(/[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g, "\\$&");
+module.exports = function (string) {
+
+    // Escape ^$.*+-?=!:|\/()[]{},
+
+    return string.replace(/[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g, '\\$&');
 };

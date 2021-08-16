@@ -11,20 +11,19 @@ Topological sorting with grouping support.
 See the [API Reference](API.md)
 
 **Example**
-
 ```js
-const Topo = require("topo");
+const Topo = require('topo');
 
 const morning = new Topo();
 
-morning.add("Nap", { after: ["breakfast", "prep"] });
+morning.add('Nap', { after: ['breakfast', 'prep'] });
 
-morning.add(["Make toast", "Pour juice"], {
-  before: "breakfast",
-  group: "prep",
-});
+morning.add([
+    'Make toast',
+    'Pour juice'
+], { before: 'breakfast', group: 'prep' });
 
-morning.add("Eat breakfast", { group: "breakfast" });
+morning.add('Eat breakfast', { group: 'breakfast' });
 
-morning.nodes; // ['Make toast', 'Pour juice', 'Eat breakfast', 'Nap']
+morning.nodes;        // ['Make toast', 'Pour juice', 'Eat breakfast', 'Nap']
 ```

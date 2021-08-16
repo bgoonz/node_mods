@@ -1,7 +1,8 @@
-"use strict";
+'use strict';
 
 const internals = {};
 
+
 module.exports = {
-  settingsCache: Symbol("settingsCache"),
+    settingsCache: Symbol('settingsCache')
 };

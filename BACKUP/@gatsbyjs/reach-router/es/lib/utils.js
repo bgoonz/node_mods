@@ -32,7 +32,7 @@ var pick = function pick(routes, uri) {
   var default_ = void 0;
 
   var _uri$split = uri.split("?"),
-    uriPathname = _uri$split[0];
+      uriPathname = _uri$split[0];
 
   var uriSegments = segmentize(uriPathname);
   var isRootUri = uriSegments[0] === "";
@@ -46,7 +46,7 @@ var pick = function pick(routes, uri) {
       default_ = {
         route: route,
         params: {},
-        uri: uri,
+        uri: uri
       };
       continue;
     }
@@ -65,10 +65,7 @@ var pick = function pick(routes, uri) {
         // uri:   /files/documents/work
         // route: /files/*
         var param = routeSegment.slice(1) || "*";
-        params[param] = uriSegments
-          .slice(index)
-          .map(decodeURIComponent)
-          .join("/");
+        params[param] = uriSegments.slice(index).map(decodeURIComponent).join("/");
         break;
       }
 
@@ -84,18 +81,7 @@ var pick = function pick(routes, uri) {
 
       if (dynamicMatch && !isRootUri) {
         var matchIsNotReserved = reservedNames.indexOf(dynamicMatch[1]) === -1;
-        !matchIsNotReserved
-          ? process.env.NODE_ENV !== "production"
-            ? invariant(
-                false,
-                '<Router> dynamic segment "' +
-                  dynamicMatch[1] +
-                  '" is a reserved name. Please use a different name in path "' +
-                  route.path +
-                  '".'
-              )
-            : invariant(false)
-          : void 0;
+        !matchIsNotReserved ? process.env.NODE_ENV !== "production" ? invariant(false, "<Router> dynamic segment \"" + dynamicMatch[1] + "\" is a reserved name. Please use a different name in path \"" + route.path + "\".") : invariant(false) : void 0;
         var value = decodeURIComponent(uriSegment);
         params[dynamicMatch[1]] = value;
       } else if (routeSegment !== uriSegment) {
@@ -111,7 +97,7 @@ var pick = function pick(routes, uri) {
       match = {
         route: route,
         params: params,
-        uri: "/" + uriSegments.slice(0, index).join("/"),
+        uri: "/" + uriSegments.slice(0, index).join("/")
       };
       break;
     }
@@ -159,11 +145,11 @@ var resolve = function resolve(to, base) {
   }
 
   var _to$split = to.split("?"),
-    toPathname = _to$split[0],
-    toQuery = _to$split[1];
+      toPathname = _to$split[0],
+      toQuery = _to$split[1];
 
   var _base$split = base.split("?"),
-    basePathname = _base$split[0];
+      basePathname = _base$split[0];
 
   var toSegments = segmentize(toPathname);
   var baseSegments = segmentize(basePathname);
@@ -188,8 +174,7 @@ var resolve = function resolve(to, base) {
   var segments = [];
   for (var i = 0, l = allSegments.length; i < l; i++) {
     var segment = allSegments[i];
-    if (segment === "..") segments.pop();
-    else if (segment !== ".") segments.push(segment);
+    if (segment === "..") segments.pop();else if (segment !== ".") segments.push(segment);
   }
 
   return addQuery("/" + segments.join("/"), toQuery);
@@ -200,23 +185,19 @@ var resolve = function resolve(to, base) {
 
 var insertParams = function insertParams(path, params) {
   var _path$split = path.split("?"),
-    pathBase = _path$split[0],
-    _path$split$ = _path$split[1],
-    query = _path$split$ === undefined ? "" : _path$split$;
+      pathBase = _path$split[0],
+      _path$split$ = _path$split[1],
+      query = _path$split$ === undefined ? "" : _path$split$;
 
   var segments = segmentize(pathBase);
-  var constructedPath =
-    "/" +
-    segments
-      .map(function (segment) {
-        var match = paramRe.exec(segment);
-        return match ? params[match[1]] : segment;
-      })
-      .join("/");
+  var constructedPath = "/" + segments.map(function (segment) {
+    var match = paramRe.exec(segment);
+    return match ? params[match[1]] : segment;
+  }).join("/");
   var _params$location = params.location;
   _params$location = _params$location === undefined ? {} : _params$location;
   var _params$location$sear = _params$location.search,
-    search = _params$location$sear === undefined ? "" : _params$location$sear;
+      search = _params$location$sear === undefined ? "" : _params$location$sear;
 
   var searchSplit = search.split("?")[1] || "";
   constructedPath = addQuery(constructedPath, query, searchSplit);
@@ -253,16 +234,11 @@ var isSplat = function isSplat(segment) {
 };
 
 var rankRoute = function rankRoute(route, index) {
-  var score = route.default
-    ? 0
-    : segmentize(route.path).reduce(function (score, segment) {
-        score += SEGMENT_POINTS;
-        if (isRootSegment(segment)) score += ROOT_POINTS;
-        else if (isDynamic(segment)) score += DYNAMIC_POINTS;
-        else if (isSplat(segment)) score -= SEGMENT_POINTS + SPLAT_PENALTY;
-        else score += STATIC_POINTS;
-        return score;
-      }, 0);
+  var score = route.default ? 0 : segmentize(route.path).reduce(function (score, segment) {
+    score += SEGMENT_POINTS;
+    if (isRootSegment(segment)) score += ROOT_POINTS;else if (isDynamic(segment)) score += DYNAMIC_POINTS;else if (isSplat(segment)) score -= SEGMENT_POINTS + SPLAT_PENALTY;else score += STATIC_POINTS;
+    return score;
+  }, 0);
   return { route: route, score: score, index: index };
 };
 
@@ -273,22 +249,13 @@ var rankRoutes = function rankRoutes(routes) {
 };
 
 var segmentize = function segmentize(uri) {
-  return (
-    uri
-      // strip starting/ending slashes
-      .replace(/(^\/+|\/+$)/g, "")
-      .split("/")
-  );
+  return uri
+  // strip starting/ending slashes
+  .replace(/(^\/+|\/+$)/g, "").split("/");
 };
 
 var addQuery = function addQuery(pathname) {
-  for (
-    var _len = arguments.length,
-      query = Array(_len > 1 ? _len - 1 : 0),
-      _key = 1;
-    _key < _len;
-    _key++
-  ) {
+  for (var _len = arguments.length, query = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     query[_key - 1] = arguments[_key];
   }
 
@@ -307,21 +274,10 @@ var reservedNames = ["uri", "path"];
  */
 var shallowCompare = function shallowCompare(obj1, obj2) {
   var obj1Keys = Object.keys(obj1);
-  return (
-    obj1Keys.length === Object.keys(obj2).length &&
-    obj1Keys.every(function (key) {
-      return obj2.hasOwnProperty(key) && obj1[key] === obj2[key];
-    })
-  );
+  return obj1Keys.length === Object.keys(obj2).length && obj1Keys.every(function (key) {
+    return obj2.hasOwnProperty(key) && obj1[key] === obj2[key];
+  });
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-export {
-  startsWith,
-  pick,
-  match,
-  resolve,
-  insertParams,
-  validateRedirect,
-  shallowCompare,
-};
+export { startsWith, pick, match, resolve, insertParams, validateRedirect, shallowCompare };

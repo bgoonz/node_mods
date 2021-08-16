@@ -1,15 +1,11 @@
-import { IResolvers } from "@graphql-tools/utils";
-export declare type ResolversFactory<TContext> = (
-  ...args: any[]
-) => IResolvers<any, TContext>;
-export declare type ResolversDefinition<TContext> =
-  | IResolvers<any, TContext>
-  | ResolversFactory<TContext>;
+import { IResolvers } from '@graphql-tools/utils';
+export declare type ResolversFactory<TContext> = (...args: any[]) => IResolvers<any, TContext>;
+export declare type ResolversDefinition<TContext> = IResolvers<any, TContext> | ResolversFactory<TContext>;
 /**
  * Additional options for merging resolvers
  */
 export interface MergeResolversOptions {
-  exclusions?: string[];
+    exclusions?: string[];
 }
 /**
  * Deep merges multiple resolver definition objects into a single definition.
@@ -40,7 +36,4 @@ export interface MergeResolversOptions {
  * const resolvers = mergeResolvers(resolversArray)
  * ```
  */
-export declare function mergeResolvers<
-  TContext,
-  T extends ResolversDefinition<TContext>
->(resolversDefinitions: T[], options?: MergeResolversOptions): T;
+export declare function mergeResolvers<TContext, T extends ResolversDefinition<TContext>>(resolversDefinitions: T[], options?: MergeResolversOptions): T;

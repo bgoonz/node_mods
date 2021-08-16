@@ -7,9 +7,9 @@ Occasionally you need to take a Git repository URL, such as `https://gitlab.com/
 `@hutson/parse-repository-url` helps to extract that information from many valid Git URLs strings that you might encounter, including for platforms like GitLab, GitHub, and their various use cases, such as hosted, on-premise, and multiple sub-groups.
 
 ## Table of Contents
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 
 - [Features](#features)
 - [Installation](#installation)
@@ -22,13 +22,13 @@ Occasionally you need to take a Git repository URL, such as `https://gitlab.com/
 
 ## Features
 
-- [x] Return `browse` function that returns URL usable in a browser. (Similar to [`hosted-git-info`](https://github.com/npm/hosted-git-info/blob/5d2cc4a8c93012387a86a0afa1384ccf7ac31084/README.md#methods))
-- [x] Return `domain` property containing the fully qualified domain name and port.
-- [x] Return `project` property.
-- [x] Return `type` property indicating the SCM host, such as `github` or `gitlab`.
-- [x] Return `user` property.
+* [x] Return `browse` function that returns URL usable in a browser. (Similar to [`hosted-git-info`](https://github.com/npm/hosted-git-info/blob/5d2cc4a8c93012387a86a0afa1384ccf7ac31084/README.md#methods))
+* [x] Return `domain` property containing the fully qualified domain name and port.
+* [x] Return `project` property.
+* [x] Return `type` property indicating the SCM host, such as `github` or `gitlab`.
+* [x] Return `user` property.
 
-> \*_Note:_ Returns `null` for any property where the information could not be extracted from the repository URL.
+> **Note:* Returns `null` for any property where the information could not be extracted from the repository URL.
 
 ## Installation
 
@@ -44,19 +44,13 @@ yarn add [--dev] @hutson/parse-repository-url
 const parseRepositoryURL = require(`@hutson/parse-github-repository`);
 
 // {domain: `gitlab.com`, project: `parse-repository-url`, type: `gitlab`, user: `hyper-expanse/open-source`}
-parseRepositoryURL(
-  `https://gitlab.com/hyper-expanse/open-source/parse-repository-url`
-);
+parseRepositoryURL(`https://gitlab.com/hyper-expanse/open-source/parse-repository-url`);
 
 // {domain: `git.example.com`, project: `parse-repository-url`, type: null, user: `hyper-expanse/open-source`}
-parseRepositoryURL(
-  `https://git.example.com/hyper-expanse/open-source/parse-repository-url`
-);
+parseRepositoryURL(`https://git.example.com/hyper-expanse/open-source/parse-repository-url`);
 
 // {domain: `gitlab.com`, project: `parse-repository-url`, type: `gitlab`, user: `hyper-expanse/open-source`}
-const repository = parseRepositoryURL(
-  `git@gitlab.com/hyper-expanse/open-source/parse-repository-url`
-);
+const repository = parseRepositoryURL(`git@gitlab.com/hyper-expanse/open-source/parse-repository-url`);
 repository.browse(); // https://gitlab.com/hyper-expanse/open-source/parse-repository-url
 
 // {domain: `github.com`, project: `project`, type: `github`, user: `user`}

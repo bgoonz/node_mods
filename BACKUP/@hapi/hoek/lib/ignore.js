@@ -1,5 +1,6 @@
-"use strict";
+'use strict';
 
 const internals = {};
 
-module.exports = function () {};
+
+module.exports = function () { };
