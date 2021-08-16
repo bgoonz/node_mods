@@ -53,6 +53,7 @@
         "color-blind": "^0.1.1",
         "colorname": "^1.2.0",
         "commander": "^8.1.0",
+        "cpy": "^8.1.2",
         "cropperjs": "^1.5.11",
         "cross-env": "^7.0.3",
         "css-declaration-sorter": "^6.0.3",
