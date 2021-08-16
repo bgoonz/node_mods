@@ -1,4 +1,5 @@
 # prettier-config
+
 Prettier config used at GitHub
 
 ## Usage
@@ -24,6 +25,6 @@ index 2ecef3d..260838f 100644
    "license": "MIT",
    "author": "GitHub Inc.",
    "main": "index.js"
- ```
- 
- [Check out the `prettier` documentation for more info on sharing configurations](https://prettier.io/docs/en/configuration.html#sharing-configurations).
+```
+
+[Check out the `prettier` documentation for more info on sharing configurations](https://prettier.io/docs/en/configuration.html#sharing-configurations).

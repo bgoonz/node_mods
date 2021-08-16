@@ -3,4 +3,5 @@ function _isNativeFunction(fn) {
 }
 
 module.exports = _isNativeFunction;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

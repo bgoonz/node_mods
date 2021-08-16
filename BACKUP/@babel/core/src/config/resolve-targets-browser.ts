@@ -7,7 +7,7 @@ export function resolveBrowserslistConfigFile(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   browserslistConfigFile: string,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  configFilePath: string,
+  configFilePath: string
 ): string | void {
   return undefined;
 }
@@ -15,7 +15,7 @@ export function resolveBrowserslistConfigFile(
 export function resolveTargets(
   options: ValidatedOptions,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  root: string,
+  root: string
 ): Targets {
   // todo(flow->ts) remove any and refactor to not assign different types into same variable
   let targets: any = options.targets;

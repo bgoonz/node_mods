@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = splitExportDeclaration;
 
@@ -17,8 +17,11 @@ function splitExportDeclaration(exportDeclaration) {
   const isClassDeclaration = declaration.isClassDeclaration();
 
   if (isDefault) {
-    const standaloneDeclaration = declaration.isFunctionDeclaration() || isClassDeclaration;
-    const scope = declaration.isScope() ? declaration.scope.parent : declaration.scope;
+    const standaloneDeclaration =
+      declaration.isFunctionDeclaration() || isClassDeclaration;
+    const scope = declaration.isScope()
+      ? declaration.scope.parent
+      : declaration.scope;
     let id = declaration.node.id;
     let needBindingRegistration = false;
 
@@ -26,13 +29,23 @@ function splitExportDeclaration(exportDeclaration) {
       needBindingRegistration = true;
       id = scope.generateUidIdentifier("default");
 
-      if (standaloneDeclaration || declaration.isFunctionExpression() || declaration.isClassExpression()) {
+      if (
+        standaloneDeclaration ||
+        declaration.isFunctionExpression() ||
+        declaration.isClassExpression()
+      ) {
         declaration.node.id = t.cloneNode(id);
       }
     }
 
-    const updatedDeclaration = standaloneDeclaration ? declaration : t.variableDeclaration("var", [t.variableDeclarator(t.cloneNode(id), declaration.node)]);
-    const updatedExportDeclaration = t.exportNamedDeclaration(null, [t.exportSpecifier(t.cloneNode(id), t.identifier("default"))]);
+    const updatedDeclaration = standaloneDeclaration
+      ? declaration
+      : t.variableDeclaration("var", [
+          t.variableDeclarator(t.cloneNode(id), declaration.node),
+        ]);
+    const updatedExportDeclaration = t.exportNamedDeclaration(null, [
+      t.exportSpecifier(t.cloneNode(id), t.identifier("default")),
+    ]);
     exportDeclaration.insertAfter(updatedExportDeclaration);
     exportDeclaration.replaceWith(updatedDeclaration);
 
@@ -48,7 +61,7 @@ function splitExportDeclaration(exportDeclaration) {
   }
 
   const bindingIdentifiers = declaration.getOuterBindingIdentifiers();
-  const specifiers = Object.keys(bindingIdentifiers).map(name => {
+  const specifiers = Object.keys(bindingIdentifiers).map((name) => {
     return t.exportSpecifier(t.identifier(name), t.identifier(name));
   });
   const aliasDeclar = t.exportNamedDeclaration(null, specifiers);

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.shouldHighlight = shouldHighlight;
 exports.getChalk = getChalk;
@@ -25,7 +25,7 @@ function getDefs(chalk) {
     string: chalk.green,
     regex: chalk.magenta,
     comment: chalk.grey,
-    invalid: chalk.white.bgRed.bold
+    invalid: chalk.white.bgRed.bold,
   };
 }
 
@@ -37,11 +37,21 @@ let tokenize;
 
   const getTokenType = function (token, offset, text) {
     if (token.type === "name") {
-      if ((0, _helperValidatorIdentifier.isKeyword)(token.value) || (0, _helperValidatorIdentifier.isStrictReservedWord)(token.value, true) || sometimesKeywords.has(token.value)) {
+      if (
+        (0, _helperValidatorIdentifier.isKeyword)(token.value) ||
+        (0, _helperValidatorIdentifier.isStrictReservedWord)(
+          token.value,
+          true
+        ) ||
+        sometimesKeywords.has(token.value)
+      ) {
         return "keyword";
       }
 
-      if (JSX_TAG.test(token.value) && (text[offset - 1] === "<" || text.substr(offset - 2, 2) == "</")) {
+      if (
+        JSX_TAG.test(token.value) &&
+        (text[offset - 1] === "<" || text.substr(offset - 2, 2) == "</")
+      ) {
         return "jsxIdentifier";
       }
 
@@ -54,7 +64,10 @@ let tokenize;
       return "bracket";
     }
 
-    if (token.type === "invalid" && (token.value === "@" || token.value === "#")) {
+    if (
+      token.type === "invalid" &&
+      (token.value === "@" || token.value === "#")
+    ) {
       return "punctuator";
     }
 
@@ -64,12 +77,12 @@ let tokenize;
   tokenize = function* (text) {
     let match;
 
-    while (match = _jsTokens.default.exec(text)) {
+    while ((match = _jsTokens.default.exec(text))) {
       const token = _jsTokens.matchToToken(match);
 
       yield {
         type: getTokenType(token, match.index, text),
-        value: token.value
+        value: token.value,
       };
     }
   };
@@ -78,14 +91,14 @@ let tokenize;
 function highlightTokens(defs, text) {
   let highlighted = "";
 
-  for (const {
-    type,
-    value
-  } of tokenize(text)) {
+  for (const { type, value } of tokenize(text)) {
     const colorize = defs[type];
 
     if (colorize) {
-      highlighted += value.split(NEWLINE).map(str => colorize(str)).join("\n");
+      highlighted += value
+        .split(NEWLINE)
+        .map((str) => colorize(str))
+        .join("\n");
     } else {
       highlighted += value;
     }
@@ -99,10 +112,12 @@ function shouldHighlight(options) {
 }
 
 function getChalk(options) {
-  return options.forceColor ? new _chalk.constructor({
-    enabled: true,
-    level: 1
-  }) : _chalk;
+  return options.forceColor
+    ? new _chalk.constructor({
+        enabled: true,
+        level: 1,
+      })
+    : _chalk;
 }
 
 function highlight(code, options = {}) {

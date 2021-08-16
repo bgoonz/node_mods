@@ -9,7 +9,8 @@ function _wrapRegExp() {
     return new BabelRegExp(re, undefined, groups);
   };
 
-  module.exports["default"] = module.exports, module.exports.__esModule = true;
+  (module.exports["default"] = module.exports),
+    (module.exports.__esModule = true);
   var _super = RegExp.prototype;
 
   var _groups = new WeakMap();
@@ -35,9 +36,13 @@ function _wrapRegExp() {
     if (typeof substitution === "string") {
       var groups = _groups.get(this);
 
-      return _super[Symbol.replace].call(this, str, substitution.replace(/\$<([^>]+)>/g, function (_, name) {
-        return "$" + groups[name];
-      }));
+      return _super[Symbol.replace].call(
+        this,
+        str,
+        substitution.replace(/\$<([^>]+)>/g, function (_, name) {
+          return "$" + groups[name];
+        })
+      );
     } else if (typeof substitution === "function") {
       var _this = this;
 
@@ -69,4 +74,5 @@ function _wrapRegExp() {
 }
 
 module.exports = _wrapRegExp;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

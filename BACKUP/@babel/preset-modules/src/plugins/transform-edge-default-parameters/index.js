@@ -5,7 +5,7 @@
  */
 
 export default ({ types: t }) => {
-  const isArrowParent = p =>
+  const isArrowParent = (p) =>
     p.parentKey === "params" &&
     p.parentPath &&
     t.isArrowFunctionExpression(p.parentPath);

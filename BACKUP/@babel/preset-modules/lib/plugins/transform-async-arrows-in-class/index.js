@@ -24,21 +24,18 @@ exports.default = void 0;
  */
 const OPTS = {
   allowInsertArrow: false,
-  specCompliant: false
+  specCompliant: false,
 };
 
-var _default = ({
-  types: t
-}) => ({
+var _default = ({ types: t }) => ({
   name: "transform-async-arrows-in-class",
   visitor: {
     ArrowFunctionExpression(path) {
       if (path.node.async && path.findParent(t.isClassMethod)) {
         path.arrowFunctionToExpression(OPTS);
       }
-    }
-
-  }
+    },
+  },
 });
 
 exports.default = _default;

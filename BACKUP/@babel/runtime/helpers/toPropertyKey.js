@@ -8,4 +8,5 @@ function _toPropertyKey(arg) {
 }
 
 module.exports = _toPropertyKey;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

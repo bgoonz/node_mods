@@ -19,7 +19,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
 function _asyncToGenerator(fn) {
   return function () {
     var self = this,
-        args = arguments;
+      args = arguments;
     return new _Promise(function (resolve, reject) {
       var gen = fn.apply(self, args);
 
@@ -37,4 +37,5 @@ function _asyncToGenerator(fn) {
 }
 
 module.exports = _asyncToGenerator;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

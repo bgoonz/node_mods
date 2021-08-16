@@ -16,4 +16,5 @@ function _toPrimitive(input, hint) {
 }
 
 module.exports = _toPrimitive;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

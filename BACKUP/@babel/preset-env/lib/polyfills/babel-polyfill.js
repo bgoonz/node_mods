@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = _default;
 
@@ -16,13 +16,7 @@ const NO_DIRECT_POLYFILL_IMPORT = `
   When setting \`useBuiltIns: 'usage'\`, polyfills are automatically imported when needed.
   Please remove the direct import of \`SPECIFIER\` or use \`useBuiltIns: 'entry'\` instead.`;
 
-function _default({
-  template
-}, {
-  regenerator,
-  deprecated,
-  usage
-}) {
+function _default({ template }, { regenerator, deprecated, usage }) {
   return {
     name: "preset-env/replace-babel-polyfill",
     visitor: {
@@ -49,7 +43,7 @@ function _default({
       },
 
       Program(path) {
-        path.get("body").forEach(bodyPath => {
+        path.get("body").forEach((bodyPath) => {
           const src = (0, _utils.getRequireSource)(bodyPath);
 
           if (usage && (0, _utils.isPolyfillSource)(src)) {
@@ -70,8 +64,7 @@ function _default({
             }
           }
         });
-      }
-
-    }
+      },
+    },
   };
 }

@@ -7,4 +7,5 @@ function _skipFirstGeneratorNext(fn) {
 }
 
 module.exports = _skipFirstGeneratorNext;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

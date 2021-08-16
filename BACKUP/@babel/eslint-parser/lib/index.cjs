@@ -1,15 +1,10 @@
-const {
-  normalizeESLintConfig
-} = require("./configuration.cjs");
+const { normalizeESLintConfig } = require("./configuration.cjs");
 
 const analyzeScope = require("./analyze-scope.cjs");
 
 const baseParse = require("./parse.cjs");
 
-const {
-  LocalClient,
-  WorkerClient
-} = require("./client.cjs");
+const { LocalClient, WorkerClient } = require("./client.cjs");
 
 const client = new LocalClient();
 
@@ -24,6 +19,6 @@ exports.parseForESLint = function (code, options = {}) {
   return {
     ast,
     scopeManager,
-    visitorKeys: client.getVisitorKeys()
+    visitorKeys: client.getVisitorKeys(),
   };
 };

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -9,7 +9,7 @@ var _helperPluginUtils = require("@babel/helper-plugin-utils");
 
 var _pluginSyntaxJsonStrings = require("@babel/plugin-syntax-json-strings");
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
   const regex = /(\\*)([\u2028\u2029])/g;
 
@@ -23,17 +23,12 @@ var _default = (0, _helperPluginUtils.declare)(api => {
     name: "proposal-json-strings",
     inherits: _pluginSyntaxJsonStrings.default,
     visitor: {
-      "DirectiveLiteral|StringLiteral"({
-        node
-      }) {
-        const {
-          extra
-        } = node;
+      "DirectiveLiteral|StringLiteral"({ node }) {
+        const { extra } = node;
         if (!(extra != null && extra.raw)) return;
         extra.raw = extra.raw.replace(regex, replace);
-      }
-
-    }
+      },
+    },
   };
 });
 

@@ -3,4 +3,5 @@ function _classPrivateMethodSet() {
 }
 
 module.exports = _classPrivateMethodSet;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

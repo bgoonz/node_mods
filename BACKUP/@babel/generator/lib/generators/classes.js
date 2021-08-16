@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.ClassExpression = exports.ClassDeclaration = ClassDeclaration;
 exports.ClassBody = ClassBody;
@@ -14,13 +14,13 @@ exports.StaticBlock = StaticBlock;
 
 var t = require("@babel/types");
 
-const {
-  isExportDefaultDeclaration,
-  isExportNamedDeclaration
-} = t;
+const { isExportDefaultDeclaration, isExportNamedDeclaration } = t;
 
 function ClassDeclaration(node, parent) {
-  if (!this.format.decoratorsBeforeExport || !isExportDefaultDeclaration(parent) && !isExportNamedDeclaration(parent)) {
+  if (
+    !this.format.decoratorsBeforeExport ||
+    (!isExportDefaultDeclaration(parent) && !isExportNamedDeclaration(parent))
+  ) {
     this.printJoin(node.decorators, node);
   }
 
@@ -166,7 +166,7 @@ function StaticBlock(node) {
   } else {
     this.newline();
     this.printSequence(node.body, node, {
-      indent: true
+      indent: true,
     });
     this.rightBrace();
   }

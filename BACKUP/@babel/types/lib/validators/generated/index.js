@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.isArrayExpression = isArrayExpression;
 exports.isAssignmentExpression = isAssignmentExpression;
@@ -3995,7 +3995,61 @@ function isExpression(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("ArrayExpression" === nodeType || "AssignmentExpression" === nodeType || "BinaryExpression" === nodeType || "CallExpression" === nodeType || "ConditionalExpression" === nodeType || "FunctionExpression" === nodeType || "Identifier" === nodeType || "StringLiteral" === nodeType || "NumericLiteral" === nodeType || "NullLiteral" === nodeType || "BooleanLiteral" === nodeType || "RegExpLiteral" === nodeType || "LogicalExpression" === nodeType || "MemberExpression" === nodeType || "NewExpression" === nodeType || "ObjectExpression" === nodeType || "SequenceExpression" === nodeType || "ParenthesizedExpression" === nodeType || "ThisExpression" === nodeType || "UnaryExpression" === nodeType || "UpdateExpression" === nodeType || "ArrowFunctionExpression" === nodeType || "ClassExpression" === nodeType || "MetaProperty" === nodeType || "Super" === nodeType || "TaggedTemplateExpression" === nodeType || "TemplateLiteral" === nodeType || "YieldExpression" === nodeType || "AwaitExpression" === nodeType || "Import" === nodeType || "BigIntLiteral" === nodeType || "OptionalMemberExpression" === nodeType || "OptionalCallExpression" === nodeType || "TypeCastExpression" === nodeType || "JSXElement" === nodeType || "JSXFragment" === nodeType || "BindExpression" === nodeType || "DoExpression" === nodeType || "RecordExpression" === nodeType || "TupleExpression" === nodeType || "DecimalLiteral" === nodeType || "ModuleExpression" === nodeType || "TopicReference" === nodeType || "PipelineTopicExpression" === nodeType || "PipelineBareFunction" === nodeType || "PipelinePrimaryTopicReference" === nodeType || "TSAsExpression" === nodeType || "TSTypeAssertion" === nodeType || "TSNonNullExpression" === nodeType || nodeType === "Placeholder" && ("Expression" === node.expectedNode || "Identifier" === node.expectedNode || "StringLiteral" === node.expectedNode)) {
+  if (
+    "ArrayExpression" === nodeType ||
+    "AssignmentExpression" === nodeType ||
+    "BinaryExpression" === nodeType ||
+    "CallExpression" === nodeType ||
+    "ConditionalExpression" === nodeType ||
+    "FunctionExpression" === nodeType ||
+    "Identifier" === nodeType ||
+    "StringLiteral" === nodeType ||
+    "NumericLiteral" === nodeType ||
+    "NullLiteral" === nodeType ||
+    "BooleanLiteral" === nodeType ||
+    "RegExpLiteral" === nodeType ||
+    "LogicalExpression" === nodeType ||
+    "MemberExpression" === nodeType ||
+    "NewExpression" === nodeType ||
+    "ObjectExpression" === nodeType ||
+    "SequenceExpression" === nodeType ||
+    "ParenthesizedExpression" === nodeType ||
+    "ThisExpression" === nodeType ||
+    "UnaryExpression" === nodeType ||
+    "UpdateExpression" === nodeType ||
+    "ArrowFunctionExpression" === nodeType ||
+    "ClassExpression" === nodeType ||
+    "MetaProperty" === nodeType ||
+    "Super" === nodeType ||
+    "TaggedTemplateExpression" === nodeType ||
+    "TemplateLiteral" === nodeType ||
+    "YieldExpression" === nodeType ||
+    "AwaitExpression" === nodeType ||
+    "Import" === nodeType ||
+    "BigIntLiteral" === nodeType ||
+    "OptionalMemberExpression" === nodeType ||
+    "OptionalCallExpression" === nodeType ||
+    "TypeCastExpression" === nodeType ||
+    "JSXElement" === nodeType ||
+    "JSXFragment" === nodeType ||
+    "BindExpression" === nodeType ||
+    "DoExpression" === nodeType ||
+    "RecordExpression" === nodeType ||
+    "TupleExpression" === nodeType ||
+    "DecimalLiteral" === nodeType ||
+    "ModuleExpression" === nodeType ||
+    "TopicReference" === nodeType ||
+    "PipelineTopicExpression" === nodeType ||
+    "PipelineBareFunction" === nodeType ||
+    "PipelinePrimaryTopicReference" === nodeType ||
+    "TSAsExpression" === nodeType ||
+    "TSTypeAssertion" === nodeType ||
+    "TSNonNullExpression" === nodeType ||
+    (nodeType === "Placeholder" &&
+      ("Expression" === node.expectedNode ||
+        "Identifier" === node.expectedNode ||
+        "StringLiteral" === node.expectedNode))
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4025,7 +4079,28 @@ function isScopable(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("BlockStatement" === nodeType || "CatchClause" === nodeType || "DoWhileStatement" === nodeType || "ForInStatement" === nodeType || "ForStatement" === nodeType || "FunctionDeclaration" === nodeType || "FunctionExpression" === nodeType || "Program" === nodeType || "ObjectMethod" === nodeType || "SwitchStatement" === nodeType || "WhileStatement" === nodeType || "ArrowFunctionExpression" === nodeType || "ClassExpression" === nodeType || "ClassDeclaration" === nodeType || "ForOfStatement" === nodeType || "ClassMethod" === nodeType || "ClassPrivateMethod" === nodeType || "StaticBlock" === nodeType || "TSModuleBlock" === nodeType || nodeType === "Placeholder" && "BlockStatement" === node.expectedNode) {
+  if (
+    "BlockStatement" === nodeType ||
+    "CatchClause" === nodeType ||
+    "DoWhileStatement" === nodeType ||
+    "ForInStatement" === nodeType ||
+    "ForStatement" === nodeType ||
+    "FunctionDeclaration" === nodeType ||
+    "FunctionExpression" === nodeType ||
+    "Program" === nodeType ||
+    "ObjectMethod" === nodeType ||
+    "SwitchStatement" === nodeType ||
+    "WhileStatement" === nodeType ||
+    "ArrowFunctionExpression" === nodeType ||
+    "ClassExpression" === nodeType ||
+    "ClassDeclaration" === nodeType ||
+    "ForOfStatement" === nodeType ||
+    "ClassMethod" === nodeType ||
+    "ClassPrivateMethod" === nodeType ||
+    "StaticBlock" === nodeType ||
+    "TSModuleBlock" === nodeType ||
+    (nodeType === "Placeholder" && "BlockStatement" === node.expectedNode)
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4040,7 +4115,26 @@ function isBlockParent(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("BlockStatement" === nodeType || "CatchClause" === nodeType || "DoWhileStatement" === nodeType || "ForInStatement" === nodeType || "ForStatement" === nodeType || "FunctionDeclaration" === nodeType || "FunctionExpression" === nodeType || "Program" === nodeType || "ObjectMethod" === nodeType || "SwitchStatement" === nodeType || "WhileStatement" === nodeType || "ArrowFunctionExpression" === nodeType || "ForOfStatement" === nodeType || "ClassMethod" === nodeType || "ClassPrivateMethod" === nodeType || "StaticBlock" === nodeType || "TSModuleBlock" === nodeType || nodeType === "Placeholder" && "BlockStatement" === node.expectedNode) {
+  if (
+    "BlockStatement" === nodeType ||
+    "CatchClause" === nodeType ||
+    "DoWhileStatement" === nodeType ||
+    "ForInStatement" === nodeType ||
+    "ForStatement" === nodeType ||
+    "FunctionDeclaration" === nodeType ||
+    "FunctionExpression" === nodeType ||
+    "Program" === nodeType ||
+    "ObjectMethod" === nodeType ||
+    "SwitchStatement" === nodeType ||
+    "WhileStatement" === nodeType ||
+    "ArrowFunctionExpression" === nodeType ||
+    "ForOfStatement" === nodeType ||
+    "ClassMethod" === nodeType ||
+    "ClassPrivateMethod" === nodeType ||
+    "StaticBlock" === nodeType ||
+    "TSModuleBlock" === nodeType ||
+    (nodeType === "Placeholder" && "BlockStatement" === node.expectedNode)
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4055,7 +4149,12 @@ function isBlock(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("BlockStatement" === nodeType || "Program" === nodeType || "TSModuleBlock" === nodeType || nodeType === "Placeholder" && "BlockStatement" === node.expectedNode) {
+  if (
+    "BlockStatement" === nodeType ||
+    "Program" === nodeType ||
+    "TSModuleBlock" === nodeType ||
+    (nodeType === "Placeholder" && "BlockStatement" === node.expectedNode)
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4070,7 +4169,59 @@ function isStatement(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("BlockStatement" === nodeType || "BreakStatement" === nodeType || "ContinueStatement" === nodeType || "DebuggerStatement" === nodeType || "DoWhileStatement" === nodeType || "EmptyStatement" === nodeType || "ExpressionStatement" === nodeType || "ForInStatement" === nodeType || "ForStatement" === nodeType || "FunctionDeclaration" === nodeType || "IfStatement" === nodeType || "LabeledStatement" === nodeType || "ReturnStatement" === nodeType || "SwitchStatement" === nodeType || "ThrowStatement" === nodeType || "TryStatement" === nodeType || "VariableDeclaration" === nodeType || "WhileStatement" === nodeType || "WithStatement" === nodeType || "ClassDeclaration" === nodeType || "ExportAllDeclaration" === nodeType || "ExportDefaultDeclaration" === nodeType || "ExportNamedDeclaration" === nodeType || "ForOfStatement" === nodeType || "ImportDeclaration" === nodeType || "DeclareClass" === nodeType || "DeclareFunction" === nodeType || "DeclareInterface" === nodeType || "DeclareModule" === nodeType || "DeclareModuleExports" === nodeType || "DeclareTypeAlias" === nodeType || "DeclareOpaqueType" === nodeType || "DeclareVariable" === nodeType || "DeclareExportDeclaration" === nodeType || "DeclareExportAllDeclaration" === nodeType || "InterfaceDeclaration" === nodeType || "OpaqueType" === nodeType || "TypeAlias" === nodeType || "EnumDeclaration" === nodeType || "TSDeclareFunction" === nodeType || "TSInterfaceDeclaration" === nodeType || "TSTypeAliasDeclaration" === nodeType || "TSEnumDeclaration" === nodeType || "TSModuleDeclaration" === nodeType || "TSImportEqualsDeclaration" === nodeType || "TSExportAssignment" === nodeType || "TSNamespaceExportDeclaration" === nodeType || nodeType === "Placeholder" && ("Statement" === node.expectedNode || "Declaration" === node.expectedNode || "BlockStatement" === node.expectedNode)) {
+  if (
+    "BlockStatement" === nodeType ||
+    "BreakStatement" === nodeType ||
+    "ContinueStatement" === nodeType ||
+    "DebuggerStatement" === nodeType ||
+    "DoWhileStatement" === nodeType ||
+    "EmptyStatement" === nodeType ||
+    "ExpressionStatement" === nodeType ||
+    "ForInStatement" === nodeType ||
+    "ForStatement" === nodeType ||
+    "FunctionDeclaration" === nodeType ||
+    "IfStatement" === nodeType ||
+    "LabeledStatement" === nodeType ||
+    "ReturnStatement" === nodeType ||
+    "SwitchStatement" === nodeType ||
+    "ThrowStatement" === nodeType ||
+    "TryStatement" === nodeType ||
+    "VariableDeclaration" === nodeType ||
+    "WhileStatement" === nodeType ||
+    "WithStatement" === nodeType ||
+    "ClassDeclaration" === nodeType ||
+    "ExportAllDeclaration" === nodeType ||
+    "ExportDefaultDeclaration" === nodeType ||
+    "ExportNamedDeclaration" === nodeType ||
+    "ForOfStatement" === nodeType ||
+    "ImportDeclaration" === nodeType ||
+    "DeclareClass" === nodeType ||
+    "DeclareFunction" === nodeType ||
+    "DeclareInterface" === nodeType ||
+    "DeclareModule" === nodeType ||
+    "DeclareModuleExports" === nodeType ||
+    "DeclareTypeAlias" === nodeType ||
+    "DeclareOpaqueType" === nodeType ||
+    "DeclareVariable" === nodeType ||
+    "DeclareExportDeclaration" === nodeType ||
+    "DeclareExportAllDeclaration" === nodeType ||
+    "InterfaceDeclaration" === nodeType ||
+    "OpaqueType" === nodeType ||
+    "TypeAlias" === nodeType ||
+    "EnumDeclaration" === nodeType ||
+    "TSDeclareFunction" === nodeType ||
+    "TSInterfaceDeclaration" === nodeType ||
+    "TSTypeAliasDeclaration" === nodeType ||
+    "TSEnumDeclaration" === nodeType ||
+    "TSModuleDeclaration" === nodeType ||
+    "TSImportEqualsDeclaration" === nodeType ||
+    "TSExportAssignment" === nodeType ||
+    "TSNamespaceExportDeclaration" === nodeType ||
+    (nodeType === "Placeholder" &&
+      ("Statement" === node.expectedNode ||
+        "Declaration" === node.expectedNode ||
+        "BlockStatement" === node.expectedNode))
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4085,7 +4236,14 @@ function isTerminatorless(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("BreakStatement" === nodeType || "ContinueStatement" === nodeType || "ReturnStatement" === nodeType || "ThrowStatement" === nodeType || "YieldExpression" === nodeType || "AwaitExpression" === nodeType) {
+  if (
+    "BreakStatement" === nodeType ||
+    "ContinueStatement" === nodeType ||
+    "ReturnStatement" === nodeType ||
+    "ThrowStatement" === nodeType ||
+    "YieldExpression" === nodeType ||
+    "AwaitExpression" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4100,7 +4258,12 @@ function isCompletionStatement(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("BreakStatement" === nodeType || "ContinueStatement" === nodeType || "ReturnStatement" === nodeType || "ThrowStatement" === nodeType) {
+  if (
+    "BreakStatement" === nodeType ||
+    "ContinueStatement" === nodeType ||
+    "ReturnStatement" === nodeType ||
+    "ThrowStatement" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4130,7 +4293,13 @@ function isLoop(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("DoWhileStatement" === nodeType || "ForInStatement" === nodeType || "ForStatement" === nodeType || "WhileStatement" === nodeType || "ForOfStatement" === nodeType) {
+  if (
+    "DoWhileStatement" === nodeType ||
+    "ForInStatement" === nodeType ||
+    "ForStatement" === nodeType ||
+    "WhileStatement" === nodeType ||
+    "ForOfStatement" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4160,7 +4329,11 @@ function isExpressionWrapper(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("ExpressionStatement" === nodeType || "ParenthesizedExpression" === nodeType || "TypeCastExpression" === nodeType) {
+  if (
+    "ExpressionStatement" === nodeType ||
+    "ParenthesizedExpression" === nodeType ||
+    "TypeCastExpression" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4175,7 +4348,11 @@ function isFor(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("ForInStatement" === nodeType || "ForStatement" === nodeType || "ForOfStatement" === nodeType) {
+  if (
+    "ForInStatement" === nodeType ||
+    "ForStatement" === nodeType ||
+    "ForOfStatement" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4205,7 +4382,14 @@ function isFunction(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("FunctionDeclaration" === nodeType || "FunctionExpression" === nodeType || "ObjectMethod" === nodeType || "ArrowFunctionExpression" === nodeType || "ClassMethod" === nodeType || "ClassPrivateMethod" === nodeType) {
+  if (
+    "FunctionDeclaration" === nodeType ||
+    "FunctionExpression" === nodeType ||
+    "ObjectMethod" === nodeType ||
+    "ArrowFunctionExpression" === nodeType ||
+    "ClassMethod" === nodeType ||
+    "ClassPrivateMethod" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4220,7 +4404,14 @@ function isFunctionParent(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("FunctionDeclaration" === nodeType || "FunctionExpression" === nodeType || "ObjectMethod" === nodeType || "ArrowFunctionExpression" === nodeType || "ClassMethod" === nodeType || "ClassPrivateMethod" === nodeType) {
+  if (
+    "FunctionDeclaration" === nodeType ||
+    "FunctionExpression" === nodeType ||
+    "ObjectMethod" === nodeType ||
+    "ArrowFunctionExpression" === nodeType ||
+    "ClassMethod" === nodeType ||
+    "ClassPrivateMethod" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4235,7 +4426,19 @@ function isPureish(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("FunctionDeclaration" === nodeType || "FunctionExpression" === nodeType || "StringLiteral" === nodeType || "NumericLiteral" === nodeType || "NullLiteral" === nodeType || "BooleanLiteral" === nodeType || "RegExpLiteral" === nodeType || "ArrowFunctionExpression" === nodeType || "BigIntLiteral" === nodeType || "DecimalLiteral" === nodeType || nodeType === "Placeholder" && "StringLiteral" === node.expectedNode) {
+  if (
+    "FunctionDeclaration" === nodeType ||
+    "FunctionExpression" === nodeType ||
+    "StringLiteral" === nodeType ||
+    "NumericLiteral" === nodeType ||
+    "NullLiteral" === nodeType ||
+    "BooleanLiteral" === nodeType ||
+    "RegExpLiteral" === nodeType ||
+    "ArrowFunctionExpression" === nodeType ||
+    "BigIntLiteral" === nodeType ||
+    "DecimalLiteral" === nodeType ||
+    (nodeType === "Placeholder" && "StringLiteral" === node.expectedNode)
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4250,7 +4453,35 @@ function isDeclaration(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("FunctionDeclaration" === nodeType || "VariableDeclaration" === nodeType || "ClassDeclaration" === nodeType || "ExportAllDeclaration" === nodeType || "ExportDefaultDeclaration" === nodeType || "ExportNamedDeclaration" === nodeType || "ImportDeclaration" === nodeType || "DeclareClass" === nodeType || "DeclareFunction" === nodeType || "DeclareInterface" === nodeType || "DeclareModule" === nodeType || "DeclareModuleExports" === nodeType || "DeclareTypeAlias" === nodeType || "DeclareOpaqueType" === nodeType || "DeclareVariable" === nodeType || "DeclareExportDeclaration" === nodeType || "DeclareExportAllDeclaration" === nodeType || "InterfaceDeclaration" === nodeType || "OpaqueType" === nodeType || "TypeAlias" === nodeType || "EnumDeclaration" === nodeType || "TSDeclareFunction" === nodeType || "TSInterfaceDeclaration" === nodeType || "TSTypeAliasDeclaration" === nodeType || "TSEnumDeclaration" === nodeType || "TSModuleDeclaration" === nodeType || nodeType === "Placeholder" && "Declaration" === node.expectedNode) {
+  if (
+    "FunctionDeclaration" === nodeType ||
+    "VariableDeclaration" === nodeType ||
+    "ClassDeclaration" === nodeType ||
+    "ExportAllDeclaration" === nodeType ||
+    "ExportDefaultDeclaration" === nodeType ||
+    "ExportNamedDeclaration" === nodeType ||
+    "ImportDeclaration" === nodeType ||
+    "DeclareClass" === nodeType ||
+    "DeclareFunction" === nodeType ||
+    "DeclareInterface" === nodeType ||
+    "DeclareModule" === nodeType ||
+    "DeclareModuleExports" === nodeType ||
+    "DeclareTypeAlias" === nodeType ||
+    "DeclareOpaqueType" === nodeType ||
+    "DeclareVariable" === nodeType ||
+    "DeclareExportDeclaration" === nodeType ||
+    "DeclareExportAllDeclaration" === nodeType ||
+    "InterfaceDeclaration" === nodeType ||
+    "OpaqueType" === nodeType ||
+    "TypeAlias" === nodeType ||
+    "EnumDeclaration" === nodeType ||
+    "TSDeclareFunction" === nodeType ||
+    "TSInterfaceDeclaration" === nodeType ||
+    "TSTypeAliasDeclaration" === nodeType ||
+    "TSEnumDeclaration" === nodeType ||
+    "TSModuleDeclaration" === nodeType ||
+    (nodeType === "Placeholder" && "Declaration" === node.expectedNode)
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4265,7 +4496,15 @@ function isPatternLike(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("Identifier" === nodeType || "RestElement" === nodeType || "AssignmentPattern" === nodeType || "ArrayPattern" === nodeType || "ObjectPattern" === nodeType || nodeType === "Placeholder" && ("Pattern" === node.expectedNode || "Identifier" === node.expectedNode)) {
+  if (
+    "Identifier" === nodeType ||
+    "RestElement" === nodeType ||
+    "AssignmentPattern" === nodeType ||
+    "ArrayPattern" === nodeType ||
+    "ObjectPattern" === nodeType ||
+    (nodeType === "Placeholder" &&
+      ("Pattern" === node.expectedNode || "Identifier" === node.expectedNode))
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4280,7 +4519,17 @@ function isLVal(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("Identifier" === nodeType || "MemberExpression" === nodeType || "RestElement" === nodeType || "AssignmentPattern" === nodeType || "ArrayPattern" === nodeType || "ObjectPattern" === nodeType || "TSParameterProperty" === nodeType || nodeType === "Placeholder" && ("Pattern" === node.expectedNode || "Identifier" === node.expectedNode)) {
+  if (
+    "Identifier" === nodeType ||
+    "MemberExpression" === nodeType ||
+    "RestElement" === nodeType ||
+    "AssignmentPattern" === nodeType ||
+    "ArrayPattern" === nodeType ||
+    "ObjectPattern" === nodeType ||
+    "TSParameterProperty" === nodeType ||
+    (nodeType === "Placeholder" &&
+      ("Pattern" === node.expectedNode || "Identifier" === node.expectedNode))
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4295,7 +4544,11 @@ function isTSEntityName(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("Identifier" === nodeType || "TSQualifiedName" === nodeType || nodeType === "Placeholder" && "Identifier" === node.expectedNode) {
+  if (
+    "Identifier" === nodeType ||
+    "TSQualifiedName" === nodeType ||
+    (nodeType === "Placeholder" && "Identifier" === node.expectedNode)
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4310,7 +4563,17 @@ function isLiteral(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("StringLiteral" === nodeType || "NumericLiteral" === nodeType || "NullLiteral" === nodeType || "BooleanLiteral" === nodeType || "RegExpLiteral" === nodeType || "TemplateLiteral" === nodeType || "BigIntLiteral" === nodeType || "DecimalLiteral" === nodeType || nodeType === "Placeholder" && "StringLiteral" === node.expectedNode) {
+  if (
+    "StringLiteral" === nodeType ||
+    "NumericLiteral" === nodeType ||
+    "NullLiteral" === nodeType ||
+    "BooleanLiteral" === nodeType ||
+    "RegExpLiteral" === nodeType ||
+    "TemplateLiteral" === nodeType ||
+    "BigIntLiteral" === nodeType ||
+    "DecimalLiteral" === nodeType ||
+    (nodeType === "Placeholder" && "StringLiteral" === node.expectedNode)
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4325,7 +4588,25 @@ function isImmutable(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("StringLiteral" === nodeType || "NumericLiteral" === nodeType || "NullLiteral" === nodeType || "BooleanLiteral" === nodeType || "BigIntLiteral" === nodeType || "JSXAttribute" === nodeType || "JSXClosingElement" === nodeType || "JSXElement" === nodeType || "JSXExpressionContainer" === nodeType || "JSXSpreadChild" === nodeType || "JSXOpeningElement" === nodeType || "JSXText" === nodeType || "JSXFragment" === nodeType || "JSXOpeningFragment" === nodeType || "JSXClosingFragment" === nodeType || "DecimalLiteral" === nodeType || nodeType === "Placeholder" && "StringLiteral" === node.expectedNode) {
+  if (
+    "StringLiteral" === nodeType ||
+    "NumericLiteral" === nodeType ||
+    "NullLiteral" === nodeType ||
+    "BooleanLiteral" === nodeType ||
+    "BigIntLiteral" === nodeType ||
+    "JSXAttribute" === nodeType ||
+    "JSXClosingElement" === nodeType ||
+    "JSXElement" === nodeType ||
+    "JSXExpressionContainer" === nodeType ||
+    "JSXSpreadChild" === nodeType ||
+    "JSXOpeningElement" === nodeType ||
+    "JSXText" === nodeType ||
+    "JSXFragment" === nodeType ||
+    "JSXOpeningFragment" === nodeType ||
+    "JSXClosingFragment" === nodeType ||
+    "DecimalLiteral" === nodeType ||
+    (nodeType === "Placeholder" && "StringLiteral" === node.expectedNode)
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4340,7 +4621,15 @@ function isUserWhitespacable(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("ObjectMethod" === nodeType || "ObjectProperty" === nodeType || "ObjectTypeInternalSlot" === nodeType || "ObjectTypeCallProperty" === nodeType || "ObjectTypeIndexer" === nodeType || "ObjectTypeProperty" === nodeType || "ObjectTypeSpreadProperty" === nodeType) {
+  if (
+    "ObjectMethod" === nodeType ||
+    "ObjectProperty" === nodeType ||
+    "ObjectTypeInternalSlot" === nodeType ||
+    "ObjectTypeCallProperty" === nodeType ||
+    "ObjectTypeIndexer" === nodeType ||
+    "ObjectTypeProperty" === nodeType ||
+    "ObjectTypeSpreadProperty" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4355,7 +4644,11 @@ function isMethod(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("ObjectMethod" === nodeType || "ClassMethod" === nodeType || "ClassPrivateMethod" === nodeType) {
+  if (
+    "ObjectMethod" === nodeType ||
+    "ClassMethod" === nodeType ||
+    "ClassPrivateMethod" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4385,7 +4678,11 @@ function isProperty(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("ObjectProperty" === nodeType || "ClassProperty" === nodeType || "ClassPrivateProperty" === nodeType) {
+  if (
+    "ObjectProperty" === nodeType ||
+    "ClassProperty" === nodeType ||
+    "ClassPrivateProperty" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4415,7 +4712,12 @@ function isPattern(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("AssignmentPattern" === nodeType || "ArrayPattern" === nodeType || "ObjectPattern" === nodeType || nodeType === "Placeholder" && "Pattern" === node.expectedNode) {
+  if (
+    "AssignmentPattern" === nodeType ||
+    "ArrayPattern" === nodeType ||
+    "ObjectPattern" === nodeType ||
+    (nodeType === "Placeholder" && "Pattern" === node.expectedNode)
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4445,7 +4747,12 @@ function isModuleDeclaration(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("ExportAllDeclaration" === nodeType || "ExportDefaultDeclaration" === nodeType || "ExportNamedDeclaration" === nodeType || "ImportDeclaration" === nodeType) {
+  if (
+    "ExportAllDeclaration" === nodeType ||
+    "ExportDefaultDeclaration" === nodeType ||
+    "ExportNamedDeclaration" === nodeType ||
+    "ImportDeclaration" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4460,7 +4767,11 @@ function isExportDeclaration(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("ExportAllDeclaration" === nodeType || "ExportDefaultDeclaration" === nodeType || "ExportNamedDeclaration" === nodeType) {
+  if (
+    "ExportAllDeclaration" === nodeType ||
+    "ExportDefaultDeclaration" === nodeType ||
+    "ExportNamedDeclaration" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4475,7 +4786,14 @@ function isModuleSpecifier(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("ExportSpecifier" === nodeType || "ImportDefaultSpecifier" === nodeType || "ImportNamespaceSpecifier" === nodeType || "ImportSpecifier" === nodeType || "ExportNamespaceSpecifier" === nodeType || "ExportDefaultSpecifier" === nodeType) {
+  if (
+    "ExportSpecifier" === nodeType ||
+    "ImportDefaultSpecifier" === nodeType ||
+    "ImportNamespaceSpecifier" === nodeType ||
+    "ImportSpecifier" === nodeType ||
+    "ExportNamespaceSpecifier" === nodeType ||
+    "ExportDefaultSpecifier" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4490,7 +4808,11 @@ function isPrivate(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("ClassPrivateProperty" === nodeType || "ClassPrivateMethod" === nodeType || "PrivateName" === nodeType) {
+  if (
+    "ClassPrivateProperty" === nodeType ||
+    "ClassPrivateMethod" === nodeType ||
+    "PrivateName" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4505,7 +4827,64 @@ function isFlow(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("AnyTypeAnnotation" === nodeType || "ArrayTypeAnnotation" === nodeType || "BooleanTypeAnnotation" === nodeType || "BooleanLiteralTypeAnnotation" === nodeType || "NullLiteralTypeAnnotation" === nodeType || "ClassImplements" === nodeType || "DeclareClass" === nodeType || "DeclareFunction" === nodeType || "DeclareInterface" === nodeType || "DeclareModule" === nodeType || "DeclareModuleExports" === nodeType || "DeclareTypeAlias" === nodeType || "DeclareOpaqueType" === nodeType || "DeclareVariable" === nodeType || "DeclareExportDeclaration" === nodeType || "DeclareExportAllDeclaration" === nodeType || "DeclaredPredicate" === nodeType || "ExistsTypeAnnotation" === nodeType || "FunctionTypeAnnotation" === nodeType || "FunctionTypeParam" === nodeType || "GenericTypeAnnotation" === nodeType || "InferredPredicate" === nodeType || "InterfaceExtends" === nodeType || "InterfaceDeclaration" === nodeType || "InterfaceTypeAnnotation" === nodeType || "IntersectionTypeAnnotation" === nodeType || "MixedTypeAnnotation" === nodeType || "EmptyTypeAnnotation" === nodeType || "NullableTypeAnnotation" === nodeType || "NumberLiteralTypeAnnotation" === nodeType || "NumberTypeAnnotation" === nodeType || "ObjectTypeAnnotation" === nodeType || "ObjectTypeInternalSlot" === nodeType || "ObjectTypeCallProperty" === nodeType || "ObjectTypeIndexer" === nodeType || "ObjectTypeProperty" === nodeType || "ObjectTypeSpreadProperty" === nodeType || "OpaqueType" === nodeType || "QualifiedTypeIdentifier" === nodeType || "StringLiteralTypeAnnotation" === nodeType || "StringTypeAnnotation" === nodeType || "SymbolTypeAnnotation" === nodeType || "ThisTypeAnnotation" === nodeType || "TupleTypeAnnotation" === nodeType || "TypeofTypeAnnotation" === nodeType || "TypeAlias" === nodeType || "TypeAnnotation" === nodeType || "TypeCastExpression" === nodeType || "TypeParameter" === nodeType || "TypeParameterDeclaration" === nodeType || "TypeParameterInstantiation" === nodeType || "UnionTypeAnnotation" === nodeType || "Variance" === nodeType || "VoidTypeAnnotation" === nodeType || "IndexedAccessType" === nodeType || "OptionalIndexedAccessType" === nodeType) {
+  if (
+    "AnyTypeAnnotation" === nodeType ||
+    "ArrayTypeAnnotation" === nodeType ||
+    "BooleanTypeAnnotation" === nodeType ||
+    "BooleanLiteralTypeAnnotation" === nodeType ||
+    "NullLiteralTypeAnnotation" === nodeType ||
+    "ClassImplements" === nodeType ||
+    "DeclareClass" === nodeType ||
+    "DeclareFunction" === nodeType ||
+    "DeclareInterface" === nodeType ||
+    "DeclareModule" === nodeType ||
+    "DeclareModuleExports" === nodeType ||
+    "DeclareTypeAlias" === nodeType ||
+    "DeclareOpaqueType" === nodeType ||
+    "DeclareVariable" === nodeType ||
+    "DeclareExportDeclaration" === nodeType ||
+    "DeclareExportAllDeclaration" === nodeType ||
+    "DeclaredPredicate" === nodeType ||
+    "ExistsTypeAnnotation" === nodeType ||
+    "FunctionTypeAnnotation" === nodeType ||
+    "FunctionTypeParam" === nodeType ||
+    "GenericTypeAnnotation" === nodeType ||
+    "InferredPredicate" === nodeType ||
+    "InterfaceExtends" === nodeType ||
+    "InterfaceDeclaration" === nodeType ||
+    "InterfaceTypeAnnotation" === nodeType ||
+    "IntersectionTypeAnnotation" === nodeType ||
+    "MixedTypeAnnotation" === nodeType ||
+    "EmptyTypeAnnotation" === nodeType ||
+    "NullableTypeAnnotation" === nodeType ||
+    "NumberLiteralTypeAnnotation" === nodeType ||
+    "NumberTypeAnnotation" === nodeType ||
+    "ObjectTypeAnnotation" === nodeType ||
+    "ObjectTypeInternalSlot" === nodeType ||
+    "ObjectTypeCallProperty" === nodeType ||
+    "ObjectTypeIndexer" === nodeType ||
+    "ObjectTypeProperty" === nodeType ||
+    "ObjectTypeSpreadProperty" === nodeType ||
+    "OpaqueType" === nodeType ||
+    "QualifiedTypeIdentifier" === nodeType ||
+    "StringLiteralTypeAnnotation" === nodeType ||
+    "StringTypeAnnotation" === nodeType ||
+    "SymbolTypeAnnotation" === nodeType ||
+    "ThisTypeAnnotation" === nodeType ||
+    "TupleTypeAnnotation" === nodeType ||
+    "TypeofTypeAnnotation" === nodeType ||
+    "TypeAlias" === nodeType ||
+    "TypeAnnotation" === nodeType ||
+    "TypeCastExpression" === nodeType ||
+    "TypeParameter" === nodeType ||
+    "TypeParameterDeclaration" === nodeType ||
+    "TypeParameterInstantiation" === nodeType ||
+    "UnionTypeAnnotation" === nodeType ||
+    "Variance" === nodeType ||
+    "VoidTypeAnnotation" === nodeType ||
+    "IndexedAccessType" === nodeType ||
+    "OptionalIndexedAccessType" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4520,7 +4899,34 @@ function isFlowType(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("AnyTypeAnnotation" === nodeType || "ArrayTypeAnnotation" === nodeType || "BooleanTypeAnnotation" === nodeType || "BooleanLiteralTypeAnnotation" === nodeType || "NullLiteralTypeAnnotation" === nodeType || "ExistsTypeAnnotation" === nodeType || "FunctionTypeAnnotation" === nodeType || "GenericTypeAnnotation" === nodeType || "InterfaceTypeAnnotation" === nodeType || "IntersectionTypeAnnotation" === nodeType || "MixedTypeAnnotation" === nodeType || "EmptyTypeAnnotation" === nodeType || "NullableTypeAnnotation" === nodeType || "NumberLiteralTypeAnnotation" === nodeType || "NumberTypeAnnotation" === nodeType || "ObjectTypeAnnotation" === nodeType || "StringLiteralTypeAnnotation" === nodeType || "StringTypeAnnotation" === nodeType || "SymbolTypeAnnotation" === nodeType || "ThisTypeAnnotation" === nodeType || "TupleTypeAnnotation" === nodeType || "TypeofTypeAnnotation" === nodeType || "UnionTypeAnnotation" === nodeType || "VoidTypeAnnotation" === nodeType || "IndexedAccessType" === nodeType || "OptionalIndexedAccessType" === nodeType) {
+  if (
+    "AnyTypeAnnotation" === nodeType ||
+    "ArrayTypeAnnotation" === nodeType ||
+    "BooleanTypeAnnotation" === nodeType ||
+    "BooleanLiteralTypeAnnotation" === nodeType ||
+    "NullLiteralTypeAnnotation" === nodeType ||
+    "ExistsTypeAnnotation" === nodeType ||
+    "FunctionTypeAnnotation" === nodeType ||
+    "GenericTypeAnnotation" === nodeType ||
+    "InterfaceTypeAnnotation" === nodeType ||
+    "IntersectionTypeAnnotation" === nodeType ||
+    "MixedTypeAnnotation" === nodeType ||
+    "EmptyTypeAnnotation" === nodeType ||
+    "NullableTypeAnnotation" === nodeType ||
+    "NumberLiteralTypeAnnotation" === nodeType ||
+    "NumberTypeAnnotation" === nodeType ||
+    "ObjectTypeAnnotation" === nodeType ||
+    "StringLiteralTypeAnnotation" === nodeType ||
+    "StringTypeAnnotation" === nodeType ||
+    "SymbolTypeAnnotation" === nodeType ||
+    "ThisTypeAnnotation" === nodeType ||
+    "TupleTypeAnnotation" === nodeType ||
+    "TypeofTypeAnnotation" === nodeType ||
+    "UnionTypeAnnotation" === nodeType ||
+    "VoidTypeAnnotation" === nodeType ||
+    "IndexedAccessType" === nodeType ||
+    "OptionalIndexedAccessType" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4535,7 +4941,18 @@ function isFlowBaseAnnotation(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("AnyTypeAnnotation" === nodeType || "BooleanTypeAnnotation" === nodeType || "NullLiteralTypeAnnotation" === nodeType || "MixedTypeAnnotation" === nodeType || "EmptyTypeAnnotation" === nodeType || "NumberTypeAnnotation" === nodeType || "StringTypeAnnotation" === nodeType || "SymbolTypeAnnotation" === nodeType || "ThisTypeAnnotation" === nodeType || "VoidTypeAnnotation" === nodeType) {
+  if (
+    "AnyTypeAnnotation" === nodeType ||
+    "BooleanTypeAnnotation" === nodeType ||
+    "NullLiteralTypeAnnotation" === nodeType ||
+    "MixedTypeAnnotation" === nodeType ||
+    "EmptyTypeAnnotation" === nodeType ||
+    "NumberTypeAnnotation" === nodeType ||
+    "StringTypeAnnotation" === nodeType ||
+    "SymbolTypeAnnotation" === nodeType ||
+    "ThisTypeAnnotation" === nodeType ||
+    "VoidTypeAnnotation" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4550,7 +4967,21 @@ function isFlowDeclaration(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("DeclareClass" === nodeType || "DeclareFunction" === nodeType || "DeclareInterface" === nodeType || "DeclareModule" === nodeType || "DeclareModuleExports" === nodeType || "DeclareTypeAlias" === nodeType || "DeclareOpaqueType" === nodeType || "DeclareVariable" === nodeType || "DeclareExportDeclaration" === nodeType || "DeclareExportAllDeclaration" === nodeType || "InterfaceDeclaration" === nodeType || "OpaqueType" === nodeType || "TypeAlias" === nodeType) {
+  if (
+    "DeclareClass" === nodeType ||
+    "DeclareFunction" === nodeType ||
+    "DeclareInterface" === nodeType ||
+    "DeclareModule" === nodeType ||
+    "DeclareModuleExports" === nodeType ||
+    "DeclareTypeAlias" === nodeType ||
+    "DeclareOpaqueType" === nodeType ||
+    "DeclareVariable" === nodeType ||
+    "DeclareExportDeclaration" === nodeType ||
+    "DeclareExportAllDeclaration" === nodeType ||
+    "InterfaceDeclaration" === nodeType ||
+    "OpaqueType" === nodeType ||
+    "TypeAlias" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4580,7 +5011,12 @@ function isEnumBody(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("EnumBooleanBody" === nodeType || "EnumNumberBody" === nodeType || "EnumStringBody" === nodeType || "EnumSymbolBody" === nodeType) {
+  if (
+    "EnumBooleanBody" === nodeType ||
+    "EnumNumberBody" === nodeType ||
+    "EnumStringBody" === nodeType ||
+    "EnumSymbolBody" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4595,7 +5031,12 @@ function isEnumMember(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("EnumBooleanMember" === nodeType || "EnumNumberMember" === nodeType || "EnumStringMember" === nodeType || "EnumDefaultedMember" === nodeType) {
+  if (
+    "EnumBooleanMember" === nodeType ||
+    "EnumNumberMember" === nodeType ||
+    "EnumStringMember" === nodeType ||
+    "EnumDefaultedMember" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4610,7 +5051,23 @@ function isJSX(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("JSXAttribute" === nodeType || "JSXClosingElement" === nodeType || "JSXElement" === nodeType || "JSXEmptyExpression" === nodeType || "JSXExpressionContainer" === nodeType || "JSXSpreadChild" === nodeType || "JSXIdentifier" === nodeType || "JSXMemberExpression" === nodeType || "JSXNamespacedName" === nodeType || "JSXOpeningElement" === nodeType || "JSXSpreadAttribute" === nodeType || "JSXText" === nodeType || "JSXFragment" === nodeType || "JSXOpeningFragment" === nodeType || "JSXClosingFragment" === nodeType) {
+  if (
+    "JSXAttribute" === nodeType ||
+    "JSXClosingElement" === nodeType ||
+    "JSXElement" === nodeType ||
+    "JSXEmptyExpression" === nodeType ||
+    "JSXExpressionContainer" === nodeType ||
+    "JSXSpreadChild" === nodeType ||
+    "JSXIdentifier" === nodeType ||
+    "JSXMemberExpression" === nodeType ||
+    "JSXNamespacedName" === nodeType ||
+    "JSXOpeningElement" === nodeType ||
+    "JSXSpreadAttribute" === nodeType ||
+    "JSXText" === nodeType ||
+    "JSXFragment" === nodeType ||
+    "JSXOpeningFragment" === nodeType ||
+    "JSXClosingFragment" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4625,7 +5082,13 @@ function isTSTypeElement(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("TSCallSignatureDeclaration" === nodeType || "TSConstructSignatureDeclaration" === nodeType || "TSPropertySignature" === nodeType || "TSMethodSignature" === nodeType || "TSIndexSignature" === nodeType) {
+  if (
+    "TSCallSignatureDeclaration" === nodeType ||
+    "TSConstructSignatureDeclaration" === nodeType ||
+    "TSPropertySignature" === nodeType ||
+    "TSMethodSignature" === nodeType ||
+    "TSIndexSignature" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4640,7 +5103,43 @@ function isTSType(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("TSAnyKeyword" === nodeType || "TSBooleanKeyword" === nodeType || "TSBigIntKeyword" === nodeType || "TSIntrinsicKeyword" === nodeType || "TSNeverKeyword" === nodeType || "TSNullKeyword" === nodeType || "TSNumberKeyword" === nodeType || "TSObjectKeyword" === nodeType || "TSStringKeyword" === nodeType || "TSSymbolKeyword" === nodeType || "TSUndefinedKeyword" === nodeType || "TSUnknownKeyword" === nodeType || "TSVoidKeyword" === nodeType || "TSThisType" === nodeType || "TSFunctionType" === nodeType || "TSConstructorType" === nodeType || "TSTypeReference" === nodeType || "TSTypePredicate" === nodeType || "TSTypeQuery" === nodeType || "TSTypeLiteral" === nodeType || "TSArrayType" === nodeType || "TSTupleType" === nodeType || "TSOptionalType" === nodeType || "TSRestType" === nodeType || "TSUnionType" === nodeType || "TSIntersectionType" === nodeType || "TSConditionalType" === nodeType || "TSInferType" === nodeType || "TSParenthesizedType" === nodeType || "TSTypeOperator" === nodeType || "TSIndexedAccessType" === nodeType || "TSMappedType" === nodeType || "TSLiteralType" === nodeType || "TSExpressionWithTypeArguments" === nodeType || "TSImportType" === nodeType) {
+  if (
+    "TSAnyKeyword" === nodeType ||
+    "TSBooleanKeyword" === nodeType ||
+    "TSBigIntKeyword" === nodeType ||
+    "TSIntrinsicKeyword" === nodeType ||
+    "TSNeverKeyword" === nodeType ||
+    "TSNullKeyword" === nodeType ||
+    "TSNumberKeyword" === nodeType ||
+    "TSObjectKeyword" === nodeType ||
+    "TSStringKeyword" === nodeType ||
+    "TSSymbolKeyword" === nodeType ||
+    "TSUndefinedKeyword" === nodeType ||
+    "TSUnknownKeyword" === nodeType ||
+    "TSVoidKeyword" === nodeType ||
+    "TSThisType" === nodeType ||
+    "TSFunctionType" === nodeType ||
+    "TSConstructorType" === nodeType ||
+    "TSTypeReference" === nodeType ||
+    "TSTypePredicate" === nodeType ||
+    "TSTypeQuery" === nodeType ||
+    "TSTypeLiteral" === nodeType ||
+    "TSArrayType" === nodeType ||
+    "TSTupleType" === nodeType ||
+    "TSOptionalType" === nodeType ||
+    "TSRestType" === nodeType ||
+    "TSUnionType" === nodeType ||
+    "TSIntersectionType" === nodeType ||
+    "TSConditionalType" === nodeType ||
+    "TSInferType" === nodeType ||
+    "TSParenthesizedType" === nodeType ||
+    "TSTypeOperator" === nodeType ||
+    "TSIndexedAccessType" === nodeType ||
+    "TSMappedType" === nodeType ||
+    "TSLiteralType" === nodeType ||
+    "TSExpressionWithTypeArguments" === nodeType ||
+    "TSImportType" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4655,7 +5154,23 @@ function isTSBaseType(node, opts) {
   if (!node) return false;
   const nodeType = node.type;
 
-  if ("TSAnyKeyword" === nodeType || "TSBooleanKeyword" === nodeType || "TSBigIntKeyword" === nodeType || "TSIntrinsicKeyword" === nodeType || "TSNeverKeyword" === nodeType || "TSNullKeyword" === nodeType || "TSNumberKeyword" === nodeType || "TSObjectKeyword" === nodeType || "TSStringKeyword" === nodeType || "TSSymbolKeyword" === nodeType || "TSUndefinedKeyword" === nodeType || "TSUnknownKeyword" === nodeType || "TSVoidKeyword" === nodeType || "TSThisType" === nodeType || "TSLiteralType" === nodeType) {
+  if (
+    "TSAnyKeyword" === nodeType ||
+    "TSBooleanKeyword" === nodeType ||
+    "TSBigIntKeyword" === nodeType ||
+    "TSIntrinsicKeyword" === nodeType ||
+    "TSNeverKeyword" === nodeType ||
+    "TSNullKeyword" === nodeType ||
+    "TSNumberKeyword" === nodeType ||
+    "TSObjectKeyword" === nodeType ||
+    "TSStringKeyword" === nodeType ||
+    "TSSymbolKeyword" === nodeType ||
+    "TSUndefinedKeyword" === nodeType ||
+    "TSUnknownKeyword" === nodeType ||
+    "TSVoidKeyword" === nodeType ||
+    "TSThisType" === nodeType ||
+    "TSLiteralType" === nodeType
+  ) {
     if (typeof opts === "undefined") {
       return true;
     } else {
@@ -4667,7 +5182,9 @@ function isTSBaseType(node, opts) {
 }
 
 function isNumberLiteral(node, opts) {
-  console.trace("The node type NumberLiteral has been renamed to NumericLiteral");
+  console.trace(
+    "The node type NumberLiteral has been renamed to NumericLiteral"
+  );
   if (!node) return false;
   const nodeType = node.type;
 
@@ -4715,7 +5232,9 @@ function isRestProperty(node, opts) {
 }
 
 function isSpreadProperty(node, opts) {
-  console.trace("The node type SpreadProperty has been renamed to SpreadElement");
+  console.trace(
+    "The node type SpreadProperty has been renamed to SpreadElement"
+  );
   if (!node) return false;
   const nodeType = node.type;
 

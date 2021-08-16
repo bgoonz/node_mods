@@ -5,7 +5,7 @@
 
 A Babel preset that enables async/await, Tagged Templates, arrow functions, destructured and rest parameters, and more **in all modern browsers** ([88% of traffic](https://caniuse.com/#feat=es6-module)).
 
-It works around bugs and inconsistencies in modern JavaScript engines by converting broken syntax to the _closest non-broken modern syntax_.  Use this in place of `@babel/preset-env`'s [target.esmodules](https://babeljs.io/docs/en/babel-preset-env#targetsesmodules) option for smaller bundle size and improved performance.
+It works around bugs and inconsistencies in modern JavaScript engines by converting broken syntax to the _closest non-broken modern syntax_. Use this in place of `@babel/preset-env`'s [target.esmodules](https://babeljs.io/docs/en/babel-preset-env#targetsesmodules) option for smaller bundle size and improved performance.
 
 This preset is only useful for browsers. You can serve the output to modern browsers while still supporting older browsers using the [module/nomodule pattern](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/):
 
@@ -95,13 +95,13 @@ This plugin takes a different approach than we've historically taken with JavaSc
 **input:**
 
 ```js
-const foo = ({ a = 1 }, b = 2, ...args) => [a,b,args];
+const foo = ({ a = 1 }, b = 2, ...args) => [a, b, args];
 ```
 
 **output:**
 
 ```js
-const foo = ({ a: a = 1 }, b = 2, ...args) => [a,b,args];
+const foo = ({ a: a = 1 }, b = 2, ...args) => [a, b, args];
 ```
 
 That output works in all ES Modules-supporting browsers, and is only **59 bytes** minified & gzipped.
@@ -109,25 +109,28 @@ That output works in all ES Modules-supporting browsers, and is only **59 bytes*
 > Compare this to `@babel/preset-env`'s `targets.esmodules` output (**147 bytes** minified & gzipped):
 >
 > ```js
->const foo = function foo(_ref, b) {
->  let { a = 1 } = _ref;
+> const foo = function foo(_ref, b) {
+>   let { a = 1 } = _ref;
 >
->  if (b === void 0) { b = 2; }
+>   if (b === void 0) {
+>     b = 2;
+>   }
 >
->  for (
->    var _len = arguments.length,
->      args = new Array(_len > 2 ? _len - 2 : 0),
->      _key = 2;  _key < _len; _key++
->  ) {
->    args[_key - 2] = arguments[_key];
->  }
+>   for (
+>     var _len = arguments.length,
+>       args = new Array(_len > 2 ? _len - 2 : 0),
+>       _key = 2;
+>     _key < _len;
+>     _key++
+>   ) {
+>     args[_key - 2] = arguments[_key];
+>   }
 >
->  return [a, b, args];
->};
->````
+>   return [a, b, args];
+> };
+> ```
 
 The result is improved bundle size and performance, while supporting the same browsers.
-
 
 ### Important: Minification
 
@@ -140,8 +143,8 @@ With [Terser's Node API](https://github.com/terser/terser#minify-options):
 ```js
 terser.minify({
   ecma: 8,
-  safari10: true
-})
+  safari10: true,
+});
 ```
 
 With [Terser CLI](https://npm.im/terser):
@@ -159,11 +162,11 @@ module.exports = {
       new TerserPlugin({
         terserOptions: {
           ecma: 8,
-          safari10: true
-        }
-      })
-    ]
-  }
+          safari10: true,
+        },
+      }),
+    ],
+  },
 };
 ```
 

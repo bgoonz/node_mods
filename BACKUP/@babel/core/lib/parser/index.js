@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = parser;
 
@@ -27,19 +27,17 @@ function _codeFrame() {
 
 var _missingPluginHelper = require("./util/missing-plugin-helper");
 
-function* parser(pluginPasses, {
-  parserOpts,
-  highlightCode = true,
-  filename = "unknown"
-}, code) {
+function* parser(
+  pluginPasses,
+  { parserOpts, highlightCode = true, filename = "unknown" },
+  code
+) {
   try {
     const results = [];
 
     for (const plugins of pluginPasses) {
       for (const plugin of plugins) {
-        const {
-          parserOverride
-        } = plugin;
+        const { parserOverride } = plugin;
 
         if (parserOverride) {
           const ast = parserOverride(code, parserOpts, _parser().parse);
@@ -54,7 +52,12 @@ function* parser(pluginPasses, {
       yield* [];
 
       if (typeof results[0].then === "function") {
-        throw new Error(`You appear to be using an async parser plugin, ` + `which your current version of Babel does not support. ` + `If you're using a published plugin, you may need to upgrade ` + `your @babel/core version.`);
+        throw new Error(
+          `You appear to be using an async parser plugin, ` +
+            `which your current version of Babel does not support. ` +
+            `If you're using a published plugin, you may need to upgrade ` +
+            `your @babel/core version.`
+        );
       }
 
       return results[0];
@@ -63,26 +66,31 @@ function* parser(pluginPasses, {
     throw new Error("More than one plugin attempted to override parsing.");
   } catch (err) {
     if (err.code === "BABEL_PARSER_SOURCETYPE_MODULE_REQUIRED") {
-      err.message += "\nConsider renaming the file to '.mjs', or setting sourceType:module " + "or sourceType:unambiguous in your Babel config for this file.";
+      err.message +=
+        "\nConsider renaming the file to '.mjs', or setting sourceType:module " +
+        "or sourceType:unambiguous in your Babel config for this file.";
     }
 
-    const {
-      loc,
-      missingPlugin
-    } = err;
+    const { loc, missingPlugin } = err;
 
     if (loc) {
-      const codeFrame = (0, _codeFrame().codeFrameColumns)(code, {
-        start: {
-          line: loc.line,
-          column: loc.column + 1
+      const codeFrame = (0, _codeFrame().codeFrameColumns)(
+        code,
+        {
+          start: {
+            line: loc.line,
+            column: loc.column + 1,
+          },
+        },
+        {
+          highlightCode,
         }
-      }, {
-        highlightCode
-      });
+      );
 
       if (missingPlugin) {
-        err.message = `${filename}: ` + (0, _missingPluginHelper.default)(missingPlugin[0], loc, codeFrame);
+        err.message =
+          `${filename}: ` +
+          (0, _missingPluginHelper.default)(missingPlugin[0], loc, codeFrame);
       } else {
         err.message = `${filename}: ${err.message}\n\n` + codeFrame;
       }

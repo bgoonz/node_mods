@@ -5,7 +5,9 @@ exports.default = void 0;
 
 var _esutils = _interopRequireDefault(require("esutils"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 /**
  * Converts JSX Spread arguments into Object Spread, avoiding Babel's helper or Object.assign injection.
@@ -16,9 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * ...which Babel converts to:
  *   h("div", { a: "1", ...b })
  */
-var _default = ({
-  types: t
-}) => {
+var _default = ({ types: t }) => {
   // converts a set of JSXAttributes to an Object.assign() call
   function convertAttributesAssign(attributes) {
     const args = [];
@@ -47,9 +47,11 @@ var _default = ({
       }
     }
 
-    return t.callExpression(t.memberExpression(t.identifier("Object"), t.identifier("assign")), args);
+    return t.callExpression(
+      t.memberExpression(t.identifier("Object"), t.identifier("assign")),
+      args
+    );
   } // Converts a JSXAttribute to the equivalent ObjectExpression property
-
 
   function convertAttributeSpread(node) {
     if (t.isJSXSpreadAttribute(node)) {
@@ -61,10 +63,11 @@ var _default = ({
     return t.inherits(t.objectProperty(name, value), node);
   } // Convert a JSX attribute name to an Object expression property name
 
-
   function getAttributeName(node) {
     if (t.isJSXNamespacedName(node.name)) {
-      return t.stringLiteral(node.name.namespace.name + ":" + node.name.name.name);
+      return t.stringLiteral(
+        node.name.namespace.name + ":" + node.name.name.name
+      );
     }
 
     if (_esutils.default.keyword.isIdentifierNameES6(node.name.name)) {
@@ -73,7 +76,6 @@ var _default = ({
 
     return t.stringLiteral(node.name.name);
   } // Convert a JSX attribute value to a JavaScript expression value
-
 
   function getAttributeValue(node) {
     let value = node.value || t.booleanLiteral(true);
@@ -96,18 +98,27 @@ var _default = ({
     visitor: {
       JSXOpeningElement(path, state) {
         const useSpread = state.opts.useSpread === true;
-        const hasSpread = path.node.attributes.some(attr => t.isJSXSpreadAttribute(attr)); // ignore JSX Elements without spread or with lone spread:
+        const hasSpread = path.node.attributes.some((attr) =>
+          t.isJSXSpreadAttribute(attr)
+        ); // ignore JSX Elements without spread or with lone spread:
 
         if (!hasSpread || path.node.attributes.length === 1) return;
 
         if (useSpread) {
-          path.node.attributes = [t.jsxSpreadAttribute(t.objectExpression(path.node.attributes.map(convertAttributeSpread)))];
+          path.node.attributes = [
+            t.jsxSpreadAttribute(
+              t.objectExpression(
+                path.node.attributes.map(convertAttributeSpread)
+              )
+            ),
+          ];
         } else {
-          path.node.attributes = [t.jsxSpreadAttribute(convertAttributesAssign(path.node.attributes))];
+          path.node.attributes = [
+            t.jsxSpreadAttribute(convertAttributesAssign(path.node.attributes)),
+          ];
         }
-      }
-
-    }
+      },
+    },
   };
 };
 

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = addCreateSuperHelper;
 
@@ -23,7 +23,7 @@ function addCreateSuperHelper(file) {
   const fn = helper({
     CREATE_SUPER: id,
     GET_PROTOTYPE_OF: file.addHelper("getPrototypeOf"),
-    POSSIBLE_CONSTRUCTOR_RETURN: file.addHelper("possibleConstructorReturn")
+    POSSIBLE_CONSTRUCTOR_RETURN: file.addHelper("possibleConstructorReturn"),
   });
   file.path.unshiftContainer("body", [fn]);
   file.scope.registerDeclaration(file.path.get("body.0"));

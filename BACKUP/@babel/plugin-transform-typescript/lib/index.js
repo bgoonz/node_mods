@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -40,10 +40,18 @@ const NEEDS_EXPLICIT_ESM = new WeakMap();
 const PARSED_PARAMS = new WeakSet();
 
 function isGlobalType(path, name) {
-  const program = path.find(path => path.isProgram()).node;
+  const program = path.find((path) => path.isProgram()).node;
   if (path.scope.hasOwnBinding(name)) return false;
   if (GLOBAL_TYPES.get(program).has(name)) return true;
-  console.warn(`The exported identifier "${name}" is not declared in Babel's scope tracker\n` + `as a JavaScript value binding, and "@babel/plugin-transform-typescript"\n` + `never encountered it as a TypeScript type declaration.\n` + `It will be treated as a JavaScript value.\n\n` + `This problem is likely caused by another plugin injecting\n` + `"${name}" without registering it in the scope tracker. If you are the author\n` + ` of that plugin, please use "scope.registerDeclaration(declarationPath)".`);
+  console.warn(
+    `The exported identifier "${name}" is not declared in Babel's scope tracker\n` +
+      `as a JavaScript value binding, and "@babel/plugin-transform-typescript"\n` +
+      `never encountered it as a TypeScript type declaration.\n` +
+      `It will be treated as a JavaScript value.\n\n` +
+      `This problem is likely caused by another plugin injecting\n` +
+      `"${name}" without registering it in the scope tracker. If you are the author\n` +
+      ` of that plugin, please use "scope.registerDeclaration(declarationPath)".`
+  );
   return false;
 }
 
@@ -59,27 +67,28 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
     jsxPragma = "React.createElement",
     jsxPragmaFrag = "React.Fragment",
     onlyRemoveTypeImports = false,
-    optimizeConstEnums = false
+    optimizeConstEnums = false,
   } = opts;
   {
-    var {
-      allowDeclareFields = false
-    } = opts;
+    var { allowDeclareFields = false } = opts;
   }
   const classMemberVisitors = {
     field(path) {
-      const {
-        node
-      } = path;
+      const { node } = path;
       {
         if (!allowDeclareFields && node.declare) {
-          throw path.buildCodeFrameError(`The 'declare' modifier is only allowed when the 'allowDeclareFields' option of ` + `@babel/plugin-transform-typescript or @babel/preset-typescript is enabled.`);
+          throw path.buildCodeFrameError(
+            `The 'declare' modifier is only allowed when the 'allowDeclareFields' option of ` +
+              `@babel/plugin-transform-typescript or @babel/preset-typescript is enabled.`
+          );
         }
       }
 
       if (node.declare) {
         if (node.value) {
-          throw path.buildCodeFrameError(`Fields with the 'declare' modifier cannot be initialized here, but only in the constructor`);
+          throw path.buildCodeFrameError(
+            `Fields with the 'declare' modifier cannot be initialized here, but only in the constructor`
+          );
         }
 
         if (!node.decorators) {
@@ -87,7 +96,9 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
         }
       } else if (node.definite) {
         if (node.value) {
-          throw path.buildCodeFrameError(`Definitely assigned fields cannot be initialized here, but only in the constructor`);
+          throw path.buildCodeFrameError(
+            `Definitely assigned fields cannot be initialized here, but only in the constructor`
+          );
         }
 
         {
@@ -96,7 +107,12 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
           }
         }
       } else {
-        if (!allowDeclareFields && !node.value && !node.decorators && !_core.types.isClassPrivateProperty(node)) {
+        if (
+          !allowDeclareFields &&
+          !node.value &&
+          !node.decorators &&
+          !_core.types.isClassPrivateProperty(node)
+        ) {
           path.remove();
         }
       }
@@ -111,9 +127,7 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
       if (node.override) node.override = null;
     },
 
-    method({
-      node
-    }) {
+    method({ node }) {
       if (node.accessibility) node.accessibility = null;
       if (node.abstract) node.abstract = null;
       if (node.optional) node.optional = null;
@@ -125,31 +139,42 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
       const parameterProperties = [];
 
       for (const param of path.node.params) {
-        if (param.type === "TSParameterProperty" && !PARSED_PARAMS.has(param.parameter)) {
+        if (
+          param.type === "TSParameterProperty" &&
+          !PARSED_PARAMS.has(param.parameter)
+        ) {
           PARSED_PARAMS.add(param.parameter);
           parameterProperties.push(param.parameter);
         }
       }
 
       if (parameterProperties.length) {
-        const assigns = parameterProperties.map(p => {
+        const assigns = parameterProperties.map((p) => {
           let id;
 
           if (_core.types.isIdentifier(p)) {
             id = p;
-          } else if (_core.types.isAssignmentPattern(p) && _core.types.isIdentifier(p.left)) {
+          } else if (
+            _core.types.isAssignmentPattern(p) &&
+            _core.types.isIdentifier(p.left)
+          ) {
             id = p.left;
           } else {
-            throw path.buildCodeFrameError("Parameter properties can not be destructuring patterns.");
+            throw path.buildCodeFrameError(
+              "Parameter properties can not be destructuring patterns."
+            );
           }
 
           return _core.template.statement.ast`
               this.${_core.types.cloneNode(id)} = ${_core.types.cloneNode(id)}`;
         });
-        (0, _helperCreateClassFeaturesPlugin.injectInitialization)(classPath, path, assigns);
+        (0, _helperCreateClassFeaturesPlugin.injectInitialization)(
+          classPath,
+          path,
+          assigns
+        );
       }
-    }
-
+    },
   };
   return {
     name: "transform-typescript",
@@ -160,9 +185,7 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
       RestElement: visitPattern,
       Program: {
         enter(path, state) {
-          const {
-            file
-          } = state;
+          const { file } = state;
           let fileJsxPragma = null;
           let fileJsxPragmaFrag = null;
 
@@ -221,12 +244,15 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
                 for (const specifier of stmt.node.specifiers) {
                   const binding = stmt.scope.getBinding(specifier.local.name);
 
-                  if (binding && isImportTypeOnly({
-                    binding,
-                    programPath: path,
-                    pragmaImportName,
-                    pragmaFragImportName
-                  })) {
+                  if (
+                    binding &&
+                    isImportTypeOnly({
+                      binding,
+                      programPath: path,
+                      pragmaImportName,
+                      pragmaFragImportName,
+                    })
+                  ) {
                     importsToRemove.push(binding.path);
                   } else {
                     allElided = false;
@@ -250,30 +276,42 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
               stmt = stmt.get("declaration");
             }
 
-            if (stmt.isVariableDeclaration({
-              declare: true
-            })) {
+            if (
+              stmt.isVariableDeclaration({
+                declare: true,
+              })
+            ) {
               for (const name of Object.keys(stmt.getBindingIdentifiers())) {
                 registerGlobalType(path.scope, name);
               }
-            } else if (stmt.isTSTypeAliasDeclaration() || stmt.isTSDeclareFunction() && stmt.get("id").isIdentifier() || stmt.isTSInterfaceDeclaration() || stmt.isClassDeclaration({
-              declare: true
-            }) || stmt.isTSEnumDeclaration({
-              declare: true
-            }) || stmt.isTSModuleDeclaration({
-              declare: true
-            }) && stmt.get("id").isIdentifier()) {
+            } else if (
+              stmt.isTSTypeAliasDeclaration() ||
+              (stmt.isTSDeclareFunction() && stmt.get("id").isIdentifier()) ||
+              stmt.isTSInterfaceDeclaration() ||
+              stmt.isClassDeclaration({
+                declare: true,
+              }) ||
+              stmt.isTSEnumDeclaration({
+                declare: true,
+              }) ||
+              (stmt.isTSModuleDeclaration({
+                declare: true,
+              }) &&
+                stmt.get("id").isIdentifier())
+            ) {
               registerGlobalType(path.scope, stmt.node.id.name);
             }
           }
         },
 
         exit(path) {
-          if (path.node.sourceType === "module" && NEEDS_EXPLICIT_ESM.get(path.node)) {
+          if (
+            path.node.sourceType === "module" &&
+            NEEDS_EXPLICIT_ESM.get(path.node)
+          ) {
             path.pushContainer("body", _core.types.exportNamedDeclaration());
           }
-        }
-
+        },
       },
 
       ExportNamedDeclaration(path, state) {
@@ -286,9 +324,13 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
           return;
         }
 
-        if (!path.node.source && path.node.specifiers.length > 0 && path.node.specifiers.every(({
-          local
-        }) => isGlobalType(path, local.name))) {
+        if (
+          !path.node.source &&
+          path.node.specifiers.length > 0 &&
+          path.node.specifiers.every(({ local }) =>
+            isGlobalType(path, local.name)
+          )
+        ) {
           path.remove();
           return;
         }
@@ -307,7 +349,10 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
           NEEDS_EXPLICIT_ESM.set(state.file.ast.program, true);
         }
 
-        if (_core.types.isIdentifier(path.node.declaration) && isGlobalType(path, path.node.declaration.name)) {
+        if (
+          _core.types.isIdentifier(path.node.declaration) &&
+          isGlobalType(path, path.node.declaration.name)
+        ) {
           path.remove();
           return;
         }
@@ -329,9 +374,7 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
         }
       },
 
-      VariableDeclarator({
-        node
-      }) {
+      VariableDeclarator({ node }) {
         if (node.definite) node.definite = null;
       },
 
@@ -340,9 +383,7 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
       },
 
       ClassDeclaration(path) {
-        const {
-          node
-        } = path;
+        const { node } = path;
 
         if (node.declare) {
           path.remove();
@@ -351,38 +392,39 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
       },
 
       Class(path) {
-        const {
-          node
-        } = path;
+        const { node } = path;
         if (node.typeParameters) node.typeParameters = null;
         if (node.superTypeParameters) node.superTypeParameters = null;
         if (node.implements) node.implements = null;
         if (node.abstract) node.abstract = null;
-        path.get("body.body").forEach(child => {
+        path.get("body.body").forEach((child) => {
           if (child.isClassMethod() || child.isClassPrivateMethod()) {
             if (child.node.kind === "constructor") {
               classMemberVisitors.constructor(child, path);
             } else {
               classMemberVisitors.method(child);
             }
-          } else if (child.isClassProperty() || child.isClassPrivateProperty()) {
+          } else if (
+            child.isClassProperty() ||
+            child.isClassPrivateProperty()
+          ) {
             classMemberVisitors.field(child);
           }
         });
       },
 
       Function(path) {
-        const {
-          node,
-          scope
-        } = path;
+        const { node, scope } = path;
         if (node.typeParameters) node.typeParameters = null;
         if (node.returnType) node.returnType = null;
         const params = node.params;
 
-        if (params.length > 0 && _core.types.isIdentifier(params[0], {
-          name: "this"
-        })) {
+        if (
+          params.length > 0 &&
+          _core.types.isIdentifier(params[0], {
+            name: "this",
+          })
+        ) {
           params.shift();
         }
 
@@ -417,15 +459,33 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
       },
 
       TSImportEqualsDeclaration(path) {
-        if (_core.types.isTSExternalModuleReference(path.node.moduleReference)) {
-          throw path.buildCodeFrameError(`\`import ${path.node.id.name} = require('${path.node.moduleReference.expression.value}')\` ` + "is not supported by @babel/plugin-transform-typescript\n" + "Please consider using " + `\`import ${path.node.id.name} from '${path.node.moduleReference.expression.value}';\` alongside ` + "Typescript's --allowSyntheticDefaultImports option.");
+        if (
+          _core.types.isTSExternalModuleReference(path.node.moduleReference)
+        ) {
+          throw path.buildCodeFrameError(
+            `\`import ${path.node.id.name} = require('${path.node.moduleReference.expression.value}')\` ` +
+              "is not supported by @babel/plugin-transform-typescript\n" +
+              "Please consider using " +
+              `\`import ${path.node.id.name} from '${path.node.moduleReference.expression.value}';\` alongside ` +
+              "Typescript's --allowSyntheticDefaultImports option."
+          );
         }
 
-        path.replaceWith(_core.types.variableDeclaration("var", [_core.types.variableDeclarator(path.node.id, entityNameToExpr(path.node.moduleReference))]));
+        path.replaceWith(
+          _core.types.variableDeclaration("var", [
+            _core.types.variableDeclarator(
+              path.node.id,
+              entityNameToExpr(path.node.moduleReference)
+            ),
+          ])
+        );
       },
 
       TSExportAssignment(path) {
-        throw path.buildCodeFrameError("`export =` is not supported by @babel/plugin-transform-typescript\n" + "Please consider using `export <value>;`.");
+        throw path.buildCodeFrameError(
+          "`export =` is not supported by @babel/plugin-transform-typescript\n" +
+            "Please consider using `export <value>;`."
+        );
       },
 
       TSTypeAssertion(path) {
@@ -433,9 +493,7 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
       },
 
       TSAsExpression(path) {
-        let {
-          node
-        } = path;
+        let { node } = path;
 
         do {
           node = node.expression;
@@ -466,22 +524,22 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
 
       TaggedTemplateExpression(path) {
         path.node.typeParameters = null;
-      }
-
-    }
+      },
+    },
   };
 
   function entityNameToExpr(node) {
     if (_core.types.isTSQualifiedName(node)) {
-      return _core.types.memberExpression(entityNameToExpr(node.left), node.right);
+      return _core.types.memberExpression(
+        entityNameToExpr(node.left),
+        node.right
+      );
     }
 
     return node;
   }
 
-  function visitPattern({
-    node
-  }) {
+  function visitPattern({ node }) {
     if (node.typeAnnotation) node.typeAnnotation = null;
     if (_core.types.isIdentifier(node) && node.optional) node.optional = null;
   }
@@ -490,7 +548,7 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
     binding,
     programPath,
     pragmaImportName,
-    pragmaFragImportName
+    pragmaFragImportName,
   }) {
     for (const path of binding.referencePaths) {
       if (!isInType(path)) {
@@ -498,7 +556,10 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
       }
     }
 
-    if (binding.identifier.name !== pragmaImportName && binding.identifier.name !== pragmaFragImportName) {
+    if (
+      binding.identifier.name !== pragmaImportName &&
+      binding.identifier.name !== pragmaFragImportName
+    ) {
       return true;
     }
 
@@ -507,8 +568,7 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
       "JSXElement|JSXFragment"(path) {
         sourceFileHasJsx = true;
         path.stop();
-      }
-
+      },
     });
     return !sourceFileHasJsx;
   }

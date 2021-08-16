@@ -5,4 +5,5 @@ function _awaitAsyncGenerator(value) {
 }
 
 module.exports = _awaitAsyncGenerator;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

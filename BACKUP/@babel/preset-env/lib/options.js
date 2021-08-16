@@ -1,9 +1,12 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
-exports.UseBuiltInsOption = exports.ModulesOption = exports.TopLevelOptions = void 0;
+exports.UseBuiltInsOption =
+  exports.ModulesOption =
+  exports.TopLevelOptions =
+    void 0;
 const TopLevelOptions = {
   bugfixes: "bugfixes",
   configPath: "configPath",
@@ -19,7 +22,7 @@ const TopLevelOptions = {
   spec: "spec",
   targets: "targets",
   useBuiltIns: "useBuiltIns",
-  browserslistEnv: "browserslistEnv"
+  browserslistEnv: "browserslistEnv",
 };
 exports.TopLevelOptions = TopLevelOptions;
 const ModulesOption = {
@@ -29,12 +32,12 @@ const ModulesOption = {
   commonjs: "commonjs",
   cjs: "cjs",
   systemjs: "systemjs",
-  umd: "umd"
+  umd: "umd",
 };
 exports.ModulesOption = ModulesOption;
 const UseBuiltInsOption = {
   false: false,
   entry: "entry",
-  usage: "usage"
+  usage: "usage",
 };
 exports.UseBuiltInsOption = UseBuiltInsOption;

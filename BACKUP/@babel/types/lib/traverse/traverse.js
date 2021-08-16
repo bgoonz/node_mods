@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = traverse;
 
@@ -10,14 +10,11 @@ var _definitions = require("../definitions");
 function traverse(node, handlers, state) {
   if (typeof handlers === "function") {
     handlers = {
-      enter: handlers
+      enter: handlers,
     };
   }
 
-  const {
-    enter,
-    exit
-  } = handlers;
+  const { enter, exit } = handlers;
   traverseSimpleImpl(node, enter, exit, state, []);
 }
 
@@ -36,7 +33,7 @@ function traverseSimpleImpl(node, enter, exit, state, ancestors) {
         ancestors.push({
           node,
           key,
-          index: i
+          index: i,
         });
         traverseSimpleImpl(child, enter, exit, state, ancestors);
         ancestors.pop();
@@ -44,7 +41,7 @@ function traverseSimpleImpl(node, enter, exit, state, ancestors) {
     } else if (subNode) {
       ancestors.push({
         node,
-        key
+        key,
       });
       traverseSimpleImpl(subNode, enter, exit, state, ancestors);
       ancestors.pop();

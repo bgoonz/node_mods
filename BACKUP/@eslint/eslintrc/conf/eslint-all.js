@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-    settings: {
-        "eslint:all": true
-    }
+  settings: {
+    "eslint:all": true,
+  },
 };

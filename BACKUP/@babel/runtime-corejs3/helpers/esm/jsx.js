@@ -3,7 +3,11 @@ import _Symbol$for from "@babel/runtime-corejs3/core-js/symbol/for";
 var REACT_ELEMENT_TYPE;
 export default function _createRawReactElement(type, props, key, children) {
   if (!REACT_ELEMENT_TYPE) {
-    REACT_ELEMENT_TYPE = typeof _Symbol === "function" && _Symbol$for && _Symbol$for("react.element") || 0xeac7;
+    REACT_ELEMENT_TYPE =
+      (typeof _Symbol === "function" &&
+        _Symbol$for &&
+        _Symbol$for("react.element")) ||
+      0xeac7;
   }
 
   var defaultProps = type && type.defaultProps;
@@ -11,7 +15,7 @@ export default function _createRawReactElement(type, props, key, children) {
 
   if (!props && childrenLength !== 0) {
     props = {
-      children: void 0
+      children: void 0,
     };
   }
 
@@ -43,6 +47,6 @@ export default function _createRawReactElement(type, props, key, children) {
     key: key === undefined ? null : "" + key,
     ref: null,
     props: props,
-    _owner: null
+    _owner: null,
   };
 }

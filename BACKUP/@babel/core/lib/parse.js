@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.parseAsync = exports.parseSync = exports.parse = void 0;
 
@@ -28,7 +28,8 @@ const parseRunner = _gensync()(function* parse(code, opts) {
     return null;
   }
 
-  return yield* (0, _parser.default)(config.passes, (0, _normalizeOpts.default)(config), code);
+  return yield* (0,
+  _parser.default)(config.passes, (0, _normalizeOpts.default)(config), code);
 });
 
 const parse = function parse(code, opts, callback) {

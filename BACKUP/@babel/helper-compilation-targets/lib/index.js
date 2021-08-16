@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.isBrowsersQueryValid = isBrowsersQueryValid;
 exports.default = getTargets;
@@ -9,37 +9,37 @@ Object.defineProperty(exports, "unreleasedLabels", {
   enumerable: true,
   get: function () {
     return _targets.unreleasedLabels;
-  }
+  },
 });
 Object.defineProperty(exports, "TargetNames", {
   enumerable: true,
   get: function () {
     return _options.TargetNames;
-  }
+  },
 });
 Object.defineProperty(exports, "prettifyTargets", {
   enumerable: true,
   get: function () {
     return _pretty.prettifyTargets;
-  }
+  },
 });
 Object.defineProperty(exports, "getInclusionReasons", {
   enumerable: true,
   get: function () {
     return _debug.getInclusionReasons;
-  }
+  },
 });
 Object.defineProperty(exports, "filterItems", {
   enumerable: true,
   get: function () {
     return _filterItems.default;
-  }
+  },
 });
 Object.defineProperty(exports, "isRequired", {
   enumerable: true,
   get: function () {
     return _filterItems.isRequired;
-  }
+  },
 });
 
 var _browserslist = require("browserslist");
@@ -61,15 +61,22 @@ var _debug = require("./debug");
 var _filterItems = require("./filter-items");
 
 const ESM_SUPPORT = _nativeModules["es6.module"];
-const v = new _helperValidatorOption.OptionValidator("@babel/helper-compilation-targets");
+const v = new _helperValidatorOption.OptionValidator(
+  "@babel/helper-compilation-targets"
+);
 
 function validateTargetNames(targets) {
   const validTargets = Object.keys(_options.TargetNames);
 
   for (const target of Object.keys(targets)) {
     if (!(target in _options.TargetNames)) {
-      throw new Error(v.formatMessage(`'${target}' is not a valid target
-- Did you mean '${(0, _helperValidatorOption.findSuggestion)(target, validTargets)}'?`));
+      throw new Error(
+        v.formatMessage(`'${target}' is not a valid target
+- Did you mean '${(0, _helperValidatorOption.findSuggestion)(
+          target,
+          validTargets
+        )}'?`)
+      );
     }
   }
 
@@ -77,11 +84,17 @@ function validateTargetNames(targets) {
 }
 
 function isBrowsersQueryValid(browsers) {
-  return typeof browsers === "string" || Array.isArray(browsers) && browsers.every(b => typeof b === "string");
+  return (
+    typeof browsers === "string" ||
+    (Array.isArray(browsers) && browsers.every((b) => typeof b === "string"))
+  );
 }
 
 function validateBrowsers(browsers) {
-  v.invariant(browsers === undefined || isBrowsersQueryValid(browsers), `'${String(browsers)}' is not a valid browserslist query`);
+  v.invariant(
+    browsers === undefined || isBrowsersQueryValid(browsers),
+    `'${String(browsers)}' is not a valid browserslist query`
+  );
   return browsers;
 }
 
@@ -96,23 +109,38 @@ function getLowestVersions(browsers) {
 
     try {
       const splitVersion = browserVersion.split("-")[0].toLowerCase();
-      const isSplitUnreleased = (0, _utils.isUnreleasedVersion)(splitVersion, browserName);
+      const isSplitUnreleased = (0, _utils.isUnreleasedVersion)(
+        splitVersion,
+        browserName
+      );
 
       if (!all[normalizedBrowserName]) {
-        all[normalizedBrowserName] = isSplitUnreleased ? splitVersion : (0, _utils.semverify)(splitVersion);
+        all[normalizedBrowserName] = isSplitUnreleased
+          ? splitVersion
+          : (0, _utils.semverify)(splitVersion);
         return all;
       }
 
       const version = all[normalizedBrowserName];
-      const isUnreleased = (0, _utils.isUnreleasedVersion)(version, browserName);
+      const isUnreleased = (0, _utils.isUnreleasedVersion)(
+        version,
+        browserName
+      );
 
       if (isUnreleased && isSplitUnreleased) {
-        all[normalizedBrowserName] = (0, _utils.getLowestUnreleased)(version, splitVersion, browserName);
+        all[normalizedBrowserName] = (0, _utils.getLowestUnreleased)(
+          version,
+          splitVersion,
+          browserName
+        );
       } else if (isUnreleased) {
         all[normalizedBrowserName] = (0, _utils.semverify)(splitVersion);
       } else if (!isUnreleased && !isSplitUnreleased) {
         const parsedBrowserVersion = (0, _utils.semverify)(splitVersion);
-        all[normalizedBrowserName] = (0, _utils.semverMin)(version, parsedBrowserVersion);
+        all[normalizedBrowserName] = (0, _utils.semverMin)(
+          version,
+          parsedBrowserVersion
+        );
       }
     } catch (e) {}
 
@@ -126,10 +154,9 @@ function outputDecimalWarning(decimalTargets) {
   }
 
   console.warn("Warning, the following targets are using a decimal version:\n");
-  decimalTargets.forEach(({
-    target,
-    value
-  }) => console.warn(`  ${target}: ${value}`));
+  decimalTargets.forEach(({ target, value }) =>
+    console.warn(`  ${target}: ${value}`)
+  );
   console.warn(`
 We recommend using a string for minor/patch versions to avoid numbers like 6.10
 getting parsed as 6.1, which can lead to unexpected behavior.
@@ -140,21 +167,29 @@ function semverifyTarget(target, value) {
   try {
     return (0, _utils.semverify)(value);
   } catch (error) {
-    throw new Error(v.formatMessage(`'${value}' is not a valid value for 'targets.${target}'.`));
+    throw new Error(
+      v.formatMessage(
+        `'${value}' is not a valid value for 'targets.${target}'.`
+      )
+    );
   }
 }
 
 const targetParserMap = {
   __default(target, value) {
-    const version = (0, _utils.isUnreleasedVersion)(value, target) ? value.toLowerCase() : semverifyTarget(target, value);
+    const version = (0, _utils.isUnreleasedVersion)(value, target)
+      ? value.toLowerCase()
+      : semverifyTarget(target, value);
     return [target, version];
   },
 
   node(target, value) {
-    const parsed = value === true || value === "current" ? process.versions.node : semverifyTarget(target, value);
+    const parsed =
+      value === true || value === "current"
+        ? process.versions.node
+        : semverifyTarget(target, value);
     return [target, parsed];
-  }
-
+  },
 };
 
 function generateTargets(inputTargets) {
@@ -166,7 +201,7 @@ function generateTargets(inputTargets) {
 
 function resolveTargets(queries) {
   const resolved = _browserslist(queries, {
-    mobileToDesktop: true
+    mobileToDesktop: true,
   });
 
   return getLowestVersions(resolved);
@@ -175,25 +210,21 @@ function resolveTargets(queries) {
 function getTargets(inputTargets = {}, options = {}) {
   var _browsers;
 
-  let {
-    browsers,
-    esmodules
-  } = inputTargets;
-  const {
-    configPath = "."
-  } = options;
+  let { browsers, esmodules } = inputTargets;
+  const { configPath = "." } = options;
   validateBrowsers(browsers);
   const input = generateTargets(inputTargets);
   let targets = validateTargetNames(input);
   const shouldParseBrowsers = !!browsers;
   const hasTargets = shouldParseBrowsers || Object.keys(targets).length > 0;
-  const shouldSearchForConfig = !options.ignoreBrowserslistConfig && !hasTargets;
+  const shouldSearchForConfig =
+    !options.ignoreBrowserslistConfig && !hasTargets;
 
   if (!browsers && shouldSearchForConfig) {
     browsers = _browserslist.loadConfig({
       config: options.configFile,
       path: configPath,
-      env: options.browserslistEnv
+      env: options.browserslistEnv,
     });
 
     if (browsers == null) {
@@ -203,8 +234,14 @@ function getTargets(inputTargets = {}, options = {}) {
     }
   }
 
-  if (esmodules && (esmodules !== "intersect" || !((_browsers = browsers) != null && _browsers.length))) {
-    browsers = Object.keys(ESM_SUPPORT).map(browser => `${browser} >= ${ESM_SUPPORT[browser]}`).join(", ");
+  if (
+    esmodules &&
+    (esmodules !== "intersect" ||
+      !((_browsers = browsers) != null && _browsers.length))
+  ) {
+    browsers = Object.keys(ESM_SUPPORT)
+      .map((browser) => `${browser} >= ${ESM_SUPPORT[browser]}`)
+      .join(", ");
     esmodules = false;
   }
 
@@ -216,7 +253,11 @@ function getTargets(inputTargets = {}, options = {}) {
         const version = queryBrowsers[browser];
 
         if (ESM_SUPPORT[browser]) {
-          queryBrowsers[browser] = (0, _utils.getHighestUnreleased)(version, (0, _utils.semverify)(ESM_SUPPORT[browser]), browser);
+          queryBrowsers[browser] = (0, _utils.getHighestUnreleased)(
+            version,
+            (0, _utils.semverify)(ESM_SUPPORT[browser]),
+            browser
+          );
         } else {
           delete queryBrowsers[browser];
         }
@@ -237,11 +278,14 @@ function getTargets(inputTargets = {}, options = {}) {
     if (typeof value === "number" && value % 1 !== 0) {
       decimalWarnings.push({
         target,
-        value
+        value,
       });
     }
 
-    const parser = (_targetParserMap$targ = targetParserMap[target]) != null ? _targetParserMap$targ : targetParserMap.__default;
+    const parser =
+      (_targetParserMap$targ = targetParserMap[target]) != null
+        ? _targetParserMap$targ
+        : targetParserMap.__default;
     const [parsedTarget, parsedValue] = parser(target, value);
 
     if (parsedValue) {

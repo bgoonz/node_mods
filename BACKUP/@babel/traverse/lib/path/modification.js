@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.insertBefore = insertBefore;
 exports._containerInsert = _containerInsert;
@@ -27,24 +27,34 @@ function insertBefore(nodes_) {
 
   const nodes = this._verifyNodeList(nodes_);
 
-  const {
-    parentPath
-  } = this;
+  const { parentPath } = this;
 
-  if (parentPath.isExpressionStatement() || parentPath.isLabeledStatement() || parentPath.isExportNamedDeclaration() || parentPath.isExportDefaultDeclaration() && this.isDeclaration()) {
+  if (
+    parentPath.isExpressionStatement() ||
+    parentPath.isLabeledStatement() ||
+    parentPath.isExportNamedDeclaration() ||
+    (parentPath.isExportDefaultDeclaration() && this.isDeclaration())
+  ) {
     return parentPath.insertBefore(nodes);
-  } else if (this.isNodeType("Expression") && !this.isJSXElement() || parentPath.isForStatement() && this.key === "init") {
+  } else if (
+    (this.isNodeType("Expression") && !this.isJSXElement()) ||
+    (parentPath.isForStatement() && this.key === "init")
+  ) {
     if (this.node) nodes.push(this.node);
     return this.replaceExpressionWithStatements(nodes);
   } else if (Array.isArray(this.container)) {
     return this._containerInsertBefore(nodes);
   } else if (this.isStatementOrBlock()) {
     const node = this.node;
-    const shouldInsertCurrentNode = node && (!this.isExpressionStatement() || node.expression != null);
+    const shouldInsertCurrentNode =
+      node && (!this.isExpressionStatement() || node.expression != null);
     this.replaceWith(t.blockStatement(shouldInsertCurrentNode ? [node] : []));
     return this.unshiftContainer("body", nodes);
   } else {
-    throw new Error("We don't know what to do with this node type. " + "We were previously a Statement but we can't fit in here?");
+    throw new Error(
+      "We don't know what to do with this node type. " +
+        "We were previously a Statement but we can't fit in here?"
+    );
   }
 }
 
@@ -90,37 +100,53 @@ function insertAfter(nodes_) {
 
   const nodes = this._verifyNodeList(nodes_);
 
-  const {
-    parentPath
-  } = this;
+  const { parentPath } = this;
 
-  if (parentPath.isExpressionStatement() || parentPath.isLabeledStatement() || parentPath.isExportNamedDeclaration() || parentPath.isExportDefaultDeclaration() && this.isDeclaration()) {
-    return parentPath.insertAfter(nodes.map(node => {
-      return t.isExpression(node) ? t.expressionStatement(node) : node;
-    }));
-  } else if (this.isNodeType("Expression") && !this.isJSXElement() && !parentPath.isJSXElement() || parentPath.isForStatement() && this.key === "init") {
+  if (
+    parentPath.isExpressionStatement() ||
+    parentPath.isLabeledStatement() ||
+    parentPath.isExportNamedDeclaration() ||
+    (parentPath.isExportDefaultDeclaration() && this.isDeclaration())
+  ) {
+    return parentPath.insertAfter(
+      nodes.map((node) => {
+        return t.isExpression(node) ? t.expressionStatement(node) : node;
+      })
+    );
+  } else if (
+    (this.isNodeType("Expression") &&
+      !this.isJSXElement() &&
+      !parentPath.isJSXElement()) ||
+    (parentPath.isForStatement() && this.key === "init")
+  ) {
     if (this.node) {
       const node = this.node;
-      let {
-        scope
-      } = this;
+      let { scope } = this;
 
       if (scope.path.isPattern()) {
         t.assertExpression(node);
-        this.replaceWith(t.callExpression(t.arrowFunctionExpression([], node), []));
+        this.replaceWith(
+          t.callExpression(t.arrowFunctionExpression([], node), [])
+        );
         this.get("callee.body").insertAfter(nodes);
         return [this];
       }
 
-      if (parentPath.isMethod({
-        computed: true,
-        key: node
-      })) {
+      if (
+        parentPath.isMethod({
+          computed: true,
+          key: node,
+        })
+      ) {
         scope = scope.parent;
       }
 
       const temp = scope.generateDeclaredUidIdentifier();
-      nodes.unshift(t.expressionStatement(t.assignmentExpression("=", t.cloneNode(temp), node)));
+      nodes.unshift(
+        t.expressionStatement(
+          t.assignmentExpression("=", t.cloneNode(temp), node)
+        )
+      );
       nodes.push(t.expressionStatement(t.cloneNode(temp)));
     }
 
@@ -129,11 +155,15 @@ function insertAfter(nodes_) {
     return this._containerInsertAfter(nodes);
   } else if (this.isStatementOrBlock()) {
     const node = this.node;
-    const shouldInsertCurrentNode = node && (!this.isExpressionStatement() || node.expression != null);
+    const shouldInsertCurrentNode =
+      node && (!this.isExpressionStatement() || node.expression != null);
     this.replaceWith(t.blockStatement(shouldInsertCurrentNode ? [node] : []));
     return this.pushContainer("body", nodes);
   } else {
-    throw new Error("We don't know what to do with this node type. " + "We were previously a Statement but we can't fit in here?");
+    throw new Error(
+      "We don't know what to do with this node type. " +
+        "We were previously a Statement but we can't fit in here?"
+    );
   }
 }
 
@@ -174,7 +204,9 @@ function _verifyNodeList(nodes) {
 
     if (msg) {
       const type = Array.isArray(node) ? "array" : typeof node;
-      throw new Error(`Node list ${msg} with the index of ${i} and type of ${type}`);
+      throw new Error(
+        `Node list ${msg} with the index of ${i} and type of ${type}`
+      );
     }
   }
 
@@ -186,13 +218,15 @@ function unshiftContainer(listKey, nodes) {
 
   nodes = this._verifyNodeList(nodes);
 
-  const path = _index.default.get({
-    parentPath: this,
-    parent: this.node,
-    container: this.node[listKey],
-    listKey,
-    key: 0
-  }).setContext(this.context);
+  const path = _index.default
+    .get({
+      parentPath: this,
+      parent: this.node,
+      container: this.node[listKey],
+      listKey,
+      key: 0,
+    })
+    .setContext(this.context);
 
   return path._containerInsertBefore(nodes);
 }
@@ -204,13 +238,15 @@ function pushContainer(listKey, nodes) {
 
   const container = this.node[listKey];
 
-  const path = _index.default.get({
-    parentPath: this,
-    parent: this.node,
-    container: container,
-    listKey,
-    key: container.length
-  }).setContext(this.context);
+  const path = _index.default
+    .get({
+      parentPath: this,
+      parent: this.node,
+      container: container,
+      listKey,
+      key: container.length,
+    })
+    .setContext(this.context);
 
   return path.replaceWithMultiple(verifiedNodes);
 }

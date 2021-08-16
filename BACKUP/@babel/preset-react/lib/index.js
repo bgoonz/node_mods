@@ -1,35 +1,40 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', { value: true });
+Object.defineProperty(exports, "__esModule", { value: true });
 
-var helperPluginUtils = require('@babel/helper-plugin-utils');
-var transformReactJSX = require('@babel/plugin-transform-react-jsx');
-var transformReactJSXDevelopment = require('@babel/plugin-transform-react-jsx-development');
-var transformReactDisplayName = require('@babel/plugin-transform-react-display-name');
-var transformReactPure = require('@babel/plugin-transform-react-pure-annotations');
-var helperValidatorOption = require('@babel/helper-validator-option');
+var helperPluginUtils = require("@babel/helper-plugin-utils");
+var transformReactJSX = require("@babel/plugin-transform-react-jsx");
+var transformReactJSXDevelopment = require("@babel/plugin-transform-react-jsx-development");
+var transformReactDisplayName = require("@babel/plugin-transform-react-display-name");
+var transformReactPure = require("@babel/plugin-transform-react-pure-annotations");
+var helperValidatorOption = require("@babel/helper-validator-option");
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+function _interopDefaultLegacy(e) {
+  return e && typeof e === "object" && "default" in e ? e : { default: e };
+}
 
-var transformReactJSX__default = /*#__PURE__*/_interopDefaultLegacy(transformReactJSX);
-var transformReactJSXDevelopment__default = /*#__PURE__*/_interopDefaultLegacy(transformReactJSXDevelopment);
-var transformReactDisplayName__default = /*#__PURE__*/_interopDefaultLegacy(transformReactDisplayName);
-var transformReactPure__default = /*#__PURE__*/_interopDefaultLegacy(transformReactPure);
+var transformReactJSX__default =
+  /*#__PURE__*/ _interopDefaultLegacy(transformReactJSX);
+var transformReactJSXDevelopment__default = /*#__PURE__*/ _interopDefaultLegacy(
+  transformReactJSXDevelopment
+);
+var transformReactDisplayName__default = /*#__PURE__*/ _interopDefaultLegacy(
+  transformReactDisplayName
+);
+var transformReactPure__default =
+  /*#__PURE__*/ _interopDefaultLegacy(transformReactPure);
 
 new helperValidatorOption.OptionValidator("@babel/preset-react");
 function normalizeOptions(options = {}) {
   {
-    let {
-      pragma,
-      pragmaFrag
-    } = options;
+    let { pragma, pragmaFrag } = options;
     const {
       pure,
       throwIfNamespace = true,
       runtime = "classic",
       importSource,
       useBuiltIns,
-      useSpread
+      useSpread,
     } = options;
 
     if (runtime === "classic") {
@@ -47,7 +52,7 @@ function normalizeOptions(options = {}) {
       runtime,
       throwIfNamespace,
       useBuiltIns,
-      useSpread
+      useSpread,
     };
   }
 }
@@ -61,19 +66,28 @@ var index = helperPluginUtils.declare((api, opts) => {
     pragmaFrag,
     pure,
     runtime,
-    throwIfNamespace
+    throwIfNamespace,
   } = normalizeOptions(opts);
   return {
-    plugins: [[development ? transformReactJSXDevelopment__default['default'] : transformReactJSX__default['default'], {
-      importSource,
-      pragma,
-      pragmaFrag,
-      runtime,
-      throwIfNamespace,
-      pure,
-      useBuiltIns: !!opts.useBuiltIns,
-      useSpread: opts.useSpread
-    }], transformReactDisplayName__default['default'], pure !== false && transformReactPure__default['default']].filter(Boolean)
+    plugins: [
+      [
+        development
+          ? transformReactJSXDevelopment__default["default"]
+          : transformReactJSX__default["default"],
+        {
+          importSource,
+          pragma,
+          pragmaFrag,
+          runtime,
+          throwIfNamespace,
+          pure,
+          useBuiltIns: !!opts.useBuiltIns,
+          useSpread: opts.useSpread,
+        },
+      ],
+      transformReactDisplayName__default["default"],
+      pure !== false && transformReactPure__default["default"],
+    ].filter(Boolean),
   };
 });
 

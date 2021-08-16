@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.findParent = findParent;
 exports.find = find;
@@ -21,7 +21,7 @@ var _index = require("./index");
 function findParent(callback) {
   let path = this;
 
-  while (path = path.parentPath) {
+  while ((path = path.parentPath)) {
     if (callback(path)) return path;
   }
 
@@ -33,20 +33,23 @@ function find(callback) {
 
   do {
     if (callback(path)) return path;
-  } while (path = path.parentPath);
+  } while ((path = path.parentPath));
 
   return null;
 }
 
 function getFunctionParent() {
-  return this.findParent(p => p.isFunction());
+  return this.findParent((p) => p.isFunction());
 }
 
 function getStatementParent() {
   let path = this;
 
   do {
-    if (!path.parentPath || Array.isArray(path.container) && path.isStatement()) {
+    if (
+      !path.parentPath ||
+      (Array.isArray(path.container) && path.isStatement())
+    ) {
       break;
     } else {
       path = path.parentPath;
@@ -54,42 +57,47 @@ function getStatementParent() {
   } while (path);
 
   if (path && (path.isProgram() || path.isFile())) {
-    throw new Error("File/Program node, we can't possibly find a statement parent to this");
+    throw new Error(
+      "File/Program node, we can't possibly find a statement parent to this"
+    );
   }
 
   return path;
 }
 
 function getEarliestCommonAncestorFrom(paths) {
-  return this.getDeepestCommonAncestorFrom(paths, function (deepest, i, ancestries) {
-    let earliest;
-    const keys = t.VISITOR_KEYS[deepest.type];
+  return this.getDeepestCommonAncestorFrom(
+    paths,
+    function (deepest, i, ancestries) {
+      let earliest;
+      const keys = t.VISITOR_KEYS[deepest.type];
 
-    for (const ancestry of ancestries) {
-      const path = ancestry[i + 1];
+      for (const ancestry of ancestries) {
+        const path = ancestry[i + 1];
 
-      if (!earliest) {
-        earliest = path;
-        continue;
-      }
-
-      if (path.listKey && earliest.listKey === path.listKey) {
-        if (path.key < earliest.key) {
+        if (!earliest) {
           earliest = path;
           continue;
         }
+
+        if (path.listKey && earliest.listKey === path.listKey) {
+          if (path.key < earliest.key) {
+            earliest = path;
+            continue;
+          }
+        }
+
+        const earliestKeyIndex = keys.indexOf(earliest.parentKey);
+        const currentKeyIndex = keys.indexOf(path.parentKey);
+
+        if (earliestKeyIndex > currentKeyIndex) {
+          earliest = path;
+        }
       }
 
-      const earliestKeyIndex = keys.indexOf(earliest.parentKey);
-      const currentKeyIndex = keys.indexOf(path.parentKey);
-
-      if (earliestKeyIndex > currentKeyIndex) {
-        earliest = path;
-      }
+      return earliest;
     }
-
-    return earliest;
-  });
+  );
 }
 
 function getDeepestCommonAncestorFrom(paths, filter) {
@@ -103,7 +111,7 @@ function getDeepestCommonAncestorFrom(paths, filter) {
 
   let minDepth = Infinity;
   let lastCommonIndex, lastCommon;
-  const ancestries = paths.map(path => {
+  const ancestries = paths.map((path) => {
     const ancestry = [];
 
     do {
@@ -148,7 +156,7 @@ function getAncestry() {
 
   do {
     paths.push(path);
-  } while (path = path.parentPath);
+  } while ((path = path.parentPath));
 
   return paths;
 }
@@ -158,7 +166,7 @@ function isAncestor(maybeDescendant) {
 }
 
 function isDescendant(maybeAncestor) {
-  return !!this.findParent(parent => parent === maybeAncestor);
+  return !!this.findParent((parent) => parent === maybeAncestor);
 }
 
 function inType(...candidateTypes) {

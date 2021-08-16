@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -22,17 +22,13 @@ function removePlugin(plugins, name) {
   }
 }
 
-var _default = (0, _helperPluginUtils.declare)((api, {
-  isTSX
-}) => {
+var _default = (0, _helperPluginUtils.declare)((api, { isTSX }) => {
   api.assertVersion(7);
   return {
     name: "syntax-typescript",
 
     manipulateOptions(opts, parserOpts) {
-      const {
-        plugins
-      } = parserOpts;
+      const { plugins } = parserOpts;
       removePlugin(plugins, "flow");
       removePlugin(plugins, "jsx");
       parserOpts.plugins.push("typescript", "classProperties");
@@ -43,8 +39,7 @@ var _default = (0, _helperPluginUtils.declare)((api, {
       if (isTSX) {
         parserOpts.plugins.push("jsx");
       }
-    }
-
+    },
   };
 });
 

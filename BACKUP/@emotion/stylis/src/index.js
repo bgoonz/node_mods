@@ -1,2 +1,2 @@
 // @flow
-export { default } from './stylis.min'
+export { default } from "./stylis.min";

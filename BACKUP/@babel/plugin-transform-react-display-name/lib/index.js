@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -11,7 +11,7 @@ var _path = require("path");
 
 var _core = require("@babel/core");
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
 
   function addDisplayName(id, call) {
@@ -23,27 +23,38 @@ var _default = (0, _helperPluginUtils.declare)(api => {
 
       const key = _core.types.toComputedKey(prop);
 
-      if (_core.types.isLiteral(key, {
-        value: "displayName"
-      })) {
+      if (
+        _core.types.isLiteral(key, {
+          value: "displayName",
+        })
+      ) {
         safe = false;
         break;
       }
     }
 
     if (safe) {
-      props.unshift(_core.types.objectProperty(_core.types.identifier("displayName"), _core.types.stringLiteral(id)));
+      props.unshift(
+        _core.types.objectProperty(
+          _core.types.identifier("displayName"),
+          _core.types.stringLiteral(id)
+        )
+      );
     }
   }
 
-  const isCreateClassCallExpression = _core.types.buildMatchMemberExpression("React.createClass");
+  const isCreateClassCallExpression =
+    _core.types.buildMatchMemberExpression("React.createClass");
 
-  const isCreateClassAddon = callee => callee.name === "createReactClass";
+  const isCreateClassAddon = (callee) => callee.name === "createReactClass";
 
   function isCreateClass(node) {
     if (!node || !_core.types.isCallExpression(node)) return false;
 
-    if (!isCreateClassCallExpression(node.callee) && !isCreateClassAddon(node.callee)) {
+    if (
+      !isCreateClassCallExpression(node.callee) &&
+      !isCreateClassAddon(node.callee)
+    ) {
       return false;
     }
 
@@ -57,9 +68,7 @@ var _default = (0, _helperPluginUtils.declare)(api => {
   return {
     name: "transform-react-display-name",
     visitor: {
-      ExportDefaultDeclaration({
-        node
-      }, state) {
+      ExportDefaultDeclaration({ node }, state) {
         if (isCreateClass(node.declaration)) {
           const filename = state.filename || "unknown";
 
@@ -74,9 +83,7 @@ var _default = (0, _helperPluginUtils.declare)(api => {
       },
 
       CallExpression(path) {
-        const {
-          node
-        } = path;
+        const { node } = path;
         if (!isCreateClass(node)) return;
         let id;
         path.find(function (path) {
@@ -101,9 +108,8 @@ var _default = (0, _helperPluginUtils.declare)(api => {
         if (_core.types.isIdentifier(id)) {
           addDisplayName(id.name, node);
         }
-      }
-
-    }
+      },
+    },
   };
 });
 

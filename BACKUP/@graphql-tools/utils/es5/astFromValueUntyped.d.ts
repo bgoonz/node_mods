@@ -1,4 +1,4 @@
-import { ValueNode } from 'graphql';
+import { ValueNode } from "graphql";
 /**
  * Produces a GraphQL Value AST given a JavaScript object.
  * Function will match JavaScript/JSON values to GraphQL AST schema format

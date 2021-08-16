@@ -14,4 +14,5 @@ function _defaults(obj, defaults) {
 }
 
 module.exports = _defaults;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

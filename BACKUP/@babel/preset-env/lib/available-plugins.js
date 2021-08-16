@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.minVersions = exports.default = void 0;
 
@@ -143,77 +143,98 @@ var _pluginBugfixV8SpreadParametersInOptionalChaining = require("@babel/plugin-b
 
 var _default = {
   "bugfix/transform-async-arrows-in-class": () => _transformAsyncArrowsInClass,
-  "bugfix/transform-edge-default-parameters": () => _transformEdgeDefaultParameters,
+  "bugfix/transform-edge-default-parameters": () =>
+    _transformEdgeDefaultParameters,
   "bugfix/transform-edge-function-name": () => _transformEdgeFunctionName,
-  "bugfix/transform-safari-block-shadowing": () => _transformSafariBlockShadowing,
+  "bugfix/transform-safari-block-shadowing": () =>
+    _transformSafariBlockShadowing,
   "bugfix/transform-safari-for-shadowing": () => _transformSafariForShadowing,
-  "bugfix/transform-tagged-template-caching": () => _transformTaggedTemplateCaching,
-  "bugfix/transform-v8-spread-parameters-in-optional-chaining": () => _pluginBugfixV8SpreadParametersInOptionalChaining.default,
-  "proposal-async-generator-functions": () => _pluginProposalAsyncGeneratorFunctions.default,
+  "bugfix/transform-tagged-template-caching": () =>
+    _transformTaggedTemplateCaching,
+  "bugfix/transform-v8-spread-parameters-in-optional-chaining": () =>
+    _pluginBugfixV8SpreadParametersInOptionalChaining.default,
+  "proposal-async-generator-functions": () =>
+    _pluginProposalAsyncGeneratorFunctions.default,
   "proposal-class-properties": () => _pluginProposalClassProperties.default,
   "proposal-class-static-block": () => _pluginProposalClassStaticBlock.default,
   "proposal-dynamic-import": () => _pluginProposalDynamicImport.default,
-  "proposal-export-namespace-from": () => _pluginProposalExportNamespaceFrom.default,
+  "proposal-export-namespace-from": () =>
+    _pluginProposalExportNamespaceFrom.default,
   "proposal-json-strings": () => _pluginProposalJsonStrings.default,
-  "proposal-logical-assignment-operators": () => _pluginProposalLogicalAssignmentOperators.default,
-  "proposal-nullish-coalescing-operator": () => _pluginProposalNullishCoalescingOperator.default,
+  "proposal-logical-assignment-operators": () =>
+    _pluginProposalLogicalAssignmentOperators.default,
+  "proposal-nullish-coalescing-operator": () =>
+    _pluginProposalNullishCoalescingOperator.default,
   "proposal-numeric-separator": () => _pluginProposalNumericSeparator.default,
   "proposal-object-rest-spread": () => _pluginProposalObjectRestSpread.default,
-  "proposal-optional-catch-binding": () => _pluginProposalOptionalCatchBinding.default,
+  "proposal-optional-catch-binding": () =>
+    _pluginProposalOptionalCatchBinding.default,
   "proposal-optional-chaining": () => _pluginProposalOptionalChaining.default,
   "proposal-private-methods": () => _pluginProposalPrivateMethods.default,
-  "proposal-private-property-in-object": () => _pluginProposalPrivatePropertyInObject.default,
-  "proposal-unicode-property-regex": () => _pluginProposalUnicodePropertyRegex.default,
+  "proposal-private-property-in-object": () =>
+    _pluginProposalPrivatePropertyInObject.default,
+  "proposal-unicode-property-regex": () =>
+    _pluginProposalUnicodePropertyRegex.default,
   "syntax-async-generators": () => _pluginSyntaxAsyncGenerators,
   "syntax-class-properties": () => _pluginSyntaxClassProperties,
   "syntax-class-static-block": () => _pluginSyntaxClassStaticBlock.default,
   "syntax-dynamic-import": () => _pluginSyntaxDynamicImport,
   "syntax-export-namespace-from": () => _pluginSyntaxExportNamespaceFrom,
   "syntax-json-strings": () => _pluginSyntaxJsonStrings,
-  "syntax-logical-assignment-operators": () => _pluginSyntaxLogicalAssignmentOperators,
-  "syntax-nullish-coalescing-operator": () => _pluginSyntaxNullishCoalescingOperator,
+  "syntax-logical-assignment-operators": () =>
+    _pluginSyntaxLogicalAssignmentOperators,
+  "syntax-nullish-coalescing-operator": () =>
+    _pluginSyntaxNullishCoalescingOperator,
   "syntax-numeric-separator": () => _pluginSyntaxNumericSeparator,
   "syntax-object-rest-spread": () => _pluginSyntaxObjectRestSpread,
   "syntax-optional-catch-binding": () => _pluginSyntaxOptionalCatchBinding,
   "syntax-optional-chaining": () => _pluginSyntaxOptionalChaining,
-  "syntax-private-property-in-object": () => _pluginSyntaxPrivatePropertyInObject.default,
+  "syntax-private-property-in-object": () =>
+    _pluginSyntaxPrivatePropertyInObject.default,
   "syntax-top-level-await": () => _pluginSyntaxTopLevelAwait.default,
   "transform-arrow-functions": () => _pluginTransformArrowFunctions.default,
-  "transform-async-to-generator": () => _pluginTransformAsyncToGenerator.default,
-  "transform-block-scoped-functions": () => _pluginTransformBlockScopedFunctions.default,
+  "transform-async-to-generator": () =>
+    _pluginTransformAsyncToGenerator.default,
+  "transform-block-scoped-functions": () =>
+    _pluginTransformBlockScopedFunctions.default,
   "transform-block-scoping": () => _pluginTransformBlockScoping.default,
   "transform-classes": () => _pluginTransformClasses.default,
-  "transform-computed-properties": () => _pluginTransformComputedProperties.default,
+  "transform-computed-properties": () =>
+    _pluginTransformComputedProperties.default,
   "transform-destructuring": () => _pluginTransformDestructuring.default,
   "transform-dotall-regex": () => _pluginTransformDotallRegex.default,
   "transform-duplicate-keys": () => _pluginTransformDuplicateKeys.default,
-  "transform-exponentiation-operator": () => _pluginTransformExponentiationOperator.default,
+  "transform-exponentiation-operator": () =>
+    _pluginTransformExponentiationOperator.default,
   "transform-for-of": () => _pluginTransformForOf.default,
   "transform-function-name": () => _pluginTransformFunctionName.default,
   "transform-literals": () => _pluginTransformLiterals.default,
-  "transform-member-expression-literals": () => _pluginTransformMemberExpressionLiterals.default,
+  "transform-member-expression-literals": () =>
+    _pluginTransformMemberExpressionLiterals.default,
   "transform-modules-amd": () => _pluginTransformModulesAmd.default,
   "transform-modules-commonjs": () => _pluginTransformModulesCommonjs.default,
   "transform-modules-systemjs": () => _pluginTransformModulesSystemjs.default,
   "transform-modules-umd": () => _pluginTransformModulesUmd.default,
-  "transform-named-capturing-groups-regex": () => _pluginTransformNamedCapturingGroupsRegex.default,
+  "transform-named-capturing-groups-regex": () =>
+    _pluginTransformNamedCapturingGroupsRegex.default,
   "transform-new-target": () => _pluginTransformNewTarget.default,
   "transform-object-super": () => _pluginTransformObjectSuper.default,
   "transform-parameters": () => _pluginTransformParameters.default,
   "transform-property-literals": () => _pluginTransformPropertyLiterals.default,
   "transform-regenerator": () => _pluginTransformRegenerator.default,
   "transform-reserved-words": () => _pluginTransformReservedWords.default,
-  "transform-shorthand-properties": () => _pluginTransformShorthandProperties.default,
+  "transform-shorthand-properties": () =>
+    _pluginTransformShorthandProperties.default,
   "transform-spread": () => _pluginTransformSpread.default,
   "transform-sticky-regex": () => _pluginTransformStickyRegex.default,
   "transform-template-literals": () => _pluginTransformTemplateLiterals.default,
   "transform-typeof-symbol": () => _pluginTransformTypeofSymbol.default,
   "transform-unicode-escapes": () => _pluginTransformUnicodeEscapes.default,
-  "transform-unicode-regex": () => _pluginTransformUnicodeRegex.default
+  "transform-unicode-regex": () => _pluginTransformUnicodeRegex.default,
 };
 exports.default = _default;
 const minVersions = {
   "proposal-class-static-block": "7.12.0",
-  "proposal-private-property-in-object": "7.10.0"
+  "proposal-private-property-in-object": "7.10.0",
 };
 exports.minVersions = minVersions;

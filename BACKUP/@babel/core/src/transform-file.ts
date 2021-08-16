@@ -19,7 +19,7 @@ type TransformFile = {
   (
     filename: string,
     opts: InputOptions | undefined | null,
-    callback: FileResultCallback,
+    callback: FileResultCallback
   ): void;
 };
 

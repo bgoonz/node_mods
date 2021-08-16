@@ -9,11 +9,12 @@ function _inherits(subClass, superClass) {
     constructor: {
       value: subClass,
       writable: true,
-      configurable: true
-    }
+      configurable: true,
+    },
   });
   if (superClass) setPrototypeOf(subClass, superClass);
 }
 
 module.exports = _inherits;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

@@ -7,9 +7,9 @@ yarn add @emotion/is-prop-valid
 ```
 
 ```jsx
-import isPropValid from '@emotion/is-prop-valid'
+import isPropValid from "@emotion/is-prop-valid";
 
-isPropValid('href') // true
+isPropValid("href"); // true
 
-isPropValid('someRandomProp') // false
+isPropValid("someRandomProp"); // false
 ```

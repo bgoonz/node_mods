@@ -19,10 +19,7 @@
     "inlineSourceMap": false,
     "inlineSources": false,
     "isolatedModules": false,
-    "lib": [
-      "es2017",
-      "esnext.asynciterable"
-    ],
+    "lib": ["es2017", "esnext.asynciterable"],
     "locale": "en-us",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -55,8 +52,6 @@
     "outDir": "../../build/lib",
     "typeRoots": []
   },
-  "include": [
-    "**/*.ts"
-  ],
+  "include": ["**/*.ts"],
   "exclude": []
 }

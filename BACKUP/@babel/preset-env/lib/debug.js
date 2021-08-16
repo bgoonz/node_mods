@@ -1,14 +1,18 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.logPlugin = void 0;
 
 var _helperCompilationTargets = require("@babel/helper-compilation-targets");
 
 const logPlugin = (item, targetVersions, list) => {
-  const filteredList = (0, _helperCompilationTargets.getInclusionReasons)(item, targetVersions, list);
+  const filteredList = (0, _helperCompilationTargets.getInclusionReasons)(
+    item,
+    targetVersions,
+    list
+  );
   const support = list[item];
 
   if (!support) {

@@ -1,16 +1,24 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.createConfigItem = createConfigItem;
 Object.defineProperty(exports, "default", {
   enumerable: true,
   get: function () {
     return _full.default;
-  }
+  },
 });
-exports.createConfigItemAsync = exports.createConfigItemSync = exports.loadOptionsAsync = exports.loadOptionsSync = exports.loadOptions = exports.loadPartialConfigAsync = exports.loadPartialConfigSync = exports.loadPartialConfig = void 0;
+exports.createConfigItemAsync =
+  exports.createConfigItemSync =
+  exports.loadOptionsAsync =
+  exports.loadOptionsSync =
+  exports.loadOptions =
+  exports.loadPartialConfigAsync =
+  exports.loadPartialConfigSync =
+  exports.loadPartialConfig =
+    void 0;
 
 function _gensync() {
   const data = require("gensync");
@@ -32,12 +40,14 @@ const loadOptionsRunner = _gensync()(function* (opts) {
   var _config$options;
 
   const config = yield* (0, _full.default)(opts);
-  return (_config$options = config == null ? void 0 : config.options) != null ? _config$options : null;
+  return (_config$options = config == null ? void 0 : config.options) != null
+    ? _config$options
+    : null;
 });
 
 const createConfigItemRunner = _gensync()(_item.createConfigItem);
 
-const maybeErrback = runner => (opts, callback) => {
+const maybeErrback = (runner) => (opts, callback) => {
   if (callback === undefined && typeof opts === "function") {
     callback = opts;
     opts = undefined;

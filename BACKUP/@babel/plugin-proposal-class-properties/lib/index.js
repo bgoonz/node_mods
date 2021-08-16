@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -19,8 +19,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
     manipulateOptions(opts, parserOpts) {
       parserOpts.plugins.push("classProperties", "classPrivateProperties");
-    }
-
+    },
   });
 });
 

@@ -1,9 +1,15 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
-exports.default = exports.program = exports.expression = exports.statements = exports.statement = exports.smart = void 0;
+exports.default =
+  exports.program =
+  exports.expression =
+  exports.statements =
+  exports.statement =
+  exports.smart =
+    void 0;
 
 var formatters = require("./formatters");
 
@@ -26,7 +32,7 @@ var _default = Object.assign(smart.bind(undefined), {
   statements,
   expression,
   program,
-  ast: smart.ast
+  ast: smart.ast,
 });
 
 exports.default = _default;

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.addDefault = addDefault;
 exports.addNamed = addNamed;
@@ -11,13 +11,13 @@ Object.defineProperty(exports, "ImportInjector", {
   enumerable: true,
   get: function () {
     return _importInjector.default;
-  }
+  },
 });
 Object.defineProperty(exports, "isModule", {
   enumerable: true,
   get: function () {
     return _isModule.default;
-  }
+  },
 });
 
 var _importInjector = require("./import-injector");

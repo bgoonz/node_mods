@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = generate;
 exports.CodeGenerator = void 0;
@@ -22,7 +22,6 @@ class Generator extends _printer.default {
   generate() {
     return super.generate(this.ast);
   }
-
 }
 
 function normalizeOptions(code, opts) {
@@ -39,16 +38,19 @@ function normalizeOptions(code, opts) {
     indent: {
       adjustMultilineComment: true,
       style: "  ",
-      base: 0
+      base: 0,
     },
     decoratorsBeforeExport: !!opts.decoratorsBeforeExport,
-    jsescOption: Object.assign({
-      quotes: "double",
-      wrap: true,
-      minimal: false
-    }, opts.jsescOption),
+    jsescOption: Object.assign(
+      {
+        quotes: "double",
+        wrap: true,
+        minimal: false,
+      },
+      opts.jsescOption
+    ),
     recordAndTupleSyntaxType: opts.recordAndTupleSyntaxType,
-    topicToken: opts.topicToken
+    topicToken: opts.topicToken,
   };
   {
     format.jsonCompatibleStrings = opts.jsonCompatibleStrings;
@@ -57,16 +59,25 @@ function normalizeOptions(code, opts) {
   if (format.minified) {
     format.compact = true;
 
-    format.shouldPrintComment = format.shouldPrintComment || (() => format.comments);
+    format.shouldPrintComment =
+      format.shouldPrintComment || (() => format.comments);
   } else {
-    format.shouldPrintComment = format.shouldPrintComment || (value => format.comments || value.indexOf("@license") >= 0 || value.indexOf("@preserve") >= 0);
+    format.shouldPrintComment =
+      format.shouldPrintComment ||
+      ((value) =>
+        format.comments ||
+        value.indexOf("@license") >= 0 ||
+        value.indexOf("@preserve") >= 0);
   }
 
   if (format.compact === "auto") {
     format.compact = code.length > 500000;
 
     if (format.compact) {
-      console.error("[BABEL] Note: The code generator has deoptimised the styling of " + `${opts.filename} as it exceeds the max of ${"500KB"}.`);
+      console.error(
+        "[BABEL] Note: The code generator has deoptimised the styling of " +
+          `${opts.filename} as it exceeds the max of ${"500KB"}.`
+      );
     }
   }
 
@@ -86,7 +97,6 @@ class CodeGenerator {
   generate() {
     return this._generator.generate();
   }
-
 }
 
 exports.CodeGenerator = CodeGenerator;

@@ -13,14 +13,14 @@ import type { Targets } from "@babel/helper-compilation-targets";
 
 export function resolveBrowserslistConfigFile(
   browserslistConfigFile: string,
-  configFileDir: string,
+  configFileDir: string
 ): string | undefined {
   return path.resolve(configFileDir, browserslistConfigFile);
 }
 
 export function resolveTargets(
   options: ValidatedOptions,
-  root: string,
+  root: string
 ): Targets {
   // todo(flow->ts) remove any and refactor to not assign different types into same variable
   let targets: any = options.targets;

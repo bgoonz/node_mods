@@ -1,7 +1,7 @@
-import memoize from '@emotion/memoize'
+import memoize from "@emotion/memoize";
 
 // $ExpectType string[]
-memoize((arg: string) => [arg])('foo')
+memoize((arg: string) => [arg])("foo");
 
 // $ExpectError
-memoize((arg: number) => [arg])
+memoize((arg: number) => [arg]);

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -11,7 +11,7 @@ var _helperBuilderBinaryAssignmentOperatorVisitor = require("@babel/helper-build
 
 var _core = require("@babel/core");
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
   return {
     name: "transform-exponentiation-operator",
@@ -19,10 +19,15 @@ var _default = (0, _helperPluginUtils.declare)(api => {
       operator: "**",
 
       build(left, right) {
-        return _core.types.callExpression(_core.types.memberExpression(_core.types.identifier("Math"), _core.types.identifier("pow")), [left, right]);
-      }
-
-    })
+        return _core.types.callExpression(
+          _core.types.memberExpression(
+            _core.types.identifier("Math"),
+            _core.types.identifier("pow")
+          ),
+          [left, right]
+        );
+      },
+    }),
   };
 });
 

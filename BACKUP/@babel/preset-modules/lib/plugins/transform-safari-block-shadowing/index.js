@@ -7,9 +7,7 @@ exports.default = _default;
  * Fixes block-shadowed let/const bindings in Safari 10/11.
  * https://kangax.github.io/compat-table/es6/#test-let_scope_shadow_resolution
  */
-function _default({
-  types: t
-}) {
+function _default({ types: t }) {
   return {
     name: "transform-safari-block-shadowing",
     visitor: {
@@ -27,7 +25,7 @@ function _default({
 
           if (!scope.hasOwnBinding(name)) continue; // check if shadowed within the nearest function/program boundary
 
-          while (scope = scope.parent) {
+          while ((scope = scope.parent)) {
             if (scope.hasOwnBinding(name)) {
               path.scope.rename(name);
               break;
@@ -38,9 +36,8 @@ function _default({
             }
           }
         }
-      }
-
-    }
+      },
+    },
   };
 }
 

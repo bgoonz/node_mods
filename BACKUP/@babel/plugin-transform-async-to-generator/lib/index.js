@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -15,10 +15,7 @@ var _core = require("@babel/core");
 
 var _default = (0, _helperPluginUtils.declare)((api, options) => {
   api.assertVersion(7);
-  const {
-    method,
-    module
-  } = options;
+  const { method, module } = options;
   const noNewArrows = api.assumption("noNewArrows");
 
   if (method && module) {
@@ -32,15 +29,19 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
           if (wrapAsync) {
             wrapAsync = _core.types.cloneNode(wrapAsync);
           } else {
-            wrapAsync = state.methodWrapper = (0, _helperModuleImports.addNamed)(path, method, module);
+            wrapAsync = state.methodWrapper = (0,
+            _helperModuleImports.addNamed)(path, method, module);
           }
 
-          (0, _helperRemapAsyncToGenerator.default)(path, {
-            wrapAsync
-          }, noNewArrows);
-        }
-
-      }
+          (0, _helperRemapAsyncToGenerator.default)(
+            path,
+            {
+              wrapAsync,
+            },
+            noNewArrows
+          );
+        },
+      },
     };
   }
 
@@ -49,12 +50,15 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
     visitor: {
       Function(path, state) {
         if (!path.node.async || path.node.generator) return;
-        (0, _helperRemapAsyncToGenerator.default)(path, {
-          wrapAsync: state.addHelper("asyncToGenerator")
-        }, noNewArrows);
-      }
-
-    }
+        (0, _helperRemapAsyncToGenerator.default)(
+          path,
+          {
+            wrapAsync: state.addHelper("asyncToGenerator"),
+          },
+          noNewArrows
+        );
+      },
+    },
   };
 });
 

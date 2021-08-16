@@ -1,4 +1,5 @@
-# ____template_placeholder____
+# \_**\_template_placeholder\_\_**
+
 Created with cfa.
 
 ## Prerequisites
@@ -6,30 +7,30 @@ Created with cfa.
 This app is run using Docker, Make, Flutter, .NET Core 3.1 and Node.js.
 
 - **Docker**: <br/>
-https://www.docker.com/products/docker-desktop
+  https://www.docker.com/products/docker-desktop
 
 - **Make**:
-<br/>macOS: `brew install make`
-<br/>Ubuntu: `sudo apt-get install build-essential`
-<br/>Windows: https://www.cygwin.com (select make package during installation)
+  <br/>macOS: `brew install make`
+  <br/>Ubuntu: `sudo apt-get install build-essential`
+  <br/>Windows: https://www.cygwin.com (select make package during installation)
 
 - **Flutter**:
-<br/>https://flutter.dev/docs/get-started/install
+  <br/>https://flutter.dev/docs/get-started/install
 
 - **.NET Core 3.1**:
-<br/>https://dotnet.microsoft.com/download/dotnet-core/3.1
+  <br/>https://dotnet.microsoft.com/download/dotnet-core/3.1
 
 - **Node.js**:
-<br/>https://nodejs.org/en/
+  <br/>https://nodejs.org/en/
 
 Recomanded IDEs: Visual Studio and/or Visual Studio Code
 
 - **Visual Studio**:
-<br/>macOS: https://visualstudio.microsoft.com/vs/mac
-<br/>Windows: https://visualstudio.microsoft.com/vs/community
+  <br/>macOS: https://visualstudio.microsoft.com/vs/mac
+  <br/>Windows: https://visualstudio.microsoft.com/vs/community
 
 - **Visual Studio Code**:
-<br/>https://code.visualstudio.com/Download
+  <br/>https://code.visualstudio.com/Download
 
 Recommended Visual Studio Code extensions:
 <br/>https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp

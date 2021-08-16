@@ -3,12 +3,12 @@
 export function resolve(
   dirname: string,
   moduleName: string,
-  absoluteImports: boolean | string,
+  absoluteImports: boolean | string
 ): string {
   if (absoluteImports === false) return moduleName;
 
   throw new Error(
-    `"absoluteImports" is not supported in bundles prepared for the browser.`,
+    `"absoluteImports" is not supported in bundles prepared for the browser.`
   );
 }
 

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = hoistVariables;
 
@@ -26,7 +26,11 @@ const visitor = {
       firstId = declar.node.id;
 
       if (declar.node.init) {
-        nodes.push(t.expressionStatement(t.assignmentExpression("=", declar.node.id, declar.node.init)));
+        nodes.push(
+          t.expressionStatement(
+            t.assignmentExpression("=", declar.node.id, declar.node.init)
+          )
+        );
       }
 
       for (const name of Object.keys(declar.getBindingIdentifiers())) {
@@ -34,20 +38,21 @@ const visitor = {
       }
     }
 
-    if (path.parentPath.isFor({
-      left: path.node
-    })) {
+    if (
+      path.parentPath.isFor({
+        left: path.node,
+      })
+    ) {
       path.replaceWith(firstId);
     } else {
       path.replaceWithMultiple(nodes);
     }
-  }
-
+  },
 };
 
 function hoistVariables(path, emit, kind = "var") {
   path.traverse(visitor, {
     kind,
-    emit
+    emit,
   });
 }

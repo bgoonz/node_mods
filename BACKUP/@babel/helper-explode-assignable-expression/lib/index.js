@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = _default;
 
@@ -19,7 +19,7 @@ function getObjRef(node, nodes, scope) {
   } else if (t.isMemberExpression(node)) {
     ref = node.object;
 
-    if (t.isSuper(ref) || t.isIdentifier(ref) && scope.hasBinding(ref.name)) {
+    if (t.isSuper(ref) || (t.isIdentifier(ref) && scope.hasBinding(ref.name))) {
       return ref;
     }
   } else {
@@ -28,7 +28,7 @@ function getObjRef(node, nodes, scope) {
 
   const temp = scope.generateUidIdentifierBasedOnNode(ref);
   scope.push({
-    id: temp
+    id: temp,
   });
   nodes.push(t.assignmentExpression("=", t.cloneNode(temp), t.cloneNode(ref)));
   return temp;
@@ -38,14 +38,16 @@ function getPropRef(node, nodes, scope) {
   const prop = node.property;
 
   if (t.isPrivateName(prop)) {
-    throw new Error("We can't generate property ref for private name, please install `@babel/plugin-proposal-class-properties`");
+    throw new Error(
+      "We can't generate property ref for private name, please install `@babel/plugin-proposal-class-properties`"
+    );
   }
 
   const key = t.toComputedKey(node, prop);
   if (t.isLiteral(key) && t.isPureish(key)) return key;
   const temp = scope.generateUidIdentifierBasedOnNode(prop);
   scope.push({
-    id: temp
+    id: temp,
   });
   nodes.push(t.assignmentExpression("=", t.cloneNode(temp), t.cloneNode(prop)));
   return temp;
@@ -74,6 +76,6 @@ function _default(node, nodes, file, scope, allowedSingleIdent) {
 
   return {
     uid: uid,
-    ref: ref
+    ref: ref,
   };
 }

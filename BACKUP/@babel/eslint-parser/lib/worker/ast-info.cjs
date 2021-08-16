@@ -10,15 +10,26 @@ exports.getVisitorKeys = function getVisitorKeys() {
       ChainExpression: ESLINT_VISITOR_KEYS.ChainExpression,
       ImportExpression: ESLINT_VISITOR_KEYS.ImportExpression,
       Literal: ESLINT_VISITOR_KEYS.Literal,
-      MethodDefinition: ["decorators"].concat(ESLINT_VISITOR_KEYS.MethodDefinition),
+      MethodDefinition: ["decorators"].concat(
+        ESLINT_VISITOR_KEYS.MethodDefinition
+      ),
       Property: ["decorators"].concat(ESLINT_VISITOR_KEYS.Property),
-      PropertyDefinition: ["decorators"].concat(ESLINT_VISITOR_KEYS.PropertyDefinition)
+      PropertyDefinition: ["decorators"].concat(
+        ESLINT_VISITOR_KEYS.PropertyDefinition
+      ),
     };
     const conflictTypes = {
-      ClassPrivateMethod: ["decorators"].concat(ESLINT_VISITOR_KEYS.MethodDefinition),
-      ExportAllDeclaration: ESLINT_VISITOR_KEYS.ExportAllDeclaration
+      ClassPrivateMethod: ["decorators"].concat(
+        ESLINT_VISITOR_KEYS.MethodDefinition
+      ),
+      ExportAllDeclaration: ESLINT_VISITOR_KEYS.ExportAllDeclaration,
     };
-    visitorKeys = Object.assign({}, newTypes, babel.types.VISITOR_KEYS, conflictTypes);
+    visitorKeys = Object.assign(
+      {},
+      newTypes,
+      babel.types.VISITOR_KEYS,
+      conflictTypes
+    );
   }
 
   return visitorKeys;
@@ -27,7 +38,15 @@ exports.getVisitorKeys = function getVisitorKeys() {
 let tokLabels;
 
 exports.getTokLabels = function getTokLabels() {
-  return tokLabels || (tokLabels = (p => p.reduce((o, [k, v]) => Object.assign({}, o, {
-    [k]: v
-  }), {}))(Object.entries(babel.tokTypes).map(([key, tok]) => [key, tok.label])));
+  return (
+    tokLabels ||
+    (tokLabels = ((p) =>
+      p.reduce(
+        (o, [k, v]) =>
+          Object.assign({}, o, {
+            [k]: v,
+          }),
+        {}
+      ))(Object.entries(babel.tokTypes).map(([key, tok]) => [key, tok.label])))
+  );
 };

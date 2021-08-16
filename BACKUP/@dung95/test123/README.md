@@ -6,20 +6,21 @@
 Lightweight logger with an extensible configuration. Supports level based filtering and tagging. Filtering keeps your logs readable and uncluttered while tagging makes them searchable.
 
 ## Features
-* Small footprint, around 500 bytes with 0 dependencies
-* Filter by level, `ERROR > WARN > INFO`
-* Filter by tag, `'security' | 'whatever'`
-* Log callback is extensible from console to cloud
-  * Style terminal output with chalk
-  * Send JSON to a cloud service like [Loggly](https://www.loggly.com/)
-  * Log strings and objects to the console
-  * Combine any of the above based on env
-* API mirrors `console.log`, logs objects and supports rest parameters
-* Works reliably with node or any browser through a bundler
-* Includes **TypeScript definitions** so no need for external `@types`
 
+- Small footprint, around 500 bytes with 0 dependencies
+- Filter by level, `ERROR > WARN > INFO`
+- Filter by tag, `'security' | 'whatever'`
+- Log callback is extensible from console to cloud
+  - Style terminal output with chalk
+  - Send JSON to a cloud service like [Loggly](https://www.loggly.com/)
+  - Log strings and objects to the console
+  - Combine any of the above based on env
+- API mirrors `console.log`, logs objects and supports rest parameters
+- Works reliably with node or any browser through a bundler
+- Includes **TypeScript definitions** so no need for external `@types`
 
 ## Install
+
 ```shell
 npm install missionlog
 ```
@@ -38,24 +39,24 @@ import { log, LogLevel } from 'missionlog';
  *    tag's level defaults to INFO.
  * @param callback? handle logging whichever way works best for you
  */
-log.init(
-  { transporter: 'INFO', security: 'ERROR', system: 'OFF' },
-  (level, tag, msg, params) => {
-    const prefix = `${level}: [${tag}] `;
-    switch(level) {
-      case LogLevel.ERROR:
-        console.error(prefix, msg, ...params);
-        break;
-      case LogLevel.WARN:
-        console.warn(prefix, msg, ...params);
-        break;
-      case LogLevel.INFO:
-        console.info(prefix, msg, ...params);
-        break;
-    }
-  });
+log.init({ transporter: 'INFO', security: 'ERROR', system: 'OFF' }, (level, tag, msg, params) => {
+  const prefix = `${level}: [${tag}] `;
+  switch (level) {
+    case LogLevel.ERROR:
+      console.error(prefix, msg, ...params);
+      break;
+    case LogLevel.WARN:
+      console.warn(prefix, msg, ...params);
+      break;
+    case LogLevel.INFO:
+      console.info(prefix, msg, ...params);
+      break;
+  }
+});
 ```
+
 ## Usage
+
 ```javascript
 import { log, tag } from 'missionlog';
 
@@ -77,16 +78,16 @@ log.init({ loader: 'ERROR', system: 'INFO' });
 // disable logging by clearing the callback
 log.init();
 ```
-## Advanced Usage
-Create an instance with its own tags and callback.
-```javascript
 
+## Advanced Usage
+
+Create an instance with its own tags and callback.
+
+```javascript
 import { Log, tag } from 'missionlog';
 
-const myLog = new Log().init(
-  { loader: 'INFO', security: 'ERROR' },
-  (level, tag, msg, params) => {
-    console.log(`${level}: [${tag}] `, msg, ...params);
+const myLog = new Log().init({ loader: 'INFO', security: 'ERROR' }, (level, tag, msg, params) => {
+  console.log(`${level}: [${tag}] `, msg, ...params);
 });
 
 myLog.info(tag.security, 'login successful');

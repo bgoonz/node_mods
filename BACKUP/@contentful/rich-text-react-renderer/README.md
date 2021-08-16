@@ -19,21 +19,21 @@ yarn add @contentful/rich-text-react-renderer
 ## Usage
 
 ```javascript
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const document = {
-  nodeType: 'document',
+  nodeType: "document",
   data: {},
   content: [
     {
-      nodeType: 'paragraph',
+      nodeType: "paragraph",
       data: {},
       content: [
         {
-          nodeType: 'text',
-          value: 'Hello world!',
+          nodeType: "text",
+          value: "Hello world!",
           marks: [],
-          data: {}
+          data: {},
         },
       ],
     },
@@ -44,23 +44,23 @@ documentToReactComponents(document); // -> <p>Hello world!</p>
 ```
 
 ```javascript
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const document = {
-  nodeType: 'document',
+  nodeType: "document",
   content: [
     {
-      nodeType: 'paragraph',
+      nodeType: "paragraph",
       content: [
         {
-          nodeType: 'text',
-          value: 'Hello',
-          marks: [{ type: 'bold' }],
+          nodeType: "text",
+          value: "Hello",
+          marks: [{ type: "bold" }],
         },
         {
-          nodeType: 'text',
-          value: ' world!',
-          marks: [{ type: 'italic' }],
+          nodeType: "text",
+          value: " world!",
+          marks: [{ type: "italic" }],
         },
       ],
     },
@@ -74,24 +74,24 @@ documentToReactComponents(document);
 You can also pass custom renderers for both marks and nodes as an optional parameter like so:
 
 ```javascript
-import { BLOCKS, MARKS } from '@contentful/rich-text-types';
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { BLOCKS, MARKS } from "@contentful/rich-text-types";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const document = {
-  nodeType: 'document',
+  nodeType: "document",
   content: [
     {
-      nodeType: 'paragraph',
+      nodeType: "paragraph",
       content: [
         {
-          nodeType: 'text',
-          value: 'Hello',
-          marks: [{ type: 'bold' }],
+          nodeType: "text",
+          value: "Hello",
+          marks: [{ type: "bold" }],
         },
         {
-          nodeType: 'text',
-          value: ' world!',
-          marks: [{ type: 'italic' }],
+          nodeType: "text",
+          value: " world!",
+          marks: [{ type: "italic" }],
         },
       ],
     },
@@ -104,12 +104,12 @@ const Text = ({ children }) => <p className="align-center">{children}</p>;
 
 const options = {
   renderMark: {
-    [MARKS.BOLD]: text => <Bold>{text}</Bold>,
+    [MARKS.BOLD]: (text) => <Bold>{text}</Bold>,
   },
   renderNode: {
     [BLOCKS.PARAGRAPH]: (node, children) => <Text>{children}</Text>,
   },
-  renderText: text => text.replace('!', '?'),
+  renderText: (text) => text.replace("!", "?"),
 };
 
 documentToReactComponents(document, options);
@@ -191,8 +191,8 @@ The `renderText` callback is a function that has a single string argument and re
 
 ```javascript
 const options = {
-  renderText: text => {
-    return text.split('\n').reduce((children, textSegment, index) => {
+  renderText: (text) => {
+    return text.split("\n").reduce((children, textSegment, index) => {
       return [...children, index > 0 && <br key={index} />, textSegment];
     }, []);
   },
@@ -208,7 +208,7 @@ To work around this limitation, just append any non-numeric character to your cu
 ```javascript
 const options = {
   renderMark: {
-    [MARKS.BOLD]: text => {
+    [MARKS.BOLD]: (text) => {
       return <b key={`${text}-key`}>{text}</b>;
     },
   },

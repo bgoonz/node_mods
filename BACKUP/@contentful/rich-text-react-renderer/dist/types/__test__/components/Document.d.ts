@@ -1,6 +1,6 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent, ReactNode } from "react";
 declare type DocumentProps = {
-    children: ReactNode;
+  children: ReactNode;
 };
 declare const Document: FunctionComponent<DocumentProps>;
 export default Document;

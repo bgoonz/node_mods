@@ -1,10 +1,14 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.isPluginRequired = isPluginRequired;
-exports.default = exports.getPolyfillPlugins = exports.getModulesPluginNames = exports.transformIncludesAndExcludes = void 0;
+exports.default =
+  exports.getPolyfillPlugins =
+  exports.getModulesPluginNames =
+  exports.transformIncludesAndExcludes =
+    void 0;
 
 var _semver = require("semver");
 
@@ -40,15 +44,18 @@ var _availablePlugins = require("./available-plugins");
 
 var _helperPluginUtils = require("@babel/helper-plugin-utils");
 
-const pluginCoreJS2 = _babelPluginPolyfillCorejs.default || _babelPluginPolyfillCorejs;
-const pluginCoreJS3 = _babelPluginPolyfillCorejs2.default || _babelPluginPolyfillCorejs2;
-const pluginRegenerator = _babelPluginPolyfillRegenerator.default || _babelPluginPolyfillRegenerator;
+const pluginCoreJS2 =
+  _babelPluginPolyfillCorejs.default || _babelPluginPolyfillCorejs;
+const pluginCoreJS3 =
+  _babelPluginPolyfillCorejs2.default || _babelPluginPolyfillCorejs2;
+const pluginRegenerator =
+  _babelPluginPolyfillRegenerator.default || _babelPluginPolyfillRegenerator;
 
 function isPluginRequired(targets, support) {
   return (0, _helperCompilationTargets.isRequired)("fake-name", targets, {
     compatData: {
-      "fake-name": support
-    }
+      "fake-name": support,
+    },
   });
 }
 
@@ -65,42 +72,65 @@ function filterStageFromList(list, stageList) {
 const pluginLists = {
   withProposals: {
     withoutBugfixes: _pluginsCompatData.plugins,
-    withBugfixes: Object.assign({}, _pluginsCompatData.plugins, _pluginsCompatData.pluginsBugfixes)
+    withBugfixes: Object.assign(
+      {},
+      _pluginsCompatData.plugins,
+      _pluginsCompatData.pluginsBugfixes
+    ),
   },
   withoutProposals: {
-    withoutBugfixes: filterStageFromList(_pluginsCompatData.plugins, _shippedProposals.proposalPlugins),
-    withBugfixes: filterStageFromList(Object.assign({}, _pluginsCompatData.plugins, _pluginsCompatData.pluginsBugfixes), _shippedProposals.proposalPlugins)
-  }
+    withoutBugfixes: filterStageFromList(
+      _pluginsCompatData.plugins,
+      _shippedProposals.proposalPlugins
+    ),
+    withBugfixes: filterStageFromList(
+      Object.assign(
+        {},
+        _pluginsCompatData.plugins,
+        _pluginsCompatData.pluginsBugfixes
+      ),
+      _shippedProposals.proposalPlugins
+    ),
+  },
 };
 
 function getPluginList(proposals, bugfixes) {
   if (proposals) {
-    if (bugfixes) return pluginLists.withProposals.withBugfixes;else return pluginLists.withProposals.withoutBugfixes;
+    if (bugfixes) return pluginLists.withProposals.withBugfixes;
+    else return pluginLists.withProposals.withoutBugfixes;
   } else {
-    if (bugfixes) return pluginLists.withoutProposals.withBugfixes;else return pluginLists.withoutProposals.withoutBugfixes;
+    if (bugfixes) return pluginLists.withoutProposals.withBugfixes;
+    else return pluginLists.withoutProposals.withoutBugfixes;
   }
 }
 
-const getPlugin = pluginName => {
+const getPlugin = (pluginName) => {
   const plugin = _availablePlugins.default[pluginName]();
 
   if (!plugin) {
-    throw new Error(`Could not find plugin "${pluginName}". Ensure there is an entry in ./available-plugins.js for it.`);
+    throw new Error(
+      `Could not find plugin "${pluginName}". Ensure there is an entry in ./available-plugins.js for it.`
+    );
   }
 
   return plugin;
 };
 
-const transformIncludesAndExcludes = opts => {
-  return opts.reduce((result, opt) => {
-    const target = opt.match(/^(es|es6|es7|esnext|web)\./) ? "builtIns" : "plugins";
-    result[target].add(opt);
-    return result;
-  }, {
-    all: opts,
-    plugins: new Set(),
-    builtIns: new Set()
-  });
+const transformIncludesAndExcludes = (opts) => {
+  return opts.reduce(
+    (result, opt) => {
+      const target = opt.match(/^(es|es6|es7|esnext|web)\./)
+        ? "builtIns"
+        : "plugins";
+      result[target].add(opt);
+      return result;
+    },
+    {
+      all: opts,
+      plugins: new Set(),
+      builtIns: new Set(),
+    }
+  );
 };
 
 exports.transformIncludesAndExcludes = transformIncludesAndExcludes;
@@ -111,7 +141,7 @@ const getModulesPluginNames = ({
   shouldTransformESM,
   shouldTransformDynamicImport,
   shouldTransformExportNamespaceFrom,
-  shouldParseTopLevelAwait
+  shouldParseTopLevelAwait,
 }) => {
   const modulesPluginNames = [];
 
@@ -120,11 +150,18 @@ const getModulesPluginNames = ({
       modulesPluginNames.push(transformations[modules]);
     }
 
-    if (shouldTransformDynamicImport && shouldTransformESM && modules !== "umd") {
+    if (
+      shouldTransformDynamicImport &&
+      shouldTransformESM &&
+      modules !== "umd"
+    ) {
       modulesPluginNames.push("proposal-dynamic-import");
     } else {
       if (shouldTransformDynamicImport) {
-        console.warn("Dynamic import can only be supported when transforming ES modules" + " to AMD, CommonJS or SystemJS. Only the parser plugin will be enabled.");
+        console.warn(
+          "Dynamic import can only be supported when transforming ES modules" +
+            " to AMD, CommonJS or SystemJS. Only the parser plugin will be enabled."
+        );
       }
 
       modulesPluginNames.push("syntax-dynamic-import");
@@ -157,7 +194,7 @@ const getPolyfillPlugins = ({
   proposals,
   shippedProposals,
   regenerator,
-  debug
+  debug,
 }) => {
   const polyfillPlugins = [];
 
@@ -170,37 +207,64 @@ const getPolyfillPlugins = ({
       exclude,
       proposals,
       shippedProposals,
-      debug
+      debug,
     };
 
     if (corejs) {
       if (useBuiltIns === "usage") {
         if (corejs.major === 2) {
-          polyfillPlugins.push([pluginCoreJS2, pluginOptions], [_babelPolyfill.default, {
-            usage: true
-          }]);
+          polyfillPlugins.push(
+            [pluginCoreJS2, pluginOptions],
+            [
+              _babelPolyfill.default,
+              {
+                usage: true,
+              },
+            ]
+          );
         } else {
-          polyfillPlugins.push([pluginCoreJS3, pluginOptions], [_babelPolyfill.default, {
-            usage: true,
-            deprecated: true
-          }]);
+          polyfillPlugins.push(
+            [pluginCoreJS3, pluginOptions],
+            [
+              _babelPolyfill.default,
+              {
+                usage: true,
+                deprecated: true,
+              },
+            ]
+          );
         }
 
         if (regenerator) {
-          polyfillPlugins.push([pluginRegenerator, {
-            method: "usage-global",
-            debug
-          }]);
+          polyfillPlugins.push([
+            pluginRegenerator,
+            {
+              method: "usage-global",
+              debug,
+            },
+          ]);
         }
       } else {
         if (corejs.major === 2) {
-          polyfillPlugins.push([_babelPolyfill.default, {
-            regenerator
-          }], [pluginCoreJS2, pluginOptions]);
+          polyfillPlugins.push(
+            [
+              _babelPolyfill.default,
+              {
+                regenerator,
+              },
+            ],
+            [pluginCoreJS2, pluginOptions]
+          );
         } else {
-          polyfillPlugins.push([pluginCoreJS3, pluginOptions], [_babelPolyfill.default, {
-            deprecated: true
-          }]);
+          polyfillPlugins.push(
+            [pluginCoreJS3, pluginOptions],
+            [
+              _babelPolyfill.default,
+              {
+                deprecated: true,
+              },
+            ]
+          );
 
           if (!regenerator) {
             polyfillPlugins.push([_regenerator.default, pluginOptions]);
@@ -215,8 +279,17 @@ const getPolyfillPlugins = ({
 
 exports.getPolyfillPlugins = getPolyfillPlugins;
 
-function getLocalTargets(optionsTargets, ignoreBrowserslistConfig, configPath, browserslistEnv) {
-  if (optionsTargets != null && optionsTargets.esmodules && optionsTargets.browsers) {
+function getLocalTargets(
+  optionsTargets,
+  ignoreBrowserslistConfig,
+  configPath,
+  browserslistEnv
+) {
+  if (
+    optionsTargets != null &&
+    optionsTargets.esmodules &&
+    optionsTargets.browsers
+  ) {
     console.warn(`
 @babel/preset-env: esmodules and browsers targets have been specified together.
 \`browsers\` target, \`${optionsTargets.browsers.toString()}\` will be ignored.
@@ -226,7 +299,7 @@ function getLocalTargets(optionsTargets, ignoreBrowserslistConfig, configPath, b
   return (0, _helperCompilationTargets.default)(optionsTargets, {
     ignoreBrowserslistConfig,
     configPath,
-    browserslistEnv
+    browserslistEnv,
   });
 }
 
@@ -263,15 +336,18 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
     spec,
     targets: optionsTargets,
     useBuiltIns,
-    corejs: {
-      version: corejs,
-      proposals
-    },
-    browserslistEnv
+    corejs: { version: corejs, proposals },
+    browserslistEnv,
   } = (0, _normalizeOptions.default)(opts);
   let targets = babelTargets;
 
-  if ((0, _semver.lt)(api.version, "7.13.0") || opts.targets || opts.configPath || opts.browserslistEnv || opts.ignoreBrowserslistConfig) {
+  if (
+    (0, _semver.lt)(api.version, "7.13.0") ||
+    opts.targets ||
+    opts.configPath ||
+    opts.browserslistEnv ||
+    opts.ignoreBrowserslistConfig
+  ) {
     {
       var hasUglifyTarget = false;
 
@@ -284,29 +360,56 @@ option \`forceAllTransforms: true\` instead.
 `);
       }
     }
-    targets = getLocalTargets(optionsTargets, ignoreBrowserslistConfig, configPath, browserslistEnv);
+    targets = getLocalTargets(
+      optionsTargets,
+      ignoreBrowserslistConfig,
+      configPath,
+      browserslistEnv
+    );
   }
 
   const transformTargets = forceAllTransforms || hasUglifyTarget ? {} : targets;
   const include = transformIncludesAndExcludes(optionsInclude);
   const exclude = transformIncludesAndExcludes(optionsExclude);
   const compatData = getPluginList(shippedProposals, bugfixes);
-  const shouldSkipExportNamespaceFrom = modules === "auto" && (api.caller == null ? void 0 : api.caller(supportsExportNamespaceFrom)) || modules === false && !(0, _helperCompilationTargets.isRequired)("proposal-export-namespace-from", transformTargets, {
-    compatData,
-    includes: include.plugins,
-    excludes: exclude.plugins
-  });
+  const shouldSkipExportNamespaceFrom =
+    (modules === "auto" &&
+      (api.caller == null
+        ? void 0
+        : api.caller(supportsExportNamespaceFrom))) ||
+    (modules === false &&
+      !(0, _helperCompilationTargets.isRequired)(
+        "proposal-export-namespace-from",
+        transformTargets,
+        {
+          compatData,
+          includes: include.plugins,
+          excludes: exclude.plugins,
+        }
+      ));
   const modulesPluginNames = getModulesPluginNames({
     modules,
     transformations: _moduleTransformations.default,
-    shouldTransformESM: modules !== "auto" || !(api.caller != null && api.caller(supportsStaticESM)),
-    shouldTransformDynamicImport: modules !== "auto" || !(api.caller != null && api.caller(supportsDynamicImport)),
+    shouldTransformESM:
+      modules !== "auto" ||
+      !(api.caller != null && api.caller(supportsStaticESM)),
+    shouldTransformDynamicImport:
+      modules !== "auto" ||
+      !(api.caller != null && api.caller(supportsDynamicImport)),
     shouldTransformExportNamespaceFrom: !shouldSkipExportNamespaceFrom,
-    shouldParseTopLevelAwait: !api.caller || api.caller(supportsTopLevelAwait)
+    shouldParseTopLevelAwait: !api.caller || api.caller(supportsTopLevelAwait),
   });
-  const pluginNames = (0, _helperCompilationTargets.filterItems)(compatData, include.plugins, exclude.plugins, transformTargets, modulesPluginNames, (0, _getOptionSpecificExcludes.default)({
-    loose
-  }), _shippedProposals.pluginSyntaxMap);
+  const pluginNames = (0, _helperCompilationTargets.filterItems)(
+    compatData,
+    include.plugins,
+    exclude.plugins,
+    transformTargets,
+    modulesPluginNames,
+    (0, _getOptionSpecificExcludes.default)({
+      loose,
+    }),
+    _shippedProposals.pluginSyntaxMap
+  );
   (0, _filterItems.removeUnnecessaryItems)(pluginNames, _overlappingPlugins);
   (0, _filterItems.removeUnsupportedItems)(pluginNames, api.version);
   const polyfillPlugins = getPolyfillPlugins({
@@ -318,40 +421,62 @@ option \`forceAllTransforms: true\` instead.
     proposals,
     shippedProposals,
     regenerator: pluginNames.has("transform-regenerator"),
-    debug
+    debug,
   });
   const pluginUseBuiltIns = useBuiltIns !== false;
-  const plugins = Array.from(pluginNames).map(pluginName => {
-    if (pluginName === "proposal-class-properties" || pluginName === "proposal-private-methods" || pluginName === "proposal-private-property-in-object") {
-      return [getPlugin(pluginName), {
-        loose: loose ? "#__internal__@babel/preset-env__prefer-true-but-false-is-ok-if-it-prevents-an-error" : "#__internal__@babel/preset-env__prefer-false-but-true-is-ok-if-it-prevents-an-error"
-      }];
-    }
+  const plugins = Array.from(pluginNames)
+    .map((pluginName) => {
+      if (
+        pluginName === "proposal-class-properties" ||
+        pluginName === "proposal-private-methods" ||
+        pluginName === "proposal-private-property-in-object"
+      ) {
+        return [
+          getPlugin(pluginName),
+          {
+            loose: loose
+              ? "#__internal__@babel/preset-env__prefer-true-but-false-is-ok-if-it-prevents-an-error"
+              : "#__internal__@babel/preset-env__prefer-false-but-true-is-ok-if-it-prevents-an-error",
+          },
+        ];
+      }
 
-    return [getPlugin(pluginName), {
-      spec,
-      loose,
-      useBuiltIns: pluginUseBuiltIns
-    }];
-  }).concat(polyfillPlugins);
+      return [
+        getPlugin(pluginName),
+        {
+          spec,
+          loose,
+          useBuiltIns: pluginUseBuiltIns,
+        },
+      ];
+    })
+    .concat(polyfillPlugins);
 
   if (debug) {
     console.log("@babel/preset-env: `DEBUG` option");
     console.log("\nUsing targets:");
-    console.log(JSON.stringify((0, _helperCompilationTargets.prettifyTargets)(targets), null, 2));
+    console.log(
+      JSON.stringify(
+        (0, _helperCompilationTargets.prettifyTargets)(targets),
+        null,
+        2
+      )
+    );
     console.log(`\nUsing modules transform: ${modules.toString()}`);
     console.log("\nUsing plugins:");
-    pluginNames.forEach(pluginName => {
+    pluginNames.forEach((pluginName) => {
       (0, _debug.logPlugin)(pluginName, targets, compatData);
     });
 
     if (!useBuiltIns) {
-      console.log("\nUsing polyfills: No polyfills were added, since the `useBuiltIns` option was not set.");
+      console.log(
+        "\nUsing polyfills: No polyfills were added, since the `useBuiltIns` option was not set."
+      );
     }
   }
 
   return {
-    plugins
+    plugins,
   };
 });
 

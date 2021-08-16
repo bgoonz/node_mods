@@ -13,7 +13,7 @@ export type { ConfigFile, IgnoreFile, RelativeConfig, FilePackageData };
 
 export function findConfigUpwards(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  rootDir: string,
+  rootDir: string
 ): string | null {
   return null;
 }
@@ -35,7 +35,7 @@ export function* findRelativeConfig(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   envName: string,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  caller: CallerMetadata | void,
+  caller: CallerMetadata | void
 ): Handler<RelativeConfig> {
   return { config: null, ignore: null };
 }
@@ -47,7 +47,7 @@ export function* findRootConfig(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   envName: string,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  caller: CallerMetadata | void,
+  caller: CallerMetadata | void
 ): Handler<ConfigFile | null> {
   return null;
 }
@@ -59,7 +59,7 @@ export function* loadConfig(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   envName: string,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  caller: CallerMetadata | void,
+  caller: CallerMetadata | void
 ): Handler<ConfigFile> {
   throw new Error(`Cannot load ${name} relative to ${dirname} in a browser`);
 }
@@ -67,7 +67,7 @@ export function* loadConfig(
 // eslint-disable-next-line require-yield
 export function* resolveShowConfigPath(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  dirname: string,
+  dirname: string
 ): Handler<string | null> {
   return null;
 }
@@ -86,24 +86,24 @@ export function resolvePreset(name: string, dirname: string): string | null {
 
 export function loadPlugin(
   name: string,
-  dirname: string,
+  dirname: string
 ): Handler<{
   filepath: string;
   value: unknown;
 }> {
   throw new Error(
-    `Cannot load plugin ${name} relative to ${dirname} in a browser`,
+    `Cannot load plugin ${name} relative to ${dirname} in a browser`
   );
 }
 
 export function loadPreset(
   name: string,
-  dirname: string,
+  dirname: string
 ): Handler<{
   filepath: string;
   value: unknown;
 }> {
   throw new Error(
-    `Cannot load preset ${name} relative to ${dirname} in a browser`,
+    `Cannot load preset ${name} relative to ${dirname} in a browser`
   );
 }

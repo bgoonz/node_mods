@@ -11,10 +11,10 @@ const { IgnorePattern } = require("./ignore-pattern");
 const { OverrideTester } = require("./override-tester");
 
 module.exports = {
-    ConfigArray,
-    ConfigDependency,
-    ExtractedConfig,
-    IgnorePattern,
-    OverrideTester,
-    getUsedExtractedConfigs
+  ConfigArray,
+  ConfigDependency,
+  ExtractedConfig,
+  IgnorePattern,
+  OverrideTester,
+  getUsedExtractedConfigs,
 };

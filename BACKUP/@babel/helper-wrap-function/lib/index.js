@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = wrapFunction;
 
@@ -41,22 +41,37 @@ const buildDeclarationWrapper = (0, _template.default)(`
 function classOrObjectMethod(path, callId) {
   const node = path.node;
   const body = node.body;
-  const container = t.functionExpression(null, [], t.blockStatement(body.body), true);
-  body.body = [t.returnStatement(t.callExpression(t.callExpression(callId, [container]), []))];
+  const container = t.functionExpression(
+    null,
+    [],
+    t.blockStatement(body.body),
+    true
+  );
+  body.body = [
+    t.returnStatement(
+      t.callExpression(t.callExpression(callId, [container]), [])
+    ),
+  ];
   node.async = false;
   node.generator = false;
-  path.get("body.body.0.argument.callee.arguments.0").unwrapFunctionEnvironment();
+  path
+    .get("body.body.0.argument.callee.arguments.0")
+    .unwrapFunctionEnvironment();
 }
 
 function plainFunction(path, callId, noNewArrows) {
   const node = path.node;
   const isDeclaration = path.isFunctionDeclaration();
   const functionId = node.id;
-  const wrapper = isDeclaration ? buildDeclarationWrapper : functionId ? buildNamedExpressionWrapper : buildAnonymousExpressionWrapper;
+  const wrapper = isDeclaration
+    ? buildDeclarationWrapper
+    : functionId
+    ? buildNamedExpressionWrapper
+    : buildAnonymousExpressionWrapper;
 
   if (path.isArrowFunctionExpression()) {
     path.arrowFunctionToExpression({
-      noNewArrows
+      noNewArrows,
     });
   }
 
@@ -71,18 +86,22 @@ function plainFunction(path, callId, noNewArrows) {
     NAME: functionId || null,
     REF: path.scope.generateUidIdentifier(functionId ? functionId.name : "ref"),
     FUNCTION: built,
-    PARAMS: node.params.reduce((acc, param) => {
-      acc.done = acc.done || t.isAssignmentPattern(param) || t.isRestElement(param);
+    PARAMS: node.params.reduce(
+      (acc, param) => {
+        acc.done =
+          acc.done || t.isAssignmentPattern(param) || t.isRestElement(param);
 
-      if (!acc.done) {
-        acc.params.push(path.scope.generateUidIdentifier("x"));
+        if (!acc.done) {
+          acc.params.push(path.scope.generateUidIdentifier("x"));
+        }
+
+        return acc;
+      },
+      {
+        params: [],
+        done: false,
       }
-
-      return acc;
-    }, {
-      params: [],
-      done: false
-    }).params
+    ).params,
   });
 
   if (isDeclaration) {
@@ -95,7 +114,7 @@ function plainFunction(path, callId, noNewArrows) {
       (0, _helperFunctionName.default)({
         node: retFunction,
         parent: path.parent,
-        scope: path.scope
+        scope: path.scope,
       });
     }
 

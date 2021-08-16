@@ -1,4 +1,8 @@
-import { compareFunctionCovs, compareRangeCovs, compareScriptCovs } from "./compare";
+import {
+  compareFunctionCovs,
+  compareRangeCovs,
+  compareScriptCovs,
+} from "./compare";
 import { RangeTree } from "./range-tree";
 import { FunctionCov, ProcessCov, ScriptCov } from "./types";
 

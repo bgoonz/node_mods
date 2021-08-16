@@ -1,26 +1,26 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.createClassFeaturePlugin = createClassFeaturePlugin;
 Object.defineProperty(exports, "injectInitialization", {
   enumerable: true,
   get: function () {
     return _misc.injectInitialization;
-  }
+  },
 });
 Object.defineProperty(exports, "enableFeature", {
   enumerable: true,
   get: function () {
     return _features.enableFeature;
-  }
+  },
 });
 Object.defineProperty(exports, "FEATURES", {
   enumerable: true,
   get: function () {
     return _features.FEATURES;
-  }
+  },
 });
 
 var _core = require("@babel/core");
@@ -46,8 +46,8 @@ function createClassFeaturePlugin({
   loose,
   manipulateOptions,
   api = {
-    assumption: () => void 0
-  }
+    assumption: () => void 0,
+  },
 }) {
   const setPublicClassFields = api.assumption("setPublicClassFields");
   const privateFieldsAsProperties = api.assumption("privateFieldsAsProperties");
@@ -66,7 +66,18 @@ function createClassFeaturePlugin({
     }
 
     if (explicit.length !== 0) {
-      console.warn(`[${name}]: You are using the "loose: true" option and you are` + ` explicitly setting a value for the ${explicit.join(" and ")}` + ` assumption${explicit.length > 1 ? "s" : ""}. The "loose" option` + ` can cause incompatibilities with the other class features` + ` plugins, so it's recommended that you replace it with the` + ` following top-level option:\n` + `\t"assumptions": {\n` + `\t\t"setPublicClassFields": true,\n` + `\t\t"privateFieldsAsProperties": true\n` + `\t}`);
+      console.warn(
+        `[${name}]: You are using the "loose: true" option and you are` +
+          ` explicitly setting a value for the ${explicit.join(" and ")}` +
+          ` assumption${explicit.length > 1 ? "s" : ""}. The "loose" option` +
+          ` can cause incompatibilities with the other class features` +
+          ` plugins, so it's recommended that you replace it with the` +
+          ` following top-level option:\n` +
+          `\t"assumptions": {\n` +
+          `\t\t"setPublicClassFields": true,\n` +
+          `\t\t"privateFieldsAsProperties": true\n` +
+          `\t}`
+      );
     }
   }
 
@@ -98,33 +109,46 @@ function createClassFeaturePlugin({
         for (const path of body.get("body")) {
           (0, _features.verifyUsedFeatures)(path, this.file);
 
-          if ((path.isClassProperty() || path.isClassMethod()) && path.node.computed) {
+          if (
+            (path.isClassProperty() || path.isClassMethod()) &&
+            path.node.computed
+          ) {
             computedPaths.push(path);
           }
 
           if (path.isPrivate()) {
-            const {
-              name
-            } = path.node.key.id;
+            const { name } = path.node.key.id;
             const getName = `get ${name}`;
             const setName = `set ${name}`;
 
             if (path.isClassPrivateMethod()) {
               if (path.node.kind === "get") {
-                if (privateNames.has(getName) || privateNames.has(name) && !privateNames.has(setName)) {
+                if (
+                  privateNames.has(getName) ||
+                  (privateNames.has(name) && !privateNames.has(setName))
+                ) {
                   throw path.buildCodeFrameError("Duplicate private field");
                 }
 
                 privateNames.add(getName).add(name);
               } else if (path.node.kind === "set") {
-                if (privateNames.has(setName) || privateNames.has(name) && !privateNames.has(getName)) {
+                if (
+                  privateNames.has(setName) ||
+                  (privateNames.has(name) && !privateNames.has(getName))
+                ) {
                   throw path.buildCodeFrameError("Duplicate private field");
                 }
 
                 privateNames.add(setName).add(name);
               }
             } else {
-              if (privateNames.has(name) && !privateNames.has(getName) && !privateNames.has(setName) || privateNames.has(name) && (privateNames.has(getName) || privateNames.has(setName))) {
+              if (
+                (privateNames.has(name) &&
+                  !privateNames.has(getName) &&
+                  !privateNames.has(setName)) ||
+                (privateNames.has(name) &&
+                  (privateNames.has(getName) || privateNames.has(setName)))
+              ) {
                 throw path.buildCodeFrameError("Duplicate private field");
               }
 
@@ -132,14 +156,20 @@ function createClassFeaturePlugin({
             }
           }
 
-          if (path.isClassMethod({
-            kind: "constructor"
-          })) {
+          if (
+            path.isClassMethod({
+              kind: "constructor",
+            })
+          ) {
             constructor = path;
           } else {
             elements.push(path);
 
-            if (path.isProperty() || path.isPrivate() || path.isStaticBlock != null && path.isStaticBlock()) {
+            if (
+              path.isProperty() ||
+              path.isPrivate() ||
+              (path.isStaticBlock != null && path.isStaticBlock())
+            ) {
               props.push(path);
             }
           }
@@ -157,38 +187,71 @@ function createClassFeaturePlugin({
         }
 
         const privateNamesMap = (0, _fields.buildPrivateNamesMap)(props);
-        const privateNamesNodes = (0, _fields.buildPrivateNamesNodes)(privateNamesMap, privateFieldsAsProperties != null ? privateFieldsAsProperties : loose, state);
-        (0, _fields.transformPrivateNamesUsage)(ref, path, privateNamesMap, {
-          privateFieldsAsProperties: privateFieldsAsProperties != null ? privateFieldsAsProperties : loose,
-          noDocumentAll
-        }, state);
+        const privateNamesNodes = (0, _fields.buildPrivateNamesNodes)(
+          privateNamesMap,
+          privateFieldsAsProperties != null ? privateFieldsAsProperties : loose,
+          state
+        );
+        (0, _fields.transformPrivateNamesUsage)(
+          ref,
+          path,
+          privateNamesMap,
+          {
+            privateFieldsAsProperties:
+              privateFieldsAsProperties != null
+                ? privateFieldsAsProperties
+                : loose,
+            noDocumentAll,
+          },
+          state
+        );
         let keysNodes, staticNodes, instanceNodes, pureStaticNodes, wrapClass;
 
         if (isDecorated) {
           staticNodes = pureStaticNodes = keysNodes = [];
-          ({
-            instanceNodes,
-            wrapClass
-          } = (0, _decorators.buildDecoratedClass)(ref, path, elements, this.file));
+          ({ instanceNodes, wrapClass } = (0, _decorators.buildDecoratedClass)(
+            ref,
+            path,
+            elements,
+            this.file
+          ));
         } else {
-          keysNodes = (0, _misc.extractComputedKeys)(ref, path, computedPaths, this.file);
-          ({
-            staticNodes,
-            pureStaticNodes,
-            instanceNodes,
-            wrapClass
-          } = (0, _fields.buildFieldsInitNodes)(ref, path.node.superClass, props, privateNamesMap, state, setPublicClassFields != null ? setPublicClassFields : loose, privateFieldsAsProperties != null ? privateFieldsAsProperties : loose, constantSuper != null ? constantSuper : loose, innerBinding));
+          keysNodes = (0, _misc.extractComputedKeys)(
+            ref,
+            path,
+            computedPaths,
+            this.file
+          );
+          ({ staticNodes, pureStaticNodes, instanceNodes, wrapClass } = (0,
+          _fields.buildFieldsInitNodes)(
+            ref,
+            path.node.superClass,
+            props,
+            privateNamesMap,
+            state,
+            setPublicClassFields != null ? setPublicClassFields : loose,
+            privateFieldsAsProperties != null
+              ? privateFieldsAsProperties
+              : loose,
+            constantSuper != null ? constantSuper : loose,
+            innerBinding
+          ));
         }
 
         if (instanceNodes.length > 0) {
-          (0, _misc.injectInitialization)(path, constructor, instanceNodes, (referenceVisitor, state) => {
-            if (isDecorated) return;
+          (0, _misc.injectInitialization)(
+            path,
+            constructor,
+            instanceNodes,
+            (referenceVisitor, state) => {
+              if (isDecorated) return;
 
-            for (const prop of props) {
-              if (prop.node.static) continue;
-              prop.traverse(referenceVisitor, state);
+              for (const prop of props) {
+                if (prop.node.static) continue;
+                prop.traverse(referenceVisitor, state);
+              }
             }
-          });
+          );
         }
 
         const wrappedPath = wrapClass(path);
@@ -199,14 +262,19 @@ function createClassFeaturePlugin({
         }
 
         if (pureStaticNodes.length > 0) {
-          wrappedPath.find(parent => parent.isStatement() || parent.isDeclaration()).insertAfter(pureStaticNodes);
+          wrappedPath
+            .find((parent) => parent.isStatement() || parent.isDeclaration())
+            .insertAfter(pureStaticNodes);
         }
       },
 
       PrivateName(path) {
-        if (this.file.get(versionKey) !== version || path.parentPath.isPrivate({
-          key: path.node
-        })) {
+        if (
+          this.file.get(versionKey) !== version ||
+          path.parentPath.isPrivate({
+            key: path.node,
+          })
+        ) {
           return;
         }
 
@@ -217,15 +285,17 @@ function createClassFeaturePlugin({
         if (this.file.get(versionKey) !== version) return;
         const decl = path.get("declaration");
 
-        if (decl.isClassDeclaration() && (0, _decorators.hasDecorators)(decl.node)) {
+        if (
+          decl.isClassDeclaration() &&
+          (0, _decorators.hasDecorators)(decl.node)
+        ) {
           if (decl.node.id) {
             (0, _helperSplitExportDeclaration.default)(path);
           } else {
             decl.node.type = "ClassExpression";
           }
         }
-      }
-
-    }
+      },
+    },
   };
 }

@@ -1,9 +1,15 @@
-import { Source } from '@graphql-tools/utils';
-import { LoadTypedefsOptions, UnnormalizedTypeDefPointer } from './load-typedefs';
+import { Source } from "@graphql-tools/utils";
+import {
+  LoadTypedefsOptions,
+  UnnormalizedTypeDefPointer,
+} from "./load-typedefs";
 /**
  * Kinds of AST nodes that are included in executable documents
  */
-export declare const OPERATION_KINDS: ("OperationDefinition" | "FragmentDefinition")[];
+export declare const OPERATION_KINDS: (
+  | "OperationDefinition"
+  | "FragmentDefinition"
+)[];
 /**
  * Kinds of AST nodes that are included in type system definition documents
  */
@@ -16,7 +22,10 @@ export declare const NON_OPERATION_KINDS: any[];
  * @param pointerOrPointers Pointers to the files to load the documents from
  * @param options Additional options
  */
-export declare function loadDocuments(pointerOrPointers: UnnormalizedTypeDefPointer | UnnormalizedTypeDefPointer[], options: LoadTypedefsOptions): Promise<Source[]>;
+export declare function loadDocuments(
+  pointerOrPointers: UnnormalizedTypeDefPointer | UnnormalizedTypeDefPointer[],
+  options: LoadTypedefsOptions
+): Promise<Source[]>;
 /**
  * Synchronously loads executable documents (i.e. operations and fragments) from
  * the provided pointers. The pointers may be individual files or a glob pattern.
@@ -25,4 +34,7 @@ export declare function loadDocuments(pointerOrPointers: UnnormalizedTypeDefPoin
  * @param pointerOrPointers Pointers to the files to load the documents from
  * @param options Additional options
  */
-export declare function loadDocumentsSync(pointerOrPointers: UnnormalizedTypeDefPointer | UnnormalizedTypeDefPointer[], options: LoadTypedefsOptions): Source[];
+export declare function loadDocumentsSync(
+  pointerOrPointers: UnnormalizedTypeDefPointer | UnnormalizedTypeDefPointer[],
+  options: LoadTypedefsOptions
+): Source[];

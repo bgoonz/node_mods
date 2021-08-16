@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -9,7 +9,7 @@ var _helperPluginUtils = require("@babel/helper-plugin-utils");
 
 var _core = require("@babel/core");
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
   const surrogate = /[\ud800-\udfff]/g;
   const unicodeEscape = /(\\+)u\{([0-9a-fA-F]+)\}/g;
@@ -39,7 +39,7 @@ var _default = (0, _helperPluginUtils.declare)(api => {
   function getUnicodeEscape(str) {
     let match;
 
-    while (match = unicodeEscape.exec(str)) {
+    while ((match = unicodeEscape.exec(str))) {
       if (match[1].length % 2 === 0) continue;
       unicodeEscape.lastIndex = 0;
       return match[0];
@@ -51,28 +51,24 @@ var _default = (0, _helperPluginUtils.declare)(api => {
   return {
     name: "transform-unicode-escapes",
 
-    manipulateOptions({
-      generatorOpts
-    }) {
+    manipulateOptions({ generatorOpts }) {
       var _generatorOpts$jsescO, _generatorOpts$jsescO2;
 
       if (!generatorOpts.jsescOption) {
         generatorOpts.jsescOption = {};
       }
 
-      (_generatorOpts$jsescO2 = (_generatorOpts$jsescO = generatorOpts.jsescOption).minimal) != null ? _generatorOpts$jsescO2 : _generatorOpts$jsescO.minimal = false;
+      (_generatorOpts$jsescO2 = (_generatorOpts$jsescO =
+        generatorOpts.jsescOption).minimal) != null
+        ? _generatorOpts$jsescO2
+        : (_generatorOpts$jsescO.minimal = false);
     },
 
     visitor: {
       Identifier(path) {
-        const {
-          node,
-          key
-        } = path;
-        const {
-          name
-        } = node;
-        const replaced = name.replace(surrogate, c => {
+        const { node, key } = path;
+        const { name } = node;
+        const replaced = name.replace(surrogate, (c) => {
           return `_u${c.charCodeAt(0).toString(16)}`;
         });
         if (name === replaced) return;
@@ -84,16 +80,16 @@ var _default = (0, _helperPluginUtils.declare)(api => {
           return;
         }
 
-        const {
-          parentPath,
-          scope
-        } = path;
+        const { parentPath, scope } = path;
 
-        if (parentPath.isMemberExpression({
-          property: node
-        }) || parentPath.isOptionalMemberExpression({
-          property: node
-        })) {
+        if (
+          parentPath.isMemberExpression({
+            property: node,
+          }) ||
+          parentPath.isOptionalMemberExpression({
+            property: node,
+          })
+        ) {
           parentPath.node.computed = true;
           path.replaceWith(str);
           return;
@@ -106,39 +102,34 @@ var _default = (0, _helperPluginUtils.declare)(api => {
           return;
         }
 
-        throw path.buildCodeFrameError(`Can't reference '${name}' as a bare identifier`);
+        throw path.buildCodeFrameError(
+          `Can't reference '${name}' as a bare identifier`
+        );
       },
 
       "StringLiteral|DirectiveLiteral"(path) {
-        const {
-          node
-        } = path;
-        const {
-          extra
-        } = node;
-        if (extra != null && extra.raw) extra.raw = replaceUnicodeEscapes(extra.raw);
+        const { node } = path;
+        const { extra } = node;
+        if (extra != null && extra.raw)
+          extra.raw = replaceUnicodeEscapes(extra.raw);
       },
 
       TemplateElement(path) {
-        const {
-          node,
-          parentPath
-        } = path;
-        const {
-          value
-        } = node;
+        const { node, parentPath } = path;
+        const { value } = node;
         const firstEscape = getUnicodeEscape(value.raw);
         if (!firstEscape) return;
         const grandParent = parentPath.parentPath;
 
         if (grandParent.isTaggedTemplateExpression()) {
-          throw path.buildCodeFrameError(`Can't replace Unicode escape '${firstEscape}' inside tagged template literals. You can enable '@babel/plugin-transform-template-literals' to compile them to classic strings.`);
+          throw path.buildCodeFrameError(
+            `Can't replace Unicode escape '${firstEscape}' inside tagged template literals. You can enable '@babel/plugin-transform-template-literals' to compile them to classic strings.`
+          );
         }
 
         value.raw = replaceUnicodeEscapes(value.raw);
-      }
-
-    }
+      },
+    },
   };
 });
 

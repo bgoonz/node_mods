@@ -15,11 +15,13 @@ exports.default = void 0;
 function handle(declaration) {
   if (!declaration.isVariableDeclaration()) return;
   const fn = declaration.getFunctionParent();
-  const {
-    name
-  } = declaration.node.declarations[0].id; // check if there is a shadowed binding coming from a parameter
+  const { name } = declaration.node.declarations[0].id; // check if there is a shadowed binding coming from a parameter
 
-  if (fn && fn.scope.hasOwnBinding(name) && fn.scope.getOwnBinding(name).kind === "param") {
+  if (
+    fn &&
+    fn.scope.hasOwnBinding(name) &&
+    fn.scope.getOwnBinding(name).kind === "param"
+  ) {
     declaration.scope.rename(name);
   }
 }
@@ -33,9 +35,8 @@ var _default = () => ({
 
     ForStatement(path) {
       handle(path.get("init"));
-    }
-
-  }
+    },
+  },
 });
 
 exports.default = _default;

@@ -1,6 +1,6 @@
 # @babel/helper-annotate-as-pure
 
-> Helper function to annotate paths and nodes with #__PURE__ comment
+> Helper function to annotate paths and nodes with #**PURE** comment
 
 See our website [@babel/helper-annotate-as-pure](https://babeljs.io/docs/en/babel-helper-annotate-as-pure) for more information.
 

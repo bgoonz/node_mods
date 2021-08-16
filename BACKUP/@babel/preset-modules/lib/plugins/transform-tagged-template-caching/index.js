@@ -21,9 +21,7 @@ exports.default = void 0;
  *
  * Benchmarks: https://jsperf.com/compiled-tagged-template-performance
  */
-var _default = ({
-  types: t
-}) => ({
+var _default = ({ types: t }) => ({
   name: "transform-tagged-template-caching",
   visitor: {
     TaggedTemplateExpression(path, state) {
@@ -44,31 +42,51 @@ var _default = ({
       let identity = state.get("identity");
 
       if (!identity) {
-        identity = path.scope.getProgramParent().generateDeclaredUidIdentifier("_");
+        identity = path.scope
+          .getProgramParent()
+          .generateDeclaredUidIdentifier("_");
         state.set("identity", identity);
         const binding = path.scope.getBinding(identity.name);
-        binding.path.get("init").replaceWith(t.arrowFunctionExpression( // re-use the helper identifier for compressability
-        [t.identifier("t")], t.identifier("t")));
+        binding.path.get("init").replaceWith(
+          t.arrowFunctionExpression(
+            // re-use the helper identifier for compressability
+            [t.identifier("t")],
+            t.identifier("t")
+          )
+        );
       } // Use the identity function helper to get a reference to the template's Strings.
       // We replace all expressions with `0` ensure Strings has the same shape.
       //   identity`a${0}`
 
-
-      const template = t.taggedTemplateExpression(identity, t.templateLiteral(path.node.quasi.quasis, expressions.map(() => t.numericLiteral(0))));
+      const template = t.taggedTemplateExpression(
+        identity,
+        t.templateLiteral(
+          path.node.quasi.quasis,
+          expressions.map(() => t.numericLiteral(0))
+        )
+      );
       processed.set(template, true); // Install an inline cache at the callsite using the global variable:
       //   _t || (_t = identity`a${0}`)
 
-      const ident = path.scope.getProgramParent().generateDeclaredUidIdentifier("t");
+      const ident = path.scope
+        .getProgramParent()
+        .generateDeclaredUidIdentifier("t");
       path.scope.getBinding(ident.name).path.parent.kind = "let";
-      const inlineCache = t.logicalExpression("||", ident, t.assignmentExpression("=", ident, template)); // The original tag function becomes a plain function call.
+      const inlineCache = t.logicalExpression(
+        "||",
+        ident,
+        t.assignmentExpression("=", ident, template)
+      ); // The original tag function becomes a plain function call.
       // The expressions omitted from the cached Strings tag are directly applied as arguments.
       //   tag(_t || (_t = Object`a${0}`), 'hello')
 
-      const node = t.callExpression(path.node.tag, [inlineCache, ...expressions]);
+      const node = t.callExpression(path.node.tag, [
+        inlineCache,
+        ...expressions,
+      ]);
       path.replaceWith(node);
-    }
-
-  }
+    },
+  },
 });
 
 exports.default = _default;

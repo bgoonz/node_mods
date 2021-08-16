@@ -11,8 +11,8 @@ interface Options {
 
 const options: Options & minimist.ParsedArgs = minimist(process.argv.slice(2), {
   string: ["devDist"],
-  default: {devDist: undefined},
-  alias: {devDist: "dev-dist"},
+  default: { devDist: undefined },
+  alias: { devDist: "dev-dist" },
 });
 
 const project: buildTools.Project = {
@@ -21,7 +21,7 @@ const project: buildTools.Project = {
   buildDir: "build",
   distDir: "dist",
   srcDir: "src",
-  typescript: {}
+  typescript: {},
 };
 
 const lib: LibTarget = {
@@ -32,8 +32,11 @@ const lib: LibTarget = {
   mainModule: "index",
   dist: {
     packageJsonMap: (old: buildTools.PackageJson): buildTools.PackageJson => {
-      const version: string = options.devDist !== undefined ? `${old.version}-build.${options.devDist}` : old.version;
-      return <any> {...old, version, scripts: undefined, private: false};
+      const version: string =
+        options.devDist !== undefined
+          ? `${old.version}-build.${options.devDist}`
+          : old.version;
+      return <any>{ ...old, version, scripts: undefined, private: false };
     },
     npmPublish: {
       tag: options.devDist !== undefined ? "next" : "latest",
@@ -90,6 +93,9 @@ const libTasks: any = registerLibTasks(gulp, lib);
 registerMochaTasks(gulp, test);
 buildTools.projectTasks.registerAll(gulp, project);
 
-gulp.task("all:tsconfig.json", gulp.parallel("lib:tsconfig.json", "test:tsconfig.json"));
+gulp.task(
+  "all:tsconfig.json",
+  gulp.parallel("lib:tsconfig.json", "test:tsconfig.json")
+);
 gulp.task("dist", libTasks.dist);
 gulp.task("default", libTasks.dist);

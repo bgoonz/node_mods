@@ -7,7 +7,8 @@ var superPropBase = require("./superPropBase.js");
 function _get(target, property, receiver) {
   if (typeof Reflect !== "undefined" && _Reflect$get) {
     module.exports = _get = _Reflect$get;
-    module.exports["default"] = module.exports, module.exports.__esModule = true;
+    (module.exports["default"] = module.exports),
+      (module.exports.__esModule = true);
   } else {
     module.exports = _get = function _get(target, property, receiver) {
       var base = superPropBase(target, property);
@@ -22,11 +23,13 @@ function _get(target, property, receiver) {
       return desc.value;
     };
 
-    module.exports["default"] = module.exports, module.exports.__esModule = true;
+    (module.exports["default"] = module.exports),
+      (module.exports.__esModule = true);
   }
 
   return _get(target, property, receiver || target);
 }
 
 module.exports = _get;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

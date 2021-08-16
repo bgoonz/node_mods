@@ -8,7 +8,7 @@ export default function (moduleName, dirname, absoluteRuntime) {
 
   return resolveAbsoluteRuntime(
     moduleName,
-    path.resolve(dirname, absoluteRuntime === true ? "." : absoluteRuntime),
+    path.resolve(dirname, absoluteRuntime === true ? "." : absoluteRuntime)
   );
 }
 
@@ -16,7 +16,7 @@ function resolveAbsoluteRuntime(moduleName: string, dirname: string) {
   try {
     return path
       .dirname(
-        require.resolve(`${moduleName}/package.json`, { paths: [dirname] }),
+        require.resolve(`${moduleName}/package.json`, { paths: [dirname] })
       )
       .replace(/\\/g, "/");
   } catch (err) {
@@ -28,7 +28,7 @@ function resolveAbsoluteRuntime(moduleName: string, dirname: string) {
         code: "BABEL_RUNTIME_NOT_FOUND",
         runtime: moduleName,
         dirname,
-      },
+      }
     );
   }
 }

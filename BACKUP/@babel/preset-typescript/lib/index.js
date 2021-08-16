@@ -1,22 +1,21 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', { value: true });
+Object.defineProperty(exports, "__esModule", { value: true });
 
-var helperPluginUtils = require('@babel/helper-plugin-utils');
-var transformTypeScript = require('@babel/plugin-transform-typescript');
-var helperValidatorOption = require('@babel/helper-validator-option');
+var helperPluginUtils = require("@babel/helper-plugin-utils");
+var transformTypeScript = require("@babel/plugin-transform-typescript");
+var helperValidatorOption = require("@babel/helper-validator-option");
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+function _interopDefaultLegacy(e) {
+  return e && typeof e === "object" && "default" in e ? e : { default: e };
+}
 
-var transformTypeScript__default = /*#__PURE__*/_interopDefaultLegacy(transformTypeScript);
+var transformTypeScript__default =
+  /*#__PURE__*/ _interopDefaultLegacy(transformTypeScript);
 
 const v = new helperValidatorOption.OptionValidator("@babel/preset-typescript");
 function normalizeOptions(options = {}) {
-  let {
-    allowNamespaces = true,
-    jsxPragma,
-    onlyRemoveTypeImports
-  } = options;
+  let { allowNamespaces = true, jsxPragma, onlyRemoveTypeImports } = options;
   const TopLevelOptions = {
     allExtensions: "allExtensions",
     allowNamespaces: "allowNamespaces",
@@ -24,17 +23,33 @@ function normalizeOptions(options = {}) {
     jsxPragma: "jsxPragma",
     jsxPragmaFrag: "jsxPragmaFrag",
     onlyRemoveTypeImports: "onlyRemoveTypeImports",
-    optimizeConstEnums: "optimizeConstEnums"
+    optimizeConstEnums: "optimizeConstEnums",
   };
-  const jsxPragmaFrag = v.validateStringOption(TopLevelOptions.jsxPragmaFrag, options.jsxPragmaFrag, "React.Fragment");
-  const allExtensions = v.validateBooleanOption(TopLevelOptions.allExtensions, options.allExtensions, false);
-  const isTSX = v.validateBooleanOption(TopLevelOptions.isTSX, options.isTSX, false);
+  const jsxPragmaFrag = v.validateStringOption(
+    TopLevelOptions.jsxPragmaFrag,
+    options.jsxPragmaFrag,
+    "React.Fragment"
+  );
+  const allExtensions = v.validateBooleanOption(
+    TopLevelOptions.allExtensions,
+    options.allExtensions,
+    false
+  );
+  const isTSX = v.validateBooleanOption(
+    TopLevelOptions.isTSX,
+    options.isTSX,
+    false
+  );
 
   if (isTSX) {
     v.invariant(allExtensions, "isTSX:true requires allExtensions:true");
   }
 
-  const optimizeConstEnums = v.validateBooleanOption(TopLevelOptions.optimizeConstEnums, options.optimizeConstEnums, false);
+  const optimizeConstEnums = v.validateBooleanOption(
+    TopLevelOptions.optimizeConstEnums,
+    options.optimizeConstEnums,
+    false
+  );
   return {
     allExtensions,
     allowNamespaces,
@@ -42,7 +57,7 @@ function normalizeOptions(options = {}) {
     jsxPragma,
     jsxPragmaFrag,
     onlyRemoveTypeImports,
-    optimizeConstEnums
+    optimizeConstEnums,
   };
 }
 
@@ -55,29 +70,42 @@ var index = helperPluginUtils.declare((api, opts) => {
     jsxPragma,
     jsxPragmaFrag,
     onlyRemoveTypeImports,
-    optimizeConstEnums
+    optimizeConstEnums,
   } = normalizeOptions(opts);
 
-  const pluginOptions = isTSX => ({
+  const pluginOptions = (isTSX) => ({
     allowDeclareFields: opts.allowDeclareFields,
     allowNamespaces,
     isTSX,
     jsxPragma,
     jsxPragmaFrag,
     onlyRemoveTypeImports,
-    optimizeConstEnums
+    optimizeConstEnums,
   });
 
   return {
-    overrides: allExtensions ? [{
-      plugins: [[transformTypeScript__default['default'], pluginOptions(isTSX)]]
-    }] : [{
-      test: /\.ts$/,
-      plugins: [[transformTypeScript__default['default'], pluginOptions(false)]]
-    }, {
-      test: /\.tsx$/,
-      plugins: [[transformTypeScript__default['default'], pluginOptions(true)]]
-    }]
+    overrides: allExtensions
+      ? [
+          {
+            plugins: [
+              [transformTypeScript__default["default"], pluginOptions(isTSX)],
+            ],
+          },
+        ]
+      : [
+          {
+            test: /\.ts$/,
+            plugins: [
+              [transformTypeScript__default["default"], pluginOptions(false)],
+            ],
+          },
+          {
+            test: /\.tsx$/,
+            plugins: [
+              [transformTypeScript__default["default"], pluginOptions(true)],
+            ],
+          },
+        ],
   };
 });
 

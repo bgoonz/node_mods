@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -9,7 +9,7 @@ var _helperPluginUtils = require("@babel/helper-plugin-utils");
 
 var _helperFunctionName = require("@babel/helper-function-name");
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
   return {
     name: "transform-function-name",
@@ -20,8 +20,7 @@ var _default = (0, _helperPluginUtils.declare)(api => {
             const replacement = (0, _helperFunctionName.default)(path);
             if (replacement) path.replaceWith(replacement);
           }
-        }
-
+        },
       },
 
       ObjectProperty(path) {
@@ -31,9 +30,8 @@ var _default = (0, _helperPluginUtils.declare)(api => {
           const newNode = (0, _helperFunctionName.default)(value);
           if (newNode) value.replaceWith(newNode);
         }
-      }
-
-    }
+      },
+    },
   };
 });
 

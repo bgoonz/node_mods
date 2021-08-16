@@ -1,4 +1,4 @@
-import { Document } from './types';
+import { Document } from "./types";
 /**
  * A rich text document considered to be empty.
  * Any other document structure than this is not considered empty.

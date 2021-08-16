@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -15,12 +15,12 @@ function replacePropertySuper(path, getObjectRef, file) {
   const replaceSupers = new _helperReplaceSupers.default({
     getObjectRef: getObjectRef,
     methodPath: path,
-    file: file
+    file: file,
   });
   replaceSupers.replace();
 }
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
   return {
     name: "transform-object-super",
@@ -28,22 +28,28 @@ var _default = (0, _helperPluginUtils.declare)(api => {
       ObjectExpression(path, state) {
         let objectRef;
 
-        const getObjectRef = () => objectRef = objectRef || path.scope.generateUidIdentifier("obj");
+        const getObjectRef = () =>
+          (objectRef = objectRef || path.scope.generateUidIdentifier("obj"));
 
-        path.get("properties").forEach(propPath => {
+        path.get("properties").forEach((propPath) => {
           if (!propPath.isMethod()) return;
           replacePropertySuper(propPath, getObjectRef, state);
         });
 
         if (objectRef) {
           path.scope.push({
-            id: _core.types.cloneNode(objectRef)
+            id: _core.types.cloneNode(objectRef),
           });
-          path.replaceWith(_core.types.assignmentExpression("=", _core.types.cloneNode(objectRef), path.node));
+          path.replaceWith(
+            _core.types.assignmentExpression(
+              "=",
+              _core.types.cloneNode(objectRef),
+              path.node
+            )
+          );
         }
-      }
-
-    }
+      },
+    },
   };
 });
 

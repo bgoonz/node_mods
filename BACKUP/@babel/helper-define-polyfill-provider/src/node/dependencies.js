@@ -9,7 +9,7 @@ const nativeRequireResolve = parseFloat(process.versions.node) >= 8.9;
 export function resolve(
   dirname: string,
   moduleName: string,
-  absoluteImports: boolean | string,
+  absoluteImports: boolean | string
 ): string {
   if (absoluteImports === false) return moduleName;
 
@@ -54,7 +54,7 @@ export function resolve(
         code: "BABEL_POLYFILL_NOT_FOUND",
         polyfill: moduleName,
         dirname,
-      },
+      }
     );
   }
 }
@@ -76,15 +76,13 @@ export function has(basedir: string, name: string) {
 export function logMissing(missingDeps: Set<string>) {
   if (missingDeps.size === 0) return;
 
-  const deps = Array.from(missingDeps)
-    .sort()
-    .join(" ");
+  const deps = Array.from(missingDeps).sort().join(" ");
 
   console.warn(
     "\nSome polyfills have been added but are not present in your dependencies.\n" +
       "Please run one of the following commands:\n" +
       `\tnpm install --save ${deps}\n` +
-      `\tyarn add ${deps}\n`,
+      `\tyarn add ${deps}\n`
   );
 
   process.exitCode = 1;
@@ -100,6 +98,6 @@ const laterLogMissingDependencies = debounce(() => {
 export function laterLogMissing(missingDeps: Set<string>) {
   if (missingDeps.size === 0) return;
 
-  missingDeps.forEach(name => allMissingDeps.add(name));
+  missingDeps.forEach((name) => allMissingDeps.add(name));
   laterLogMissingDependencies();
 }

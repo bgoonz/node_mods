@@ -1,15 +1,49 @@
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+      args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+      _next(undefined);
+    });
+  };
+}
 
 const babel = require("./babel-core.cjs");
 
 function getParserPlugins(babelOptions) {
   var _babelOptions$parserO, _babelOptions$parserO2;
 
-  const babelParserPlugins = (_babelOptions$parserO = (_babelOptions$parserO2 = babelOptions.parserOpts) == null ? void 0 : _babelOptions$parserO2.plugins) != null ? _babelOptions$parserO : [];
+  const babelParserPlugins =
+    (_babelOptions$parserO =
+      (_babelOptions$parserO2 = babelOptions.parserOpts) == null
+        ? void 0
+        : _babelOptions$parserO2.plugins) != null
+      ? _babelOptions$parserO
+      : [];
   const estreeOptions = {
-    classFeatures: false
+    classFeatures: false,
   };
 
   for (const plugin of babelParserPlugins) {
@@ -23,24 +57,35 @@ function getParserPlugins(babelOptions) {
 }
 
 function normalizeParserOptions(options) {
-  return Object.assign({
-    sourceType: options.sourceType,
-    filename: options.filePath
-  }, options.babelOptions, {
-    parserOpts: Object.assign({
-      allowImportExportEverywhere: options.allowImportExportEverywhere,
-      allowReturnOutsideFunction: true,
-      allowSuperOutsideMethod: true
-    }, options.babelOptions.parserOpts, {
-      plugins: getParserPlugins(options.babelOptions),
-      attachComment: false,
-      ranges: true,
-      tokens: true
-    }),
-    caller: Object.assign({
-      name: "@babel/eslint-parser"
-    }, options.babelOptions.caller)
-  });
+  return Object.assign(
+    {
+      sourceType: options.sourceType,
+      filename: options.filePath,
+    },
+    options.babelOptions,
+    {
+      parserOpts: Object.assign(
+        {
+          allowImportExportEverywhere: options.allowImportExportEverywhere,
+          allowReturnOutsideFunction: true,
+          allowSuperOutsideMethod: true,
+        },
+        options.babelOptions.parserOpts,
+        {
+          plugins: getParserPlugins(options.babelOptions),
+          attachComment: false,
+          ranges: true,
+          tokens: true,
+        }
+      ),
+      caller: Object.assign(
+        {
+          name: "@babel/eslint-parser",
+        },
+        options.babelOptions.caller
+      ),
+    }
+  );
 }
 
 function validateResolvedConfig(config, options, parseOptions) {
@@ -64,18 +109,22 @@ function validateResolvedConfig(config, options, parseOptions) {
 }
 
 function getDefaultParserOptions(options) {
-  return Object.assign({
-    plugins: []
-  }, options, {
-    babelrc: false,
-    configFile: false,
-    browserslistConfigFile: false,
-    ignore: null,
-    only: null
-  });
+  return Object.assign(
+    {
+      plugins: [],
+    },
+    options,
+    {
+      babelrc: false,
+      configFile: false,
+      browserslistConfigFile: false,
+      ignore: null,
+      only: null,
+    }
+  );
 }
 
-exports.normalizeBabelParseConfig = function () {
+exports.normalizeBabelParseConfig = (function () {
   var _ref = _asyncToGenerator(function* (options) {
     const parseOptions = normalizeParserOptions(options);
     const config = yield babel.loadPartialConfigAsync(parseOptions);
@@ -85,7 +134,7 @@ exports.normalizeBabelParseConfig = function () {
   return function (_x) {
     return _ref.apply(this, arguments);
   };
-}();
+})();
 
 exports.normalizeBabelParseConfigSync = function (options) {
   const parseOptions = normalizeParserOptions(options);

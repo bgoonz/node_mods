@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.replaceWithMultiple = replaceWithMultiple;
 exports.replaceWithSourceString = replaceWithSourceString;
@@ -31,7 +31,9 @@ function replaceWithMultiple(nodes) {
   nodes = this._verifyNodeList(nodes);
   t.inheritLeadingComments(nodes[0], this.node);
   t.inheritTrailingComments(nodes[nodes.length - 1], this.node);
-  (_pathCache$get = _cache.path.get(this.parent)) == null ? void 0 : _pathCache$get.delete(this.node);
+  (_pathCache$get = _cache.path.get(this.parent)) == null
+    ? void 0
+    : _pathCache$get.delete(this.node);
   this.node = this.container[this.key] = null;
   const paths = this.insertAfter(nodes);
 
@@ -54,12 +56,14 @@ function replaceWithSourceString(replacement) {
     const loc = err.loc;
 
     if (loc) {
-      err.message += " - make sure this is an expression.\n" + (0, _codeFrame.codeFrameColumns)(replacement, {
-        start: {
-          line: loc.line,
-          column: loc.column + 1
-        }
-      });
+      err.message +=
+        " - make sure this is an expression.\n" +
+        (0, _codeFrame.codeFrameColumns)(replacement, {
+          start: {
+            line: loc.line,
+            column: loc.column + 1,
+          },
+        });
       err.code = "BABEL_REPLACE_SOURCE_ERROR";
     }
 
@@ -85,7 +89,9 @@ function replaceWith(replacement) {
   }
 
   if (!replacement) {
-    throw new Error("You passed `path.replaceWith()` a falsy node, use `path.remove()` instead");
+    throw new Error(
+      "You passed `path.replaceWith()` a falsy node, use `path.remove()` instead"
+    );
   }
 
   if (this.node === replacement) {
@@ -93,28 +99,41 @@ function replaceWith(replacement) {
   }
 
   if (this.isProgram() && !t.isProgram(replacement)) {
-    throw new Error("You can only replace a Program root node with another Program node");
+    throw new Error(
+      "You can only replace a Program root node with another Program node"
+    );
   }
 
   if (Array.isArray(replacement)) {
-    throw new Error("Don't use `path.replaceWith()` with an array of nodes, use `path.replaceWithMultiple()`");
+    throw new Error(
+      "Don't use `path.replaceWith()` with an array of nodes, use `path.replaceWithMultiple()`"
+    );
   }
 
   if (typeof replacement === "string") {
-    throw new Error("Don't use `path.replaceWith()` with a source string, use `path.replaceWithSourceString()`");
+    throw new Error(
+      "Don't use `path.replaceWith()` with a source string, use `path.replaceWithSourceString()`"
+    );
   }
 
   let nodePath = "";
 
   if (this.isNodeType("Statement") && t.isExpression(replacement)) {
-    if (!this.canHaveVariableDeclarationOrExpression() && !this.canSwapBetweenExpressionAndStatement(replacement) && !this.parentPath.isExportDefaultDeclaration()) {
+    if (
+      !this.canHaveVariableDeclarationOrExpression() &&
+      !this.canSwapBetweenExpressionAndStatement(replacement) &&
+      !this.parentPath.isExportDefaultDeclaration()
+    ) {
       replacement = t.expressionStatement(replacement);
       nodePath = "expression";
     }
   }
 
   if (this.isNodeType("Expression") && t.isStatement(replacement)) {
-    if (!this.canHaveVariableDeclarationOrExpression() && !this.canSwapBetweenExpressionAndStatement(replacement)) {
+    if (
+      !this.canHaveVariableDeclarationOrExpression() &&
+      !this.canSwapBetweenExpressionAndStatement(replacement)
+    ) {
       return this.replaceExpressionWithStatements([replacement]);
     }
   }
@@ -148,7 +167,9 @@ function _replaceWith(node) {
   }
 
   this.debug(`Replace with ${node == null ? void 0 : node.type}`);
-  (_pathCache$get2 = _cache.path.get(this.parent)) == null ? void 0 : _pathCache$get2.set(node, this).delete(this.node);
+  (_pathCache$get2 = _cache.path.get(this.parent)) == null
+    ? void 0
+    : _pathCache$get2.set(node, this).delete(this.node);
   this.node = this.container[this.key] = node;
 }
 
@@ -161,34 +182,46 @@ function replaceExpressionWithStatements(nodes) {
   }
 
   const functionParent = this.getFunctionParent();
-  const isParentAsync = functionParent == null ? void 0 : functionParent.is("async");
-  const isParentGenerator = functionParent == null ? void 0 : functionParent.is("generator");
+  const isParentAsync =
+    functionParent == null ? void 0 : functionParent.is("async");
+  const isParentGenerator =
+    functionParent == null ? void 0 : functionParent.is("generator");
   const container = t.arrowFunctionExpression([], t.blockStatement(nodes));
   this.replaceWith(t.callExpression(container, []));
   const callee = this.get("callee");
-  (0, _helperHoistVariables.default)(callee.get("body"), id => {
-    this.scope.push({
-      id
-    });
-  }, "var");
+  (0, _helperHoistVariables.default)(
+    callee.get("body"),
+    (id) => {
+      this.scope.push({
+        id,
+      });
+    },
+    "var"
+  );
   const completionRecords = this.get("callee").getCompletionRecords();
 
   for (const path of completionRecords) {
     if (!path.isExpressionStatement()) continue;
-    const loop = path.findParent(path => path.isLoop());
+    const loop = path.findParent((path) => path.isLoop());
 
     if (loop) {
       let uid = loop.getData("expressionReplacementReturnUid");
 
       if (!uid) {
         uid = callee.scope.generateDeclaredUidIdentifier("ret");
-        callee.get("body").pushContainer("body", t.returnStatement(t.cloneNode(uid)));
+        callee
+          .get("body")
+          .pushContainer("body", t.returnStatement(t.cloneNode(uid)));
         loop.setData("expressionReplacementReturnUid", uid);
       } else {
         uid = t.identifier(uid.name);
       }
 
-      path.get("expression").replaceWith(t.assignmentExpression("=", t.cloneNode(uid), path.node.expression));
+      path
+        .get("expression")
+        .replaceWith(
+          t.assignmentExpression("=", t.cloneNode(uid), path.node.expression)
+        );
     } else {
       path.replaceWith(t.returnStatement(path.node.expression));
     }
@@ -197,9 +230,21 @@ function replaceExpressionWithStatements(nodes) {
   callee.arrowFunctionToExpression();
   const newCallee = callee;
 
-  const needToAwaitFunction = isParentAsync && _index.default.hasType(this.get("callee.body").node, "AwaitExpression", t.FUNCTION_TYPES);
+  const needToAwaitFunction =
+    isParentAsync &&
+    _index.default.hasType(
+      this.get("callee.body").node,
+      "AwaitExpression",
+      t.FUNCTION_TYPES
+    );
 
-  const needToYieldFunction = isParentGenerator && _index.default.hasType(this.get("callee.body").node, "YieldExpression", t.FUNCTION_TYPES);
+  const needToYieldFunction =
+    isParentGenerator &&
+    _index.default.hasType(
+      this.get("callee.body").node,
+      "YieldExpression",
+      t.FUNCTION_TYPES
+    );
 
   if (needToAwaitFunction) {
     newCallee.set("async", true);

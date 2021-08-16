@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 var _default = {
@@ -10,6 +10,6 @@ var _default = {
   commonjs: "transform-modules-commonjs",
   cjs: "transform-modules-commonjs",
   systemjs: "transform-modules-systemjs",
-  umd: "transform-modules-umd"
+  umd: "transform-modules-umd",
 };
 exports.default = _default;

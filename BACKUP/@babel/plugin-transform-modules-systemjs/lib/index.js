@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.getExportSpecifierName = getExportSpecifierName;
 exports.default = void 0;
@@ -56,43 +56,98 @@ function getExportSpecifierName(node, stringSpecifiers) {
 
     return stringValue;
   } else {
-    throw new Error(`Expected export specifier to be either Identifier or StringLiteral, got ${node.type}`);
+    throw new Error(
+      `Expected export specifier to be either Identifier or StringLiteral, got ${node.type}`
+    );
   }
 }
 
-function constructExportCall(path, exportIdent, exportNames, exportValues, exportStarTarget, stringSpecifiers) {
+function constructExportCall(
+  path,
+  exportIdent,
+  exportNames,
+  exportValues,
+  exportStarTarget,
+  stringSpecifiers
+) {
   const statements = [];
 
   if (!exportStarTarget) {
     if (exportNames.length === 1) {
-      statements.push(_core.types.expressionStatement(_core.types.callExpression(exportIdent, [_core.types.stringLiteral(exportNames[0]), exportValues[0]])));
+      statements.push(
+        _core.types.expressionStatement(
+          _core.types.callExpression(exportIdent, [
+            _core.types.stringLiteral(exportNames[0]),
+            exportValues[0],
+          ])
+        )
+      );
     } else {
       const objectProperties = [];
 
       for (let i = 0; i < exportNames.length; i++) {
         const exportName = exportNames[i];
         const exportValue = exportValues[i];
-        objectProperties.push(_core.types.objectProperty(stringSpecifiers.has(exportName) ? _core.types.stringLiteral(exportName) : _core.types.identifier(exportName), exportValue));
+        objectProperties.push(
+          _core.types.objectProperty(
+            stringSpecifiers.has(exportName)
+              ? _core.types.stringLiteral(exportName)
+              : _core.types.identifier(exportName),
+            exportValue
+          )
+        );
       }
 
-      statements.push(_core.types.expressionStatement(_core.types.callExpression(exportIdent, [_core.types.objectExpression(objectProperties)])));
+      statements.push(
+        _core.types.expressionStatement(
+          _core.types.callExpression(exportIdent, [
+            _core.types.objectExpression(objectProperties),
+          ])
+        )
+      );
     }
   } else {
     const exportObj = path.scope.generateUid("exportObj");
-    statements.push(_core.types.variableDeclaration("var", [_core.types.variableDeclarator(_core.types.identifier(exportObj), _core.types.objectExpression([]))]));
-    statements.push(buildExportAll({
-      KEY: path.scope.generateUidIdentifier("key"),
-      EXPORT_OBJ: _core.types.identifier(exportObj),
-      TARGET: exportStarTarget
-    }));
+    statements.push(
+      _core.types.variableDeclaration("var", [
+        _core.types.variableDeclarator(
+          _core.types.identifier(exportObj),
+          _core.types.objectExpression([])
+        ),
+      ])
+    );
+    statements.push(
+      buildExportAll({
+        KEY: path.scope.generateUidIdentifier("key"),
+        EXPORT_OBJ: _core.types.identifier(exportObj),
+        TARGET: exportStarTarget,
+      })
+    );
 
     for (let i = 0; i < exportNames.length; i++) {
       const exportName = exportNames[i];
       const exportValue = exportValues[i];
-      statements.push(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.memberExpression(_core.types.identifier(exportObj), _core.types.identifier(exportName)), exportValue)));
+      statements.push(
+        _core.types.expressionStatement(
+          _core.types.assignmentExpression(
+            "=",
+            _core.types.memberExpression(
+              _core.types.identifier(exportObj),
+              _core.types.identifier(exportName)
+            ),
+            exportValue
+          )
+        )
+      );
     }
 
-    statements.push(_core.types.expressionStatement(_core.types.callExpression(exportIdent, [_core.types.identifier(exportObj)])));
+    statements.push(
+      _core.types.expressionStatement(
+        _core.types.callExpression(exportIdent, [
+          _core.types.identifier(exportObj),
+        ])
+      )
+    );
   }
 
   return statements;
@@ -100,10 +155,7 @@ function constructExportCall(path, exportIdent, exportNames, exportValues, expor
 
 var _default = (0, _helperPluginUtils.declare)((api, options) => {
   api.assertVersion(7);
-  const {
-    systemGlobal = "System",
-    allowTopLevelThis = false
-  } = options;
+  const { systemGlobal = "System", allowTopLevelThis = false } = options;
   const IGNORE_REASSIGNMENT_SYMBOL = Symbol();
   const reassignmentVisitor = {
     "AssignmentExpression|UpdateExpression"(path) {
@@ -123,7 +175,10 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
           if (!exportedNames) return;
 
           for (const exportedName of exportedNames) {
-            exprs.push(this.buildCall(exportedName, _core.types.identifier(name)).expression);
+            exprs.push(
+              this.buildCall(exportedName, _core.types.identifier(name))
+                .expression
+            );
           }
         }
 
@@ -138,11 +193,18 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       if (!exportedNames) return;
       let node = path.node;
       const isPostUpdateExpression = path.isUpdateExpression({
-        prefix: false
+        prefix: false,
       });
 
       if (isPostUpdateExpression) {
-        node = _core.types.binaryExpression(node.operator[0], _core.types.unaryExpression("+", _core.types.cloneNode(node.argument)), _core.types.numericLiteral(1));
+        node = _core.types.binaryExpression(
+          node.operator[0],
+          _core.types.unaryExpression(
+            "+",
+            _core.types.cloneNode(node.argument)
+          ),
+          _core.types.numericLiteral(1)
+        );
       }
 
       for (const exportedName of exportedNames) {
@@ -154,8 +216,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       }
 
       path.replaceWith(node);
-    }
-
+    },
   };
   return {
     name: "transform-modules-systemjs",
@@ -173,19 +234,43 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
             }
           }
 
-          path.replaceWith(_core.types.callExpression(_core.types.memberExpression(_core.types.identifier(state.contextIdent), _core.types.identifier("import")), [(0, _utils.getImportSource)(_core.types, path.node)]));
+          path.replaceWith(
+            _core.types.callExpression(
+              _core.types.memberExpression(
+                _core.types.identifier(state.contextIdent),
+                _core.types.identifier("import")
+              ),
+              [(0, _utils.getImportSource)(_core.types, path.node)]
+            )
+          );
         }
       },
 
       MetaProperty(path, state) {
-        if (path.node.meta.name === "import" && path.node.property.name === "meta") {
-          path.replaceWith(_core.types.memberExpression(_core.types.identifier(state.contextIdent), _core.types.identifier("meta")));
+        if (
+          path.node.meta.name === "import" &&
+          path.node.property.name === "meta"
+        ) {
+          path.replaceWith(
+            _core.types.memberExpression(
+              _core.types.identifier(state.contextIdent),
+              _core.types.identifier("meta")
+            )
+          );
         }
       },
 
       ReferencedIdentifier(path, state) {
-        if (path.node.name === "__moduleName" && !path.scope.hasBinding("__moduleName")) {
-          path.replaceWith(_core.types.memberExpression(_core.types.identifier(state.contextIdent), _core.types.identifier("id")));
+        if (
+          path.node.name === "__moduleName" &&
+          !path.scope.hasBinding("__moduleName")
+        ) {
+          path.replaceWith(
+            _core.types.memberExpression(
+              _core.types.identifier(state.contextIdent),
+              _core.types.identifier("id")
+            )
+          );
         }
       },
 
@@ -202,10 +287,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         exit(path, state) {
           const scope = path.scope;
           const exportIdent = scope.generateUid("export");
-          const {
-            contextIdent,
-            stringSpecifiers
-          } = state;
+          const { contextIdent, stringSpecifiers } = state;
           const exportMap = Object.create(null);
           const modules = [];
           let beforeBody = [];
@@ -228,18 +310,25 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
             });
 
             if (!module) {
-              modules.push(module = {
-                key: source,
-                imports: [],
-                exports: []
-              });
+              modules.push(
+                (module = {
+                  key: source,
+                  imports: [],
+                  exports: [],
+                })
+              );
             }
 
             module[key] = module[key].concat(specifiers);
           }
 
           function buildExportCall(name, val) {
-            return _core.types.expressionStatement(_core.types.callExpression(_core.types.identifier(exportIdent), [_core.types.stringLiteral(name), val]));
+            return _core.types.expressionStatement(
+              _core.types.callExpression(_core.types.identifier(exportIdent), [
+                _core.types.stringLiteral(name),
+                val,
+              ])
+            );
           }
 
           const exportNames = [];
@@ -252,7 +341,15 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
               removedPaths.push(path);
             } else if (path.isClassDeclaration()) {
               variableIds.push(_core.types.cloneNode(path.node.id));
-              path.replaceWith(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.cloneNode(path.node.id), _core.types.toExpression(path.node))));
+              path.replaceWith(
+                _core.types.expressionStatement(
+                  _core.types.assignmentExpression(
+                    "=",
+                    _core.types.cloneNode(path.node.id),
+                    _core.types.toExpression(path.node)
+                  )
+                )
+              );
             } else if (path.isImportDeclaration()) {
               const source = path.node.source.value;
               pushModule(source, "imports", path.node.specifiers);
@@ -276,7 +373,15 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
                   exportValues.push(scope.buildUndefinedNode());
                   variableIds.push(_core.types.cloneNode(id));
                   addExportName(id.name, "default");
-                  path.replaceWith(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.cloneNode(id), _core.types.toExpression(declar.node))));
+                  path.replaceWith(
+                    _core.types.expressionStatement(
+                      _core.types.assignmentExpression(
+                        "=",
+                        _core.types.cloneNode(id),
+                        _core.types.toExpression(declar.node)
+                      )
+                    )
+                  );
                 } else {
                   exportNames.push("default");
                   exportValues.push(_core.types.toExpression(declar.node));
@@ -316,10 +421,20 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
                   exportNames.push(name);
                   exportValues.push(scope.buildUndefinedNode());
                   variableIds.push(_core.types.cloneNode(declar.node.id));
-                  path.replaceWith(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.cloneNode(declar.node.id), _core.types.toExpression(declar.node))));
+                  path.replaceWith(
+                    _core.types.expressionStatement(
+                      _core.types.assignmentExpression(
+                        "=",
+                        _core.types.cloneNode(declar.node.id),
+                        _core.types.toExpression(declar.node)
+                      )
+                    )
+                  );
                   addExportName(name, name);
                 } else {
-                  for (const name of Object.keys(declar.getBindingIdentifiers())) {
+                  for (const name of Object.keys(
+                    declar.getBindingIdentifiers()
+                  )) {
                     addExportName(name, name);
                   }
                 }
@@ -334,19 +449,22 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
                     const nodes = [];
 
                     for (const specifier of specifiers) {
-                      const {
-                        local,
-                        exported
-                      } = specifier;
+                      const { local, exported } = specifier;
                       const binding = scope.getBinding(local.name);
-                      const exportedName = getExportSpecifierName(exported, stringSpecifiers);
+                      const exportedName = getExportSpecifierName(
+                        exported,
+                        stringSpecifiers
+                      );
 
-                      if (binding && _core.types.isFunctionDeclaration(binding.path.node)) {
+                      if (
+                        binding &&
+                        _core.types.isFunctionDeclaration(binding.path.node)
+                      ) {
                         exportNames.push(exportedName);
                         exportValues.push(_core.types.cloneNode(local));
                       } else if (!binding) {
-                          nodes.push(buildExportCall(exportedName, local));
-                        }
+                        nodes.push(buildExportCall(exportedName, local));
+                      }
 
                       addExportName(local.name, exportedName);
                     }
@@ -366,16 +484,37 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
             for (let specifier of specifiers.imports) {
               if (_core.types.isImportNamespaceSpecifier(specifier)) {
-                setterBody.push(_core.types.expressionStatement(_core.types.assignmentExpression("=", specifier.local, _core.types.identifier(target))));
+                setterBody.push(
+                  _core.types.expressionStatement(
+                    _core.types.assignmentExpression(
+                      "=",
+                      specifier.local,
+                      _core.types.identifier(target)
+                    )
+                  )
+                );
               } else if (_core.types.isImportDefaultSpecifier(specifier)) {
-                specifier = _core.types.importSpecifier(specifier.local, _core.types.identifier("default"));
+                specifier = _core.types.importSpecifier(
+                  specifier.local,
+                  _core.types.identifier("default")
+                );
               }
 
               if (_core.types.isImportSpecifier(specifier)) {
-                const {
-                  imported
-                } = specifier;
-                setterBody.push(_core.types.expressionStatement(_core.types.assignmentExpression("=", specifier.local, _core.types.memberExpression(_core.types.identifier(target), specifier.imported, imported.type === "StringLiteral"))));
+                const { imported } = specifier;
+                setterBody.push(
+                  _core.types.expressionStatement(
+                    _core.types.assignmentExpression(
+                      "=",
+                      specifier.local,
+                      _core.types.memberExpression(
+                        _core.types.identifier(target),
+                        specifier.imported,
+                        imported.type === "StringLiteral"
+                      )
+                    )
+                  )
+                );
               }
             }
 
@@ -388,43 +527,89 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
                 if (_core.types.isExportAllDeclaration(node)) {
                   hasExportStar = true;
                 } else if (_core.types.isExportSpecifier(node)) {
-                  const exportedName = getExportSpecifierName(node.exported, stringSpecifiers);
+                  const exportedName = getExportSpecifierName(
+                    node.exported,
+                    stringSpecifiers
+                  );
                   exportNames.push(exportedName);
-                  exportValues.push(_core.types.memberExpression(_core.types.identifier(target), node.local, _core.types.isStringLiteral(node.local)));
-                } else {}
+                  exportValues.push(
+                    _core.types.memberExpression(
+                      _core.types.identifier(target),
+                      node.local,
+                      _core.types.isStringLiteral(node.local)
+                    )
+                  );
+                } else {
+                }
               }
 
-              setterBody = setterBody.concat(constructExportCall(path, _core.types.identifier(exportIdent), exportNames, exportValues, hasExportStar ? _core.types.identifier(target) : null, stringSpecifiers));
+              setterBody = setterBody.concat(
+                constructExportCall(
+                  path,
+                  _core.types.identifier(exportIdent),
+                  exportNames,
+                  exportValues,
+                  hasExportStar ? _core.types.identifier(target) : null,
+                  stringSpecifiers
+                )
+              );
             }
 
             sources.push(_core.types.stringLiteral(specifiers.key));
-            setters.push(_core.types.functionExpression(null, [_core.types.identifier(target)], _core.types.blockStatement(setterBody)));
+            setters.push(
+              _core.types.functionExpression(
+                null,
+                [_core.types.identifier(target)],
+                _core.types.blockStatement(setterBody)
+              )
+            );
           });
-          let moduleName = (0, _helperModuleTransforms.getModuleName)(this.file.opts, options);
+          let moduleName = (0, _helperModuleTransforms.getModuleName)(
+            this.file.opts,
+            options
+          );
           if (moduleName) moduleName = _core.types.stringLiteral(moduleName);
-          (0, _helperHoistVariables.default)(path, (id, name, hasInit) => {
-            variableIds.push(id);
+          (0, _helperHoistVariables.default)(
+            path,
+            (id, name, hasInit) => {
+              variableIds.push(id);
 
-            if (!hasInit && name in exportMap) {
-              for (const exported of exportMap[name]) {
-                exportNames.push(exported);
-                exportValues.push(scope.buildUndefinedNode());
+              if (!hasInit && name in exportMap) {
+                for (const exported of exportMap[name]) {
+                  exportNames.push(exported);
+                  exportValues.push(scope.buildUndefinedNode());
+                }
               }
-            }
-          }, null);
+            },
+            null
+          );
 
           if (variableIds.length) {
-            beforeBody.unshift(_core.types.variableDeclaration("var", variableIds.map(id => _core.types.variableDeclarator(id))));
+            beforeBody.unshift(
+              _core.types.variableDeclaration(
+                "var",
+                variableIds.map((id) => _core.types.variableDeclarator(id))
+              )
+            );
           }
 
           if (exportNames.length) {
-            beforeBody = beforeBody.concat(constructExportCall(path, _core.types.identifier(exportIdent), exportNames, exportValues, null, stringSpecifiers));
+            beforeBody = beforeBody.concat(
+              constructExportCall(
+                path,
+                _core.types.identifier(exportIdent),
+                exportNames,
+                exportValues,
+                null,
+                stringSpecifiers
+              )
+            );
           }
 
           path.traverse(reassignmentVisitor, {
             exports: exportMap,
             buildCall: buildExportCall,
-            scope
+            scope,
           });
 
           for (const path of removedPaths) {
@@ -442,22 +627,32 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
               path.skip();
             },
 
-            noScope: true
+            noScope: true,
           });
-          path.node.body = [buildTemplate({
-            SYSTEM_REGISTER: _core.types.memberExpression(_core.types.identifier(systemGlobal), _core.types.identifier("register")),
-            BEFORE_BODY: beforeBody,
-            MODULE_NAME: moduleName,
-            SETTERS: _core.types.arrayExpression(setters),
-            EXECUTE: _core.types.functionExpression(null, [], _core.types.blockStatement(path.node.body), false, hasTLA),
-            SOURCES: _core.types.arrayExpression(sources),
-            EXPORT_IDENTIFIER: _core.types.identifier(exportIdent),
-            CONTEXT_IDENTIFIER: _core.types.identifier(contextIdent)
-          })];
-        }
-
-      }
-    }
+          path.node.body = [
+            buildTemplate({
+              SYSTEM_REGISTER: _core.types.memberExpression(
+                _core.types.identifier(systemGlobal),
+                _core.types.identifier("register")
+              ),
+              BEFORE_BODY: beforeBody,
+              MODULE_NAME: moduleName,
+              SETTERS: _core.types.arrayExpression(setters),
+              EXECUTE: _core.types.functionExpression(
+                null,
+                [],
+                _core.types.blockStatement(path.node.body),
+                false,
+                hasTLA
+              ),
+              SOURCES: _core.types.arrayExpression(sources),
+              EXPORT_IDENTIFIER: _core.types.identifier(exportIdent),
+              CONTEXT_IDENTIFIER: _core.types.identifier(contextIdent),
+            }),
+          ];
+        },
+      },
+    },
   };
 });
 

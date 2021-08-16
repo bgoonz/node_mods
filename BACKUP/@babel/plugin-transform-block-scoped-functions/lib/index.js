@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -9,7 +9,7 @@ var _helperPluginUtils = require("@babel/helper-plugin-utils");
 
 var _core = require("@babel/core");
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
 
   function statementList(key, path) {
@@ -19,7 +19,9 @@ var _default = (0, _helperPluginUtils.declare)(api => {
       const func = path.node;
       if (!path.isFunctionDeclaration()) continue;
 
-      const declar = _core.types.variableDeclaration("let", [_core.types.variableDeclarator(func.id, _core.types.toExpression(func))]);
+      const declar = _core.types.variableDeclaration("let", [
+        _core.types.variableDeclarator(func.id, _core.types.toExpression(func)),
+      ]);
 
       declar._blockHoist = 2;
       func.id = null;
@@ -31,14 +33,14 @@ var _default = (0, _helperPluginUtils.declare)(api => {
     name: "transform-block-scoped-functions",
     visitor: {
       BlockStatement(path) {
-        const {
-          node,
-          parent
-        } = path;
+        const { node, parent } = path;
 
-        if (_core.types.isFunction(parent, {
-          body: node
-        }) || _core.types.isExportDeclaration(parent)) {
+        if (
+          _core.types.isFunction(parent, {
+            body: node,
+          }) ||
+          _core.types.isExportDeclaration(parent)
+        ) {
           return;
         }
 
@@ -47,9 +49,8 @@ var _default = (0, _helperPluginUtils.declare)(api => {
 
       SwitchCase(path) {
         statementList("consequent", path);
-      }
-
-    }
+      },
+    },
   };
 });
 

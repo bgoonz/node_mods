@@ -21,7 +21,8 @@ function _wrapRegExp() {
     return new BabelRegExp(re, undefined, groups);
   };
 
-  module.exports["default"] = module.exports, module.exports.__esModule = true;
+  (module.exports["default"] = module.exports),
+    (module.exports.__esModule = true);
   var _super = RegExp.prototype;
 
   var _groups = new _WeakMap();
@@ -47,9 +48,13 @@ function _wrapRegExp() {
     if (typeof substitution === "string") {
       var groups = _groups.get(this);
 
-      return _super[_Symbol$replace].call(this, str, substitution.replace(/\$<([^>]+)>/g, function (_, name) {
-        return "$" + groups[name];
-      }));
+      return _super[_Symbol$replace].call(
+        this,
+        str,
+        substitution.replace(/\$<([^>]+)>/g, function (_, name) {
+          return "$" + groups[name];
+        })
+      );
     } else if (typeof substitution === "function") {
       var _this = this;
 
@@ -73,14 +78,19 @@ function _wrapRegExp() {
 
     var g = _groups.get(re);
 
-    return _reduceInstanceProperty(_context = _Object$keys(g)).call(_context, function (groups, name) {
-      groups[name] = result[g[name]];
-      return groups;
-    }, _Object$create(null));
+    return _reduceInstanceProperty((_context = _Object$keys(g))).call(
+      _context,
+      function (groups, name) {
+        groups[name] = result[g[name]];
+        return groups;
+      },
+      _Object$create(null)
+    );
   }
 
   return _wrapRegExp.apply(this, arguments);
 }
 
 module.exports = _wrapRegExp;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

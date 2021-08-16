@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.arrayExpression = arrayExpression;
 exports.assignmentExpression = assignmentExpression;
@@ -157,7 +157,8 @@ exports.jSXAttribute = exports.jsxAttribute = jsxAttribute;
 exports.jSXClosingElement = exports.jsxClosingElement = jsxClosingElement;
 exports.jSXElement = exports.jsxElement = jsxElement;
 exports.jSXEmptyExpression = exports.jsxEmptyExpression = jsxEmptyExpression;
-exports.jSXExpressionContainer = exports.jsxExpressionContainer = jsxExpressionContainer;
+exports.jSXExpressionContainer = exports.jsxExpressionContainer =
+  jsxExpressionContainer;
 exports.jSXSpreadChild = exports.jsxSpreadChild = jsxSpreadChild;
 exports.jSXIdentifier = exports.jsxIdentifier = jsxIdentifier;
 exports.jSXMemberExpression = exports.jsxMemberExpression = jsxMemberExpression;
@@ -190,8 +191,10 @@ exports.tSParameterProperty = exports.tsParameterProperty = tsParameterProperty;
 exports.tSDeclareFunction = exports.tsDeclareFunction = tsDeclareFunction;
 exports.tSDeclareMethod = exports.tsDeclareMethod = tsDeclareMethod;
 exports.tSQualifiedName = exports.tsQualifiedName = tsQualifiedName;
-exports.tSCallSignatureDeclaration = exports.tsCallSignatureDeclaration = tsCallSignatureDeclaration;
-exports.tSConstructSignatureDeclaration = exports.tsConstructSignatureDeclaration = tsConstructSignatureDeclaration;
+exports.tSCallSignatureDeclaration = exports.tsCallSignatureDeclaration =
+  tsCallSignatureDeclaration;
+exports.tSConstructSignatureDeclaration =
+  exports.tsConstructSignatureDeclaration = tsConstructSignatureDeclaration;
 exports.tSPropertySignature = exports.tsPropertySignature = tsPropertySignature;
 exports.tSMethodSignature = exports.tsMethodSignature = tsMethodSignature;
 exports.tSIndexSignature = exports.tsIndexSignature = tsIndexSignature;
@@ -229,10 +232,13 @@ exports.tSTypeOperator = exports.tsTypeOperator = tsTypeOperator;
 exports.tSIndexedAccessType = exports.tsIndexedAccessType = tsIndexedAccessType;
 exports.tSMappedType = exports.tsMappedType = tsMappedType;
 exports.tSLiteralType = exports.tsLiteralType = tsLiteralType;
-exports.tSExpressionWithTypeArguments = exports.tsExpressionWithTypeArguments = tsExpressionWithTypeArguments;
-exports.tSInterfaceDeclaration = exports.tsInterfaceDeclaration = tsInterfaceDeclaration;
+exports.tSExpressionWithTypeArguments = exports.tsExpressionWithTypeArguments =
+  tsExpressionWithTypeArguments;
+exports.tSInterfaceDeclaration = exports.tsInterfaceDeclaration =
+  tsInterfaceDeclaration;
 exports.tSInterfaceBody = exports.tsInterfaceBody = tsInterfaceBody;
-exports.tSTypeAliasDeclaration = exports.tsTypeAliasDeclaration = tsTypeAliasDeclaration;
+exports.tSTypeAliasDeclaration = exports.tsTypeAliasDeclaration =
+  tsTypeAliasDeclaration;
 exports.tSAsExpression = exports.tsAsExpression = tsAsExpression;
 exports.tSTypeAssertion = exports.tsTypeAssertion = tsTypeAssertion;
 exports.tSEnumDeclaration = exports.tsEnumDeclaration = tsEnumDeclaration;
@@ -240,14 +246,19 @@ exports.tSEnumMember = exports.tsEnumMember = tsEnumMember;
 exports.tSModuleDeclaration = exports.tsModuleDeclaration = tsModuleDeclaration;
 exports.tSModuleBlock = exports.tsModuleBlock = tsModuleBlock;
 exports.tSImportType = exports.tsImportType = tsImportType;
-exports.tSImportEqualsDeclaration = exports.tsImportEqualsDeclaration = tsImportEqualsDeclaration;
-exports.tSExternalModuleReference = exports.tsExternalModuleReference = tsExternalModuleReference;
+exports.tSImportEqualsDeclaration = exports.tsImportEqualsDeclaration =
+  tsImportEqualsDeclaration;
+exports.tSExternalModuleReference = exports.tsExternalModuleReference =
+  tsExternalModuleReference;
 exports.tSNonNullExpression = exports.tsNonNullExpression = tsNonNullExpression;
 exports.tSExportAssignment = exports.tsExportAssignment = tsExportAssignment;
-exports.tSNamespaceExportDeclaration = exports.tsNamespaceExportDeclaration = tsNamespaceExportDeclaration;
+exports.tSNamespaceExportDeclaration = exports.tsNamespaceExportDeclaration =
+  tsNamespaceExportDeclaration;
 exports.tSTypeAnnotation = exports.tsTypeAnnotation = tsTypeAnnotation;
-exports.tSTypeParameterInstantiation = exports.tsTypeParameterInstantiation = tsTypeParameterInstantiation;
-exports.tSTypeParameterDeclaration = exports.tsTypeParameterDeclaration = tsTypeParameterDeclaration;
+exports.tSTypeParameterInstantiation = exports.tsTypeParameterInstantiation =
+  tsTypeParameterInstantiation;
+exports.tSTypeParameterDeclaration = exports.tsTypeParameterDeclaration =
+  tsTypeParameterDeclaration;
 exports.tSTypeParameter = exports.tsTypeParameter = tsTypeParameter;
 exports.numberLiteral = NumberLiteral;
 exports.regexLiteral = RegexLiteral;
@@ -524,7 +535,16 @@ function metaProperty(meta, property) {
   return (0, _builder.default)("MetaProperty", ...arguments);
 }
 
-function classMethod(kind, key, params, body, computed, _static, generator, async) {
+function classMethod(
+  kind,
+  key,
+  params,
+  body,
+  computed,
+  _static,
+  generator,
+  async
+) {
   return (0, _builder.default)("ClassMethod", ...arguments);
 }
 
@@ -580,7 +600,14 @@ function optionalCallExpression(callee, _arguments, optional) {
   return (0, _builder.default)("OptionalCallExpression", ...arguments);
 }
 
-function classProperty(key, value, typeAnnotation, decorators, computed, _static) {
+function classProperty(
+  key,
+  value,
+  typeAnnotation,
+  decorators,
+  computed,
+  _static
+) {
   return (0, _builder.default)("ClassProperty", ...arguments);
 }
 
@@ -720,7 +747,13 @@ function numberTypeAnnotation() {
   return (0, _builder.default)("NumberTypeAnnotation", ...arguments);
 }
 
-function objectTypeAnnotation(properties, indexers, callProperties, internalSlots, exact) {
+function objectTypeAnnotation(
+  properties,
+  indexers,
+  callProperties,
+  internalSlots,
+  exact
+) {
   return (0, _builder.default)("ObjectTypeAnnotation", ...arguments);
 }
 
@@ -1004,11 +1037,19 @@ function tsQualifiedName(left, right) {
   return (0, _builder.default)("TSQualifiedName", ...arguments);
 }
 
-function tsCallSignatureDeclaration(typeParameters, parameters, typeAnnotation) {
+function tsCallSignatureDeclaration(
+  typeParameters,
+  parameters,
+  typeAnnotation
+) {
   return (0, _builder.default)("TSCallSignatureDeclaration", ...arguments);
 }
 
-function tsConstructSignatureDeclaration(typeParameters, parameters, typeAnnotation) {
+function tsConstructSignatureDeclaration(
+  typeParameters,
+  parameters,
+  typeAnnotation
+) {
   return (0, _builder.default)("TSConstructSignatureDeclaration", ...arguments);
 }
 
@@ -1241,7 +1282,9 @@ function tsTypeParameter(constraint, _default, name) {
 }
 
 function NumberLiteral(...args) {
-  console.trace("The node type NumberLiteral has been renamed to NumericLiteral");
+  console.trace(
+    "The node type NumberLiteral has been renamed to NumericLiteral"
+  );
   return (0, _builder.default)("NumberLiteral", ...args);
 }
 
@@ -1256,6 +1299,8 @@ function RestProperty(...args) {
 }
 
 function SpreadProperty(...args) {
-  console.trace("The node type SpreadProperty has been renamed to SpreadElement");
+  console.trace(
+    "The node type SpreadProperty has been renamed to SpreadElement"
+  );
   return (0, _builder.default)("SpreadProperty", ...args);
 }

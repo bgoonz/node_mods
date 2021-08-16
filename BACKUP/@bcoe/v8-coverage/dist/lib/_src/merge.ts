@@ -19,9 +19,11 @@ import { FunctionCov, ProcessCov, Range, RangeCov, ScriptCov } from "./types";
  * @param processCovs Process coverages to merge.
  * @return Merged process coverage.
  */
-export function mergeProcessCovs(processCovs: ReadonlyArray<ProcessCov>): ProcessCov {
+export function mergeProcessCovs(
+  processCovs: ReadonlyArray<ProcessCov>
+): ProcessCov {
   if (processCovs.length === 0) {
-    return {result: []};
+    return { result: [] };
   }
 
   const urlToScripts: Map<string, ScriptCov[]> = new Map();
@@ -41,7 +43,7 @@ export function mergeProcessCovs(processCovs: ReadonlyArray<ProcessCov>): Proces
     // assert: `scripts.length > 0`
     result.push(mergeScriptCovs(scripts)!);
   }
-  const merged: ProcessCov = {result};
+  const merged: ProcessCov = { result };
 
   normalizeProcessCov(merged);
   return merged;
@@ -59,7 +61,9 @@ export function mergeProcessCovs(processCovs: ReadonlyArray<ProcessCov>): Proces
  * @param scriptCovs Process coverages to merge.
  * @return Merged script coverage, or `undefined` if the input list was empty.
  */
-export function mergeScriptCovs(scriptCovs: ReadonlyArray<ScriptCov>): ScriptCov | undefined {
+export function mergeScriptCovs(
+  scriptCovs: ReadonlyArray<ScriptCov>
+): ScriptCov | undefined {
   if (scriptCovs.length === 0) {
     return undefined;
   } else if (scriptCovs.length === 1) {
@@ -78,10 +82,12 @@ export function mergeScriptCovs(scriptCovs: ReadonlyArray<ScriptCov>): ScriptCov
       const rootRange: string = stringifyFunctionRootRange(funcCov);
       let funcCovs: FunctionCov[] | undefined = rangeToFuncs.get(rootRange);
 
-      if (funcCovs === undefined ||
+      if (
+        funcCovs === undefined ||
         // if the entry in rangeToFuncs is function-level granularity and
         // the new coverage is block-level, prefer block-level.
-        (!funcCovs[0].isBlockCoverage && funcCov.isBlockCoverage)) {
+        (!funcCovs[0].isBlockCoverage && funcCov.isBlockCoverage)
+      ) {
         funcCovs = [];
         rangeToFuncs.set(rootRange, funcCovs);
       } else if (funcCovs[0].isBlockCoverage && !funcCov.isBlockCoverage) {
@@ -99,7 +105,7 @@ export function mergeScriptCovs(scriptCovs: ReadonlyArray<ScriptCov>): ScriptCov
     functions.push(mergeFunctionCovs(funcCovs)!);
   }
 
-  const merged: ScriptCov = {scriptId, url, functions};
+  const merged: ScriptCov = { scriptId, url, functions };
   normalizeScriptCov(merged);
   return merged;
 }
@@ -117,7 +123,9 @@ export function mergeScriptCovs(scriptCovs: ReadonlyArray<ScriptCov>): ScriptCov
  */
 function stringifyFunctionRootRange(funcCov: Readonly<FunctionCov>): string {
   const rootRange: RangeCov = funcCov.ranges[0];
-  return `${rootRange.startOffset.toString(10)};${rootRange.endOffset.toString(10)}`;
+  return `${rootRange.startOffset.toString(10)};${rootRange.endOffset.toString(
+    10
+  )}`;
 }
 
 /**
@@ -132,7 +140,9 @@ function stringifyFunctionRootRange(funcCov: Readonly<FunctionCov>): string {
  * @param funcCovs Function coverages to merge.
  * @return Merged function coverage, or `undefined` if the input list was empty.
  */
-export function mergeFunctionCovs(funcCovs: ReadonlyArray<FunctionCov>): FunctionCov | undefined {
+export function mergeFunctionCovs(
+  funcCovs: ReadonlyArray<FunctionCov>
+): FunctionCov | undefined {
   if (funcCovs.length === 0) {
     return undefined;
   } else if (funcCovs.length === 1) {
@@ -154,9 +164,11 @@ export function mergeFunctionCovs(funcCovs: ReadonlyArray<FunctionCov>): Functio
   const mergedTree: RangeTree = mergeRangeTrees(trees)!;
   normalizeRangeTree(mergedTree);
   const ranges: RangeCov[] = mergedTree.toRanges();
-  const isBlockCoverage: boolean = !(ranges.length === 1 && ranges[0].count === 0);
+  const isBlockCoverage: boolean = !(
+    ranges.length === 1 && ranges[0].count === 0
+  );
 
-  const merged: FunctionCov = {functionName, ranges, isBlockCoverage};
+  const merged: FunctionCov = { functionName, ranges, isBlockCoverage };
   // assert: `merged` is normalized
   return merged;
 }
@@ -164,7 +176,9 @@ export function mergeFunctionCovs(funcCovs: ReadonlyArray<FunctionCov>): Functio
 /**
  * @precondition Same `start` and `end` for all the trees
  */
-function mergeRangeTrees(trees: ReadonlyArray<RangeTree>): RangeTree | undefined {
+function mergeRangeTrees(
+  trees: ReadonlyArray<RangeTree>
+): RangeTree | undefined {
   if (trees.length <= 1) {
     return trees[0];
   }
@@ -214,11 +228,15 @@ class StartEventQueue {
     this.pendingTrees = undefined;
   }
 
-  static fromParentTrees(parentTrees: ReadonlyArray<RangeTree>): StartEventQueue {
+  static fromParentTrees(
+    parentTrees: ReadonlyArray<RangeTree>
+  ): StartEventQueue {
     const startToTrees: Map<number, RangeTreeWithParent[]> = new Map();
     for (const [parentIndex, parentTree] of parentTrees.entries()) {
       for (const child of parentTree.children) {
-        let trees: RangeTreeWithParent[] | undefined = startToTrees.get(child.start);
+        let trees: RangeTreeWithParent[] | undefined = startToTrees.get(
+          child.start
+        );
         if (trees === undefined) {
           trees = [];
           startToTrees.set(child.start, trees);
@@ -272,9 +290,12 @@ class StartEventQueue {
   }
 }
 
-function mergeRangeTreeChildren(parentTrees: ReadonlyArray<RangeTree>): RangeTree[] {
+function mergeRangeTreeChildren(
+  parentTrees: ReadonlyArray<RangeTree>
+): RangeTree[] {
   const result: RangeTree[] = [];
-  const startEventQueue: StartEventQueue = StartEventQueue.fromParentTrees(parentTrees);
+  const startEventQueue: StartEventQueue =
+    StartEventQueue.fromParentTrees(parentTrees);
   const parentToNested: Map<number, RangeTree[]> = new Map();
   let openRange: Range | undefined;
 
@@ -291,17 +312,19 @@ function mergeRangeTreeChildren(parentTrees: ReadonlyArray<RangeTree>): RangeTre
 
     if (openRange === undefined) {
       let openRangeEnd: number = event.offset + 1;
-      for (const {parentIndex, tree} of event.trees) {
+      for (const { parentIndex, tree } of event.trees) {
         openRangeEnd = Math.max(openRangeEnd, tree.end);
         insertChild(parentToNested, parentIndex, tree);
       }
       startEventQueue.setPendingOffset(openRangeEnd);
-      openRange = {start: event.offset, end: openRangeEnd};
+      openRange = { start: event.offset, end: openRangeEnd };
     } else {
-      for (const {parentIndex, tree} of event.trees) {
+      for (const { parentIndex, tree } of event.trees) {
         if (tree.end > openRange.end) {
           const right: RangeTree = tree.split(openRange.end);
-          startEventQueue.pushPendingTree(new RangeTreeWithParent(parentIndex, right));
+          startEventQueue.pushPendingTree(
+            new RangeTreeWithParent(parentIndex, right)
+          );
         }
         insertChild(parentToNested, parentIndex, tree);
       }
@@ -314,7 +337,11 @@ function mergeRangeTreeChildren(parentTrees: ReadonlyArray<RangeTree>): RangeTre
   return result;
 }
 
-function insertChild(parentToNested: Map<number, RangeTree[]>, parentIndex: number, tree: RangeTree): void {
+function insertChild(
+  parentToNested: Map<number, RangeTree[]>,
+  parentIndex: number,
+  tree: RangeTree
+): void {
   let nested: RangeTree[] | undefined = parentToNested.get(parentIndex);
   if (nested === undefined) {
     nested = [];
@@ -323,19 +350,23 @@ function insertChild(parentToNested: Map<number, RangeTree[]>, parentIndex: numb
   nested.push(tree);
 }
 
-function nextChild(openRange: Range, parentToNested: Map<number, RangeTree[]>): RangeTree {
+function nextChild(
+  openRange: Range,
+  parentToNested: Map<number, RangeTree[]>
+): RangeTree {
   const matchingTrees: RangeTree[] = [];
 
   for (const nested of parentToNested.values()) {
-    if (nested.length === 1 && nested[0].start === openRange.start && nested[0].end === openRange.end) {
+    if (
+      nested.length === 1 &&
+      nested[0].start === openRange.start &&
+      nested[0].end === openRange.end
+    ) {
       matchingTrees.push(nested[0]);
     } else {
-      matchingTrees.push(new RangeTree(
-        openRange.start,
-        openRange.end,
-        0,
-        nested,
-      ));
+      matchingTrees.push(
+        new RangeTree(openRange.start, openRange.end, 0, nested)
+      );
     }
   }
   parentToNested.clear();

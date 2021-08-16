@@ -2,9 +2,7 @@
 
 const crypto = require(`crypto`);
 
-const {
-  GraphQLScalarType
-} = require(`gatsby/graphql`);
+const { GraphQLScalarType } = require(`gatsby/graphql`);
 
 const elasticlunr = require(`elasticlunr`);
 
@@ -12,20 +10,18 @@ const SEARCH_INDEX_ID = `SearchIndex < Site`;
 const SEARCH_INDEX_TYPE = `SiteSearchIndex`;
 const parent = `___SOURCE___`;
 
-const md5 = src => crypto.createHash(`md5`).update(src).digest(`hex`);
+const md5 = (src) => crypto.createHash(`md5`).update(src).digest(`hex`);
 
 const createEmptySearchIndexNode = () => {
   return {
     id: SEARCH_INDEX_ID,
     parent,
     children: [],
-    pages: []
+    pages: [],
   };
 };
 
-const appendPage = ({
-  pages
-}, newPage) => {
+const appendPage = ({ pages }, newPage) => {
   const newPages = [...pages, newPage];
   const content = JSON.stringify(newPage);
   return {
@@ -36,15 +32,20 @@ const appendPage = ({
     internal: {
       type: SEARCH_INDEX_TYPE,
       content: content,
-      contentDigest: md5(content)
-    }
+      contentDigest: md5(content),
+    },
   };
 };
 
-const createOrGetIndex = async (node, cache, getNode, getNodesByType, getNodes, server, {
-  fields,
-  resolvers
-}) => {
+const createOrGetIndex = async (
+  node,
+  cache,
+  getNode,
+  getNodesByType,
+  getNodes,
+  server,
+  { fields, resolvers }
+) => {
   const cacheKey = `${node.id}:index`;
   const cached = await cache.get(cacheKey);
 
@@ -54,7 +55,7 @@ const createOrGetIndex = async (node, cache, getNode, getNodesByType, getNodes, 
 
   const index = elasticlunr();
   index.setRef(`id`);
-  fields.forEach(field => index.addField(field));
+  fields.forEach((field) => index.addField(field));
 
   for (const pageId of node.pages) {
     const pageNode = getNode(pageId);
@@ -65,10 +66,16 @@ const createOrGetIndex = async (node, cache, getNode, getNodesByType, getNodes, 
         id: pageNode.id,
         date: pageNode.date,
         ...Object.keys(fieldResolvers).reduce((prev, key) => {
-          return { ...prev,
-            [key]: fieldResolvers[key](pageNode, getNode, getNodesByType, getNodes)
+          return {
+            ...prev,
+            [key]: fieldResolvers[key](
+              pageNode,
+              getNode,
+              getNodesByType,
+              getNodes
+            ),
           };
-        }, {})
+        }, {}),
       };
       index.addDoc(doc);
     }
@@ -93,29 +100,19 @@ const SearchIndex = new GraphQLScalarType({
 
   parseLiteral() {
     throw new Error(`Not supported`);
-  }
-
+  },
 });
 
-exports.sourceNodes = async ({
-  getNodes,
-  actions
-}) => {
-  const {
-    touchNode
-  } = actions;
-  const existingNodes = getNodes().filter(n => n.internal.owner === `@gatsby-contrib/gatsby-plugin-elasticlunr-search`);
-  existingNodes.forEach(node => touchNode(node));
+exports.sourceNodes = async ({ getNodes, actions }) => {
+  const { touchNode } = actions;
+  const existingNodes = getNodes().filter(
+    (n) =>
+      n.internal.owner === `@gatsby-contrib/gatsby-plugin-elasticlunr-search`
+  );
+  existingNodes.forEach((node) => touchNode(node));
 };
 
-exports.onCreateNode = ({
-  node,
-  actions,
-  getNode
-}, {
-  resolvers,
-  filter
-}) => {
+exports.onCreateNode = ({ node, actions, getNode }, { resolvers, filter }) => {
   if (Object.keys(resolvers).indexOf(node.internal.type) === -1) {
     return;
   }
@@ -124,21 +121,16 @@ exports.onCreateNode = ({
     return;
   }
 
-  const {
-    createNode
-  } = actions;
+  const { createNode } = actions;
   const searchIndex = getNode(SEARCH_INDEX_ID) || createEmptySearchIndexNode();
   const newSearchIndex = appendPage(searchIndex, node.id);
   createNode(newSearchIndex);
 };
 
-exports.setFieldsOnGraphQLNodeType = ({
-  type,
-  getNode,
-  getNodesByType,
-  getNodes,
-  cache
-}, pluginOptions) => {
+exports.setFieldsOnGraphQLNodeType = (
+  { type, getNode, getNodesByType, getNodes, cache },
+  pluginOptions
+) => {
   if (type.name !== SEARCH_INDEX_TYPE) {
     return null;
   }
@@ -146,7 +138,16 @@ exports.setFieldsOnGraphQLNodeType = ({
   return {
     index: {
       type: SearchIndex,
-      resolve: (node, _opts, _3, server) => createOrGetIndex(node, cache, getNode, getNodesByType, getNodes, server, pluginOptions)
-    }
+      resolve: (node, _opts, _3, server) =>
+        createOrGetIndex(
+          node,
+          cache,
+          getNode,
+          getNodesByType,
+          getNodes,
+          server,
+          pluginOptions
+        ),
+    },
   };
 };

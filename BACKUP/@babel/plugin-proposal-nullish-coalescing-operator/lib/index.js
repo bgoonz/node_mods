@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -11,22 +11,20 @@ var _pluginSyntaxNullishCoalescingOperator = require("@babel/plugin-syntax-nulli
 
 var _core = require("@babel/core");
 
-var _default = (0, _helperPluginUtils.declare)((api, {
-  loose = false
-}) => {
+var _default = (0, _helperPluginUtils.declare)((api, { loose = false }) => {
   var _api$assumption;
 
   api.assertVersion(7);
-  const noDocumentAll = (_api$assumption = api.assumption("noDocumentAll")) != null ? _api$assumption : loose;
+  const noDocumentAll =
+    (_api$assumption = api.assumption("noDocumentAll")) != null
+      ? _api$assumption
+      : loose;
   return {
     name: "proposal-nullish-coalescing-operator",
     inherits: _pluginSyntaxNullishCoalescingOperator.default,
     visitor: {
       LogicalExpression(path) {
-        const {
-          node,
-          scope
-        } = path;
+        const { node, scope } = path;
 
         if (node.operator !== "??") {
           return;
@@ -44,15 +42,38 @@ var _default = (0, _helperPluginUtils.declare)((api, {
         } else {
           ref = scope.generateUidIdentifierBasedOnNode(node.left);
           scope.push({
-            id: _core.types.cloneNode(ref)
+            id: _core.types.cloneNode(ref),
           });
           assignment = _core.types.assignmentExpression("=", ref, node.left);
         }
 
-        path.replaceWith(_core.types.conditionalExpression(noDocumentAll ? _core.types.binaryExpression("!=", assignment, _core.types.nullLiteral()) : _core.types.logicalExpression("&&", _core.types.binaryExpression("!==", assignment, _core.types.nullLiteral()), _core.types.binaryExpression("!==", _core.types.cloneNode(ref), scope.buildUndefinedNode())), _core.types.cloneNode(ref), node.right));
-      }
-
-    }
+        path.replaceWith(
+          _core.types.conditionalExpression(
+            noDocumentAll
+              ? _core.types.binaryExpression(
+                  "!=",
+                  assignment,
+                  _core.types.nullLiteral()
+                )
+              : _core.types.logicalExpression(
+                  "&&",
+                  _core.types.binaryExpression(
+                    "!==",
+                    assignment,
+                    _core.types.nullLiteral()
+                  ),
+                  _core.types.binaryExpression(
+                    "!==",
+                    _core.types.cloneNode(ref),
+                    scope.buildUndefinedNode()
+                  )
+                ),
+            _core.types.cloneNode(ref),
+            node.right
+          )
+        );
+      },
+    },
   };
 });
 

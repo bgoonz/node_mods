@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -21,11 +21,24 @@ function gatherNodeParts(node, parts) {
   switch (node == null ? void 0 : node.type) {
     default:
       if (t.isModuleDeclaration(node)) {
-        if ((t.isExportAllDeclaration(node) || t.isExportNamedDeclaration(node) || t.isImportDeclaration(node)) && node.source) {
+        if (
+          (t.isExportAllDeclaration(node) ||
+            t.isExportNamedDeclaration(node) ||
+            t.isImportDeclaration(node)) &&
+          node.source
+        ) {
           gatherNodeParts(node.source, parts);
-        } else if ((t.isExportNamedDeclaration(node) || t.isImportDeclaration(node)) && node.specifiers && node.specifiers.length) {
+        } else if (
+          (t.isExportNamedDeclaration(node) || t.isImportDeclaration(node)) &&
+          node.specifiers &&
+          node.specifiers.length
+        ) {
           for (const e of node.specifiers) gatherNodeParts(e, parts);
-        } else if ((t.isExportDefaultDeclaration(node) || t.isExportNamedDeclaration(node)) && node.declaration) {
+        } else if (
+          (t.isExportDefaultDeclaration(node) ||
+            t.isExportNamedDeclaration(node)) &&
+          node.declaration
+        ) {
           gatherNodeParts(node.declaration, parts);
         }
       } else if (t.isModuleSpecifier(node)) {
@@ -164,7 +177,8 @@ const collectorVisitor = {
       const declar = path.get(key);
 
       if (declar.isVar()) {
-        const parentScope = path.scope.getFunctionParent() || path.scope.getProgramParent();
+        const parentScope =
+          path.scope.getFunctionParent() || path.scope.getProgramParent();
         parentScope.registerBinding("var", declar);
       }
     }
@@ -174,7 +188,8 @@ const collectorVisitor = {
     if (path.isBlockScoped()) return;
     if (path.isImportDeclaration()) return;
     if (path.isExportDeclaration()) return;
-    const parent = path.scope.getFunctionParent() || path.scope.getProgramParent();
+    const parent =
+      path.scope.getFunctionParent() || path.scope.getProgramParent();
     parent.registerDeclaration(path);
   },
 
@@ -197,10 +212,7 @@ const collectorVisitor = {
 
   ExportDeclaration: {
     exit(path) {
-      const {
-        node,
-        scope
-      } = path;
+      const { node, scope } = path;
       if (t.isExportAllDeclaration(node)) return;
       const declar = node.declaration;
 
@@ -217,8 +229,7 @@ const collectorVisitor = {
           }
         }
       }
-    }
-
+    },
   },
 
   LabeledStatement(path) {
@@ -257,7 +268,11 @@ const collectorVisitor = {
   },
 
   Function(path) {
-    if (path.isFunctionExpression() && path.has("id") && !path.get("id").node[t.NOT_LOCAL_BINDING]) {
+    if (
+      path.isFunctionExpression() &&
+      path.has("id") &&
+      !path.get("id").node[t.NOT_LOCAL_BINDING]
+    ) {
       path.scope.registerBinding("local", path.get("id"), path);
     }
 
@@ -272,8 +287,7 @@ const collectorVisitor = {
     if (path.has("id") && !path.get("id").node[t.NOT_LOCAL_BINDING]) {
       path.scope.registerBinding("local", path);
     }
-  }
-
+  },
 };
 let uid = 0;
 
@@ -290,9 +304,7 @@ class Scope {
     this.uids = void 0;
     this.data = void 0;
     this.crawling = void 0;
-    const {
-      node
-    } = path;
+    const { node } = path;
 
     const cached = _cache.scope.get(node);
 
@@ -313,7 +325,7 @@ class Scope {
     var _parent;
 
     let parent,
-        path = this.path;
+      path = this.path;
 
     do {
       const isKey = path.key === "key";
@@ -340,7 +352,7 @@ class Scope {
   generateDeclaredUidIdentifier(name) {
     const id = this.generateUidIdentifier(name);
     this.push({
-      id
+      id,
     });
     return t.cloneNode(id);
   }
@@ -350,14 +362,22 @@ class Scope {
   }
 
   generateUid(name = "temp") {
-    name = t.toIdentifier(name).replace(/^_+/, "").replace(/[0-9]+$/g, "");
+    name = t
+      .toIdentifier(name)
+      .replace(/^_+/, "")
+      .replace(/[0-9]+$/g, "");
     let uid;
     let i = 1;
 
     do {
       uid = this._generateUid(name, i);
       i++;
-    } while (this.hasLabel(uid) || this.hasBinding(uid) || this.hasGlobal(uid) || this.hasReference(uid));
+    } while (
+      this.hasLabel(uid) ||
+      this.hasBinding(uid) ||
+      this.hasGlobal(uid) ||
+      this.hasReference(uid)
+    );
 
     const program = this.getProgramParent();
     program.references[uid] = true;
@@ -409,7 +429,7 @@ class Scope {
 
       if (!dontPush) {
         this.push({
-          id
+          id,
         });
         return t.cloneNode(id);
       }
@@ -421,10 +441,19 @@ class Scope {
   checkBlockScopedCollisions(local, kind, name, id) {
     if (kind === "param") return;
     if (local.kind === "local") return;
-    const duplicate = kind === "let" || local.kind === "let" || local.kind === "const" || local.kind === "module" || local.kind === "param" && (kind === "let" || kind === "const");
+    const duplicate =
+      kind === "let" ||
+      local.kind === "let" ||
+      local.kind === "const" ||
+      local.kind === "module" ||
+      (local.kind === "param" && (kind === "let" || kind === "const"));
 
     if (duplicate) {
-      throw this.hub.buildError(id, `Duplicate declaration "${name}"`, TypeError);
+      throw this.hub.buildError(
+        id,
+        `Duplicate declaration "${name}"`,
+        TypeError
+      );
     }
   }
 
@@ -458,10 +487,10 @@ class Scope {
           constant: binding.constant,
           references: binding.references,
           violations: binding.constantViolations.length,
-          kind: binding.kind
+          kind: binding.kind,
         });
       }
-    } while (scope = scope.parent);
+    } while ((scope = scope.parent));
 
     console.log(sep);
   }
@@ -470,7 +499,11 @@ class Scope {
     if (t.isIdentifier(node)) {
       const binding = this.getBinding(node.name);
 
-      if (binding != null && binding.constant && binding.path.isGenericType("Array")) {
+      if (
+        binding != null &&
+        binding.constant &&
+        binding.path.isGenericType("Array")
+      ) {
         return node;
       }
     }
@@ -479,10 +512,24 @@ class Scope {
       return node;
     }
 
-    if (t.isIdentifier(node, {
-      name: "arguments"
-    })) {
-      return t.callExpression(t.memberExpression(t.memberExpression(t.memberExpression(t.identifier("Array"), t.identifier("prototype")), t.identifier("slice")), t.identifier("call")), [node]);
+    if (
+      t.isIdentifier(node, {
+        name: "arguments",
+      })
+    ) {
+      return t.callExpression(
+        t.memberExpression(
+          t.memberExpression(
+            t.memberExpression(
+              t.identifier("Array"),
+              t.identifier("prototype")
+            ),
+            t.identifier("slice")
+          ),
+          t.identifier("call")
+        ),
+        [node]
+      );
     }
 
     let helperName;
@@ -539,7 +586,11 @@ class Scope {
     } else if (path.isExportDeclaration()) {
       const declar = path.get("declaration");
 
-      if (declar.isClassDeclaration() || declar.isFunctionDeclaration() || declar.isVariableDeclaration()) {
+      if (
+        declar.isClassDeclaration() ||
+        declar.isFunctionDeclaration() ||
+        declar.isVariableDeclaration()
+      ) {
         this.registerDeclaration(declar);
       }
     } else {
@@ -594,7 +645,7 @@ class Scope {
             identifier: id,
             scope: this,
             path: bindingPath,
-            kind: kind
+            kind: kind,
           });
         }
       }
@@ -610,7 +661,7 @@ class Scope {
 
     do {
       if (scope.uids[name]) return true;
-    } while (scope = scope.parent);
+    } while ((scope = scope.parent));
 
     return false;
   }
@@ -620,7 +671,7 @@ class Scope {
 
     do {
       if (scope.globals[name]) return true;
-    } while (scope = scope.parent);
+    } while ((scope = scope.parent));
 
     return false;
   }
@@ -648,7 +699,10 @@ class Scope {
 
       return true;
     } else if (t.isBinary(node)) {
-      return this.isPure(node.left, constantsOnly) && this.isPure(node.right, constantsOnly);
+      return (
+        this.isPure(node.left, constantsOnly) &&
+        this.isPure(node.right, constantsOnly)
+      );
     } else if (t.isArrayExpression(node)) {
       for (const elem of node.elements) {
         if (!this.isPure(elem, constantsOnly)) return false;
@@ -671,7 +725,11 @@ class Scope {
     } else if (t.isUnaryExpression(node)) {
       return this.isPure(node.argument, constantsOnly);
     } else if (t.isTaggedTemplateExpression(node)) {
-      return t.matchesPattern(node.tag, "String.raw") && !this.hasBinding("String", true) && this.isPure(node.quasi, constantsOnly);
+      return (
+        t.matchesPattern(node.tag, "String.raw") &&
+        !this.hasBinding("String", true) &&
+        this.isPure(node.quasi, constantsOnly)
+      );
     } else if (t.isTemplateLiteral(node)) {
       for (const expression of node.expressions) {
         if (!this.isPure(expression, constantsOnly)) return false;
@@ -684,7 +742,7 @@ class Scope {
   }
 
   setData(key, val) {
-    return this.data[key] = val;
+    return (this.data[key] = val);
   }
 
   getData(key) {
@@ -693,7 +751,7 @@ class Scope {
     do {
       const data = scope.data[key];
       if (data != null) return data;
-    } while (scope = scope.parent);
+    } while ((scope = scope.parent));
   }
 
   removeData(key) {
@@ -702,7 +760,7 @@ class Scope {
     do {
       const data = scope.data[key];
       if (data != null) scope.data[key] = null;
-    } while (scope = scope.parent);
+    } while ((scope = scope.parent));
   }
 
   init() {
@@ -724,7 +782,7 @@ class Scope {
     const state = {
       references: [],
       constantViolations: [],
-      assignments: []
+      assignments: [],
     };
     this.crawling = true;
 
@@ -812,7 +870,7 @@ class Scope {
       if (scope.path.isProgram()) {
         return scope;
       }
-    } while (scope = scope.parent);
+    } while ((scope = scope.parent));
 
     throw new Error("Couldn't find a Program");
   }
@@ -824,7 +882,7 @@ class Scope {
       if (scope.path.isFunctionParent()) {
         return scope;
       }
-    } while (scope = scope.parent);
+    } while ((scope = scope.parent));
 
     return null;
   }
@@ -836,9 +894,11 @@ class Scope {
       if (scope.path.isBlockParent()) {
         return scope;
       }
-    } while (scope = scope.parent);
+    } while ((scope = scope.parent));
 
-    throw new Error("We couldn't find a BlockStatement, For, Switch, Function, Loop or Program...");
+    throw new Error(
+      "We couldn't find a BlockStatement, For, Switch, Function, Loop or Program..."
+    );
   }
 
   getAllBindings() {
@@ -891,13 +951,18 @@ class Scope {
       if (binding) {
         var _previousPath;
 
-        if ((_previousPath = previousPath) != null && _previousPath.isPattern() && binding.kind !== "param") {} else {
+        if (
+          (_previousPath = previousPath) != null &&
+          _previousPath.isPattern() &&
+          binding.kind !== "param"
+        ) {
+        } else {
           return binding;
         }
       }
 
       previousPath = scope.path;
-    } while (scope = scope.parent);
+    } while ((scope = scope.parent));
   }
 
   getOwnBinding(name) {
@@ -907,7 +972,9 @@ class Scope {
   getBindingIdentifier(name) {
     var _this$getBinding;
 
-    return (_this$getBinding = this.getBinding(name)) == null ? void 0 : _this$getBinding.identifier;
+    return (_this$getBinding = this.getBinding(name)) == null
+      ? void 0
+      : _this$getBinding.identifier;
   }
 
   getOwnBindingIdentifier(name) {
@@ -932,7 +999,9 @@ class Scope {
   parentHasBinding(name, noGlobals) {
     var _this$parent;
 
-    return (_this$parent = this.parent) == null ? void 0 : _this$parent.hasBinding(name, noGlobals);
+    return (_this$parent = this.parent) == null
+      ? void 0
+      : _this$parent.hasBinding(name, noGlobals);
   }
 
   moveBindingTo(name, scope) {
@@ -952,16 +1021,17 @@ class Scope {
   removeBinding(name) {
     var _this$getBinding2;
 
-    (_this$getBinding2 = this.getBinding(name)) == null ? void 0 : _this$getBinding2.scope.removeOwnBinding(name);
+    (_this$getBinding2 = this.getBinding(name)) == null
+      ? void 0
+      : _this$getBinding2.scope.removeOwnBinding(name);
     let scope = this;
 
     do {
       if (scope.uids[name]) {
         scope.uids[name] = false;
       }
-    } while (scope = scope.parent);
+    } while ((scope = scope.parent));
   }
-
 }
 
 exports.default = Scope;

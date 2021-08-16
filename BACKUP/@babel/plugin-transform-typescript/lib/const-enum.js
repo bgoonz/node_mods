@@ -1,32 +1,55 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = transpileConstEnum;
 
 var _enum = require("./enum");
 
 function transpileConstEnum(path, t) {
-  const {
-    name
-  } = path.node.id;
+  const { name } = path.node.id;
   const parentIsExport = path.parentPath.isExportNamedDeclaration();
   let isExported = parentIsExport;
 
   if (!isExported && t.isProgram(path.parent)) {
-    isExported = path.parent.body.some(stmt => t.isExportNamedDeclaration(stmt) && !stmt.source && stmt.specifiers.some(spec => t.isExportSpecifier(spec) && spec.local.name === name));
+    isExported = path.parent.body.some(
+      (stmt) =>
+        t.isExportNamedDeclaration(stmt) &&
+        !stmt.source &&
+        stmt.specifiers.some(
+          (spec) => t.isExportSpecifier(spec) && spec.local.name === name
+        )
+    );
   }
 
   const entries = (0, _enum.translateEnumValues)(path, t);
 
   if (isExported) {
-    const obj = t.objectExpression(entries.map(([name, value]) => t.objectProperty(t.isValidIdentifier(name) ? t.identifier(name) : t.stringLiteral(name), value)));
+    const obj = t.objectExpression(
+      entries.map(([name, value]) =>
+        t.objectProperty(
+          t.isValidIdentifier(name)
+            ? t.identifier(name)
+            : t.stringLiteral(name),
+          value
+        )
+      )
+    );
 
     if (path.scope.hasOwnBinding(name)) {
-      (parentIsExport ? path.parentPath : path).replaceWith(t.expressionStatement(t.callExpression(t.memberExpression(t.identifier("Object"), t.identifier("assign")), [path.node.id, obj])));
+      (parentIsExport ? path.parentPath : path).replaceWith(
+        t.expressionStatement(
+          t.callExpression(
+            t.memberExpression(t.identifier("Object"), t.identifier("assign")),
+            [path.node.id, obj]
+          )
+        )
+      );
     } else {
-      path.replaceWith(t.variableDeclaration("var", [t.variableDeclarator(path.node.id, obj)]));
+      path.replaceWith(
+        t.variableDeclaration("var", [t.variableDeclarator(path.node.id, obj)])
+      );
       path.scope.registerDeclaration(path);
     }
 
@@ -40,9 +63,12 @@ function transpileConstEnum(path, t) {
     },
 
     MemberExpression(path) {
-      if (!t.isIdentifier(path.node.object, {
-        name
-      })) return;
+      if (
+        !t.isIdentifier(path.node.object, {
+          name,
+        })
+      )
+        return;
       let key;
 
       if (path.node.computed) {
@@ -59,8 +85,7 @@ function transpileConstEnum(path, t) {
 
       if (!entriesMap.has(key)) return;
       path.replaceWith(t.cloneNode(entriesMap.get(key)));
-    }
-
+    },
   });
   path.remove();
 }

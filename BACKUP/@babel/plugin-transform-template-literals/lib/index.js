@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -13,8 +13,14 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
   var _api$assumption, _api$assumption2;
 
   api.assertVersion(7);
-  const ignoreToPrimitiveHint = (_api$assumption = api.assumption("ignoreToPrimitiveHint")) != null ? _api$assumption : options.loose;
-  const mutableTemplateObject = (_api$assumption2 = api.assumption("mutableTemplateObject")) != null ? _api$assumption2 : options.loose;
+  const ignoreToPrimitiveHint =
+    (_api$assumption = api.assumption("ignoreToPrimitiveHint")) != null
+      ? _api$assumption
+      : options.loose;
+  const mutableTemplateObject =
+    (_api$assumption2 = api.assumption("mutableTemplateObject")) != null
+      ? _api$assumption2
+      : options.loose;
   let helperName = "taggedTemplateLiteral";
   if (mutableTemplateObject) helperName += "Loose";
 
@@ -33,7 +39,10 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         return left;
       }
 
-      return _core.types.callExpression(_core.types.memberExpression(left, _core.types.identifier("concat")), [right]);
+      return _core.types.callExpression(
+        _core.types.memberExpression(left, _core.types.identifier("concat")),
+        [right]
+      );
     });
   }
 
@@ -41,22 +50,18 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
     name: "transform-template-literals",
     visitor: {
       TaggedTemplateExpression(path) {
-        const {
-          node
-        } = path;
-        const {
-          quasi
-        } = node;
+        const { node } = path;
+        const { quasi } = node;
         const strings = [];
         const raws = [];
         let isStringsRawEqual = true;
 
         for (const elem of quasi.quasis) {
-          const {
-            raw,
-            cooked
-          } = elem.value;
-          const value = cooked == null ? path.scope.buildUndefinedNode() : _core.types.stringLiteral(cooked);
+          const { raw, cooked } = elem.value;
+          const value =
+            cooked == null
+              ? path.scope.buildUndefinedNode()
+              : _core.types.stringLiteral(cooked);
           strings.push(value);
           raws.push(_core.types.stringLiteral(raw));
 
@@ -73,13 +78,18 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
         const tmp = path.scope.generateUidIdentifier("templateObject");
         path.scope.getProgramParent().push({
-          id: _core.types.cloneNode(tmp)
+          id: _core.types.cloneNode(tmp),
         });
-        path.replaceWith(_core.types.callExpression(node.tag, [_core.template.expression.ast`
+        path.replaceWith(
+          _core.types.callExpression(node.tag, [
+            _core.template.expression.ast`
               ${_core.types.cloneNode(tmp)} || (
                 ${tmp} = ${this.addHelper(helperName)}(${helperArgs})
               )
-            `, ...quasi.expressions]));
+            `,
+            ...quasi.expressions,
+          ])
+        );
       },
 
       TemplateLiteral(path) {
@@ -96,15 +106,20 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
             const expr = expressions[index++];
             const node = expr.node;
 
-            if (!_core.types.isStringLiteral(node, {
-              value: ""
-            })) {
+            if (
+              !_core.types.isStringLiteral(node, {
+                value: "",
+              })
+            ) {
               nodes.push(node);
             }
           }
         }
 
-        if (!_core.types.isStringLiteral(nodes[0]) && !(ignoreToPrimitiveHint && _core.types.isStringLiteral(nodes[1]))) {
+        if (
+          !_core.types.isStringLiteral(nodes[0]) &&
+          !(ignoreToPrimitiveHint && _core.types.isStringLiteral(nodes[1]))
+        ) {
           nodes.unshift(_core.types.stringLiteral(""));
         }
 
@@ -119,9 +134,8 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         }
 
         path.replaceWith(root);
-      }
-
-    }
+      },
+    },
   };
 });
 

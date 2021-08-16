@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.injectInitialization = injectInitialization;
 exports.extractComputedKeys = extractComputedKeys;
@@ -10,21 +10,22 @@ var _core = require("@babel/core");
 
 var _helperReplaceSupers = require("@babel/helper-replace-supers");
 
-const findBareSupers = _core.traverse.visitors.merge([{
-  Super(path) {
-    const {
-      node,
-      parentPath
-    } = path;
+const findBareSupers = _core.traverse.visitors.merge([
+  {
+    Super(path) {
+      const { node, parentPath } = path;
 
-    if (parentPath.isCallExpression({
-      callee: node
-    })) {
-      this.push(parentPath);
-    }
-  }
-
-}, _helperReplaceSupers.environmentVisitor]);
+      if (
+        parentPath.isCallExpression({
+          callee: node,
+        })
+      ) {
+        this.push(parentPath);
+      }
+    },
+  },
+  _helperReplaceSupers.environmentVisitor,
+]);
 
 const referenceVisitor = {
   "TSTypeAnnotation|TypeAnnotation"(path) {
@@ -36,15 +37,19 @@ const referenceVisitor = {
       this.scope.rename(path.node.name);
       path.skip();
     }
-  }
-
+  },
 };
 
 function handleClassTDZ(path, state) {
-  if (state.classBinding && state.classBinding === path.scope.getBinding(path.node.name)) {
+  if (
+    state.classBinding &&
+    state.classBinding === path.scope.getBinding(path.node.name)
+  ) {
     const classNameTDZError = state.file.addHelper("classNameTDZError");
 
-    const throwNode = _core.types.callExpression(classNameTDZError, [_core.types.stringLiteral(path.node.name)]);
+    const throwNode = _core.types.callExpression(classNameTDZError, [
+      _core.types.stringLiteral(path.node.name),
+    ]);
 
     path.replaceWith(_core.types.sequenceExpression([throwNode, path.node]));
     path.skip();
@@ -52,7 +57,7 @@ function handleClassTDZ(path, state) {
 }
 
 const classFieldDefinitionEvaluationTDZVisitor = {
-  ReferencedIdentifier: handleClassTDZ
+  ReferencedIdentifier: handleClassTDZ,
 };
 
 function injectInitialization(path, constructor, nodes, renamer) {
@@ -60,11 +65,20 @@ function injectInitialization(path, constructor, nodes, renamer) {
   const isDerived = !!path.node.superClass;
 
   if (!constructor) {
-    const newConstructor = _core.types.classMethod("constructor", _core.types.identifier("constructor"), [], _core.types.blockStatement([]));
+    const newConstructor = _core.types.classMethod(
+      "constructor",
+      _core.types.identifier("constructor"),
+      [],
+      _core.types.blockStatement([])
+    );
 
     if (isDerived) {
-      newConstructor.params = [_core.types.restElement(_core.types.identifier("args"))];
-      newConstructor.body.body.push(_core.template.statement.ast`super(...args)`);
+      newConstructor.params = [
+        _core.types.restElement(_core.types.identifier("args")),
+      ];
+      newConstructor.body.body.push(
+        _core.template.statement.ast`super(...args)`
+      );
     }
 
     [constructor] = path.get("body").unshiftContainer("body", newConstructor);
@@ -72,7 +86,7 @@ function injectInitialization(path, constructor, nodes, renamer) {
 
   if (renamer) {
     renamer(referenceVisitor, {
-      scope: constructor.scope
+      scope: constructor.scope,
     });
   }
 
@@ -86,7 +100,7 @@ function injectInitialization(path, constructor, nodes, renamer) {
         bareSuper.insertAfter(nodes);
         isFirst = false;
       } else {
-        bareSuper.insertAfter(nodes.map(n => _core.types.cloneNode(n)));
+        bareSuper.insertAfter(nodes.map((n) => _core.types.cloneNode(n)));
       }
     }
   } else {
@@ -98,7 +112,7 @@ function extractComputedKeys(ref, path, computedPaths, file) {
   const declarations = [];
   const state = {
     classBinding: path.node.id && path.scope.getBinding(path.node.id.name),
-    file
+    file,
   };
 
   for (const computedPath of computedPaths) {
@@ -113,12 +127,22 @@ function extractComputedKeys(ref, path, computedPaths, file) {
     const computedNode = computedPath.node;
 
     if (!computedKey.isConstantExpression()) {
-      const ident = path.scope.generateUidIdentifierBasedOnNode(computedNode.key);
+      const ident = path.scope.generateUidIdentifierBasedOnNode(
+        computedNode.key
+      );
       path.scope.push({
         id: ident,
-        kind: "let"
+        kind: "let",
       });
-      declarations.push(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.cloneNode(ident), computedNode.key)));
+      declarations.push(
+        _core.types.expressionStatement(
+          _core.types.assignmentExpression(
+            "=",
+            _core.types.cloneNode(ident),
+            computedNode.key
+          )
+        )
+      );
       computedNode.key = _core.types.cloneNode(ident);
     }
   }

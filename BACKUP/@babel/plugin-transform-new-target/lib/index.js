@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -9,7 +9,7 @@ var _helperPluginUtils = require("@babel/helper-plugin-utils");
 
 var _core = require("@babel/core");
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
   return {
     name: "transform-new-target",
@@ -17,22 +17,25 @@ var _default = (0, _helperPluginUtils.declare)(api => {
       MetaProperty(path) {
         const meta = path.get("meta");
         const property = path.get("property");
-        const {
-          scope
-        } = path;
+        const { scope } = path;
 
-        if (meta.isIdentifier({
-          name: "new"
-        }) && property.isIdentifier({
-          name: "target"
-        })) {
-          const func = path.findParent(path => {
+        if (
+          meta.isIdentifier({
+            name: "new",
+          }) &&
+          property.isIdentifier({
+            name: "target",
+          })
+        ) {
+          const func = path.findParent((path) => {
             if (path.isClass()) return true;
 
             if (path.isFunction() && !path.isArrowFunctionExpression()) {
-              if (path.isClassMethod({
-                kind: "constructor"
-              })) {
+              if (
+                path.isClassMethod({
+                  kind: "constructor",
+                })
+              ) {
                 return false;
               }
 
@@ -43,12 +46,12 @@ var _default = (0, _helperPluginUtils.declare)(api => {
           });
 
           if (!func) {
-            throw path.buildCodeFrameError("new.target must be under a (non-arrow) function or a class.");
+            throw path.buildCodeFrameError(
+              "new.target must be under a (non-arrow) function or a class."
+            );
           }
 
-          const {
-            node
-          } = func;
+          const { node } = func;
 
           if (!node.id) {
             if (func.isMethod()) {
@@ -59,18 +62,30 @@ var _default = (0, _helperPluginUtils.declare)(api => {
             node.id = scope.generateUidIdentifier("target");
           }
 
-          const constructor = _core.types.memberExpression(_core.types.thisExpression(), _core.types.identifier("constructor"));
+          const constructor = _core.types.memberExpression(
+            _core.types.thisExpression(),
+            _core.types.identifier("constructor")
+          );
 
           if (func.isClass()) {
             path.replaceWith(constructor);
             return;
           }
 
-          path.replaceWith(_core.types.conditionalExpression(_core.types.binaryExpression("instanceof", _core.types.thisExpression(), _core.types.cloneNode(node.id)), constructor, scope.buildUndefinedNode()));
+          path.replaceWith(
+            _core.types.conditionalExpression(
+              _core.types.binaryExpression(
+                "instanceof",
+                _core.types.thisExpression(),
+                _core.types.cloneNode(node.id)
+              ),
+              constructor,
+              scope.buildUndefinedNode()
+            )
+          );
         }
-      }
-
-    }
+      },
+    },
   };
 });
 

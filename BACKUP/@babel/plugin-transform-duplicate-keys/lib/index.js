@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -17,16 +17,16 @@ function getName(key) {
   return key.value.toString();
 }
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
   return {
     name: "transform-duplicate-keys",
     visitor: {
       ObjectExpression(path) {
-        const {
-          node
-        } = path;
-        const plainProps = node.properties.filter(prop => !_core.types.isSpreadElement(prop) && !prop.computed);
+        const { node } = path;
+        const plainProps = node.properties.filter(
+          (prop) => !_core.types.isSpreadElement(prop) && !prop.computed
+        );
         const alreadySeenData = Object.create(null);
         const alreadySeenGetters = Object.create(null);
         const alreadySeenSetters = Object.create(null);
@@ -53,7 +53,11 @@ var _default = (0, _helperPluginUtils.declare)(api => {
               break;
 
             default:
-              if (alreadySeenData[name] || alreadySeenGetters[name] || alreadySeenSetters[name]) {
+              if (
+                alreadySeenData[name] ||
+                alreadySeenGetters[name] ||
+                alreadySeenSetters[name]
+              ) {
                 isDuplicate = true;
               }
 
@@ -65,9 +69,8 @@ var _default = (0, _helperPluginUtils.declare)(api => {
             prop.key = _core.types.stringLiteral(name);
           }
         }
-      }
-
-    }
+      },
+    },
   };
 });
 

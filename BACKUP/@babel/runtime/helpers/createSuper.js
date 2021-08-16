@@ -8,7 +8,7 @@ function _createSuper(Derived) {
   var hasNativeReflectConstruct = isNativeReflectConstruct();
   return function _createSuperInternal() {
     var Super = getPrototypeOf(Derived),
-        result;
+      result;
 
     if (hasNativeReflectConstruct) {
       var NewTarget = getPrototypeOf(this).constructor;
@@ -22,4 +22,5 @@ function _createSuper(Derived) {
 }
 
 module.exports = _createSuper;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

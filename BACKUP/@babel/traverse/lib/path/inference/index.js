@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.getTypeAnnotation = getTypeAnnotation;
 exports._getTypeAnnotation = _getTypeAnnotation;
@@ -18,7 +18,7 @@ function getTypeAnnotation() {
   if (this.typeAnnotation) return this.typeAnnotation;
   let type = this._getTypeAnnotation() || t.anyTypeAnnotation();
   if (t.isTypeAnnotation(type)) type = type.typeAnnotation;
-  return this.typeAnnotation = type;
+  return (this.typeAnnotation = type);
 }
 
 const typeAnnotationInferringNodes = new WeakSet();
@@ -132,7 +132,10 @@ function baseTypeStrictlyMatches(rightArg) {
 
 function isGenericType(genericName) {
   const type = this.getTypeAnnotation();
-  return t.isGenericTypeAnnotation(type) && t.isIdentifier(type.id, {
-    name: genericName
-  });
+  return (
+    t.isGenericTypeAnnotation(type) &&
+    t.isIdentifier(type.id, {
+      name: genericName,
+    })
+  );
 }

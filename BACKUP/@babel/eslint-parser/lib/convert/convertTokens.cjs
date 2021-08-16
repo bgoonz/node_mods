@@ -22,13 +22,13 @@ function convertTemplateType(tokens, tl) {
       end: end.end,
       loc: {
         start: start.loc.start,
-        end: end.loc.end
-      }
+        end: end.loc.end,
+      },
     });
     templateTokens = [];
   }
 
-  tokens.forEach(token => {
+  tokens.forEach((token) => {
     switch (token.type.label) {
       case tl.backQuote:
         if (curlyBrace) {
@@ -86,21 +86,63 @@ function convertTemplateType(tokens, tl) {
 }
 
 function convertToken(token, source, tl) {
-  const {
-    type
-  } = token;
-  const {
-    label
-  } = type;
+  const { type } = token;
+  const { label } = type;
   token.range = [token.start, token.end];
 
   if (label === tl.name) {
     token.type = "Identifier";
-  } else if (label === tl.semi || label === tl.comma || label === tl.parenL || label === tl.parenR || label === tl.braceL || label === tl.braceR || label === tl.slash || label === tl.dot || label === tl.bracketL || label === tl.bracketR || label === tl.ellipsis || label === tl.arrow || label === tl.pipeline || label === tl.star || label === tl.incDec || label === tl.colon || label === tl.question || label === tl.template || label === tl.backQuote || label === tl.dollarBraceL || label === tl.at || label === tl.logicalOR || label === tl.logicalAND || label === tl.nullishCoalescing || label === tl.bitwiseOR || label === tl.bitwiseXOR || label === tl.bitwiseAND || label === tl.equality || label === tl.relational || label === tl.bitShift || label === tl.plusMin || label === tl.modulo || label === tl.exponent || label === tl.bang || label === tl.tilde || label === tl.doubleColon || label === tl.hash || label === tl.questionDot || label === tl.braceHashL || label === tl.braceBarL || label === tl.braceBarR || label === tl.bracketHashL || label === tl.bracketBarL || label === tl.bracketBarR || type.isAssign) {
+  } else if (
+    label === tl.semi ||
+    label === tl.comma ||
+    label === tl.parenL ||
+    label === tl.parenR ||
+    label === tl.braceL ||
+    label === tl.braceR ||
+    label === tl.slash ||
+    label === tl.dot ||
+    label === tl.bracketL ||
+    label === tl.bracketR ||
+    label === tl.ellipsis ||
+    label === tl.arrow ||
+    label === tl.pipeline ||
+    label === tl.star ||
+    label === tl.incDec ||
+    label === tl.colon ||
+    label === tl.question ||
+    label === tl.template ||
+    label === tl.backQuote ||
+    label === tl.dollarBraceL ||
+    label === tl.at ||
+    label === tl.logicalOR ||
+    label === tl.logicalAND ||
+    label === tl.nullishCoalescing ||
+    label === tl.bitwiseOR ||
+    label === tl.bitwiseXOR ||
+    label === tl.bitwiseAND ||
+    label === tl.equality ||
+    label === tl.relational ||
+    label === tl.bitShift ||
+    label === tl.plusMin ||
+    label === tl.modulo ||
+    label === tl.exponent ||
+    label === tl.bang ||
+    label === tl.tilde ||
+    label === tl.doubleColon ||
+    label === tl.hash ||
+    label === tl.questionDot ||
+    label === tl.braceHashL ||
+    label === tl.braceBarL ||
+    label === tl.braceBarR ||
+    label === tl.bracketHashL ||
+    label === tl.bracketBarL ||
+    label === tl.bracketBarR ||
+    type.isAssign
+  ) {
     var _token$value;
 
     token.type = "Punctuator";
-    (_token$value = token.value) != null ? _token$value : token.value = label;
+    (_token$value = token.value) != null ? _token$value : (token.value = label);
   } else if (label === tl.jsxTagStart) {
     token.type = "Punctuator";
     token.value = "<";
@@ -128,7 +170,7 @@ function convertToken(token, source, tl) {
     const value = token.value;
     token.regex = {
       pattern: value.pattern,
-      flags: value.flags
+      flags: value.flags,
     };
     token.value = `/${value.pattern}/${value.flags}`;
   } else if (label === tl.bigint) {
@@ -146,5 +188,7 @@ function convertToken(token, source, tl) {
 }
 
 module.exports = function convertTokens(tokens, code, tl) {
-  return convertTemplateType(tokens, tl).filter(t => t.type !== "CommentLine" && t.type !== "CommentBlock").map(t => convertToken(t, code, tl));
+  return convertTemplateType(tokens, tl)
+    .filter((t) => t.type !== "CommentLine" && t.type !== "CommentBlock")
+    .map((t) => convertToken(t, code, tl));
 };

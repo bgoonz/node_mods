@@ -1,12 +1,12 @@
-import isPropValid from '@emotion/is-prop-valid'
+import isPropValid from "@emotion/is-prop-valid";
 
-isPropValid('ref')
+isPropValid("ref");
 
 // $ExpectError
-isPropValid()
+isPropValid();
 // $ExpectError
-isPropValid(5)
+isPropValid(5);
 // $ExpectError
-isPropValid({})
+isPropValid({});
 // $ExpectError
-isPropValid('ref', 'def')
+isPropValid("ref", "def");
