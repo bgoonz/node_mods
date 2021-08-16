@@ -1,11 +1,10 @@
 function* it(children) {
-  if (Array.isArray(children)) yield* children;else yield children;
+  if (Array.isArray(children)) yield* children;
+  else yield children;
 }
 
 function traverse(node, visitorKeys, visitor) {
-  const {
-    type
-  } = node;
+  const { type } = node;
   if (!type) return;
   const keys = visitorKeys[type];
   if (!keys) return;
@@ -91,8 +90,7 @@ const convertNodesVisitor = {
         }
       }
     }
-  }
-
+  },
 };
 
 function convertNodes(ast, visitorKeys) {

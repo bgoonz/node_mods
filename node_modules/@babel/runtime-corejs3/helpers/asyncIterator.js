@@ -11,7 +11,8 @@ function _asyncIterator(iterable) {
 
   if (typeof _Symbol !== "undefined") {
     if (_Symbol$asyncIterator) method = iterable[_Symbol$asyncIterator];
-    if (method == null && _Symbol$iterator) method = _getIteratorMethod(iterable);
+    if (method == null && _Symbol$iterator)
+      method = _getIteratorMethod(iterable);
   }
 
   if (method == null) method = iterable["@@asyncIterator"];
@@ -21,4 +22,5 @@ function _asyncIterator(iterable) {
 }
 
 module.exports = _asyncIterator;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

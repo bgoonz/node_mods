@@ -7,7 +7,7 @@ type TransformFile = {
 export const transformFile: TransformFile = function transformFile(
   filename,
   opts,
-  callback?,
+  callback?
 ) {
   if (typeof opts === "function") {
     callback = opts;
@@ -22,6 +22,6 @@ export function transformFileSync(): never {
 
 export function transformFileAsync() {
   return Promise.reject(
-    new Error("Transforming files is not supported in browsers"),
+    new Error("Transforming files is not supported in browsers")
   );
 }

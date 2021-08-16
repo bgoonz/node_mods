@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -24,18 +24,26 @@ class ImportBuilder {
   done() {
     return {
       statements: this._statements,
-      resultName: this._resultName
+      resultName: this._resultName,
     };
   }
 
   import() {
-    this._statements.push(t.importDeclaration([], t.stringLiteral(this._importedSource)));
+    this._statements.push(
+      t.importDeclaration([], t.stringLiteral(this._importedSource))
+    );
 
     return this;
   }
 
   require() {
-    this._statements.push(t.expressionStatement(t.callExpression(t.identifier("require"), [t.stringLiteral(this._importedSource)])));
+    this._statements.push(
+      t.expressionStatement(
+        t.callExpression(t.identifier("require"), [
+          t.stringLiteral(this._importedSource),
+        ])
+      )
+    );
 
     return this;
   }
@@ -93,7 +101,10 @@ class ImportBuilder {
       this._statements.push(statement);
     }
 
-    this._statements[this._statements.length - 1] = t.variableDeclaration("var", [t.variableDeclarator(name, statement.expression)]);
+    this._statements[this._statements.length - 1] = t.variableDeclaration(
+      "var",
+      [t.variableDeclarator(name, statement.expression)]
+    );
     this._resultName = t.cloneNode(name);
     return this;
   }
@@ -114,7 +125,9 @@ class ImportBuilder {
     } else if (statement.type === "VariableDeclaration") {
       _assert(statement.declarations.length === 1);
 
-      statement.declarations[0].init = t.callExpression(callee, [statement.declarations[0].init]);
+      statement.declarations[0].init = t.callExpression(callee, [
+        statement.declarations[0].init,
+      ]);
     } else {
       _assert.fail("Unexpected type.");
     }
@@ -126,11 +139,17 @@ class ImportBuilder {
     const statement = this._statements[this._statements.length - 1];
 
     if (statement.type === "ExpressionStatement") {
-      statement.expression = t.memberExpression(statement.expression, t.identifier(name));
+      statement.expression = t.memberExpression(
+        statement.expression,
+        t.identifier(name)
+      );
     } else if (statement.type === "VariableDeclaration") {
       _assert(statement.declarations.length === 1);
 
-      statement.declarations[0].init = t.memberExpression(statement.declarations[0].init, t.identifier(name));
+      statement.declarations[0].init = t.memberExpression(
+        statement.declarations[0].init,
+        t.identifier(name)
+      );
     } else {
       _assert.fail("Unexpected type:" + statement.type);
     }
@@ -141,7 +160,6 @@ class ImportBuilder {
   read(name) {
     this._resultName = t.memberExpression(this._resultName, t.identifier(name));
   }
-
 }
 
 exports.default = ImportBuilder;

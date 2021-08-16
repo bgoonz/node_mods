@@ -18,12 +18,17 @@ function _objectSpread(target) {
 
     var ownKeys = _Object$keys(source);
 
-    if (typeof _Object$getOwnPropertySymbols === 'function') {
+    if (typeof _Object$getOwnPropertySymbols === "function") {
       var _context;
 
-      ownKeys = _concatInstanceProperty(ownKeys).call(ownKeys, _filterInstanceProperty(_context = _Object$getOwnPropertySymbols(source)).call(_context, function (sym) {
-        return _Object$getOwnPropertyDescriptor(source, sym).enumerable;
-      }));
+      ownKeys = _concatInstanceProperty(ownKeys).call(
+        ownKeys,
+        _filterInstanceProperty(
+          (_context = _Object$getOwnPropertySymbols(source))
+        ).call(_context, function (sym) {
+          return _Object$getOwnPropertyDescriptor(source, sym).enumerable;
+        })
+      );
     }
 
     _forEachInstanceProperty(ownKeys).call(ownKeys, function (key) {
@@ -35,4 +40,5 @@ function _objectSpread(target) {
 }
 
 module.exports = _objectSpread;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

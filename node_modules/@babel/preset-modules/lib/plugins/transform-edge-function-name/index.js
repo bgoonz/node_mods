@@ -15,9 +15,7 @@ exports.default = void 0;
  * There is by design - if Function.name is critical to your application, you must configure
  * your minifier to preserve function names.
  */
-var _default = ({
-  types: t
-}) => ({
+var _default = ({ types: t }) => ({
   name: "transform-edge-function-name",
   visitor: {
     FunctionExpression: {
@@ -32,10 +30,9 @@ var _default = ({
 
           path.node.id = id;
         }
-      }
-
-    }
-  }
+      },
+    },
+  },
 });
 
 exports.default = _default;

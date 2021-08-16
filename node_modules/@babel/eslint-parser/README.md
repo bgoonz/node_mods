@@ -97,13 +97,13 @@ This configuration is useful for monorepo, when you are running ESLint on every 
 
 ```js
 module.exports = {
-  "parser": "@babel/eslint-parser",
-  "parserOptions": {
-    "babelOptions": {
-      "rootMode": "upward"
-    }
-  }
-}
+  parser: "@babel/eslint-parser",
+  parserOptions: {
+    babelOptions: {
+      rootMode: "upward",
+    },
+  },
+};
 ```
 
 ### Run

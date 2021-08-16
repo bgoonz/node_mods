@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = _default;
 
@@ -44,8 +44,7 @@ const visitor = {
     if (localDeclar !== state.outerDeclar) return;
     state.selfReference = true;
     path.stop();
-  }
-
+  },
 };
 
 function getNameFromLiteralId(id) {
@@ -58,7 +57,7 @@ function getNameFromLiteralId(id) {
   }
 
   if (t.isTemplateLiteral(id)) {
-    return id.quasis.map(quasi => quasi.value.raw).join("");
+    return id.quasis.map((quasi) => quasi.value.raw).join("");
   }
 
   if (id.value !== undefined) {
@@ -83,11 +82,15 @@ function wrap(state, method, id, scope) {
       const template = build({
         FUNCTION: method,
         FUNCTION_ID: id,
-        FUNCTION_KEY: scope.generateUidIdentifier(id.name)
+        FUNCTION_KEY: scope.generateUidIdentifier(id.name),
       }).expression;
       const params = template.callee.body.body[0].params;
 
-      for (let i = 0, len = (0, _helperGetFunctionArity.default)(method); i < len; i++) {
+      for (
+        let i = 0, len = (0, _helperGetFunctionArity.default)(method);
+        i < len;
+        i++
+      ) {
         params.push(scope.generateUidIdentifier("x"));
       }
 
@@ -105,14 +108,15 @@ function visit(node, name, scope) {
     selfReference: false,
     outerDeclar: scope.getBindingIdentifier(name),
     references: [],
-    name: name
+    name: name,
   };
   const binding = scope.getOwnBinding(name);
 
   if (binding) {
     if (binding.kind === "param") {
       state.selfReference = true;
-    } else {}
+    } else {
+    }
   } else if (state.outerDeclar || scope.hasGlobal(name)) {
     scope.traverse(node, visitor, state);
   }
@@ -120,17 +124,16 @@ function visit(node, name, scope) {
   return state;
 }
 
-function _default({
-  node,
-  parent,
-  scope,
-  id
-}, localBinding = false) {
+function _default({ node, parent, scope, id }, localBinding = false) {
   if (node.id) return;
 
-  if ((t.isObjectProperty(parent) || t.isObjectMethod(parent, {
-    kind: "method"
-  })) && (!parent.computed || t.isLiteral(parent.key))) {
+  if (
+    (t.isObjectProperty(parent) ||
+      t.isObjectMethod(parent, {
+        kind: "method",
+      })) &&
+    (!parent.computed || t.isLiteral(parent.key))
+  ) {
     id = parent.key;
   } else if (t.isVariableDeclarator(parent)) {
     id = parent.id;
@@ -138,15 +141,21 @@ function _default({
     if (t.isIdentifier(id) && !localBinding) {
       const binding = scope.parent.getBinding(id.name);
 
-      if (binding && binding.constant && scope.getBinding(id.name) === binding) {
+      if (
+        binding &&
+        binding.constant &&
+        scope.getBinding(id.name) === binding
+      ) {
         node.id = t.cloneNode(id);
         node.id[t.NOT_LOCAL_BINDING] = true;
         return;
       }
     }
-  } else if (t.isAssignmentExpression(parent, {
-    operator: "="
-  })) {
+  } else if (
+    t.isAssignmentExpression(parent, {
+      operator: "=",
+    })
+  ) {
     id = parent.left;
   } else if (!id) {
     return;

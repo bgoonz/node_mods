@@ -9,4 +9,5 @@ function _classPrivateFieldSet(receiver, privateMap, value) {
 }
 
 module.exports = _classPrivateFieldSet;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

@@ -18,15 +18,26 @@ function patternToRegExp(pattern) {
 
 function buildUnusedError(label, unused) {
   if (!unused.length) return "";
-  return `  - The following "${label}" patterns didn't match any polyfill:\n` + unused.map(original => `    ${String(original)}\n`).join("");
+  return (
+    `  - The following "${label}" patterns didn't match any polyfill:\n` +
+    unused.map((original) => `    ${String(original)}\n`).join("")
+  );
 }
 
 function buldDuplicatesError(duplicates) {
   if (!duplicates.size) return "";
-  return `  - The following polyfills were matched both by "include" and "exclude" patterns:\n` + Array.from(duplicates, name => `    ${name}\n`).join("");
+  return (
+    `  - The following polyfills were matched both by "include" and "exclude" patterns:\n` +
+    Array.from(duplicates, (name) => `    ${name}\n`).join("")
+  );
 }
 
-function validateIncludeExclude(provider, polyfills, includePatterns, excludePatterns) {
+function validateIncludeExclude(
+  provider,
+  polyfills,
+  includePatterns,
+  excludePatterns
+) {
   let current;
 
   const filter = pattern => {
@@ -44,38 +55,46 @@ function validateIncludeExclude(provider, polyfills, includePatterns, excludePat
     return !matched;
   }; // prettier-ignore
 
-
-  const include = current = new Set();
+  const include = (current = new Set());
   const unusedInclude = Array.from(includePatterns).filter(filter); // prettier-ignore
 
-  const exclude = current = new Set();
+  const exclude = (current = new Set());
   const unusedExclude = Array.from(excludePatterns).filter(filter);
   const duplicates = (0, _utils.intersection)(include, exclude);
 
-  if (duplicates.size > 0 || unusedInclude.length > 0 || unusedExclude.length > 0) {
-    throw new Error(`Error while validating the "${provider}" provider options:\n` + buildUnusedError("include", unusedInclude) + buildUnusedError("exclude", unusedExclude) + buldDuplicatesError(duplicates));
+  if (
+    duplicates.size > 0 ||
+    unusedInclude.length > 0 ||
+    unusedExclude.length > 0
+  ) {
+    throw new Error(
+      `Error while validating the "${provider}" provider options:\n` +
+        buildUnusedError("include", unusedInclude) +
+        buildUnusedError("exclude", unusedExclude) +
+        buldDuplicatesError(duplicates)
+    );
   }
 
   return {
     include,
-    exclude
+    exclude,
   };
 }
 
 function applyMissingDependenciesDefaults(options, babelApi) {
-  const {
-    missingDependencies = {}
-  } = options;
+  const { missingDependencies = {} } = options;
   if (missingDependencies === false) return false;
-  const caller = babelApi.caller(caller => caller == null ? void 0 : caller.name);
+  const caller = babelApi.caller((caller) =>
+    caller == null ? void 0 : caller.name
+  );
   const {
     log = "deferred",
     inject = caller === "rollup-plugin-babel" ? "throw" : "import",
-    all = false
+    all = false,
   } = missingDependencies;
   return {
     log,
     inject,
-    all
+    all,
   };
 }

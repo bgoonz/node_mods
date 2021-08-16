@@ -6,7 +6,11 @@ var REACT_ELEMENT_TYPE;
 
 function _createRawReactElement(type, props, key, children) {
   if (!REACT_ELEMENT_TYPE) {
-    REACT_ELEMENT_TYPE = typeof _Symbol === "function" && _Symbol$for && _Symbol$for("react.element") || 0xeac7;
+    REACT_ELEMENT_TYPE =
+      (typeof _Symbol === "function" &&
+        _Symbol$for &&
+        _Symbol$for("react.element")) ||
+      0xeac7;
   }
 
   var defaultProps = type && type.defaultProps;
@@ -14,7 +18,7 @@ function _createRawReactElement(type, props, key, children) {
 
   if (!props && childrenLength !== 0) {
     props = {
-      children: void 0
+      children: void 0,
     };
   }
 
@@ -46,9 +50,10 @@ function _createRawReactElement(type, props, key, children) {
     key: key === undefined ? null : "" + key,
     ref: null,
     props: props,
-    _owner: null
+    _owner: null,
   };
 }
 
 module.exports = _createRawReactElement;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

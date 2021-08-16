@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -29,13 +29,26 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
     noInterop,
     importInterop,
     lazy = false,
-    allowCommonJSExports = true
+    allowCommonJSExports = true,
   } = options;
-  const constantReexports = (_api$assumption = api.assumption("constantReexports")) != null ? _api$assumption : options.loose;
-  const enumerableModuleMeta = (_api$assumption2 = api.assumption("enumerableModuleMeta")) != null ? _api$assumption2 : options.loose;
-  const noIncompleteNsImportDetection = (_api$assumption3 = api.assumption("noIncompleteNsImportDetection")) != null ? _api$assumption3 : false;
+  const constantReexports =
+    (_api$assumption = api.assumption("constantReexports")) != null
+      ? _api$assumption
+      : options.loose;
+  const enumerableModuleMeta =
+    (_api$assumption2 = api.assumption("enumerableModuleMeta")) != null
+      ? _api$assumption2
+      : options.loose;
+  const noIncompleteNsImportDetection =
+    (_api$assumption3 = api.assumption("noIncompleteNsImportDetection")) != null
+      ? _api$assumption3
+      : false;
 
-  if (typeof lazy !== "boolean" && typeof lazy !== "function" && (!Array.isArray(lazy) || !lazy.every(item => typeof item === "string"))) {
+  if (
+    typeof lazy !== "boolean" &&
+    typeof lazy !== "function" &&
+    (!Array.isArray(lazy) || !lazy.every((item) => typeof item === "string"))
+  ) {
     throw new Error(`.lazy must be a boolean, array of strings, or a function`);
   }
 
@@ -47,7 +60,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
     throw new Error(`.mjsStrictNamespace must be a boolean, or undefined`);
   }
 
-  const getAssertion = localName => _core.template.expression.ast`
+  const getAssertion = (localName) => _core.template.expression.ast`
     (function(){
       throw new Error(
         "The CommonJS '" + "${localName}" + "' variable is not available in ES6 modules." +
@@ -63,13 +76,19 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       const localBinding = path.scope.getBinding(localName);
       const rootBinding = this.scope.getBinding(localName);
 
-      if (rootBinding !== localBinding || path.parentPath.isObjectProperty({
-        value: path.node
-      }) && path.parentPath.parentPath.isObjectPattern() || path.parentPath.isAssignmentExpression({
-        left: path.node
-      }) || path.isAssignmentExpression({
-        left: path.node
-      })) {
+      if (
+        rootBinding !== localBinding ||
+        (path.parentPath.isObjectProperty({
+          value: path.node,
+        }) &&
+          path.parentPath.parentPath.isObjectPattern()) ||
+        path.parentPath.isAssignmentExpression({
+          left: path.node,
+        }) ||
+        path.isAssignmentExpression({
+          left: path.node,
+        })
+      ) {
         return;
       }
 
@@ -86,21 +105,30 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         const rootBinding = this.scope.getBinding(localName);
         if (rootBinding !== localBinding) return;
         const right = path.get("right");
-        right.replaceWith(_core.types.sequenceExpression([right.node, getAssertion(localName)]));
+        right.replaceWith(
+          _core.types.sequenceExpression([right.node, getAssertion(localName)])
+        );
       } else if (left.isPattern()) {
         const ids = left.getOuterBindingIdentifiers();
-        const localName = Object.keys(ids).filter(localName => {
+        const localName = Object.keys(ids).filter((localName) => {
           if (localName !== "module" && localName !== "exports") return false;
-          return this.scope.getBinding(localName) === path.scope.getBinding(localName);
+          return (
+            this.scope.getBinding(localName) ===
+            path.scope.getBinding(localName)
+          );
         })[0];
 
         if (localName) {
           const right = path.get("right");
-          right.replaceWith(_core.types.sequenceExpression([right.node, getAssertion(localName)]));
+          right.replaceWith(
+            _core.types.sequenceExpression([
+              right.node,
+              getAssertion(localName),
+            ])
+          );
         }
       }
-    }
-
+    },
   };
   return {
     name: "transform-modules-commonjs",
@@ -113,13 +141,11 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       CallExpression(path) {
         if (!this.file.has("@babel/plugin-proposal-dynamic-import")) return;
         if (!path.get("callee").isImport()) return;
-        let {
-          scope
-        } = path;
+        let { scope } = path;
 
         do {
           scope.rename("require");
-        } while (scope = scope.parent);
+        } while ((scope = scope.parent));
 
         transformImportCall(this, path.get("callee"));
       },
@@ -134,33 +160,47 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
           path.scope.rename("__dirname");
 
           if (!allowCommonJSExports) {
-            (0, _helperSimpleAccess.default)(path, new Set(["module", "exports"]));
+            (0, _helperSimpleAccess.default)(
+              path,
+              new Set(["module", "exports"])
+            );
             path.traverse(moduleExportsVisitor, {
-              scope: path.scope
+              scope: path.scope,
             });
           }
 
-          let moduleName = (0, _helperModuleTransforms.getModuleName)(this.file.opts, options);
+          let moduleName = (0, _helperModuleTransforms.getModuleName)(
+            this.file.opts,
+            options
+          );
           if (moduleName) moduleName = _core.types.stringLiteral(moduleName);
-          const {
-            meta,
-            headers
-          } = (0, _helperModuleTransforms.rewriteModuleStatementsAndPrepareHeader)(path, {
-            exportName: "exports",
-            constantReexports,
-            enumerableModuleMeta,
-            strict,
-            strictMode,
-            allowTopLevelThis,
-            noInterop,
-            importInterop,
-            lazy,
-            esNamespaceOnly: typeof state.filename === "string" && /\.mjs$/.test(state.filename) ? mjsStrictNamespace : strictNamespace,
-            noIncompleteNsImportDetection
-          });
+          const { meta, headers } = (0,
+          _helperModuleTransforms.rewriteModuleStatementsAndPrepareHeader)(
+            path,
+            {
+              exportName: "exports",
+              constantReexports,
+              enumerableModuleMeta,
+              strict,
+              strictMode,
+              allowTopLevelThis,
+              noInterop,
+              importInterop,
+              lazy,
+              esNamespaceOnly:
+                typeof state.filename === "string" &&
+                /\.mjs$/.test(state.filename)
+                  ? mjsStrictNamespace
+                  : strictNamespace,
+              noIncompleteNsImportDetection,
+            }
+          );
 
           for (const [source, metadata] of meta.source) {
-            const loadExpr = _core.types.callExpression(_core.types.identifier("require"), [_core.types.stringLiteral(source)]);
+            const loadExpr = _core.types.callExpression(
+              _core.types.identifier("require"),
+              [_core.types.stringLiteral(source)]
+            );
 
             let header;
 
@@ -168,7 +208,12 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
               if (metadata.lazy) throw new Error("Assertion failure");
               header = _core.types.expressionStatement(loadExpr);
             } else {
-              const init = (0, _helperModuleTransforms.wrapInterop)(path, loadExpr, metadata.interop) || loadExpr;
+              const init =
+                (0, _helperModuleTransforms.wrapInterop)(
+                  path,
+                  loadExpr,
+                  metadata.interop
+                ) || loadExpr;
 
               if (metadata.lazy) {
                 header = _core.template.ast`
@@ -187,15 +232,20 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
             header.loc = metadata.loc;
             headers.push(header);
-            headers.push(...(0, _helperModuleTransforms.buildNamespaceInitStatements)(meta, metadata, constantReexports));
+            headers.push(
+              ...(0, _helperModuleTransforms.buildNamespaceInitStatements)(
+                meta,
+                metadata,
+                constantReexports
+              )
+            );
           }
 
           (0, _helperModuleTransforms.ensureStatementsHoisted)(headers);
           path.unshiftContainer("body", headers);
-        }
-
-      }
-    }
+        },
+      },
+    },
   };
 });
 

@@ -4,7 +4,12 @@ var classCheckPrivateStaticAccess = require("./classCheckPrivateStaticAccess.js"
 
 var classCheckPrivateStaticFieldDescriptor = require("./classCheckPrivateStaticFieldDescriptor.js");
 
-function _classStaticPrivateFieldSpecSet(receiver, classConstructor, descriptor, value) {
+function _classStaticPrivateFieldSpecSet(
+  receiver,
+  classConstructor,
+  descriptor,
+  value
+) {
   classCheckPrivateStaticAccess(receiver, classConstructor);
   classCheckPrivateStaticFieldDescriptor(descriptor, "set");
   classApplyDescriptorSet(receiver, descriptor, value);
@@ -12,4 +17,5 @@ function _classStaticPrivateFieldSpecSet(receiver, classConstructor, descriptor,
 }
 
 module.exports = _classStaticPrivateFieldSpecSet;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

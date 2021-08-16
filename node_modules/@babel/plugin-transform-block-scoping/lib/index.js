@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -15,10 +15,7 @@ const DONE = new WeakSet();
 
 var _default = (0, _helperPluginUtils.declare)((api, opts) => {
   api.assertVersion(7);
-  const {
-    throwIfClosureRequired = false,
-    tdz: tdzEnabled = false
-  } = opts;
+  const { throwIfClosureRequired = false, tdz: tdzEnabled = false } = opts;
 
   if (typeof throwIfClosureRequired !== "boolean") {
     throw new Error(`.throwIfClosureRequired must be a boolean, or undefined`);
@@ -32,11 +29,7 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
     name: "transform-block-scoping",
     visitor: {
       VariableDeclaration(path) {
-        const {
-          node,
-          parent,
-          scope
-        } = path;
+        const { node, parent, scope } = path;
         if (!isBlockScoped(node)) return;
         convertBlockScopedToVar(path, null, parent, scope, true);
 
@@ -46,7 +39,11 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
           for (let i = 0; i < node.declarations.length; i++) {
             const decl = node.declarations[i];
 
-            const assign = _core.types.assignmentExpression("=", _core.types.cloneNode(decl.id), decl.init || scope.buildUndefinedNode());
+            const assign = _core.types.assignmentExpression(
+              "=",
+              _core.types.cloneNode(decl.id),
+              decl.init || scope.buildUndefinedNode()
+            );
 
             assign._ignoreBlockScopingTDZ = true;
             nodes.push(_core.types.expressionStatement(assign));
@@ -56,7 +53,9 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
           node._blockHoist = 2;
 
           if (path.isCompletionRecord()) {
-            nodes.push(_core.types.expressionStatement(scope.buildUndefinedNode()));
+            nodes.push(
+              _core.types.expressionStatement(scope.buildUndefinedNode())
+            );
           }
 
           path.replaceWithMultiple(nodes);
@@ -64,40 +63,59 @@ var _default = (0, _helperPluginUtils.declare)((api, opts) => {
       },
 
       Loop(path, state) {
-        const {
-          parent,
-          scope
-        } = path;
+        const { parent, scope } = path;
         path.ensureBlock();
-        const blockScoping = new BlockScoping(path, path.get("body"), parent, scope, throwIfClosureRequired, tdzEnabled, state);
+        const blockScoping = new BlockScoping(
+          path,
+          path.get("body"),
+          parent,
+          scope,
+          throwIfClosureRequired,
+          tdzEnabled,
+          state
+        );
         const replace = blockScoping.run();
         if (replace) path.replaceWith(replace);
       },
 
       CatchClause(path, state) {
-        const {
+        const { parent, scope } = path;
+        const blockScoping = new BlockScoping(
+          null,
+          path.get("body"),
           parent,
-          scope
-        } = path;
-        const blockScoping = new BlockScoping(null, path.get("body"), parent, scope, throwIfClosureRequired, tdzEnabled, state);
+          scope,
+          throwIfClosureRequired,
+          tdzEnabled,
+          state
+        );
         blockScoping.run();
       },
 
       "BlockStatement|SwitchStatement|Program"(path, state) {
         if (!ignoreBlock(path)) {
-          const blockScoping = new BlockScoping(null, path, path.parent, path.scope, throwIfClosureRequired, tdzEnabled, state);
+          const blockScoping = new BlockScoping(
+            null,
+            path,
+            path.parent,
+            path.scope,
+            throwIfClosureRequired,
+            tdzEnabled,
+            state
+          );
           blockScoping.run();
         }
-      }
-
-    }
+      },
+    },
   };
 });
 
 exports.default = _default;
 
 function ignoreBlock(path) {
-  return _core.types.isLoop(path.parent) || _core.types.isCatchClause(path.parent);
+  return (
+    _core.types.isLoop(path.parent) || _core.types.isCatchClause(path.parent)
+  );
 }
 
 const buildRetCheck = (0, _core.template)(`
@@ -112,11 +130,19 @@ function isBlockScoped(node) {
 }
 
 function isInLoop(path) {
-  const loopOrFunctionParent = path.find(path => path.isLoop() || path.isFunction());
+  const loopOrFunctionParent = path.find(
+    (path) => path.isLoop() || path.isFunction()
+  );
   return loopOrFunctionParent == null ? void 0 : loopOrFunctionParent.isLoop();
 }
 
-function convertBlockScopedToVar(path, node, parent, scope, moveBindingsToParent = false) {
+function convertBlockScopedToVar(
+  path,
+  node,
+  parent,
+  scope,
+  moveBindingsToParent = false
+) {
   if (!node) {
     node = path.node;
   }
@@ -143,52 +169,55 @@ function convertBlockScopedToVar(path, node, parent, scope, moveBindingsToParent
 }
 
 function isVar(node) {
-  return _core.types.isVariableDeclaration(node, {
-    kind: "var"
-  }) && !isBlockScoped(node);
+  return (
+    _core.types.isVariableDeclaration(node, {
+      kind: "var",
+    }) && !isBlockScoped(node)
+  );
 }
 
-const letReferenceBlockVisitor = _core.traverse.visitors.merge([{
-  Loop: {
-    enter(path, state) {
-      state.loopDepth++;
+const letReferenceBlockVisitor = _core.traverse.visitors.merge([
+  {
+    Loop: {
+      enter(path, state) {
+        state.loopDepth++;
+      },
+
+      exit(path, state) {
+        state.loopDepth--;
+      },
     },
 
-    exit(path, state) {
-      state.loopDepth--;
-    }
+    FunctionParent(path, state) {
+      if (state.loopDepth > 0) {
+        path.traverse(letReferenceFunctionVisitor, state);
+      } else {
+        path.traverse(_tdz.visitor, state);
+      }
 
+      return path.skip();
+    },
   },
+  _tdz.visitor,
+]);
 
-  FunctionParent(path, state) {
-    if (state.loopDepth > 0) {
-      path.traverse(letReferenceFunctionVisitor, state);
-    } else {
-      path.traverse(_tdz.visitor, state);
-    }
-
-    return path.skip();
-  }
-
-}, _tdz.visitor]);
-
-const letReferenceFunctionVisitor = _core.traverse.visitors.merge([{
-  ReferencedIdentifier(path, state) {
-    const ref = state.letReferences.get(path.node.name);
-    if (!ref) return;
-    const localBinding = path.scope.getBindingIdentifier(path.node.name);
-    if (localBinding && localBinding !== ref) return;
-    state.closurify = true;
-  }
-
-}, _tdz.visitor]);
+const letReferenceFunctionVisitor = _core.traverse.visitors.merge([
+  {
+    ReferencedIdentifier(path, state) {
+      const ref = state.letReferences.get(path.node.name);
+      if (!ref) return;
+      const localBinding = path.scope.getBindingIdentifier(path.node.name);
+      if (localBinding && localBinding !== ref) return;
+      state.closurify = true;
+    },
+  },
+  _tdz.visitor,
+]);
 
 const hoistVarDeclarationsVisitor = {
   enter(path, self) {
     if (path.isForStatement()) {
-      const {
-        node
-      } = path;
+      const { node } = path;
 
       if (isVar(node.init)) {
         const nodes = self.pushDeclar(node.init);
@@ -200,35 +229,36 @@ const hoistVarDeclarationsVisitor = {
         }
       }
     } else if (path.isForInStatement() || path.isForOfStatement()) {
-      const {
-        node
-      } = path;
+      const { node } = path;
 
       if (isVar(node.left)) {
         self.pushDeclar(node.left);
         node.left = node.left.declarations[0].id;
       }
     } else if (isVar(path.node)) {
-      path.replaceWithMultiple(self.pushDeclar(path.node).map(expr => _core.types.expressionStatement(expr)));
+      path.replaceWithMultiple(
+        self
+          .pushDeclar(path.node)
+          .map((expr) => _core.types.expressionStatement(expr))
+      );
     } else if (path.isFunction()) {
       return path.skip();
     }
-  }
-
+  },
 };
 const loopLabelVisitor = {
-  LabeledStatement({
-    node
-  }, state) {
+  LabeledStatement({ node }, state) {
     state.innerLabels.push(node.label.name);
-  }
-
+  },
 };
 const continuationVisitor = {
   enter(path, state) {
     if (path.isAssignmentExpression() || path.isUpdateExpression()) {
       for (const name of Object.keys(path.getBindingIdentifiers())) {
-        if (state.outsideReferences.get(name) !== path.scope.getBindingIdentifier(name)) {
+        if (
+          state.outsideReferences.get(name) !==
+          path.scope.getBindingIdentifier(name)
+        ) {
           continue;
         }
 
@@ -237,8 +267,7 @@ const continuationVisitor = {
     } else if (path.isReturnStatement()) {
       state.returnStatements.push(path);
     }
-  }
-
+  },
 };
 
 function loopNodeTo(node) {
@@ -271,17 +300,16 @@ const loopVisitor = {
   },
 
   "BreakStatement|ContinueStatement|ReturnStatement"(path, state) {
-    const {
-      node,
-      scope
-    } = path;
+    const { node, scope } = path;
     if (node[this.LOOP_IGNORE]) return;
     let replace;
     let loopText = loopNodeTo(node);
 
     if (loopText) {
       if (_core.types.isReturnStatement(node)) {
-        throw new Error("Internal error: unexpected return statement with `loopText`");
+        throw new Error(
+          "Internal error: unexpected return statement with `loopText`"
+        );
       }
 
       if (node.label) {
@@ -302,7 +330,12 @@ const loopVisitor = {
 
     if (_core.types.isReturnStatement(node)) {
       state.hasReturn = true;
-      replace = _core.types.objectExpression([_core.types.objectProperty(_core.types.identifier("v"), node.argument || scope.buildUndefinedNode())]);
+      replace = _core.types.objectExpression([
+        _core.types.objectProperty(
+          _core.types.identifier("v"),
+          node.argument || scope.buildUndefinedNode()
+        ),
+      ]);
     }
 
     if (replace) {
@@ -311,24 +344,31 @@ const loopVisitor = {
       path.skip();
       path.replaceWith(_core.types.inherits(replace, node));
     }
-  }
-
+  },
 };
 
 function isStrict(path) {
-  return !!path.find(({
-    node
-  }) => {
+  return !!path.find(({ node }) => {
     if (_core.types.isProgram(node)) {
       if (node.sourceType === "module") return true;
     } else if (!_core.types.isBlockStatement(node)) return false;
 
-    return node.directives.some(directive => directive.value.value === "use strict");
+    return node.directives.some(
+      (directive) => directive.value.value === "use strict"
+    );
   });
 }
 
 class BlockScoping {
-  constructor(loopPath, blockPath, parent, scope, throwIfClosureRequired, tdzEnabled, state) {
+  constructor(
+    loopPath,
+    blockPath,
+    parent,
+    scope,
+    throwIfClosureRequired,
+    tdzEnabled,
+    state
+  ) {
     this.parent = void 0;
     this.state = void 0;
     this.scope = void 0;
@@ -359,7 +399,9 @@ class BlockScoping {
 
     if (loopPath) {
       this.loopParent = loopPath.parent;
-      this.loopLabel = _core.types.isLabeledStatement(this.loopParent) && this.loopParent.label;
+      this.loopLabel =
+        _core.types.isLabeledStatement(this.loopParent) &&
+        this.loopParent.label;
       this.loopPath = loopPath;
       this.loop = loopPath.node;
     }
@@ -372,7 +414,10 @@ class BlockScoping {
     const needsClosure = this.getLetReferences();
     this.checkConstants();
 
-    if (_core.types.isFunction(this.parent) || _core.types.isProgram(this.block)) {
+    if (
+      _core.types.isFunction(this.parent) ||
+      _core.types.isProgram(this.block)
+    ) {
       this.updateScopeInfo();
       return;
     }
@@ -403,26 +448,64 @@ class BlockScoping {
       for (const violation of binding.constantViolations) {
         const readOnlyError = state.addHelper("readOnlyError");
 
-        const throwNode = _core.types.callExpression(readOnlyError, [_core.types.stringLiteral(name)]);
+        const throwNode = _core.types.callExpression(readOnlyError, [
+          _core.types.stringLiteral(name),
+        ]);
 
         if (violation.isAssignmentExpression()) {
-          const {
-            operator
-          } = violation.node;
+          const { operator } = violation.node;
 
           if (operator === "=") {
-            violation.replaceWith(_core.types.sequenceExpression([violation.get("right").node, throwNode]));
+            violation.replaceWith(
+              _core.types.sequenceExpression([
+                violation.get("right").node,
+                throwNode,
+              ])
+            );
           } else if (["&&=", "||=", "??="].includes(operator)) {
-            violation.replaceWith(_core.types.logicalExpression(operator.slice(0, -1), violation.get("left").node, _core.types.sequenceExpression([violation.get("right").node, throwNode])));
+            violation.replaceWith(
+              _core.types.logicalExpression(
+                operator.slice(0, -1),
+                violation.get("left").node,
+                _core.types.sequenceExpression([
+                  violation.get("right").node,
+                  throwNode,
+                ])
+              )
+            );
           } else {
-            violation.replaceWith(_core.types.sequenceExpression([_core.types.binaryExpression(operator.slice(0, -1), violation.get("left").node, violation.get("right").node), throwNode]));
+            violation.replaceWith(
+              _core.types.sequenceExpression([
+                _core.types.binaryExpression(
+                  operator.slice(0, -1),
+                  violation.get("left").node,
+                  violation.get("right").node
+                ),
+                throwNode,
+              ])
+            );
           }
         } else if (violation.isUpdateExpression()) {
-          violation.replaceWith(_core.types.sequenceExpression([_core.types.unaryExpression("+", violation.get("argument").node), throwNode]));
+          violation.replaceWith(
+            _core.types.sequenceExpression([
+              _core.types.unaryExpression("+", violation.get("argument").node),
+              throwNode,
+            ])
+          );
         } else if (violation.isForXStatement()) {
           violation.ensureBlock();
-          violation.get("left").replaceWith(_core.types.variableDeclaration("var", [_core.types.variableDeclarator(violation.scope.generateUidIdentifier(name))]));
-          violation.node.body.body.unshift(_core.types.expressionStatement(throwNode));
+          violation
+            .get("left")
+            .replaceWith(
+              _core.types.variableDeclaration("var", [
+                _core.types.variableDeclarator(
+                  violation.scope.generateUidIdentifier(name)
+                ),
+              ])
+            );
+          violation.node.body.body.unshift(
+            _core.types.expressionStatement(throwNode)
+          );
         }
       }
     }
@@ -430,7 +513,8 @@ class BlockScoping {
 
   updateScopeInfo(wrappedInClosure) {
     const blockScope = this.blockPath.scope;
-    const parentScope = blockScope.getFunctionParent() || blockScope.getProgramParent();
+    const parentScope =
+      blockScope.getFunctionParent() || blockScope.getProgramParent();
     const letRefs = this.letReferences;
 
     for (const key of letRefs.keys()) {
@@ -467,7 +551,13 @@ class BlockScoping {
         if (binding) {
           const parentBinding = scope.parent.getOwnBinding(key);
 
-          if (binding.kind === "hoisted" && !binding.path.node.async && !binding.path.node.generator && (!parentBinding || isVar(parentBinding.path.parent)) && !isStrict(binding.path.parentPath)) {
+          if (
+            binding.kind === "hoisted" &&
+            !binding.path.node.async &&
+            !binding.path.node.generator &&
+            (!parentBinding || isVar(parentBinding.path.parent)) &&
+            !isStrict(binding.path.parentPath)
+          ) {
             continue;
           }
 
@@ -491,7 +581,10 @@ class BlockScoping {
 
   wrapClosure() {
     if (this.throwIfClosureRequired) {
-      throw this.blockPath.buildCodeFrameError("Compiling let/const in this block would add a closure " + "(throwIfClosureRequired).");
+      throw this.blockPath.buildCodeFrameError(
+        "Compiling let/const in this block would add a closure " +
+          "(throwIfClosureRequired)."
+      );
     }
 
     const block = this.block;
@@ -501,7 +594,10 @@ class BlockScoping {
       for (const name of Array.from(outsideRefs.keys())) {
         const id = outsideRefs.get(name);
 
-        if (this.scope.hasGlobal(id.name) || this.scope.parentHasBinding(id.name)) {
+        if (
+          this.scope.hasGlobal(id.name) ||
+          this.scope.parentHasBinding(id.name)
+        ) {
           outsideRefs.delete(id.name);
           this.letReferences.delete(id.name);
           this.scope.rename(id.name);
@@ -513,11 +609,17 @@ class BlockScoping {
 
     this.has = this.checkLoop();
     this.hoistVarDeclarations();
-    const args = Array.from(outsideRefs.values(), node => _core.types.cloneNode(node));
-    const params = args.map(id => _core.types.cloneNode(id));
+    const args = Array.from(outsideRefs.values(), (node) =>
+      _core.types.cloneNode(node)
+    );
+    const params = args.map((id) => _core.types.cloneNode(id));
     const isSwitch = this.blockPath.isSwitchStatement();
 
-    const fn = _core.types.functionExpression(null, params, _core.types.blockStatement(isSwitch ? [block] : block.body));
+    const fn = _core.types.functionExpression(
+      null,
+      params,
+      _core.types.blockStatement(isSwitch ? [block] : block.body)
+    );
 
     this.addContinuations(fn);
 
@@ -525,7 +627,11 @@ class BlockScoping {
 
     let basePath = ".callee";
 
-    const hasYield = _core.traverse.hasType(fn.body, "YieldExpression", _core.types.FUNCTION_TYPES);
+    const hasYield = _core.traverse.hasType(
+      fn.body,
+      "YieldExpression",
+      _core.types.FUNCTION_TYPES
+    );
 
     if (hasYield) {
       fn.generator = true;
@@ -533,7 +639,11 @@ class BlockScoping {
       basePath = ".argument" + basePath;
     }
 
-    const hasAsync = _core.traverse.hasType(fn.body, "AwaitExpression", _core.types.FUNCTION_TYPES);
+    const hasAsync = _core.traverse.hasType(
+      fn.body,
+      "AwaitExpression",
+      _core.types.FUNCTION_TYPES
+    );
 
     if (hasAsync) {
       fn.async = true;
@@ -546,7 +656,11 @@ class BlockScoping {
 
     if (this.has.hasReturn || this.has.hasBreakContinue) {
       const ret = this.scope.generateUid("ret");
-      this.body.push(_core.types.variableDeclaration("var", [_core.types.variableDeclarator(_core.types.identifier(ret), call)]));
+      this.body.push(
+        _core.types.variableDeclaration("var", [
+          _core.types.variableDeclarator(_core.types.identifier(ret), call),
+        ])
+      );
       placeholderPath = "declarations.0.init" + basePath;
       index = this.body.length - 1;
       this.buildHas(ret);
@@ -559,11 +673,7 @@ class BlockScoping {
     let callPath;
 
     if (isSwitch) {
-      const {
-        parentPath,
-        listKey,
-        key
-      } = this.blockPath;
+      const { parentPath, listKey, key } = this.blockPath;
       this.blockPath.replaceWithMultiple(this.body);
       callPath = parentPath.get(listKey)[key + index];
     } else {
@@ -576,7 +686,11 @@ class BlockScoping {
 
     if (this.loop) {
       const loopId = this.scope.generateUid("loop");
-      const p = this.loopPath.insertBefore(_core.types.variableDeclaration("var", [_core.types.variableDeclarator(_core.types.identifier(loopId), fn)]));
+      const p = this.loopPath.insertBefore(
+        _core.types.variableDeclaration("var", [
+          _core.types.variableDeclarator(_core.types.identifier(loopId), fn),
+        ])
+      );
       placeholder.replaceWith(_core.types.identifier(loopId));
       fnPath = p[0].get("declarations.0.init");
     } else {
@@ -591,7 +705,7 @@ class BlockScoping {
     const state = {
       reassignments: {},
       returnStatements: [],
-      outsideReferences: this.outsideLetReferences
+      outsideReferences: this.outsideLetReferences,
     };
     this.scope.traverse(fn, continuationVisitor, state);
 
@@ -602,10 +716,26 @@ class BlockScoping {
       const newParamName = this.scope.generateUid(param.name);
       fn.params[i] = _core.types.identifier(newParamName);
       this.scope.rename(paramName, newParamName, fn);
-      state.returnStatements.forEach(returnStatement => {
-        returnStatement.insertBefore(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.identifier(paramName), _core.types.identifier(newParamName))));
+      state.returnStatements.forEach((returnStatement) => {
+        returnStatement.insertBefore(
+          _core.types.expressionStatement(
+            _core.types.assignmentExpression(
+              "=",
+              _core.types.identifier(paramName),
+              _core.types.identifier(newParamName)
+            )
+          )
+        );
       });
-      fn.body.body.push(_core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.identifier(paramName), _core.types.identifier(newParamName))));
+      fn.body.body.push(
+        _core.types.expressionStatement(
+          _core.types.assignmentExpression(
+            "=",
+            _core.types.identifier(paramName),
+            _core.types.identifier(newParamName)
+          )
+        )
+      );
     }
   }
 
@@ -630,7 +760,11 @@ class BlockScoping {
     const addDeclarationsFromChild = (path, node) => {
       node = node || path.node;
 
-      if (_core.types.isClassDeclaration(node) || _core.types.isFunctionDeclaration(node) || isBlockScoped(node)) {
+      if (
+        _core.types.isClassDeclaration(node) ||
+        _core.types.isFunctionDeclaration(node) ||
+        isBlockScoped(node)
+      ) {
         if (isBlockScoped(node)) {
           convertBlockScopedToVar(path, node, block, this.scope);
         }
@@ -688,7 +822,7 @@ class BlockScoping {
       closurify: false,
       loopDepth: 0,
       tdzEnabled: this.tdzEnabled,
-      addHelper: name => this.state.addHelper(name)
+      addHelper: (name) => this.state.addHelper(name),
     };
 
     if (isInLoop(this.blockPath)) {
@@ -708,7 +842,7 @@ class BlockScoping {
       hasReturn: false,
       isLoop: !!this.loop,
       map: {},
-      LOOP_IGNORE: Symbol()
+      LOOP_IGNORE: Symbol(),
     };
     this.blockPath.traverse(loopLabelVisitor, state);
     this.blockPath.traverse(loopVisitor, state);
@@ -735,7 +869,11 @@ class BlockScoping {
       const declar = node.declarations[i];
       if (!declar.init) continue;
 
-      const expr = _core.types.assignmentExpression("=", _core.types.cloneNode(declar.id), _core.types.cloneNode(declar.init));
+      const expr = _core.types.assignmentExpression(
+        "=",
+        _core.types.cloneNode(declar.id),
+        _core.types.cloneNode(declar.init)
+      );
 
       replace.push(_core.types.inherits(expr, declar));
     }
@@ -749,15 +887,25 @@ class BlockScoping {
 
     if (has.hasBreakContinue) {
       for (const key of Object.keys(has.map)) {
-        body.push(_core.types.ifStatement(_core.types.binaryExpression("===", _core.types.identifier(ret), _core.types.stringLiteral(key)), has.map[key]));
+        body.push(
+          _core.types.ifStatement(
+            _core.types.binaryExpression(
+              "===",
+              _core.types.identifier(ret),
+              _core.types.stringLiteral(key)
+            ),
+            has.map[key]
+          )
+        );
       }
     }
 
     if (has.hasReturn) {
-      body.push(buildRetCheck({
-        RETURN: _core.types.identifier(ret)
-      }));
+      body.push(
+        buildRetCheck({
+          RETURN: _core.types.identifier(ret),
+        })
+      );
     }
   }
-
 }

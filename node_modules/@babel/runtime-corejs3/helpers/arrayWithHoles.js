@@ -5,4 +5,5 @@ function _arrayWithHoles(arr) {
 }
 
 module.exports = _arrayWithHoles;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

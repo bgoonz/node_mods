@@ -41,17 +41,30 @@ function _objectSpread2(target) {
     if (i % 2) {
       var _context;
 
-      _forEachInstanceProperty(_context = ownKeys(Object(source), true)).call(_context, function (key) {
-        defineProperty(target, key, source[key]);
-      });
+      _forEachInstanceProperty((_context = ownKeys(Object(source), true))).call(
+        _context,
+        function (key) {
+          defineProperty(target, key, source[key]);
+        }
+      );
     } else if (_Object$getOwnPropertyDescriptors) {
-      _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source));
+      _Object$defineProperties(
+        target,
+        _Object$getOwnPropertyDescriptors(source)
+      );
     } else {
       var _context2;
 
-      _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) {
-        _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key));
-      });
+      _forEachInstanceProperty((_context2 = ownKeys(Object(source)))).call(
+        _context2,
+        function (key) {
+          _Object$defineProperty(
+            target,
+            key,
+            _Object$getOwnPropertyDescriptor(source, key)
+          );
+        }
+      );
     }
   }
 
@@ -59,4 +72,5 @@ function _objectSpread2(target) {
 }
 
 module.exports = _objectSpread2;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

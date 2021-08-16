@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -23,14 +23,14 @@ const buildAnonymousWrapper = (0, _core.template)(`
 `);
 
 function injectWrapper(path, wrapper) {
-  const {
-    body,
-    directives
-  } = path.node;
+  const { body, directives } = path.node;
   path.node.directives = [];
   path.node.body = [];
   const amdWrapper = path.pushContainer("body", wrapper)[0];
-  const amdFactory = amdWrapper.get("expression.arguments").filter(arg => arg.isFunctionExpression())[0].get("body");
+  const amdFactory = amdWrapper
+    .get("expression.arguments")
+    .filter((arg) => arg.isFunctionExpression())[0]
+    .get("body");
   amdFactory.pushContainer("directives", directives);
   amdFactory.pushContainer("body", body);
 }
@@ -39,15 +39,16 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
   var _api$assumption, _api$assumption2;
 
   api.assertVersion(7);
-  const {
-    allowTopLevelThis,
-    strict,
-    strictMode,
-    importInterop,
-    noInterop
-  } = options;
-  const constantReexports = (_api$assumption = api.assumption("constantReexports")) != null ? _api$assumption : options.loose;
-  const enumerableModuleMeta = (_api$assumption2 = api.assumption("enumerableModuleMeta")) != null ? _api$assumption2 : options.loose;
+  const { allowTopLevelThis, strict, strictMode, importInterop, noInterop } =
+    options;
+  const constantReexports =
+    (_api$assumption = api.assumption("constantReexports")) != null
+      ? _api$assumption
+      : options.loose;
+  const enumerableModuleMeta =
+    (_api$assumption2 = api.assumption("enumerableModuleMeta")) != null
+      ? _api$assumption2
+      : options.loose;
   return {
     name: "transform-modules-amd",
 
@@ -59,11 +60,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       CallExpression(path, state) {
         if (!this.file.has("@babel/plugin-proposal-dynamic-import")) return;
         if (!path.get("callee").isImport()) return;
-        let {
-          requireId,
-          resolveId,
-          rejectId
-        } = state;
+        let { requireId, resolveId, rejectId } = state;
 
         if (!requireId) {
           requireId = path.scope.generateUidIdentifier("require");
@@ -79,7 +76,12 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
         let result = _core.types.identifier("imported");
 
-        if (!noInterop) result = (0, _helperModuleTransforms.wrapInterop)(path, result, "namespace");
+        if (!noInterop)
+          result = (0, _helperModuleTransforms.wrapInterop)(
+            path,
+            result,
+            "namespace"
+          );
         path.replaceWith(_core.template.expression.ast`
             new Promise((${resolveId}, ${rejectId}) =>
               ${requireId}(
@@ -91,14 +93,15 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       },
 
       Program: {
-        exit(path, {
-          requireId
-        }) {
+        exit(path, { requireId }) {
           if (!(0, _helperModuleTransforms.isModule)(path)) {
             if (requireId) {
-              injectWrapper(path, buildAnonymousWrapper({
-                REQUIRE: _core.types.cloneNode(requireId)
-              }));
+              injectWrapper(
+                path,
+                buildAnonymousWrapper({
+                  REQUIRE: _core.types.cloneNode(requireId),
+                })
+              );
             }
 
             return;
@@ -112,20 +115,24 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
             importNames.push(_core.types.cloneNode(requireId));
           }
 
-          let moduleName = (0, _helperModuleTransforms.getModuleName)(this.file.opts, options);
+          let moduleName = (0, _helperModuleTransforms.getModuleName)(
+            this.file.opts,
+            options
+          );
           if (moduleName) moduleName = _core.types.stringLiteral(moduleName);
-          const {
-            meta,
-            headers
-          } = (0, _helperModuleTransforms.rewriteModuleStatementsAndPrepareHeader)(path, {
-            enumerableModuleMeta,
-            constantReexports,
-            strict,
-            strictMode,
-            allowTopLevelThis,
-            importInterop,
-            noInterop
-          });
+          const { meta, headers } = (0,
+          _helperModuleTransforms.rewriteModuleStatementsAndPrepareHeader)(
+            path,
+            {
+              enumerableModuleMeta,
+              constantReexports,
+              strict,
+              strictMode,
+              allowTopLevelThis,
+              importInterop,
+              noInterop,
+            }
+          );
 
           if ((0, _helperModuleTransforms.hasExports)(meta)) {
             amdArgs.push(_core.types.stringLiteral("exports"));
@@ -137,30 +144,48 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
             importNames.push(_core.types.identifier(metadata.name));
 
             if (!(0, _helperModuleTransforms.isSideEffectImport)(metadata)) {
-              const interop = (0, _helperModuleTransforms.wrapInterop)(path, _core.types.identifier(metadata.name), metadata.interop);
+              const interop = (0, _helperModuleTransforms.wrapInterop)(
+                path,
+                _core.types.identifier(metadata.name),
+                metadata.interop
+              );
 
               if (interop) {
-                const header = _core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.identifier(metadata.name), interop));
+                const header = _core.types.expressionStatement(
+                  _core.types.assignmentExpression(
+                    "=",
+                    _core.types.identifier(metadata.name),
+                    interop
+                  )
+                );
 
                 header.loc = metadata.loc;
                 headers.push(header);
               }
             }
 
-            headers.push(...(0, _helperModuleTransforms.buildNamespaceInitStatements)(meta, metadata, constantReexports));
+            headers.push(
+              ...(0, _helperModuleTransforms.buildNamespaceInitStatements)(
+                meta,
+                metadata,
+                constantReexports
+              )
+            );
           }
 
           (0, _helperModuleTransforms.ensureStatementsHoisted)(headers);
           path.unshiftContainer("body", headers);
-          injectWrapper(path, buildWrapper({
-            MODULE_NAME: moduleName,
-            AMD_ARGUMENTS: _core.types.arrayExpression(amdArgs),
-            IMPORT_NAMES: importNames
-          }));
-        }
-
-      }
-    }
+          injectWrapper(
+            path,
+            buildWrapper({
+              MODULE_NAME: moduleName,
+              AMD_ARGUMENTS: _core.types.arrayExpression(amdArgs),
+              IMPORT_NAMES: importNames,
+            })
+          );
+        },
+      },
+    },
   };
 });
 

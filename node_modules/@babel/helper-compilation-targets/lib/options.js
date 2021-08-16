@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.TargetNames = void 0;
 const TargetNames = {
@@ -16,6 +16,6 @@ const TargetNames = {
   android: "android",
   electron: "electron",
   samsung: "samsung",
-  rhino: "rhino"
+  rhino: "rhino",
 };
 exports.TargetNames = TargetNames;

@@ -5,34 +5,41 @@ exports.default = void 0;
 
 var _utils = require("../utils");
 
-var _default = callProvider => {
+var _default = (callProvider) => {
   function property(object, key, placement, path) {
-    return callProvider({
-      kind: "property",
-      object,
-      key,
-      placement
-    }, path);
+    return callProvider(
+      {
+        kind: "property",
+        object,
+        key,
+        placement,
+      },
+      path
+    );
   }
 
   return {
     // Symbol(), new Promise
     ReferencedIdentifier(path) {
       const {
-        node: {
-          name
-        },
-        scope
+        node: { name },
+        scope,
       } = path;
       if (scope.getBindingIdentifier(name)) return;
-      callProvider({
-        kind: "global",
-        name
-      }, path);
+      callProvider(
+        {
+          kind: "global",
+          name,
+        },
+        path
+      );
     },
 
     MemberExpression(path) {
-      const key = (0, _utils.resolveKey)(path.get("property"), path.node.computed);
+      const key = (0, _utils.resolveKey)(
+        path.get("property"),
+        path.node.computed
+      );
       if (!key || key === "prototype") return;
       const object = path.get("object");
       const binding = object.scope.getBinding(object.node.name);
@@ -42,10 +49,7 @@ var _default = callProvider => {
     },
 
     ObjectPattern(path) {
-      const {
-        parentPath,
-        parent
-      } = path;
+      const { parentPath, parent } = path;
       let obj; // const { keys, values } = Object
 
       if (parentPath.isVariableDeclarator()) {
@@ -65,10 +69,7 @@ var _default = callProvider => {
 
       let id = null;
       let placement = null;
-      if (obj) ({
-        id,
-        placement
-      } = (0, _utils.resolveSource)(obj));
+      if (obj) ({ id, placement } = (0, _utils.resolveSource)(obj));
 
       for (const prop of path.get("properties")) {
         if (prop.isObjectProperty()) {
@@ -83,14 +84,16 @@ var _default = callProvider => {
       const source = (0, _utils.resolveSource)(path.get("right"));
       const key = (0, _utils.resolveKey)(path.get("left"), true);
       if (!key) return;
-      callProvider({
-        kind: "in",
-        object: source.id,
-        key,
-        placement: source.placement
-      }, path);
-    }
-
+      callProvider(
+        {
+          kind: "in",
+          object: source.id,
+          key,
+          placement: source.placement,
+        },
+        path
+      );
+    },
   };
 };
 

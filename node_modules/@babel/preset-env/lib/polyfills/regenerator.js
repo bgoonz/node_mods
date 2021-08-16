@@ -1,14 +1,17 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = _default;
 
 var _utils = require("./utils");
 
 function isRegeneratorSource(source) {
-  return source === "regenerator-runtime/runtime" || source === "regenerator-runtime/runtime.js";
+  return (
+    source === "regenerator-runtime/runtime" ||
+    source === "regenerator-runtime/runtime.js"
+  );
 }
 
 function _default() {
@@ -21,14 +24,13 @@ function _default() {
     },
 
     Program(path) {
-      path.get("body").forEach(bodyPath => {
+      path.get("body").forEach((bodyPath) => {
         if (isRegeneratorSource((0, _utils.getRequireSource)(bodyPath))) {
           this.regeneratorImportExcluded = true;
           bodyPath.remove();
         }
       });
-    }
-
+    },
   };
   return {
     name: "preset-env/remove-regenerator",
@@ -46,9 +48,10 @@ function _default() {
           filename = filename.replace(/\\/g, "/");
         }
 
-        console.log(`\n[${filename}] Based on your targets, regenerator-runtime import excluded.`);
+        console.log(
+          `\n[${filename}] Based on your targets, regenerator-runtime import excluded.`
+        );
       }
-    }
-
+    },
   };
 }

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.Identifier = Identifier;
 exports.ArgumentPlaceholder = ArgumentPlaceholder;
@@ -28,10 +28,7 @@ var t = require("@babel/types");
 
 var _jsesc = require("jsesc");
 
-const {
-  isAssignmentPattern,
-  isIdentifier
-} = t;
+const { isAssignmentPattern, isIdentifier } = t;
 
 function Identifier(node) {
   this.exactSource(node.loc, () => {
@@ -57,7 +54,7 @@ function ObjectExpression(node) {
     this.space();
     this.printList(props, node, {
       indent: true,
-      statement: true
+      statement: true,
     });
     this.space();
   }
@@ -82,14 +79,23 @@ function ObjectProperty(node) {
     this.print(node.key, node);
     this.token("]");
   } else {
-    if (isAssignmentPattern(node.value) && isIdentifier(node.key) && node.key.name === node.value.left.name) {
+    if (
+      isAssignmentPattern(node.value) &&
+      isIdentifier(node.key) &&
+      node.key.name === node.value.left.name
+    ) {
       this.print(node.value, node);
       return;
     }
 
     this.print(node.key, node);
 
-    if (node.shorthand && isIdentifier(node.key) && isIdentifier(node.value) && node.key.name === node.value.name) {
+    if (
+      node.shorthand &&
+      isIdentifier(node.key) &&
+      isIdentifier(node.value) &&
+      node.key.name === node.value.name
+    ) {
       return;
     }
   }
@@ -132,7 +138,11 @@ function RecordExpression(node) {
     startToken = "#{";
     endToken = "}";
   } else {
-    throw new Error(`The "recordAndTupleSyntaxType" generator option must be "bar" or "hash" (${JSON.stringify(this.format.recordAndTupleSyntaxType)} received).`);
+    throw new Error(
+      `The "recordAndTupleSyntaxType" generator option must be "bar" or "hash" (${JSON.stringify(
+        this.format.recordAndTupleSyntaxType
+      )} received).`
+    );
   }
 
   this.token(startToken);
@@ -142,7 +152,7 @@ function RecordExpression(node) {
     this.space();
     this.printList(props, node, {
       indent: true,
-      statement: true
+      statement: true,
     });
     this.space();
   }
@@ -163,7 +173,9 @@ function TupleExpression(node) {
     startToken = "#[";
     endToken = "]";
   } else {
-    throw new Error(`${this.format.recordAndTupleSyntaxType} is not a valid recordAndTuple syntax type`);
+    throw new Error(
+      `${this.format.recordAndTupleSyntaxType} is not a valid recordAndTuple syntax type`
+    );
   }
 
   this.token(startToken);
@@ -218,9 +230,15 @@ function StringLiteral(node) {
     return;
   }
 
-  const val = _jsesc(node.value, Object.assign(this.format.jsescOption, this.format.jsonCompatibleStrings && {
-    json: true
-  }));
+  const val = _jsesc(
+    node.value,
+    Object.assign(
+      this.format.jsescOption,
+      this.format.jsonCompatibleStrings && {
+        json: true,
+      }
+    )
+  );
 
   return this.token(val);
 }
@@ -248,21 +266,18 @@ function DecimalLiteral(node) {
 }
 
 function TopicReference() {
-  const {
-    topicToken
-  } = this.format;
+  const { topicToken } = this.format;
 
   switch (topicToken) {
     case "#":
       this.token("#");
       break;
 
-    default:
-      {
-        const givenTopicTokenJSON = JSON.stringify(topicToken);
-        const message = `The "topicToken" generator option must be "#" (${givenTopicTokenJSON} received instead).`;
-        throw new Error(message);
-      }
+    default: {
+      const givenTopicTokenJSON = JSON.stringify(topicToken);
+      const message = `The "topicToken" generator option must be "#" (${givenTopicTokenJSON} received instead).`;
+      throw new Error(message);
+    }
   }
 }
 

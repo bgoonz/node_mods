@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -13,15 +13,27 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
   var _api$assumption, _options$allowArrayLi, _api$assumption2;
 
   api.assertVersion(7);
-  const {
-    useBuiltIns = false
-  } = options;
-  const iterableIsArray = (_api$assumption = api.assumption("iterableIsArray")) != null ? _api$assumption : options.loose;
-  const arrayLikeIsIterable = (_options$allowArrayLi = options.allowArrayLike) != null ? _options$allowArrayLi : api.assumption("arrayLikeIsIterable");
-  const objectRestNoSymbols = (_api$assumption2 = api.assumption("objectRestNoSymbols")) != null ? _api$assumption2 : options.loose;
+  const { useBuiltIns = false } = options;
+  const iterableIsArray =
+    (_api$assumption = api.assumption("iterableIsArray")) != null
+      ? _api$assumption
+      : options.loose;
+  const arrayLikeIsIterable =
+    (_options$allowArrayLi = options.allowArrayLike) != null
+      ? _options$allowArrayLi
+      : api.assumption("arrayLikeIsIterable");
+  const objectRestNoSymbols =
+    (_api$assumption2 = api.assumption("objectRestNoSymbols")) != null
+      ? _api$assumption2
+      : options.loose;
 
   function getExtendsHelper(file) {
-    return useBuiltIns ? _core.types.memberExpression(_core.types.identifier("Object"), _core.types.identifier("assign")) : file.addHelper("extends");
+    return useBuiltIns
+      ? _core.types.memberExpression(
+          _core.types.identifier("Object"),
+          _core.types.identifier("assign")
+        )
+      : file.addHelper("extends");
   }
 
   function variableDeclarationHasPattern(node) {
@@ -61,7 +73,11 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       return;
     }
 
-    if (_core.types.isIdentifier(node) && _core.types.isReferenced(node, ancestors[ancestors.length - 1]) && state.bindings[node.name]) {
+    if (
+      _core.types.isIdentifier(node) &&
+      _core.types.isReferenced(node, ancestors[ancestors.length - 1]) &&
+      state.bindings[node.name]
+    ) {
       state.deopt = true;
       throw STOP_TRAVERSAL;
     }
@@ -86,9 +102,17 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       let node;
 
       if (op) {
-        node = _core.types.expressionStatement(_core.types.assignmentExpression(op, id, _core.types.cloneNode(init) || this.scope.buildUndefinedNode()));
+        node = _core.types.expressionStatement(
+          _core.types.assignmentExpression(
+            op,
+            id,
+            _core.types.cloneNode(init) || this.scope.buildUndefinedNode()
+          )
+        );
       } else {
-        node = _core.types.variableDeclaration(this.kind, [_core.types.variableDeclarator(id, _core.types.cloneNode(init))]);
+        node = _core.types.variableDeclaration(this.kind, [
+          _core.types.variableDeclarator(id, _core.types.cloneNode(init)),
+        ]);
       }
 
       node._blockHoist = this.blockHoist;
@@ -96,7 +120,12 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
     }
 
     buildVariableDeclaration(id, init) {
-      const declar = _core.types.variableDeclaration("var", [_core.types.variableDeclarator(_core.types.cloneNode(id), _core.types.cloneNode(init))]);
+      const declar = _core.types.variableDeclaration("var", [
+        _core.types.variableDeclarator(
+          _core.types.cloneNode(id),
+          _core.types.cloneNode(init)
+        ),
+      ]);
 
       declar._blockHoist = this.blockHoist;
       return declar;
@@ -117,21 +146,29 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
     }
 
     toArray(node, count) {
-      if (this.iterableIsArray || _core.types.isIdentifier(node) && this.arrays[node.name]) {
+      if (
+        this.iterableIsArray ||
+        (_core.types.isIdentifier(node) && this.arrays[node.name])
+      ) {
         return node;
       } else {
         return this.scope.toArray(node, count, this.arrayLikeIsIterable);
       }
     }
 
-    pushAssignmentPattern({
-      left,
-      right
-    }, valueRef) {
+    pushAssignmentPattern({ left, right }, valueRef) {
       const tempId = this.scope.generateUidIdentifierBasedOnNode(valueRef);
       this.nodes.push(this.buildVariableDeclaration(tempId, valueRef));
 
-      const tempConditional = _core.types.conditionalExpression(_core.types.binaryExpression("===", _core.types.cloneNode(tempId), this.scope.buildUndefinedNode()), right, _core.types.cloneNode(tempId));
+      const tempConditional = _core.types.conditionalExpression(
+        _core.types.binaryExpression(
+          "===",
+          _core.types.cloneNode(tempId),
+          this.scope.buildUndefinedNode()
+        ),
+        right,
+        _core.types.cloneNode(tempId)
+      );
 
       if (_core.types.isPattern(left)) {
         let patternId;
@@ -142,7 +179,13 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
           node = this.buildVariableDeclaration(patternId, tempConditional);
         } else {
           patternId = tempId;
-          node = _core.types.expressionStatement(_core.types.assignmentExpression("=", _core.types.cloneNode(tempId), tempConditional));
+          node = _core.types.expressionStatement(
+            _core.types.assignmentExpression(
+              "=",
+              _core.types.cloneNode(tempId),
+              tempConditional
+            )
+          );
         }
 
         this.nodes.push(node);
@@ -179,24 +222,43 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       let value;
 
       if (keys.length === 0) {
-        value = _core.types.callExpression(getExtendsHelper(this), [_core.types.objectExpression([]), _core.types.cloneNode(objRef)]);
+        value = _core.types.callExpression(getExtendsHelper(this), [
+          _core.types.objectExpression([]),
+          _core.types.cloneNode(objRef),
+        ]);
       } else {
         let keyExpression = _core.types.arrayExpression(keys);
 
         if (!allLiteral) {
-          keyExpression = _core.types.callExpression(_core.types.memberExpression(keyExpression, _core.types.identifier("map")), [this.addHelper("toPropertyKey")]);
-        } else if (!hasTemplateLiteral && !_core.types.isProgram(this.scope.block)) {
-          const program = this.scope.path.findParent(path => path.isProgram());
+          keyExpression = _core.types.callExpression(
+            _core.types.memberExpression(
+              keyExpression,
+              _core.types.identifier("map")
+            ),
+            [this.addHelper("toPropertyKey")]
+          );
+        } else if (
+          !hasTemplateLiteral &&
+          !_core.types.isProgram(this.scope.block)
+        ) {
+          const program = this.scope.path.findParent((path) =>
+            path.isProgram()
+          );
           const id = this.scope.generateUidIdentifier("excluded");
           program.scope.push({
             id,
             init: keyExpression,
-            kind: "const"
+            kind: "const",
           });
           keyExpression = _core.types.cloneNode(id);
         }
 
-        value = _core.types.callExpression(this.addHelper(`objectWithoutProperties${objectRestNoSymbols ? "Loose" : ""}`), [_core.types.cloneNode(objRef), keyExpression]);
+        value = _core.types.callExpression(
+          this.addHelper(
+            `objectWithoutProperties${objectRestNoSymbols ? "Loose" : ""}`
+          ),
+          [_core.types.cloneNode(objRef), keyExpression]
+        );
       }
 
       this.nodes.push(this.buildVariableAssignment(spreadProp.argument, value));
@@ -206,7 +268,11 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       if (_core.types.isLiteral(prop.key)) prop.computed = true;
       const pattern = prop.value;
 
-      const objRef = _core.types.memberExpression(_core.types.cloneNode(propRef), prop.key, prop.computed);
+      const objRef = _core.types.memberExpression(
+        _core.types.cloneNode(propRef),
+        prop.key,
+        prop.computed
+      );
 
       if (_core.types.isPattern(pattern)) {
         this.push(pattern, objRef);
@@ -217,7 +283,14 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
     pushObjectPattern(pattern, objRef) {
       if (!pattern.properties.length) {
-        this.nodes.push(_core.types.expressionStatement(_core.types.callExpression(this.addHelper("objectDestructuringEmpty"), [objRef])));
+        this.nodes.push(
+          _core.types.expressionStatement(
+            _core.types.callExpression(
+              this.addHelper("objectDestructuringEmpty"),
+              [objRef]
+            )
+          )
+        );
       }
 
       if (pattern.properties.length > 1 && !this.scope.isStatic(objRef)) {
@@ -244,13 +317,17 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
             if (!copiedPattern) {
               copiedPattern = pattern = Object.assign({}, pattern, {
-                properties: pattern.properties.slice()
+                properties: pattern.properties.slice(),
               });
             }
 
-            copiedPattern.properties[i] = Object.assign({}, copiedPattern.properties[i], {
-              key: name
-            });
+            copiedPattern.properties[i] = Object.assign(
+              {},
+              copiedPattern.properties[i],
+              {
+                key: name,
+              }
+            );
           }
         }
       }
@@ -289,7 +366,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
       const state = {
         deopt: false,
-        bindings
+        bindings,
       };
 
       try {
@@ -306,7 +383,10 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         const elem = pattern.elements[i];
 
         if (_core.types.isRestElement(elem)) {
-          this.push(elem.argument, _core.types.arrayExpression(arr.elements.slice(i)));
+          this.push(
+            elem.argument,
+            _core.types.arrayExpression(arr.elements.slice(i))
+          );
         } else {
           this.push(elem, arr.elements[i]);
         }
@@ -338,10 +418,20 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
         if (_core.types.isRestElement(elem)) {
           elemRef = this.toArray(arrayRef);
-          elemRef = _core.types.callExpression(_core.types.memberExpression(elemRef, _core.types.identifier("slice")), [_core.types.numericLiteral(i)]);
+          elemRef = _core.types.callExpression(
+            _core.types.memberExpression(
+              elemRef,
+              _core.types.identifier("slice")
+            ),
+            [_core.types.numericLiteral(i)]
+          );
           elem = elem.argument;
         } else {
-          elemRef = _core.types.memberExpression(arrayRef, _core.types.numericLiteral(i), true);
+          elemRef = _core.types.memberExpression(
+            arrayRef,
+            _core.types.numericLiteral(i),
+            true
+          );
         }
 
         this.push(elem, elemRef);
@@ -349,11 +439,16 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
     }
 
     init(pattern, ref) {
-      if (!_core.types.isArrayExpression(ref) && !_core.types.isMemberExpression(ref)) {
+      if (
+        !_core.types.isArrayExpression(ref) &&
+        !_core.types.isMemberExpression(ref)
+      ) {
         const memo = this.scope.maybeGenerateMemoised(ref, true);
 
         if (memo) {
-          this.nodes.push(this.buildVariableDeclaration(memo, _core.types.cloneNode(ref)));
+          this.nodes.push(
+            this.buildVariableDeclaration(memo, _core.types.cloneNode(ref))
+          );
           ref = memo;
         }
       }
@@ -361,7 +456,6 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       this.push(pattern, ref);
       return this.nodes;
     }
-
   }
 
   return {
@@ -374,7 +468,12 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         const specifiers = [];
 
         for (const name of Object.keys(path.getOuterBindingIdentifiers(path))) {
-          specifiers.push(_core.types.exportSpecifier(_core.types.identifier(name), _core.types.identifier(name)));
+          specifiers.push(
+            _core.types.exportSpecifier(
+              _core.types.identifier(name),
+              _core.types.identifier(name)
+            )
+          );
         }
 
         path.replaceWith(declaration.node);
@@ -382,22 +481,27 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       },
 
       ForXStatement(path) {
-        const {
-          node,
-          scope
-        } = path;
+        const { node, scope } = path;
         const left = node.left;
 
         if (_core.types.isPattern(left)) {
           const temp = scope.generateUidIdentifier("ref");
-          node.left = _core.types.variableDeclaration("var", [_core.types.variableDeclarator(temp)]);
+          node.left = _core.types.variableDeclaration("var", [
+            _core.types.variableDeclarator(temp),
+          ]);
           path.ensureBlock();
 
           if (node.body.body.length === 0 && path.isCompletionRecord()) {
-            node.body.body.unshift(_core.types.expressionStatement(scope.buildUndefinedNode()));
+            node.body.body.unshift(
+              _core.types.expressionStatement(scope.buildUndefinedNode())
+            );
           }
 
-          node.body.body.unshift(_core.types.expressionStatement(_core.types.assignmentExpression("=", left, temp)));
+          node.body.body.unshift(
+            _core.types.expressionStatement(
+              _core.types.assignmentExpression("=", left, temp)
+            )
+          );
           return;
         }
 
@@ -405,7 +509,9 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         const pattern = left.declarations[0].id;
         if (!_core.types.isPattern(pattern)) return;
         const key = scope.generateUidIdentifier("ref");
-        node.left = _core.types.variableDeclaration(left.kind, [_core.types.variableDeclarator(key, null)]);
+        node.left = _core.types.variableDeclaration(left.kind, [
+          _core.types.variableDeclarator(key, null),
+        ]);
         const nodes = [];
         const destructuring = new DestructuringTransformer({
           kind: left.kind,
@@ -413,7 +519,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
           nodes: nodes,
           iterableIsArray,
           arrayLikeIsIterable,
-          addHelper: name => this.addHelper(name)
+          addHelper: (name) => this.addHelper(name),
         });
         destructuring.init(pattern, key);
         path.ensureBlock();
@@ -421,10 +527,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         block.body = nodes.concat(block.body);
       },
 
-      CatchClause({
-        node,
-        scope
-      }) {
+      CatchClause({ node, scope }) {
         const pattern = node.param;
         if (!_core.types.isPattern(pattern)) return;
         const ref = scope.generateUidIdentifier("ref");
@@ -436,17 +539,14 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
           nodes: nodes,
           iterableIsArray,
           arrayLikeIsIterable,
-          addHelper: name => this.addHelper(name)
+          addHelper: (name) => this.addHelper(name),
         });
         destructuring.init(pattern, ref);
         node.body.body = nodes.concat(node.body.body);
       },
 
       AssignmentExpression(path) {
-        const {
-          node,
-          scope
-        } = path;
+        const { node, scope } = path;
         if (!_core.types.isPattern(node.left)) return;
         const nodes = [];
         const destructuring = new DestructuringTransformer({
@@ -455,13 +555,20 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
           nodes: nodes,
           iterableIsArray,
           arrayLikeIsIterable,
-          addHelper: name => this.addHelper(name)
+          addHelper: (name) => this.addHelper(name),
         });
         let ref;
 
-        if (path.isCompletionRecord() || !path.parentPath.isExpressionStatement()) {
+        if (
+          path.isCompletionRecord() ||
+          !path.parentPath.isExpressionStatement()
+        ) {
           ref = scope.generateUidIdentifierBasedOnNode(node.right, "ref");
-          nodes.push(_core.types.variableDeclaration("var", [_core.types.variableDeclarator(ref, node.right)]));
+          nodes.push(
+            _core.types.variableDeclaration("var", [
+              _core.types.variableDeclarator(ref, node.right),
+            ])
+          );
 
           if (_core.types.isArrayExpression(node.right)) {
             destructuring.arrays[ref.name] = true;
@@ -475,7 +582,9 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
             path.replaceWith(_core.types.blockStatement([]));
             nodes.push(_core.types.returnStatement(_core.types.cloneNode(ref)));
           } else {
-            nodes.push(_core.types.expressionStatement(_core.types.cloneNode(ref)));
+            nodes.push(
+              _core.types.expressionStatement(_core.types.cloneNode(ref))
+            );
           }
         }
 
@@ -484,11 +593,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       },
 
       VariableDeclaration(path) {
-        const {
-          node,
-          scope,
-          parent
-        } = path;
+        const { node, scope, parent } = path;
         if (_core.types.isForXStatement(parent)) return;
         if (!parent || !path.container) return;
         if (!variableDeclarationHasPattern(node)) return;
@@ -508,7 +613,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
             kind: node.kind,
             iterableIsArray,
             arrayLikeIsIterable,
-            addHelper: name => this.addHelper(name)
+            addHelper: (name) => this.addHelper(name),
           });
 
           if (_core.types.isPattern(pattern)) {
@@ -518,7 +623,15 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
               _core.types.inherits(nodes[nodes.length - 1], declar);
             }
           } else {
-            nodes.push(_core.types.inherits(destructuring.buildVariableAssignment(declar.id, _core.types.cloneNode(declar.init)), declar));
+            nodes.push(
+              _core.types.inherits(
+                destructuring.buildVariableAssignment(
+                  declar.id,
+                  _core.types.cloneNode(declar.init)
+                ),
+                declar
+              )
+            );
           }
         }
 
@@ -544,9 +657,7 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
           if (!nodeOut.declarations) continue;
 
           for (const declaration of nodeOut.declarations) {
-            const {
-              name
-            } = declaration.id;
+            const { name } = declaration.id;
 
             if (scope.bindings[name]) {
               scope.bindings[name].kind = nodeOut.kind;
@@ -559,9 +670,8 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         } else {
           path.replaceWithMultiple(nodesOut);
         }
-      }
-
-    }
+      },
+    },
   };
 });
 

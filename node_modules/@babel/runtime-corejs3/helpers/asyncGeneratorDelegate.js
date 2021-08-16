@@ -6,7 +6,7 @@ var _Symbol$iterator = require("@babel/runtime-corejs3/core-js/symbol/iterator")
 
 function _asyncGeneratorDelegate(inner, awaitWrap) {
   var iter = {},
-      waiting = false;
+    waiting = false;
 
   function pump(key, value) {
     waiting = true;
@@ -15,15 +15,14 @@ function _asyncGeneratorDelegate(inner, awaitWrap) {
     });
     return {
       done: false,
-      value: awaitWrap(value)
+      value: awaitWrap(value),
     };
   }
 
-  ;
-
-  iter[typeof _Symbol !== "undefined" && _Symbol$iterator || "@@iterator"] = function () {
-    return this;
-  };
+  iter[(typeof _Symbol !== "undefined" && _Symbol$iterator) || "@@iterator"] =
+    function () {
+      return this;
+    };
 
   iter.next = function (value) {
     if (waiting) {
@@ -60,4 +59,5 @@ function _asyncGeneratorDelegate(inner, awaitWrap) {
 }
 
 module.exports = _asyncGeneratorDelegate;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

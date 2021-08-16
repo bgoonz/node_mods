@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 const SPACES_RE = /^[ \t]+$/;
@@ -14,13 +14,13 @@ class Buffer {
     this._queue = [];
     this._position = {
       line: 1,
-      column: 0
+      column: 0,
     };
     this._sourcePosition = {
       identifierName: null,
       line: null,
       column: null,
-      filename: null
+      filename: null,
     };
     this._disallowedPop = null;
     this._map = map;
@@ -33,7 +33,7 @@ class Buffer {
     const result = {
       code: this._buf.trimRight(),
       map: null,
-      rawMappings: map == null ? void 0 : map.getRawMappings()
+      rawMappings: map == null ? void 0 : map.getRawMappings(),
     };
 
     if (map) {
@@ -42,16 +42,15 @@ class Buffer {
         enumerable: true,
 
         get() {
-          return this.map = map.get();
+          return (this.map = map.get());
         },
 
         set(value) {
           Object.defineProperty(this, "map", {
             value,
-            writable: true
+            writable: true,
           });
-        }
-
+        },
       });
     }
 
@@ -61,13 +60,8 @@ class Buffer {
   append(str) {
     this._flush();
 
-    const {
-      line,
-      column,
-      filename,
-      identifierName,
-      force
-    } = this._sourcePosition;
+    const { line, column, filename, identifierName, force } =
+      this._sourcePosition;
 
     this._append(str, line, column, identifierName, filename, force);
   }
@@ -79,13 +73,8 @@ class Buffer {
       }
     }
 
-    const {
-      line,
-      column,
-      filename,
-      identifierName,
-      force
-    } = this._sourcePosition;
+    const { line, column, filename, identifierName, force } =
+      this._sourcePosition;
 
     this._queue.unshift([str, line, column, identifierName, filename, force]);
   }
@@ -93,7 +82,7 @@ class Buffer {
   _flush() {
     let item;
 
-    while (item = this._queue.pop()) {
+    while ((item = this._queue.pop())) {
       this._append(...item);
     }
   }
@@ -126,7 +115,17 @@ class Buffer {
   _mark(line, column, identifierName, filename, force) {
     var _this$_map;
 
-    (_this$_map = this._map) == null ? void 0 : _this$_map.mark(this._position.line, this._position.column, line, column, identifierName, filename, force);
+    (_this$_map = this._map) == null
+      ? void 0
+      : _this$_map.mark(
+          this._position.line,
+          this._position.column,
+          line,
+          column,
+          identifierName,
+          filename,
+          force
+        );
   }
 
   removeTrailingNewline() {
@@ -198,7 +197,16 @@ class Buffer {
     this.source(prop, loc);
     cb();
 
-    if ((!this._sourcePosition.force || this._sourcePosition.line !== originalLine || this._sourcePosition.column !== originalColumn || this._sourcePosition.filename !== originalFilename) && (!this._disallowedPop || this._disallowedPop.line !== originalLine || this._disallowedPop.column !== originalColumn || this._disallowedPop.filename !== originalFilename)) {
+    if (
+      (!this._sourcePosition.force ||
+        this._sourcePosition.line !== originalLine ||
+        this._sourcePosition.column !== originalColumn ||
+        this._sourcePosition.filename !== originalFilename) &&
+      (!this._disallowedPop ||
+        this._disallowedPop.line !== originalLine ||
+        this._disallowedPop.column !== originalColumn ||
+        this._disallowedPop.filename !== originalFilename)
+    ) {
       this._sourcePosition.line = originalLine;
       this._sourcePosition.column = originalColumn;
       this._sourcePosition.filename = originalFilename;
@@ -222,19 +230,25 @@ class Buffer {
         line: null,
         column: null,
         filename: null,
-        force: false
+        force: false,
       };
     }
 
     const origLine = targetObj.line;
     const origColumn = targetObj.column;
     const origFilename = targetObj.filename;
-    targetObj.identifierName = prop === "start" && (loc == null ? void 0 : loc.identifierName) || null;
+    targetObj.identifierName =
+      (prop === "start" && (loc == null ? void 0 : loc.identifierName)) || null;
     targetObj.line = pos == null ? void 0 : pos.line;
     targetObj.column = pos == null ? void 0 : pos.column;
     targetObj.filename = loc == null ? void 0 : loc.filename;
 
-    if (force || targetObj.line !== origLine || targetObj.column !== origColumn || targetObj.filename !== origFilename) {
+    if (
+      force ||
+      targetObj.line !== origLine ||
+      targetObj.column !== origColumn ||
+      targetObj.filename !== origFilename
+    ) {
       targetObj.force = force;
     }
 
@@ -245,7 +259,9 @@ class Buffer {
     const extra = this._queue.reduce((acc, item) => item[0] + acc, "");
 
     const lastIndex = extra.lastIndexOf("\n");
-    return lastIndex === -1 ? this._position.column + extra.length : extra.length - 1 - lastIndex;
+    return lastIndex === -1
+      ? this._position.column + extra.length
+      : extra.length - 1 - lastIndex;
   }
 
   getCurrentLine() {
@@ -259,7 +275,6 @@ class Buffer {
 
     return this._position.line + count;
   }
-
 }
 
 exports.default = Buffer;

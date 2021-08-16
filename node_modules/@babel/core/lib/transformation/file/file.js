@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -73,16 +73,11 @@ const errorVisitor = {
       state.loc = loc;
       path.stop();
     }
-  }
-
+  },
 };
 
 class File {
-  constructor(options, {
-    code,
-    ast,
-    inputMap
-  }) {
+  constructor(options, { code, ast, inputMap }) {
     this._map = new Map();
     this.opts = void 0;
     this.declarations = {};
@@ -97,26 +92,26 @@ class File {
       getCode: () => this.code,
       getScope: () => this.scope,
       addHelper: this.addHelper.bind(this),
-      buildError: this.buildCodeFrameError.bind(this)
+      buildError: this.buildCodeFrameError.bind(this),
     };
     this.opts = options;
     this.code = code;
     this.ast = ast;
     this.inputMap = inputMap;
-    this.path = _traverse().NodePath.get({
-      hub: this.hub,
-      parentPath: null,
-      parent: this.ast,
-      container: this.ast,
-      key: "program"
-    }).setContext();
+    this.path = _traverse()
+      .NodePath.get({
+        hub: this.hub,
+        parentPath: null,
+        parent: this.ast,
+        container: this.ast,
+        key: "program",
+      })
+      .setContext();
     this.scope = this.path.scope;
   }
 
   get shebang() {
-    const {
-      interpreter
-    } = this.path.node;
+    const { interpreter } = this.path.node;
     return interpreter ? interpreter.value : "";
   }
 
@@ -130,7 +125,13 @@ class File {
 
   set(key, val) {
     if (key === "helpersNamespace") {
-      throw new Error("Babel 7.0.0-beta.56 has dropped support for the 'helpersNamespace' utility." + "If you are using @babel/plugin-external-helpers you will need to use a newer " + "version than the one you currently have installed. " + "If you have your own implementation, you'll want to explore using 'helperGenerator' " + "alongside 'file.availableHelper()'.");
+      throw new Error(
+        "Babel 7.0.0-beta.56 has dropped support for the 'helpersNamespace' utility." +
+          "If you are using @babel/plugin-external-helpers you will need to use a newer " +
+          "version than the one you currently have installed. " +
+          "If you have your own implementation, you'll want to explore using 'helperGenerator' " +
+          "alongside 'file.availableHelper()'."
+      );
     }
 
     this._map.set(key, val);
@@ -149,7 +150,12 @@ class File {
   }
 
   addImport() {
-    throw new Error("This API has been removed. If you're looking for this " + "functionality in Babel 7, you should import the " + "'@babel/helper-module-imports' module and use the functions exposed " + " from that module, such as 'addNamed' or 'addDefault'.");
+    throw new Error(
+      "This API has been removed. If you're looking for this " +
+        "functionality in Babel 7, you should import the " +
+        "'@babel/helper-module-imports' module and use the functions exposed " +
+        " from that module, such as 'addNamed' or 'addDefault'."
+    );
   }
 
   availableHelper(name, versionRange) {
@@ -164,7 +170,10 @@ class File {
 
     if (typeof versionRange !== "string") return true;
     if (_semver().valid(versionRange)) versionRange = `^${versionRange}`;
-    return !_semver().intersects(`<${minVersion}`, versionRange) && !_semver().intersects(`>=8.0.0`, versionRange);
+    return (
+      !_semver().intersects(`<${minVersion}`, versionRange) &&
+      !_semver().intersects(`>=8.0.0`, versionRange)
+    );
   }
 
   addHelper(name) {
@@ -178,27 +187,30 @@ class File {
     }
 
     helpers().ensure(name, File);
-    const uid = this.declarations[name] = this.scope.generateUidIdentifier(name);
+    const uid = (this.declarations[name] =
+      this.scope.generateUidIdentifier(name));
     const dependencies = {};
 
     for (const dep of helpers().getDependencies(name)) {
       dependencies[dep] = this.addHelper(dep);
     }
 
-    const {
-      nodes,
-      globals
-    } = helpers().get(name, dep => dependencies[dep], uid, Object.keys(this.scope.getAllBindings()));
-    globals.forEach(name => {
+    const { nodes, globals } = helpers().get(
+      name,
+      (dep) => dependencies[dep],
+      uid,
+      Object.keys(this.scope.getAllBindings())
+    );
+    globals.forEach((name) => {
       if (this.path.scope.hasBinding(name, true)) {
         this.path.scope.rename(name);
       }
     });
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       node._compact = true;
     });
     this.path.unshiftContainer("body", nodes);
-    this.path.get("body").forEach(path => {
+    this.path.get("body").forEach((path) => {
       if (nodes.indexOf(path.node) === -1) return;
       if (path.isVariableDeclaration()) this.scope.registerDeclaration(path);
     });
@@ -206,7 +218,9 @@ class File {
   }
 
   addTemplateObject() {
-    throw new Error("This function has been moved into the template literal transform itself.");
+    throw new Error(
+      "This function has been moved into the template literal transform itself."
+    );
   }
 
   buildCodeFrameError(node, msg, _Error = SyntaxError) {
@@ -214,36 +228,43 @@ class File {
 
     if (!loc && node) {
       const state = {
-        loc: null
+        loc: null,
       };
       (0, _traverse().default)(node, errorVisitor, this.scope, state);
       loc = state.loc;
-      let txt = "This is an error on an internal node. Probably an internal error.";
+      let txt =
+        "This is an error on an internal node. Probably an internal error.";
       if (loc) txt += " Location has been estimated.";
       msg += ` (${txt})`;
     }
 
     if (loc) {
-      const {
-        highlightCode = true
-      } = this.opts;
-      msg += "\n" + (0, _codeFrame().codeFrameColumns)(this.code, {
-        start: {
-          line: loc.start.line,
-          column: loc.start.column + 1
-        },
-        end: loc.end && loc.start.line === loc.end.line ? {
-          line: loc.end.line,
-          column: loc.end.column + 1
-        } : undefined
-      }, {
-        highlightCode
-      });
+      const { highlightCode = true } = this.opts;
+      msg +=
+        "\n" +
+        (0, _codeFrame().codeFrameColumns)(
+          this.code,
+          {
+            start: {
+              line: loc.start.line,
+              column: loc.start.column + 1,
+            },
+            end:
+              loc.end && loc.start.line === loc.end.line
+                ? {
+                    line: loc.end.line,
+                    column: loc.end.column + 1,
+                  }
+                : undefined,
+          },
+          {
+            highlightCode,
+          }
+        );
     }
 
     return new _Error(msg);
   }
-
 }
 
 exports.default = File;

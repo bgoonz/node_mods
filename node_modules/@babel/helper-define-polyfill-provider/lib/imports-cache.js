@@ -5,13 +5,49 @@ exports.default = void 0;
 
 var babel = _interopRequireWildcard(require("@babel/core"));
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+function _getRequireWildcardCache() {
+  if (typeof WeakMap !== "function") return null;
+  var cache = new WeakMap();
+  _getRequireWildcardCache = function () {
+    return cache;
+  };
+  return cache;
+}
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj) {
+  if (obj && obj.__esModule) {
+    return obj;
+  }
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
+  }
+  var cache = _getRequireWildcardCache();
+  if (cache && cache.has(obj)) {
+    return cache.get(obj);
+  }
+  var newObj = {};
+  var hasPropertyDescriptor =
+    Object.defineProperty && Object.getOwnPropertyDescriptor;
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      var desc = hasPropertyDescriptor
+        ? Object.getOwnPropertyDescriptor(obj, key)
+        : null;
+      if (desc && (desc.get || desc.set)) {
+        Object.defineProperty(newObj, key, desc);
+      } else {
+        newObj[key] = obj[key];
+      }
+    }
+  }
+  newObj.default = obj;
+  if (cache) {
+    cache.set(obj, newObj);
+  }
+  return newObj;
+}
 
-const {
-  types: t
-} = babel.default || babel;
+const { types: t } = babel.default || babel;
 
 class ImportsCache {
   constructor(resolver) {
@@ -21,14 +57,20 @@ class ImportsCache {
     this._resolver = resolver;
   }
 
-  storeAnonymous(programPath, url, // eslint-disable-next-line no-undef
-  getVal) {
+  storeAnonymous(
+    programPath,
+    url, // eslint-disable-next-line no-undef
+    getVal
+  ) {
     const key = this._normalizeKey(programPath, url);
 
     const imports = this._ensure(this._anonymousImports, programPath, Set);
 
     if (imports.has(key)) return;
-    const node = getVal(programPath.node.sourceType === "script", t.stringLiteral(this._resolver(url)));
+    const node = getVal(
+      programPath.node.sourceType === "script",
+      t.stringLiteral(this._resolver(url))
+    );
     imports.add(key);
 
     this._injectImport(programPath, node);
@@ -40,10 +82,11 @@ class ImportsCache {
     const imports = this._ensure(this._imports, programPath, Map);
 
     if (!imports.has(key)) {
-      const {
-        node,
-        name: id
-      } = getVal(programPath.node.sourceType === "script", t.stringLiteral(this._resolver(url)), t.identifier(name));
+      const { node, name: id } = getVal(
+        programPath.node.sourceType === "script",
+        t.stringLiteral(this._resolver(url)),
+        t.identifier(name)
+      );
       imports.set(key, id);
 
       this._injectImport(programPath, node);
@@ -55,9 +98,13 @@ class ImportsCache {
   _injectImport(programPath, node) {
     let lastImport = this._lastImports.get(programPath);
 
-    if (lastImport && lastImport.node && // Sometimes the AST is modified and the "last import"
-    // we have has been replaced
-    lastImport.parent === programPath.node && lastImport.container === programPath.node.body) {
+    if (
+      lastImport &&
+      lastImport.node && // Sometimes the AST is modified and the "last import"
+      // we have has been replaced
+      lastImport.parent === programPath.node &&
+      lastImport.container === programPath.node.body
+    ) {
       lastImport = lastImport.insertAfter(node);
     } else {
       lastImport = programPath.unshiftContainer("body", node);
@@ -86,7 +133,6 @@ class ImportsCache {
         lastImport = path;
       }
     });*/
-
   }
 
   _ensure(map, programPath, Collection) {
@@ -101,15 +147,12 @@ class ImportsCache {
   }
 
   _normalizeKey(programPath, url, name = "") {
-    const {
-      sourceType
-    } = programPath.node; // If we rely on the imported binding (the "name" parameter), we also need to cache
+    const { sourceType } = programPath.node; // If we rely on the imported binding (the "name" parameter), we also need to cache
     // based on the sourceType. This is because the module transforms change the names
     // of the import variables.
 
     return `${name && sourceType}::${url}::${name}`;
   }
-
 }
 
 exports.default = ImportsCache;

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.run = run;
 
@@ -26,7 +26,12 @@ var _normalizeFile = require("./normalize-file");
 var _generate = require("./file/generate");
 
 function* run(config, code, ast) {
-  const file = yield* (0, _normalizeFile.default)(config.passes, (0, _normalizeOpts.default)(config), code, ast);
+  const file = yield* (0, _normalizeFile.default)(
+    config.passes,
+    (0, _normalizeOpts.default)(config),
+    code,
+    ast
+  );
   const opts = file.opts;
 
   try {
@@ -34,7 +39,9 @@ function* run(config, code, ast) {
   } catch (e) {
     var _opts$filename;
 
-    e.message = `${(_opts$filename = opts.filename) != null ? _opts$filename : "unknown"}: ${e.message}`;
+    e.message = `${
+      (_opts$filename = opts.filename) != null ? _opts$filename : "unknown"
+    }: ${e.message}`;
 
     if (!e.code) {
       e.code = "BABEL_TRANSFORM_ERROR";
@@ -47,15 +54,14 @@ function* run(config, code, ast) {
 
   try {
     if (opts.code !== false) {
-      ({
-        outputCode,
-        outputMap
-      } = (0, _generate.default)(config.passes, file));
+      ({ outputCode, outputMap } = (0, _generate.default)(config.passes, file));
     }
   } catch (e) {
     var _opts$filename2;
 
-    e.message = `${(_opts$filename2 = opts.filename) != null ? _opts$filename2 : "unknown"}: ${e.message}`;
+    e.message = `${
+      (_opts$filename2 = opts.filename) != null ? _opts$filename2 : "unknown"
+    }: ${e.message}`;
 
     if (!e.code) {
       e.code = "BABEL_GENERATE_ERROR";
@@ -70,7 +76,7 @@ function* run(config, code, ast) {
     ast: opts.ast === true ? file.ast : null,
     code: outputCode === undefined ? null : outputCode,
     map: outputMap === undefined ? null : outputMap,
-    sourceType: file.ast.program.sourceType
+    sourceType: file.ast.program.sourceType,
   };
 }
 
@@ -80,7 +86,9 @@ function* transformFile(file, pluginPasses) {
     const passes = [];
     const visitors = [];
 
-    for (const plugin of pluginPairs.concat([(0, _blockHoistPlugin.default)()])) {
+    for (const plugin of pluginPairs.concat([
+      (0, _blockHoistPlugin.default)(),
+    ])) {
       const pass = new _pluginPass.default(file, plugin.key, plugin.options);
       passPairs.push([plugin, pass]);
       passes.push(pass);
@@ -95,12 +103,21 @@ function* transformFile(file, pluginPasses) {
         yield* [];
 
         if (isThenable(result)) {
-          throw new Error(`You appear to be using an plugin with an async .pre, ` + `which your current version of Babel does not support. ` + `If you're using a published plugin, you may need to upgrade ` + `your @babel/core version.`);
+          throw new Error(
+            `You appear to be using an plugin with an async .pre, ` +
+              `which your current version of Babel does not support. ` +
+              `If you're using a published plugin, you may need to upgrade ` +
+              `your @babel/core version.`
+          );
         }
       }
     }
 
-    const visitor = _traverse().default.visitors.merge(visitors, passes, file.opts.wrapPluginVisitorMethod);
+    const visitor = _traverse().default.visitors.merge(
+      visitors,
+      passes,
+      file.opts.wrapPluginVisitorMethod
+    );
 
     (0, _traverse().default)(file.ast, visitor, file.scope);
 
@@ -112,7 +129,12 @@ function* transformFile(file, pluginPasses) {
         yield* [];
 
         if (isThenable(result)) {
-          throw new Error(`You appear to be using an plugin with an async .post, ` + `which your current version of Babel does not support. ` + `If you're using a published plugin, you may need to upgrade ` + `your @babel/core version.`);
+          throw new Error(
+            `You appear to be using an plugin with an async .post, ` +
+              `which your current version of Babel does not support. ` +
+              `If you're using a published plugin, you may need to upgrade ` +
+              `your @babel/core version.`
+          );
         }
       }
     }
@@ -120,5 +142,10 @@ function* transformFile(file, pluginPasses) {
 }
 
 function isThenable(val) {
-  return !!val && (typeof val === "object" || typeof val === "function") && !!val.then && typeof val.then === "function";
+  return (
+    !!val &&
+    (typeof val === "object" || typeof val === "function") &&
+    !!val.then &&
+    typeof val.then === "function"
+  );
 }

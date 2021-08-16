@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -15,41 +15,36 @@ var _core = require("@babel/core");
 
 var _forAwait = require("./for-await");
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
   const yieldStarVisitor = {
     Function(path) {
       path.skip();
     },
 
-    YieldExpression({
-      node
-    }, state) {
+    YieldExpression({ node }, state) {
       if (!node.delegate) return;
       const callee = state.addHelper("asyncGeneratorDelegate");
-      node.argument = _core.types.callExpression(callee, [_core.types.callExpression(state.addHelper("asyncIterator"), [node.argument]), state.addHelper("awaitAsyncGenerator")]);
-    }
-
+      node.argument = _core.types.callExpression(callee, [
+        _core.types.callExpression(state.addHelper("asyncIterator"), [
+          node.argument,
+        ]),
+        state.addHelper("awaitAsyncGenerator"),
+      ]);
+    },
   };
   const forAwaitVisitor = {
     Function(path) {
       path.skip();
     },
 
-    ForOfStatement(path, {
-      file
-    }) {
-      const {
-        node
-      } = path;
+    ForOfStatement(path, { file }) {
+      const { node } = path;
       if (!node.await) return;
       const build = (0, _forAwait.default)(path, {
-        getAsyncIterator: file.addHelper("asyncIterator")
+        getAsyncIterator: file.addHelper("asyncIterator"),
       });
-      const {
-        declar,
-        loop
-      } = build;
+      const { declar, loop } = build;
       const block = loop.body;
       path.ensureBlock();
 
@@ -68,8 +63,7 @@ var _default = (0, _helperPluginUtils.declare)(api => {
       } else {
         path.replaceWithMultiple(build.node);
       }
-    }
-
+    },
   };
   const visitor = {
     Function(path, state) {
@@ -79,10 +73,9 @@ var _default = (0, _helperPluginUtils.declare)(api => {
       path.traverse(yieldStarVisitor, state);
       (0, _helperRemapAsyncToGenerator.default)(path, {
         wrapAsync: state.addHelper("wrapAsyncGenerator"),
-        wrapAwait: state.addHelper("awaitAsyncGenerator")
+        wrapAwait: state.addHelper("awaitAsyncGenerator"),
       });
-    }
-
+    },
   };
   return {
     name: "proposal-async-generator-functions",
@@ -90,9 +83,8 @@ var _default = (0, _helperPluginUtils.declare)(api => {
     visitor: {
       Program(path, state) {
         path.traverse(visitor, state);
-      }
-
-    }
+      },
+    },
   };
 });
 

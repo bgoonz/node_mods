@@ -8,4 +8,5 @@ function _classPrivateFieldGet(receiver, privateMap) {
 }
 
 module.exports = _classPrivateFieldGet;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

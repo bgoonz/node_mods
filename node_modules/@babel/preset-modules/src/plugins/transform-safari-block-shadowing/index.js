@@ -2,7 +2,7 @@
  * Fixes block-shadowed let/const bindings in Safari 10/11.
  * https://kangax.github.io/compat-table/es6/#test-let_scope_shadow_resolution
  */
-export default function({ types: t }) {
+export default function ({ types: t }) {
   return {
     name: "transform-safari-block-shadowing",
     visitor: {

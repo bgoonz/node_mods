@@ -12,7 +12,9 @@ var _lodash = _interopRequireDefault(require("lodash.debounce"));
 
 var _resolve = _interopRequireDefault(require("resolve"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 const nativeRequireResolve = parseFloat(process.versions.node) >= 8.9;
 
@@ -45,11 +47,11 @@ function resolve(dirname, moduleName, absoluteImports) {
     if (nativeRequireResolve) {
       // $FlowIgnore
       pkg = require.resolve(`${modulePackage}/package.json`, {
-        paths: [basedir]
+        paths: [basedir],
       });
     } else {
       pkg = _resolve.default.sync(`${modulePackage}/package.json`, {
-        basedir
+        basedir,
       });
     }
 
@@ -57,11 +59,14 @@ function resolve(dirname, moduleName, absoluteImports) {
   } catch (err) {
     if (err.code !== "MODULE_NOT_FOUND") throw err; // $FlowIgnore
 
-    throw Object.assign(new Error(`Failed to resolve "${moduleName}" relative to "${dirname}"`), {
-      code: "BABEL_POLYFILL_NOT_FOUND",
-      polyfill: moduleName,
-      dirname
-    });
+    throw Object.assign(
+      new Error(`Failed to resolve "${moduleName}" relative to "${dirname}"`),
+      {
+        code: "BABEL_POLYFILL_NOT_FOUND",
+        polyfill: moduleName,
+        dirname,
+      }
+    );
   }
 }
 
@@ -70,11 +75,11 @@ function has(basedir, name) {
     if (nativeRequireResolve) {
       // $FlowIgnore
       require.resolve(name, {
-        paths: [basedir]
+        paths: [basedir],
       });
     } else {
       _resolve.default.sync(name, {
-        basedir
+        basedir,
       });
     }
 
@@ -87,7 +92,12 @@ function has(basedir, name) {
 function logMissing(missingDeps) {
   if (missingDeps.size === 0) return;
   const deps = Array.from(missingDeps).sort().join(" ");
-  console.warn("\nSome polyfills have been added but are not present in your dependencies.\n" + "Please run one of the following commands:\n" + `\tnpm install --save ${deps}\n` + `\tyarn add ${deps}\n`);
+  console.warn(
+    "\nSome polyfills have been added but are not present in your dependencies.\n" +
+      "Please run one of the following commands:\n" +
+      `\tnpm install --save ${deps}\n` +
+      `\tyarn add ${deps}\n`
+  );
   process.exitCode = 1;
 }
 
@@ -99,6 +109,6 @@ const laterLogMissingDependencies = (0, _lodash.default)(() => {
 
 function laterLogMissing(missingDeps) {
   if (missingDeps.size === 0) return;
-  missingDeps.forEach(name => allMissingDeps.add(name));
+  missingDeps.forEach((name) => allMissingDeps.add(name));
   laterLogMissingDependencies();
 }

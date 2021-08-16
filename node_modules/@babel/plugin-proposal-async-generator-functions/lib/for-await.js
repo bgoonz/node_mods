@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = _default;
 
@@ -36,35 +36,42 @@ const buildForAwait = (0, _core.template)(`
   }
 `);
 
-function _default(path, {
-  getAsyncIterator
-}) {
-  const {
-    node,
-    scope,
-    parent
-  } = path;
+function _default(path, { getAsyncIterator }) {
+  const { node, scope, parent } = path;
   const stepKey = scope.generateUidIdentifier("step");
 
-  const stepValue = _core.types.memberExpression(stepKey, _core.types.identifier("value"));
+  const stepValue = _core.types.memberExpression(
+    stepKey,
+    _core.types.identifier("value")
+  );
 
   const left = node.left;
   let declar;
 
-  if (_core.types.isIdentifier(left) || _core.types.isPattern(left) || _core.types.isMemberExpression(left)) {
-    declar = _core.types.expressionStatement(_core.types.assignmentExpression("=", left, stepValue));
+  if (
+    _core.types.isIdentifier(left) ||
+    _core.types.isPattern(left) ||
+    _core.types.isMemberExpression(left)
+  ) {
+    declar = _core.types.expressionStatement(
+      _core.types.assignmentExpression("=", left, stepValue)
+    );
   } else if (_core.types.isVariableDeclaration(left)) {
-    declar = _core.types.variableDeclaration(left.kind, [_core.types.variableDeclarator(left.declarations[0].id, stepValue)]);
+    declar = _core.types.variableDeclaration(left.kind, [
+      _core.types.variableDeclarator(left.declarations[0].id, stepValue),
+    ]);
   }
 
   let template = buildForAwait({
     ITERATOR_HAD_ERROR_KEY: scope.generateUidIdentifier("didIteratorError"),
-    ITERATOR_ABRUPT_COMPLETION: scope.generateUidIdentifier("iteratorAbruptCompletion"),
+    ITERATOR_ABRUPT_COMPLETION: scope.generateUidIdentifier(
+      "iteratorAbruptCompletion"
+    ),
     ITERATOR_ERROR_KEY: scope.generateUidIdentifier("iteratorError"),
     ITERATOR_KEY: scope.generateUidIdentifier("iterator"),
     GET_ITERATOR: getAsyncIterator,
     OBJECT: node.right,
-    STEP_KEY: _core.types.cloneNode(stepKey)
+    STEP_KEY: _core.types.cloneNode(stepKey),
   });
   template = template.body.body;
 
@@ -81,6 +88,6 @@ function _default(path, {
     replaceParent: isLabeledParent,
     node: template,
     declar,
-    loop
+    loop,
   };
 }

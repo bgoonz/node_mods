@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.needsWhitespace = needsWhitespace;
 exports.needsWhitespaceBefore = needsWhitespaceBefore;
@@ -18,7 +18,7 @@ const {
   isCallExpression,
   isExpressionStatement,
   isMemberExpression,
-  isNewExpression
+  isNewExpression,
 } = t;
 
 function expandAliases(obj) {
@@ -26,10 +26,12 @@ function expandAliases(obj) {
 
   function add(type, func) {
     const fn = newObj[type];
-    newObj[type] = fn ? function (node, parent, stack) {
-      const result = fn(node, parent, stack);
-      return result == null ? func(node, parent, stack) : result;
-    } : func;
+    newObj[type] = fn
+      ? function (node, parent, stack) {
+          const result = fn(node, parent, stack);
+          return result == null ? func(node, parent, stack) : result;
+        }
+      : func;
   }
 
   for (const type of Object.keys(obj)) {

@@ -7,4 +7,5 @@ function _classPrivateMethodGet(receiver, privateSet, fn) {
 }
 
 module.exports = _classPrivateMethodGet;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

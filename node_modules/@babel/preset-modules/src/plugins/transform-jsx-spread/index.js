@@ -85,7 +85,7 @@ export default ({ types: t }) => {
     visitor: {
       JSXOpeningElement(path, state) {
         const useSpread = state.opts.useSpread === true;
-        const hasSpread = path.node.attributes.some(attr =>
+        const hasSpread = path.node.attributes.some((attr) =>
           t.isJSXSpreadAttribute(attr)
         );
 

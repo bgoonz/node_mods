@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.pluginsBugfixes = exports.plugins = void 0;
 
@@ -28,4 +28,5 @@ for (const plugin of Object.keys(_pluginBugfixes)) {
   }
 }
 
-pluginsFiltered["proposal-class-properties"] = pluginsFiltered["proposal-private-methods"];
+pluginsFiltered["proposal-class-properties"] =
+  pluginsFiltered["proposal-private-methods"];

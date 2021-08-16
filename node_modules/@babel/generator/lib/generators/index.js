@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 
 var _templateLiterals = require("./template-literals");
@@ -13,7 +13,7 @@ Object.keys(_templateLiterals).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _templateLiterals[key];
-    }
+    },
   });
 });
 
@@ -26,7 +26,7 @@ Object.keys(_expressions).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _expressions[key];
-    }
+    },
   });
 });
 
@@ -39,7 +39,7 @@ Object.keys(_statements).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _statements[key];
-    }
+    },
   });
 });
 
@@ -52,7 +52,7 @@ Object.keys(_classes).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _classes[key];
-    }
+    },
   });
 });
 
@@ -65,7 +65,7 @@ Object.keys(_methods).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _methods[key];
-    }
+    },
   });
 });
 
@@ -78,7 +78,7 @@ Object.keys(_modules).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _modules[key];
-    }
+    },
   });
 });
 
@@ -91,7 +91,7 @@ Object.keys(_types).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _types[key];
-    }
+    },
   });
 });
 
@@ -104,7 +104,7 @@ Object.keys(_flow).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _flow[key];
-    }
+    },
   });
 });
 
@@ -117,7 +117,7 @@ Object.keys(_base).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _base[key];
-    }
+    },
   });
 });
 
@@ -130,7 +130,7 @@ Object.keys(_jsx).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _jsx[key];
-    }
+    },
   });
 });
 
@@ -143,6 +143,6 @@ Object.keys(_typescript).forEach(function (key) {
     enumerable: true,
     get: function () {
       return _typescript[key];
-    }
+    },
   });
 });

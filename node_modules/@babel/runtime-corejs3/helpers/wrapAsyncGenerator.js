@@ -7,4 +7,5 @@ function _wrapAsyncGenerator(fn) {
 }
 
 module.exports = _wrapAsyncGenerator;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

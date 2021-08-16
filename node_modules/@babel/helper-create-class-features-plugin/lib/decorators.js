@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.hasOwnDecorators = hasOwnDecorators;
 exports.hasDecorators = hasDecorators;
@@ -27,14 +27,21 @@ function prop(key, value) {
 }
 
 function method(key, body) {
-  return _core.types.objectMethod("method", _core.types.identifier(key), [], _core.types.blockStatement(body));
+  return _core.types.objectMethod(
+    "method",
+    _core.types.identifier(key),
+    [],
+    _core.types.blockStatement(body)
+  );
 }
 
 function takeDecorators(node) {
   let result;
 
   if (node.decorators && node.decorators.length > 0) {
-    result = _core.types.arrayExpression(node.decorators.map(decorator => decorator.expression));
+    result = _core.types.arrayExpression(
+      node.decorators.map((decorator) => decorator.expression)
+    );
   }
 
   node.decorators = undefined;
@@ -52,14 +59,15 @@ function getKey(node) {
 }
 
 function extractElementDescriptor(classRef, superRef, path) {
-  const {
-    node,
-    scope
-  } = path;
+  const { node, scope } = path;
   const isMethod = path.isClassMethod();
 
   if (path.isPrivate()) {
-    throw path.buildCodeFrameError(`Private ${isMethod ? "methods" : "fields"} in decorated classes are not supported yet.`);
+    throw path.buildCodeFrameError(
+      `Private ${
+        isMethod ? "methods" : "fields"
+      } in decorated classes are not supported yet.`
+    );
   }
 
   new _helperReplaceSupers.default({
@@ -67,22 +75,39 @@ function extractElementDescriptor(classRef, superRef, path) {
     objectRef: classRef,
     superRef,
     file: this,
-    refToPreserve: classRef
+    refToPreserve: classRef,
   }).replace();
-  const properties = [prop("kind", _core.types.stringLiteral(_core.types.isClassMethod(node) ? node.kind : "field")), prop("decorators", takeDecorators(node)), prop("static", node.static && _core.types.booleanLiteral(true)), prop("key", getKey(node))].filter(Boolean);
+  const properties = [
+    prop(
+      "kind",
+      _core.types.stringLiteral(
+        _core.types.isClassMethod(node) ? node.kind : "field"
+      )
+    ),
+    prop("decorators", takeDecorators(node)),
+    prop("static", node.static && _core.types.booleanLiteral(true)),
+    prop("key", getKey(node)),
+  ].filter(Boolean);
 
   if (_core.types.isClassMethod(node)) {
     const id = node.computed ? null : node.key;
 
     _core.types.toExpression(node);
 
-    properties.push(prop("value", (0, _helperFunctionName.default)({
-      node,
-      id,
-      scope
-    }) || node));
+    properties.push(
+      prop(
+        "value",
+        (0, _helperFunctionName.default)({
+          node,
+          id,
+          scope,
+        }) || node
+      )
+    );
   } else if (_core.types.isClassProperty(node) && node.value) {
-    properties.push(method("value", _core.template.statements.ast`return ${node.value}`));
+    properties.push(
+      method("value", _core.template.statements.ast`return ${node.value}`)
+    );
   } else {
     properties.push(prop("value", scope.buildUndefinedNode()));
   }
@@ -96,7 +121,10 @@ function addDecorateHelper(file) {
     return file.addHelper("decorate");
   } catch (err) {
     if (err.code === "BABEL_HELPER_UNKNOWN") {
-      err.message += "\n  '@babel/plugin-transform-decorators' in non-legacy mode" + " requires '@babel/core' version ^7.0.2 and you appear to be using" + " an older version.";
+      err.message +=
+        "\n  '@babel/plugin-transform-decorators' in non-legacy mode" +
+        " requires '@babel/core' version ^7.0.2 and you appear to be using" +
+        " an older version.";
     }
 
     throw err;
@@ -104,16 +132,11 @@ function addDecorateHelper(file) {
 }
 
 function buildDecoratedClass(ref, path, elements, file) {
-  const {
-    node,
-    scope
-  } = path;
+  const { node, scope } = path;
   const initializeId = scope.generateUidIdentifier("initialize");
   const isDeclaration = node.id && path.isDeclaration();
   const isStrict = path.isInStrictMode();
-  const {
-    superClass
-  } = node;
+  const { superClass } = node;
   node.type = "ClassDeclaration";
   if (!node.id) node.id = _core.types.cloneNode(ref);
   let superId;
@@ -125,12 +148,18 @@ function buildDecoratedClass(ref, path, elements, file) {
 
   const classDecorators = takeDecorators(node);
 
-  const definitions = _core.types.arrayExpression(elements.filter(element => !element.node.abstract).map(extractElementDescriptor.bind(file, node.id, superId)));
+  const definitions = _core.types.arrayExpression(
+    elements
+      .filter((element) => !element.node.abstract)
+      .map(extractElementDescriptor.bind(file, node.id, superId))
+  );
 
   const wrapperCall = _core.template.expression.ast`
     ${addDecorateHelper(file)}(
       ${classDecorators || _core.types.nullLiteral()},
-      function (${initializeId}, ${superClass ? _core.types.cloneNode(superId) : null}) {
+      function (${initializeId}, ${
+    superClass ? _core.types.cloneNode(superId) : null
+  }) {
         ${node}
         return { F: ${_core.types.cloneNode(node.id)}, d: ${definitions} };
       },
@@ -139,7 +168,9 @@ function buildDecoratedClass(ref, path, elements, file) {
   `;
 
   if (!isStrict) {
-    wrapperCall.arguments[1].body.directives.push(_core.types.directive(_core.types.directiveLiteral("use strict")));
+    wrapperCall.arguments[1].body.directives.push(
+      _core.types.directive(_core.types.directiveLiteral("use strict"))
+    );
   }
 
   let replacement = wrapperCall;
@@ -151,12 +182,15 @@ function buildDecoratedClass(ref, path, elements, file) {
   }
 
   return {
-    instanceNodes: [_core.template.statement.ast`${_core.types.cloneNode(initializeId)}(this)`],
+    instanceNodes: [
+      _core.template.statement.ast`${_core.types.cloneNode(
+        initializeId
+      )}(this)`,
+    ],
 
     wrapClass(path) {
       path.replaceWith(replacement);
       return path.get(classPathDesc);
-    }
-
+    },
   };
 }

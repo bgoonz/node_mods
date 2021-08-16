@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.ConfigPrinter = exports.ChainFormatter = void 0;
 
@@ -17,7 +17,7 @@ function _gensync() {
 
 const ChainFormatter = {
   Programmatic: 0,
-  Config: 1
+  Config: 1,
 };
 exports.ChainFormatter = ChainFormatter;
 const Formatter = {
@@ -58,18 +58,19 @@ const Formatter = {
     const pluginDescriptors = [...(yield* opt.plugins())];
 
     if (pluginDescriptors.length) {
-      content.plugins = pluginDescriptors.map(d => descriptorToConfig(d));
+      content.plugins = pluginDescriptors.map((d) => descriptorToConfig(d));
     }
 
     const presetDescriptors = [...(yield* opt.presets())];
 
     if (presetDescriptors.length) {
-      content.presets = [...presetDescriptors].map(d => descriptorToConfig(d));
+      content.presets = [...presetDescriptors].map((d) =>
+        descriptorToConfig(d)
+      );
     }
 
     return JSON.stringify(content, undefined, 2);
-  }
-
+  },
 };
 
 function descriptorToConfig(d) {
@@ -103,10 +104,7 @@ class ConfigPrinter {
     this._stack = [];
   }
 
-  configure(enabled, type, {
-    callerName,
-    filepath
-  }) {
+  configure(enabled, type, { callerName, filepath }) {
     if (!enabled) return () => {};
     return (content, index, envName) => {
       this._stack.push({
@@ -115,13 +113,17 @@ class ConfigPrinter {
         filepath,
         content,
         index,
-        envName
+        envName,
       });
     };
   }
 
   static *format(config) {
-    let title = Formatter.title(config.type, config.callerName, config.filepath);
+    let title = Formatter.title(
+      config.type,
+      config.callerName,
+      config.filepath
+    );
     const loc = Formatter.loc(config.index, config.envName);
     if (loc) title += ` ${loc}`;
     const content = yield* Formatter.optionsAndDescriptors(config.content);
@@ -130,10 +132,11 @@ class ConfigPrinter {
 
   *output() {
     if (this._stack.length === 0) return "";
-    const configs = yield* _gensync().all(this._stack.map(s => ConfigPrinter.format(s)));
+    const configs = yield* _gensync().all(
+      this._stack.map((s) => ConfigPrinter.format(s))
+    );
     return configs.join("\n\n");
   }
-
 }
 
 exports.ConfigPrinter = ConfigPrinter;

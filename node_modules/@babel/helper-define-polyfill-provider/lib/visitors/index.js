@@ -11,4 +11,6 @@ var _entry = _interopRequireDefault(require("./entry"));
 
 exports.entry = _entry.default;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}

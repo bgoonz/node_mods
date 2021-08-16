@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -23,7 +23,7 @@ the @babel/plugin-syntax-dynamic-import plugin and let your
 bundler handle dynamic imports.
 `;
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
   return {
     name: "proposal-dynamic-import",
@@ -40,9 +40,8 @@ var _default = (0, _helperPluginUtils.declare)(api => {
         if (!SUPPORTED_MODULES.includes(modules)) {
           throw new Error(MODULES_NOT_FOUND);
         }
-      }
-
-    }
+      },
+    },
   };
 });
 

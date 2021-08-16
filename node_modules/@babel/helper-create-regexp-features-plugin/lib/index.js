@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.createRegExpFeaturePlugin = createRegExpFeaturePlugin;
 
@@ -22,29 +22,27 @@ function pullFlag(node, flag) {
 const version = "7.14.5".split(".").reduce((v, x) => v * 1e5 + +x, 0);
 const versionKey = "@babel/plugin-regexp-features/version";
 
-function createRegExpFeaturePlugin({
-  name,
-  feature,
-  options = {}
-}) {
+function createRegExpFeaturePlugin({ name, feature, options = {} }) {
   return {
     name,
 
     pre() {
       var _file$get;
 
-      const {
-        file
-      } = this;
-      const features = (_file$get = file.get(_features.featuresKey)) != null ? _file$get : 0;
-      let newFeatures = (0, _features.enableFeature)(features, _features.FEATURES[feature]);
-      const {
-        useUnicodeFlag,
-        runtime = true
-      } = options;
+      const { file } = this;
+      const features =
+        (_file$get = file.get(_features.featuresKey)) != null ? _file$get : 0;
+      let newFeatures = (0, _features.enableFeature)(
+        features,
+        _features.FEATURES[feature]
+      );
+      const { useUnicodeFlag, runtime = true } = options;
 
       if (useUnicodeFlag === false) {
-        newFeatures = (0, _features.enableFeature)(newFeatures, _features.FEATURES.unicodeFlag);
+        newFeatures = (0, _features.enableFeature)(
+          newFeatures,
+          _features.FEATURES.unicodeFlag
+        );
       }
 
       if (newFeatures !== features) {
@@ -64,15 +62,17 @@ function createRegExpFeaturePlugin({
       RegExpLiteral(path) {
         var _file$get2;
 
-        const {
-          node
-        } = path;
-        const {
-          file
-        } = this;
+        const { node } = path;
+        const { file } = this;
         const features = file.get(_features.featuresKey);
-        const runtime = (_file$get2 = file.get(_features.runtimeKey)) != null ? _file$get2 : true;
-        const regexpuOptions = (0, _util.generateRegexpuOptions)(node, features);
+        const runtime =
+          (_file$get2 = file.get(_features.runtimeKey)) != null
+            ? _file$get2
+            : true;
+        const regexpuOptions = (0, _util.generateRegexpuOptions)(
+          node,
+          features
+        );
 
         if (regexpuOptions === null) {
           return;
@@ -88,31 +88,45 @@ function createRegExpFeaturePlugin({
 
         node.pattern = _regexpuCore(node.pattern, node.flags, regexpuOptions);
 
-        if (regexpuOptions.namedGroup && Object.keys(namedCaptureGroups).length > 0 && runtime && !isRegExpTest(path)) {
-          const call = _core.types.callExpression(this.addHelper("wrapRegExp"), [node, _core.types.valueToNode(namedCaptureGroups)]);
+        if (
+          regexpuOptions.namedGroup &&
+          Object.keys(namedCaptureGroups).length > 0 &&
+          runtime &&
+          !isRegExpTest(path)
+        ) {
+          const call = _core.types.callExpression(
+            this.addHelper("wrapRegExp"),
+            [node, _core.types.valueToNode(namedCaptureGroups)]
+          );
 
           (0, _helperAnnotateAsPure.default)(call);
           path.replaceWith(call);
         }
 
-        if ((0, _features.hasFeature)(features, _features.FEATURES.unicodeFlag)) {
+        if (
+          (0, _features.hasFeature)(features, _features.FEATURES.unicodeFlag)
+        ) {
           pullFlag(node, "u");
         }
 
-        if ((0, _features.hasFeature)(features, _features.FEATURES.dotAllFlag)) {
+        if (
+          (0, _features.hasFeature)(features, _features.FEATURES.dotAllFlag)
+        ) {
           pullFlag(node, "s");
         }
-      }
-
-    }
+      },
+    },
   };
 }
 
 function isRegExpTest(path) {
-  return path.parentPath.isMemberExpression({
-    object: path.node,
-    computed: false
-  }) && path.parentPath.get("property").isIdentifier({
-    name: "test"
-  });
+  return (
+    path.parentPath.isMemberExpression({
+      object: path.node,
+      computed: false,
+    }) &&
+    path.parentPath.get("property").isIdentifier({
+      name: "test",
+    })
+  );
 }

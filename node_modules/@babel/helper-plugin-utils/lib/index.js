@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.declare = declare;
 
@@ -15,22 +15,27 @@ function declare(builder) {
       var _clonedApi;
 
       if (api[name]) continue;
-      clonedApi = (_clonedApi = clonedApi) != null ? _clonedApi : copyApiObject(api);
+      clonedApi =
+        (_clonedApi = clonedApi) != null ? _clonedApi : copyApiObject(api);
       clonedApi[name] = apiPolyfills[name](clonedApi);
     }
 
-    return builder((_clonedApi2 = clonedApi) != null ? _clonedApi2 : api, options || {}, dirname);
+    return builder(
+      (_clonedApi2 = clonedApi) != null ? _clonedApi2 : api,
+      options || {},
+      dirname
+    );
   };
 }
 
 const apiPolyfills = {
-  assertVersion: api => range => {
+  assertVersion: (api) => (range) => {
     throwVersionError(range, api.version);
   },
   targets: () => () => {
     return {};
   },
-  assumption: () => () => {}
+  assumption: () => () => {},
 };
 
 function copyApiObject(api) {
@@ -39,7 +44,13 @@ function copyApiObject(api) {
   if (typeof api.version === "string" && /^7\./.test(api.version)) {
     proto = Object.getPrototypeOf(api);
 
-    if (proto && (!has(proto, "version") || !has(proto, "transform") || !has(proto, "template") || !has(proto, "types"))) {
+    if (
+      proto &&
+      (!has(proto, "version") ||
+        !has(proto, "transform") ||
+        !has(proto, "template") ||
+        !has(proto, "types"))
+    ) {
       proto = null;
     }
   }
@@ -73,9 +84,19 @@ function throwVersionError(range, version) {
   let err;
 
   if (version.slice(0, 2) === "7.") {
-    err = new Error(`Requires Babel "^7.0.0-beta.41", but was loaded with "${version}". ` + `You'll need to update your @babel/core version.`);
+    err = new Error(
+      `Requires Babel "^7.0.0-beta.41", but was loaded with "${version}". ` +
+        `You'll need to update your @babel/core version.`
+    );
   } else {
-    err = new Error(`Requires Babel "${range}", but was loaded with "${version}". ` + `If you are sure you have a compatible version of @babel/core, ` + `it is likely that something in your build process is loading the ` + `wrong version. Inspect the stack trace of this error to look for ` + `the first entry that doesn't mention "@babel/core" or "babel-core" ` + `to see what is calling Babel.`);
+    err = new Error(
+      `Requires Babel "${range}", but was loaded with "${version}". ` +
+        `If you are sure you have a compatible version of @babel/core, ` +
+        `it is likely that something in your build process is loading the ` +
+        `wrong version. Inspect the stack trace of this error to look for ` +
+        `the first entry that doesn't mention "@babel/core" or "babel-core" ` +
+        `to see what is calling Babel.`
+    );
   }
 
   if (typeof limit === "number") {
@@ -85,6 +106,6 @@ function throwVersionError(range, version) {
   throw Object.assign(err, {
     code: "BABEL_VERSION_UNSUPPORTED",
     version,
-    range
+    range,
   });
 }

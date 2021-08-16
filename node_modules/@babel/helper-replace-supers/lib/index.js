@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.skipAllButComputedKey = skipAllButComputedKey;
 exports.default = exports.environmentVisitor = void 0;
@@ -16,7 +16,10 @@ var t = require("@babel/types");
 
 function getPrototypeOfExpression(objectRef, isStatic, file, isPrivateMethod) {
   objectRef = t.cloneNode(objectRef);
-  const targetRef = isStatic || isPrivateMethod ? objectRef : t.memberExpression(objectRef, t.identifier("prototype"));
+  const targetRef =
+    isStatic || isPrivateMethod
+      ? objectRef
+      : t.memberExpression(objectRef, t.identifier("prototype"));
   return t.callExpression(file.addHelper("getPrototypeOf"), [targetRef]);
 }
 
@@ -34,7 +37,9 @@ function skipAllButComputedKey(path) {
 }
 
 const environmentVisitor = {
-  [`${t.staticBlock ? "StaticBlock|" : ""}ClassPrivateProperty|TypeAnnotation`](path) {
+  [`${t.staticBlock ? "StaticBlock|" : ""}ClassPrivateProperty|TypeAnnotation`](
+    path
+  ) {
     path.skip();
   },
 
@@ -46,48 +51,43 @@ const environmentVisitor = {
 
   "Method|ClassProperty"(path) {
     skipAllButComputedKey(path);
-  }
-
+  },
 };
 exports.environmentVisitor = environmentVisitor;
 
-const visitor = _traverse.default.visitors.merge([environmentVisitor, {
-  Super(path, state) {
-    const {
-      node,
-      parentPath
-    } = path;
-    if (!parentPath.isMemberExpression({
-      object: node
-    })) return;
-    state.handle(parentPath);
-  }
+const visitor = _traverse.default.visitors.merge([
+  environmentVisitor,
+  {
+    Super(path, state) {
+      const { node, parentPath } = path;
+      if (
+        !parentPath.isMemberExpression({
+          object: node,
+        })
+      )
+        return;
+      state.handle(parentPath);
+    },
+  },
+]);
 
-}]);
+const unshadowSuperBindingVisitor = _traverse.default.visitors.merge([
+  environmentVisitor,
+  {
+    Scopable(path, { refName }) {
+      const binding = path.scope.getOwnBinding(refName);
 
-const unshadowSuperBindingVisitor = _traverse.default.visitors.merge([environmentVisitor, {
-  Scopable(path, {
-    refName
-  }) {
-    const binding = path.scope.getOwnBinding(refName);
-
-    if (binding && binding.identifier.name === refName) {
-      path.scope.rename(refName);
-    }
-  }
-
-}]);
+      if (binding && binding.identifier.name === refName) {
+        path.scope.rename(refName);
+      }
+    },
+  },
+]);
 
 const specHandlers = {
   memoise(superMember, count) {
-    const {
-      scope,
-      node
-    } = superMember;
-    const {
-      computed,
-      property
-    } = node;
+    const { scope, node } = superMember;
+    const { computed, property } = node;
 
     if (!computed) {
       return;
@@ -103,10 +103,7 @@ const specHandlers = {
   },
 
   prop(superMember) {
-    const {
-      computed,
-      property
-    } = superMember.node;
+    const { computed, property } = superMember.node;
 
     if (this.memoiser.has(property)) {
       return t.cloneNode(this.memoiser.get(property));
@@ -124,53 +121,82 @@ const specHandlers = {
   },
 
   _get(superMember, thisRefs) {
-    const proto = getPrototypeOfExpression(this.getObjectRef(), this.isStatic, this.file, this.isPrivateMethod);
-    return t.callExpression(this.file.addHelper("get"), [thisRefs.memo ? t.sequenceExpression([thisRefs.memo, proto]) : proto, this.prop(superMember), thisRefs.this]);
+    const proto = getPrototypeOfExpression(
+      this.getObjectRef(),
+      this.isStatic,
+      this.file,
+      this.isPrivateMethod
+    );
+    return t.callExpression(this.file.addHelper("get"), [
+      thisRefs.memo ? t.sequenceExpression([thisRefs.memo, proto]) : proto,
+      this.prop(superMember),
+      thisRefs.this,
+    ]);
   },
 
   _getThisRefs() {
     if (!this.isDerivedConstructor) {
       return {
-        this: t.thisExpression()
+        this: t.thisExpression(),
       };
     }
 
     const thisRef = this.scope.generateDeclaredUidIdentifier("thisSuper");
     return {
       memo: t.assignmentExpression("=", thisRef, t.thisExpression()),
-      this: t.cloneNode(thisRef)
+      this: t.cloneNode(thisRef),
     };
   },
 
   set(superMember, value) {
     const thisRefs = this._getThisRefs();
 
-    const proto = getPrototypeOfExpression(this.getObjectRef(), this.isStatic, this.file, this.isPrivateMethod);
-    return t.callExpression(this.file.addHelper("set"), [thisRefs.memo ? t.sequenceExpression([thisRefs.memo, proto]) : proto, this.prop(superMember), value, thisRefs.this, t.booleanLiteral(superMember.isInStrictMode())]);
+    const proto = getPrototypeOfExpression(
+      this.getObjectRef(),
+      this.isStatic,
+      this.file,
+      this.isPrivateMethod
+    );
+    return t.callExpression(this.file.addHelper("set"), [
+      thisRefs.memo ? t.sequenceExpression([thisRefs.memo, proto]) : proto,
+      this.prop(superMember),
+      value,
+      thisRefs.this,
+      t.booleanLiteral(superMember.isInStrictMode()),
+    ]);
   },
 
   destructureSet(superMember) {
-    throw superMember.buildCodeFrameError(`Destructuring to a super field is not supported yet.`);
+    throw superMember.buildCodeFrameError(
+      `Destructuring to a super field is not supported yet.`
+    );
   },
 
   call(superMember, args) {
     const thisRefs = this._getThisRefs();
 
-    return (0, _helperOptimiseCallExpression.default)(this._get(superMember, thisRefs), t.cloneNode(thisRefs.this), args, false);
+    return (0, _helperOptimiseCallExpression.default)(
+      this._get(superMember, thisRefs),
+      t.cloneNode(thisRefs.this),
+      args,
+      false
+    );
   },
 
   optionalCall(superMember, args) {
     const thisRefs = this._getThisRefs();
 
-    return (0, _helperOptimiseCallExpression.default)(this._get(superMember, thisRefs), t.cloneNode(thisRefs.this), args, true);
-  }
-
+    return (0, _helperOptimiseCallExpression.default)(
+      this._get(superMember, thisRefs),
+      t.cloneNode(thisRefs.this),
+      args,
+      true
+    );
+  },
 };
 const looseHandlers = Object.assign({}, specHandlers, {
   prop(superMember) {
-    const {
-      property
-    } = superMember.node;
+    const { property } = superMember.node;
 
     if (this.memoiser.has(property)) {
       return t.cloneNode(this.memoiser.get(property));
@@ -180,53 +206,68 @@ const looseHandlers = Object.assign({}, specHandlers, {
   },
 
   get(superMember) {
-    const {
-      isStatic,
-      getSuperRef
-    } = this;
-    const {
-      computed
-    } = superMember.node;
+    const { isStatic, getSuperRef } = this;
+    const { computed } = superMember.node;
     const prop = this.prop(superMember);
     let object;
 
     if (isStatic) {
       var _getSuperRef;
 
-      object = (_getSuperRef = getSuperRef()) != null ? _getSuperRef : t.memberExpression(t.identifier("Function"), t.identifier("prototype"));
+      object =
+        (_getSuperRef = getSuperRef()) != null
+          ? _getSuperRef
+          : t.memberExpression(
+              t.identifier("Function"),
+              t.identifier("prototype")
+            );
     } else {
       var _getSuperRef2;
 
-      object = t.memberExpression((_getSuperRef2 = getSuperRef()) != null ? _getSuperRef2 : t.identifier("Object"), t.identifier("prototype"));
+      object = t.memberExpression(
+        (_getSuperRef2 = getSuperRef()) != null
+          ? _getSuperRef2
+          : t.identifier("Object"),
+        t.identifier("prototype")
+      );
     }
 
     return t.memberExpression(object, prop, computed);
   },
 
   set(superMember, value) {
-    const {
-      computed
-    } = superMember.node;
+    const { computed } = superMember.node;
     const prop = this.prop(superMember);
-    return t.assignmentExpression("=", t.memberExpression(t.thisExpression(), prop, computed), value);
+    return t.assignmentExpression(
+      "=",
+      t.memberExpression(t.thisExpression(), prop, computed),
+      value
+    );
   },
 
   destructureSet(superMember) {
-    const {
-      computed
-    } = superMember.node;
+    const { computed } = superMember.node;
     const prop = this.prop(superMember);
     return t.memberExpression(t.thisExpression(), prop, computed);
   },
 
   call(superMember, args) {
-    return (0, _helperOptimiseCallExpression.default)(this.get(superMember), t.thisExpression(), args, false);
+    return (0, _helperOptimiseCallExpression.default)(
+      this.get(superMember),
+      t.thisExpression(),
+      args,
+      false
+    );
   },
 
   optionalCall(superMember, args) {
-    return (0, _helperOptimiseCallExpression.default)(this.get(superMember), t.thisExpression(), args, true);
-  }
-
+    return (0, _helperOptimiseCallExpression.default)(
+      this.get(superMember),
+      t.thisExpression(),
+      args,
+      true
+    );
+  },
 });
 
 class ReplaceSupers {
@@ -235,13 +276,20 @@ class ReplaceSupers {
 
     const path = opts.methodPath;
     this.methodPath = path;
-    this.isDerivedConstructor = path.isClassMethod({
-      kind: "constructor"
-    }) && !!opts.superRef;
-    this.isStatic = path.isObjectMethod() || path.node.static || (path.isStaticBlock == null ? void 0 : path.isStaticBlock());
+    this.isDerivedConstructor =
+      path.isClassMethod({
+        kind: "constructor",
+      }) && !!opts.superRef;
+    this.isStatic =
+      path.isObjectMethod() ||
+      path.node.static ||
+      (path.isStaticBlock == null ? void 0 : path.isStaticBlock());
     this.isPrivateMethod = path.isPrivate() && path.isMethod();
     this.file = opts.file;
-    this.constantSuper = (_opts$constantSuper = opts.constantSuper) != null ? _opts$constantSuper : opts.isLoose;
+    this.constantSuper =
+      (_opts$constantSuper = opts.constantSuper) != null
+        ? _opts$constantSuper
+        : opts.isLoose;
     this.opts = opts;
   }
 
@@ -257,23 +305,29 @@ class ReplaceSupers {
   replace() {
     if (this.opts.refToPreserve) {
       this.methodPath.traverse(unshadowSuperBindingVisitor, {
-        refName: this.opts.refToPreserve.name
+        refName: this.opts.refToPreserve.name,
       });
     }
 
     const handler = this.constantSuper ? looseHandlers : specHandlers;
-    (0, _helperMemberExpressionToFunctions.default)(this.methodPath, visitor, Object.assign({
-      file: this.file,
-      scope: this.methodPath.scope,
-      isDerivedConstructor: this.isDerivedConstructor,
-      isStatic: this.isStatic,
-      isPrivateMethod: this.isPrivateMethod,
-      getObjectRef: this.getObjectRef.bind(this),
-      getSuperRef: this.getSuperRef.bind(this),
-      boundGet: handler.get
-    }, handler));
+    (0, _helperMemberExpressionToFunctions.default)(
+      this.methodPath,
+      visitor,
+      Object.assign(
+        {
+          file: this.file,
+          scope: this.methodPath.scope,
+          isDerivedConstructor: this.isDerivedConstructor,
+          isStatic: this.isStatic,
+          isPrivateMethod: this.isPrivateMethod,
+          getObjectRef: this.getObjectRef.bind(this),
+          getSuperRef: this.getSuperRef.bind(this),
+          boundGet: handler.get,
+        },
+        handler
+      )
+    );
   }
-
 }
 
 exports.default = ReplaceSupers;

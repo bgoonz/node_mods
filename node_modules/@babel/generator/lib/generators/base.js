@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.File = File;
 exports.Program = Program;
@@ -33,16 +33,19 @@ function BlockStatement(node) {
 
   this.token("{");
   this.printInnerComments(node);
-  const hasDirectives = (_node$directives = node.directives) == null ? void 0 : _node$directives.length;
+  const hasDirectives =
+    (_node$directives = node.directives) == null
+      ? void 0
+      : _node$directives.length;
 
   if (node.body.length || hasDirectives) {
     this.newline();
     this.printSequence(node.directives, node, {
-      indent: true
+      indent: true,
     });
     if (hasDirectives) this.newline();
     this.printSequence(node.body, node, {
-      indent: true
+      indent: true,
     });
     this.removeTrailingNewline();
     this.source("end", node.loc);
@@ -70,16 +73,17 @@ function DirectiveLiteral(node) {
     return;
   }
 
-  const {
-    value
-  } = node;
+  const { value } = node;
 
   if (!unescapedDoubleQuoteRE.test(value)) {
     this.token(`"${value}"`);
   } else if (!unescapedSingleQuoteRE.test(value)) {
     this.token(`'${value}'`);
   } else {
-    throw new Error("Malformed AST: it is not possible to print a directive containing" + " both unescaped single and double quotes.");
+    throw new Error(
+      "Malformed AST: it is not possible to print a directive containing" +
+        " both unescaped single and double quotes."
+    );
   }
 }
 

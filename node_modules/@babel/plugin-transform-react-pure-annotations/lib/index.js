@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -11,9 +11,25 @@ var _helperAnnotateAsPure = require("@babel/helper-annotate-as-pure");
 
 var _core = require("@babel/core");
 
-const PURE_CALLS = new Map([["react", ["cloneElement", "createContext", "createElement", "createFactory", "createRef", "forwardRef", "isValidElement", "memo", "lazy"]], ["react-dom", ["createPortal"]]]);
+const PURE_CALLS = new Map([
+  [
+    "react",
+    [
+      "cloneElement",
+      "createContext",
+      "createElement",
+      "createFactory",
+      "createRef",
+      "forwardRef",
+      "isValidElement",
+      "memo",
+      "lazy",
+    ],
+  ],
+  ["react-dom", ["createPortal"]],
+]);
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
   return {
     name: "transform-react-pure-annotations",
@@ -22,9 +38,8 @@ var _default = (0, _helperPluginUtils.declare)(api => {
         if (isReactCall(path)) {
           (0, _helperAnnotateAsPure.default)(path);
         }
-      }
-
-    }
+      },
+    },
   };
 });
 
@@ -48,11 +63,16 @@ function isReactCall(path) {
   for (const [module, methods] of PURE_CALLS) {
     const object = path.get("callee.object");
 
-    if (object.referencesImport(module, "default") || object.referencesImport(module, "*")) {
+    if (
+      object.referencesImport(module, "default") ||
+      object.referencesImport(module, "*")
+    ) {
       for (const method of methods) {
-        if (_core.types.isIdentifier(path.node.callee.property, {
-          name: method
-        })) {
+        if (
+          _core.types.isIdentifier(path.node.callee.property, {
+            name: method,
+          })
+        ) {
           return true;
         }
       }

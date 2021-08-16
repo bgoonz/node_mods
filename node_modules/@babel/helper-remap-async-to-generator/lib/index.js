@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = _default;
 
@@ -16,9 +16,7 @@ const awaitVisitor = {
     path.skip();
   },
 
-  AwaitExpression(path, {
-    wrapAwait
-  }) {
+  AwaitExpression(path, { wrapAwait }) {
     const argument = path.get("argument");
 
     if (path.parentPath.isYieldExpression()) {
@@ -26,45 +24,64 @@ const awaitVisitor = {
       return;
     }
 
-    path.replaceWith(t.yieldExpression(wrapAwait ? t.callExpression(t.cloneNode(wrapAwait), [argument.node]) : argument.node));
-  }
-
+    path.replaceWith(
+      t.yieldExpression(
+        wrapAwait
+          ? t.callExpression(t.cloneNode(wrapAwait), [argument.node])
+          : argument.node
+      )
+    );
+  },
 };
 
 function _default(path, helpers, noNewArrows) {
   path.traverse(awaitVisitor, {
-    wrapAwait: helpers.wrapAwait
+    wrapAwait: helpers.wrapAwait,
   });
   const isIIFE = checkIsIIFE(path);
   path.node.async = false;
   path.node.generator = true;
-  (0, _helperWrapFunction.default)(path, t.cloneNode(helpers.wrapAsync), noNewArrows);
-  const isProperty = path.isObjectMethod() || path.isClassMethod() || path.parentPath.isObjectProperty() || path.parentPath.isClassProperty();
+  (0, _helperWrapFunction.default)(
+    path,
+    t.cloneNode(helpers.wrapAsync),
+    noNewArrows
+  );
+  const isProperty =
+    path.isObjectMethod() ||
+    path.isClassMethod() ||
+    path.parentPath.isObjectProperty() ||
+    path.parentPath.isClassProperty();
 
   if (!isProperty && !isIIFE && path.isExpression()) {
     (0, _helperAnnotateAsPure.default)(path);
   }
 
   function checkIsIIFE(path) {
-    if (path.parentPath.isCallExpression({
-      callee: path.node
-    })) {
+    if (
+      path.parentPath.isCallExpression({
+        callee: path.node,
+      })
+    ) {
       return true;
     }
 
-    const {
-      parentPath
-    } = path;
+    const { parentPath } = path;
 
-    if (parentPath.isMemberExpression() && t.isIdentifier(parentPath.node.property, {
-      name: "bind"
-    })) {
-      const {
-        parentPath: bindCall
-      } = parentPath;
-      return bindCall.isCallExpression() && bindCall.node.arguments.length === 1 && t.isThisExpression(bindCall.node.arguments[0]) && bindCall.parentPath.isCallExpression({
-        callee: bindCall.node
-      });
+    if (
+      parentPath.isMemberExpression() &&
+      t.isIdentifier(parentPath.node.property, {
+        name: "bind",
+      })
+    ) {
+      const { parentPath: bindCall } = parentPath;
+      return (
+        bindCall.isCallExpression() &&
+        bindCall.node.arguments.length === 1 &&
+        t.isThisExpression(bindCall.node.arguments[0]) &&
+        bindCall.parentPath.isCallExpression({
+          callee: bindCall.node,
+        })
+      );
     }
 
     return false;

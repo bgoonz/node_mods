@@ -1,17 +1,17 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = transformWithoutHelper;
 
 var _core = require("@babel/core");
 
 function transformWithoutHelper(loose, path, state) {
-  const pushComputedProps = loose ? pushComputedPropsLoose : pushComputedPropsSpec;
-  const {
-    node
-  } = path;
+  const pushComputedProps = loose
+    ? pushComputedPropsLoose
+    : pushComputedPropsSpec;
+  const { node } = path;
   const build = pushComputedProps(path, state);
   const declar = build.declar;
   const loop = build.loop;
@@ -79,25 +79,33 @@ const buildForOf = (0, _core.template)(`
 `);
 
 function pushComputedPropsLoose(path, file) {
-  const {
-    node,
-    scope,
-    parent
-  } = path;
-  const {
-    left
-  } = node;
+  const { node, scope, parent } = path;
+  const { left } = node;
   let declar, id, intermediate;
 
-  if (_core.types.isIdentifier(left) || _core.types.isPattern(left) || _core.types.isMemberExpression(left)) {
+  if (
+    _core.types.isIdentifier(left) ||
+    _core.types.isPattern(left) ||
+    _core.types.isMemberExpression(left)
+  ) {
     id = left;
     intermediate = null;
   } else if (_core.types.isVariableDeclaration(left)) {
     id = scope.generateUidIdentifier("ref");
-    declar = _core.types.variableDeclaration(left.kind, [_core.types.variableDeclarator(left.declarations[0].id, _core.types.identifier(id.name))]);
-    intermediate = _core.types.variableDeclaration("var", [_core.types.variableDeclarator(_core.types.identifier(id.name))]);
+    declar = _core.types.variableDeclaration(left.kind, [
+      _core.types.variableDeclarator(
+        left.declarations[0].id,
+        _core.types.identifier(id.name)
+      ),
+    ]);
+    intermediate = _core.types.variableDeclaration("var", [
+      _core.types.variableDeclarator(_core.types.identifier(id.name)),
+    ]);
   } else {
-    throw file.buildCodeFrameError(left, `Unknown node type ${left.type} in ForStatement`);
+    throw file.buildCodeFrameError(
+      left,
+      `Unknown node type ${left.type} in ForStatement`
+    );
   }
 
   const iteratorKey = scope.generateUidIdentifier("iterator");
@@ -108,7 +116,7 @@ function pushComputedPropsLoose(path, file) {
     OBJECT: node.right,
     INDEX: scope.generateUidIdentifier("i"),
     ID: id,
-    INTERMEDIATE: intermediate
+    INTERMEDIATE: intermediate,
   });
 
   const isLabeledParent = _core.types.isLabeledStatement(parent);
@@ -123,37 +131,49 @@ function pushComputedPropsLoose(path, file) {
     replaceParent: isLabeledParent,
     declar: declar,
     node: labeled || loop,
-    loop: loop
+    loop: loop,
   };
 }
 
 function pushComputedPropsSpec(path, file) {
-  const {
-    node,
-    scope,
-    parent
-  } = path;
+  const { node, scope, parent } = path;
   const left = node.left;
   let declar;
   const stepKey = scope.generateUid("step");
 
-  const stepValue = _core.types.memberExpression(_core.types.identifier(stepKey), _core.types.identifier("value"));
+  const stepValue = _core.types.memberExpression(
+    _core.types.identifier(stepKey),
+    _core.types.identifier("value")
+  );
 
-  if (_core.types.isIdentifier(left) || _core.types.isPattern(left) || _core.types.isMemberExpression(left)) {
-    declar = _core.types.expressionStatement(_core.types.assignmentExpression("=", left, stepValue));
+  if (
+    _core.types.isIdentifier(left) ||
+    _core.types.isPattern(left) ||
+    _core.types.isMemberExpression(left)
+  ) {
+    declar = _core.types.expressionStatement(
+      _core.types.assignmentExpression("=", left, stepValue)
+    );
   } else if (_core.types.isVariableDeclaration(left)) {
-    declar = _core.types.variableDeclaration(left.kind, [_core.types.variableDeclarator(left.declarations[0].id, stepValue)]);
+    declar = _core.types.variableDeclaration(left.kind, [
+      _core.types.variableDeclarator(left.declarations[0].id, stepValue),
+    ]);
   } else {
-    throw file.buildCodeFrameError(left, `Unknown node type ${left.type} in ForStatement`);
+    throw file.buildCodeFrameError(
+      left,
+      `Unknown node type ${left.type} in ForStatement`
+    );
   }
 
   const template = buildForOf({
     ITERATOR_HAD_ERROR_KEY: scope.generateUidIdentifier("didIteratorError"),
-    ITERATOR_COMPLETION: scope.generateUidIdentifier("iteratorNormalCompletion"),
+    ITERATOR_COMPLETION: scope.generateUidIdentifier(
+      "iteratorNormalCompletion"
+    ),
     ITERATOR_ERROR_KEY: scope.generateUidIdentifier("iteratorError"),
     ITERATOR_KEY: scope.generateUidIdentifier("iterator"),
     STEP_KEY: _core.types.identifier(stepKey),
-    OBJECT: node.right
+    OBJECT: node.right,
   });
 
   const isLabeledParent = _core.types.isLabeledStatement(parent);
@@ -169,6 +189,6 @@ function pushComputedPropsSpec(path, file) {
     replaceParent: isLabeledParent,
     declar: declar,
     loop: loop,
-    node: template
+    node: template,
   };
 }

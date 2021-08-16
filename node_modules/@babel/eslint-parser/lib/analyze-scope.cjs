@@ -1,36 +1,66 @@
-function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+function _classPrivateFieldGet(receiver, privateMap) {
+  var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get");
+  return _classApplyDescriptorGet(receiver, descriptor);
+}
 
-function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+function _classApplyDescriptorGet(receiver, descriptor) {
+  if (descriptor.get) {
+    return descriptor.get.call(receiver);
+  }
+  return descriptor.value;
+}
 
-function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+function _classPrivateFieldSet(receiver, privateMap, value) {
+  var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set");
+  _classApplyDescriptorSet(receiver, descriptor, value);
+  return value;
+}
 
-function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+function _classExtractFieldDescriptor(receiver, privateMap, action) {
+  if (!privateMap.has(receiver)) {
+    throw new TypeError(
+      "attempted to " + action + " private field on non-instance"
+    );
+  }
+  return privateMap.get(receiver);
+}
 
-function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+function _classApplyDescriptorSet(receiver, descriptor, value) {
+  if (descriptor.set) {
+    descriptor.set.call(receiver, value);
+  } else {
+    if (!descriptor.writable) {
+      throw new TypeError("attempted to set read only private field");
+    }
+    descriptor.value = value;
+  }
+}
 
 const escope = require("eslint-scope");
 
-const {
-  Definition
-} = require("eslint-scope/lib/definition");
+const { Definition } = require("eslint-scope/lib/definition");
 
 const OriginalPatternVisitor = require("eslint-scope/lib/pattern-visitor");
 
 const OriginalReferencer = require("eslint-scope/lib/referencer");
 
-const {
-  getKeys: fallback
-} = require("eslint-visitor-keys");
+const { getKeys: fallback } = require("eslint-visitor-keys");
 
 let visitorKeysMap;
 
 function getVisitorValues(nodeType, client) {
   if (visitorKeysMap) return visitorKeysMap[nodeType];
-  const {
-    FLOW_FLIPPED_ALIAS_KEYS,
-    VISITOR_KEYS
-  } = client.getTypesInfo();
-  const flowFlippedAliasKeys = FLOW_FLIPPED_ALIAS_KEYS.concat(["ArrayPattern", "ClassDeclaration", "ClassExpression", "FunctionDeclaration", "FunctionExpression", "Identifier", "ObjectPattern", "RestElement"]);
+  const { FLOW_FLIPPED_ALIAS_KEYS, VISITOR_KEYS } = client.getTypesInfo();
+  const flowFlippedAliasKeys = FLOW_FLIPPED_ALIAS_KEYS.concat([
+    "ArrayPattern",
+    "ClassDeclaration",
+    "ClassExpression",
+    "FunctionDeclaration",
+    "FunctionExpression",
+    "Identifier",
+    "ObjectPattern",
+    "RestElement",
+  ]);
   visitorKeysMap = Object.entries(VISITOR_KEYS).reduce((acc, [key, value]) => {
     if (!flowFlippedAliasKeys.includes(value)) {
       acc[key] = value;
@@ -44,46 +74,46 @@ function getVisitorValues(nodeType, client) {
 const propertyTypes = {
   callProperties: {
     type: "loop",
-    values: ["value"]
+    values: ["value"],
   },
   indexers: {
     type: "loop",
-    values: ["key", "value"]
+    values: ["key", "value"],
   },
   properties: {
     type: "loop",
-    values: ["argument", "value"]
+    values: ["argument", "value"],
   },
   types: {
-    type: "loop"
+    type: "loop",
   },
   params: {
-    type: "loop"
+    type: "loop",
   },
   argument: {
-    type: "single"
+    type: "single",
   },
   elementType: {
-    type: "single"
+    type: "single",
   },
   qualification: {
-    type: "single"
+    type: "single",
   },
   rest: {
-    type: "single"
+    type: "single",
   },
   returnType: {
-    type: "single"
+    type: "single",
   },
   typeAnnotation: {
-    type: "typeAnnotation"
+    type: "typeAnnotation",
   },
   typeParameters: {
-    type: "typeParameters"
+    type: "typeParameters",
   },
   id: {
-    type: "id"
-  }
+    type: "id",
+  },
 };
 
 class PatternVisitor extends OriginalPatternVisitor {
@@ -94,7 +124,6 @@ class PatternVisitor extends OriginalPatternVisitor {
   ObjectPattern(node) {
     node.properties.forEach(this.visit, this);
   }
-
 }
 
 var _client = new WeakMap();
@@ -105,7 +134,7 @@ class Referencer extends OriginalReferencer {
 
     _client.set(this, {
       writable: true,
-      value: void 0
+      value: void 0,
     });
 
     _classPrivateFieldSet(this, _client, client);
@@ -125,7 +154,7 @@ class Referencer extends OriginalReferencer {
     if (typeof options === "function") {
       callback = options;
       options = {
-        processRightHandNodes: false
+        processRightHandNodes: false,
       };
     }
 
@@ -144,7 +173,9 @@ class Referencer extends OriginalReferencer {
 
     this._visitTypeAnnotation(node.implements);
 
-    this._visitTypeAnnotation(node.superTypeParameters && node.superTypeParameters.params);
+    this._visitTypeAnnotation(
+      node.superTypeParameters && node.superTypeParameters.params
+    );
 
     super.visitClass(node);
 
@@ -168,7 +199,10 @@ class Referencer extends OriginalReferencer {
   visitProperty(node) {
     var _node$value;
 
-    if (((_node$value = node.value) == null ? void 0 : _node$value.type) === "TypeCastExpression") {
+    if (
+      ((_node$value = node.value) == null ? void 0 : _node$value.type) ===
+      "TypeCastExpression"
+    ) {
       this._visitTypeAnnotation(node.value);
     }
 
@@ -258,7 +292,10 @@ class Referencer extends OriginalReferencer {
   }
 
   _createScopeVariable(node, name) {
-    this.currentScope().variableScope.__define(name, new Definition("Variable", name, node, null, null, null));
+    this.currentScope().variableScope.__define(
+      name,
+      new Definition("Variable", name, node, null, null, null)
+    );
   }
 
   _nestTypeParamScope(node) {
@@ -267,7 +304,13 @@ class Referencer extends OriginalReferencer {
     }
 
     const parentScope = this.scopeManager.__currentScope;
-    const scope = new escope.Scope(this.scopeManager, "type-parameters", parentScope, node, false);
+    const scope = new escope.Scope(
+      this.scopeManager,
+      "type-parameters",
+      parentScope,
+      node,
+      false
+    );
 
     this.scopeManager.__nestScope(scope);
 
@@ -298,7 +341,10 @@ class Referencer extends OriginalReferencer {
       return;
     }
 
-    const visitorValues = getVisitorValues(node.type, _classPrivateFieldGet(this, _client));
+    const visitorValues = getVisitorValues(
+      node.type,
+      _classPrivateFieldGet(this, _client)
+    );
 
     if (!visitorValues) {
       return;
@@ -362,7 +408,6 @@ class Referencer extends OriginalReferencer {
       }
     }
   }
-
 }
 
 module.exports = function analyzeScope(ast, parserOptions, client) {
@@ -370,11 +415,14 @@ module.exports = function analyzeScope(ast, parserOptions, client) {
     ignoreEval: true,
     optimistic: false,
     directive: false,
-    nodejsScope: ast.sourceType === "script" && (parserOptions.ecmaFeatures && parserOptions.ecmaFeatures.globalReturn) === true,
+    nodejsScope:
+      ast.sourceType === "script" &&
+      (parserOptions.ecmaFeatures &&
+        parserOptions.ecmaFeatures.globalReturn) === true,
     impliedStrict: false,
     sourceType: ast.sourceType,
     ecmaVersion: parserOptions.ecmaVersion,
-    fallback
+    fallback,
   };
   options.childVisitorKeys = client.getVisitorKeys();
   const scopeManager = new escope.ScopeManager(options);

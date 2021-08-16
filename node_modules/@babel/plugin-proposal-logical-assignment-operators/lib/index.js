@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -11,22 +11,15 @@ var _pluginSyntaxLogicalAssignmentOperators = require("@babel/plugin-syntax-logi
 
 var _core = require("@babel/core");
 
-var _default = (0, _helperPluginUtils.declare)(api => {
+var _default = (0, _helperPluginUtils.declare)((api) => {
   api.assertVersion(7);
   return {
     name: "proposal-logical-assignment-operators",
     inherits: _pluginSyntaxLogicalAssignmentOperators.default,
     visitor: {
       AssignmentExpression(path) {
-        const {
-          node,
-          scope
-        } = path;
-        const {
-          operator,
-          left,
-          right
-        } = node;
+        const { node, scope } = path;
+        const { operator, left, right } = node;
         const operatorTrunc = operator.slice(0, -1);
 
         if (!_core.types.LOGICAL_OPERATORS.includes(operatorTrunc)) {
@@ -36,16 +29,16 @@ var _default = (0, _helperPluginUtils.declare)(api => {
         const lhs = _core.types.cloneNode(left);
 
         if (_core.types.isMemberExpression(left)) {
-          const {
-            object,
-            property,
-            computed
-          } = left;
+          const { object, property, computed } = left;
           const memo = scope.maybeGenerateMemoised(object);
 
           if (memo) {
             left.object = memo;
-            lhs.object = _core.types.assignmentExpression("=", _core.types.cloneNode(memo), object);
+            lhs.object = _core.types.assignmentExpression(
+              "=",
+              _core.types.cloneNode(memo),
+              object
+            );
           }
 
           if (computed) {
@@ -53,15 +46,24 @@ var _default = (0, _helperPluginUtils.declare)(api => {
 
             if (memo) {
               left.property = memo;
-              lhs.property = _core.types.assignmentExpression("=", _core.types.cloneNode(memo), property);
+              lhs.property = _core.types.assignmentExpression(
+                "=",
+                _core.types.cloneNode(memo),
+                property
+              );
             }
           }
         }
 
-        path.replaceWith(_core.types.logicalExpression(operatorTrunc, lhs, _core.types.assignmentExpression("=", left, right)));
-      }
-
-    }
+        path.replaceWith(
+          _core.types.logicalExpression(
+            operatorTrunc,
+            lhs,
+            _core.types.assignmentExpression("=", left, right)
+          )
+        );
+      },
+    },
   };
 });
 

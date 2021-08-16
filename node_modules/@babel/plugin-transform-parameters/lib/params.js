@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = convertFunctionParams;
 
@@ -27,35 +27,37 @@ const buildSafeArgumentsAccess = (0, _core.template)(`
 `);
 const iifeVisitor = {
   "ReferencedIdentifier|BindingIdentifier"(path, state) {
-    const {
-      scope,
-      node
-    } = path;
-    const {
-      name
-    } = node;
+    const { scope, node } = path;
+    const { name } = node;
 
-    if (name === "eval" || scope.getBinding(name) === state.scope.parent.getBinding(name) && state.scope.hasOwnBinding(name)) {
+    if (
+      name === "eval" ||
+      (scope.getBinding(name) === state.scope.parent.getBinding(name) &&
+        state.scope.hasOwnBinding(name))
+    ) {
       state.needsOuterBinding = true;
       path.stop();
     }
   },
 
-  "TypeAnnotation|TSTypeAnnotation|TypeParameterDeclaration|TSTypeParameterDeclaration": path => path.skip()
+  "TypeAnnotation|TSTypeAnnotation|TypeParameterDeclaration|TSTypeParameterDeclaration":
+    (path) => path.skip(),
 };
 
-function convertFunctionParams(path, ignoreFunctionLength, shouldTransformParam, replaceRestElement) {
+function convertFunctionParams(
+  path,
+  ignoreFunctionLength,
+  shouldTransformParam,
+  replaceRestElement
+) {
   const params = path.get("params");
-  const isSimpleParameterList = params.every(param => param.isIdentifier());
+  const isSimpleParameterList = params.every((param) => param.isIdentifier());
   if (isSimpleParameterList) return false;
-  const {
-    node,
-    scope
-  } = path;
+  const { node, scope } = path;
   const state = {
     stop: false,
     needsOuterBinding: false,
-    scope
+    scope,
   };
   const body = [];
   const shadowedParams = new Set();
@@ -64,27 +66,32 @@ function convertFunctionParams(path, ignoreFunctionLength, shouldTransformParam,
     for (const name of Object.keys(param.getBindingIdentifiers())) {
       var _scope$bindings$name;
 
-      const constantViolations = (_scope$bindings$name = scope.bindings[name]) == null ? void 0 : _scope$bindings$name.constantViolations;
+      const constantViolations =
+        (_scope$bindings$name = scope.bindings[name]) == null
+          ? void 0
+          : _scope$bindings$name.constantViolations;
 
       if (constantViolations) {
         for (const redeclarator of constantViolations) {
           const node = redeclarator.node;
 
           switch (node.type) {
-            case "VariableDeclarator":
-              {
-                if (node.init === null) {
-                  const declaration = redeclarator.parentPath;
+            case "VariableDeclarator": {
+              if (node.init === null) {
+                const declaration = redeclarator.parentPath;
 
-                  if (!declaration.parentPath.isFor() || declaration.parentPath.get("body") === declaration) {
-                    redeclarator.remove();
-                    break;
-                  }
+                if (
+                  !declaration.parentPath.isFor() ||
+                  declaration.parentPath.get("body") === declaration
+                ) {
+                  redeclarator.remove();
+                  break;
                 }
-
-                shadowedParams.add(name);
-                break;
               }
+
+              shadowedParams.add(name);
+              break;
+            }
 
             case "FunctionDeclaration":
               shadowedParams.add(name);
@@ -119,26 +126,33 @@ function convertFunctionParams(path, ignoreFunctionLength, shouldTransformParam,
 
     const paramIsAssignmentPattern = param.isAssignmentPattern();
 
-    if (paramIsAssignmentPattern && (ignoreFunctionLength || node.kind === "set")) {
+    if (
+      paramIsAssignmentPattern &&
+      (ignoreFunctionLength || node.kind === "set")
+    ) {
       const left = param.get("left");
       const right = param.get("right");
       const undefinedNode = scope.buildUndefinedNode();
 
       if (left.isIdentifier()) {
-        body.push(buildLooseDefaultParam({
-          ASSIGNMENT_IDENTIFIER: _core.types.cloneNode(left.node),
-          DEFAULT_VALUE: right.node,
-          UNDEFINED: undefinedNode
-        }));
+        body.push(
+          buildLooseDefaultParam({
+            ASSIGNMENT_IDENTIFIER: _core.types.cloneNode(left.node),
+            DEFAULT_VALUE: right.node,
+            UNDEFINED: undefinedNode,
+          })
+        );
         param.replaceWith(left.node);
       } else if (left.isObjectPattern() || left.isArrayPattern()) {
         const paramName = scope.generateUidIdentifier();
-        body.push(buildLooseDestructuredDefaultParam({
-          ASSIGNMENT_IDENTIFIER: left.node,
-          DEFAULT_VALUE: right.node,
-          PARAMETER_NAME: _core.types.cloneNode(paramName),
-          UNDEFINED: undefinedNode
-        }));
+        body.push(
+          buildLooseDestructuredDefaultParam({
+            ASSIGNMENT_IDENTIFIER: left.node,
+            DEFAULT_VALUE: right.node,
+            PARAMETER_NAME: _core.types.cloneNode(paramName),
+            UNDEFINED: undefinedNode,
+          })
+        );
         param.replaceWith(paramName);
       }
     } else if (paramIsAssignmentPattern) {
@@ -148,16 +162,21 @@ function convertFunctionParams(path, ignoreFunctionLength, shouldTransformParam,
       const defNode = buildDefaultParam({
         VARIABLE_NAME: left.node,
         DEFAULT_VALUE: right.node,
-        ARGUMENT_KEY: _core.types.numericLiteral(i)
+        ARGUMENT_KEY: _core.types.numericLiteral(i),
       });
       body.push(defNode);
     } else if (firstOptionalIndex !== null) {
-      const defNode = buildSafeArgumentsAccess([param.node, _core.types.numericLiteral(i)]);
+      const defNode = buildSafeArgumentsAccess([
+        param.node,
+        _core.types.numericLiteral(i),
+      ]);
       body.push(defNode);
     } else if (param.isObjectPattern() || param.isArrayPattern()) {
       const uid = path.scope.generateUidIdentifier("ref");
 
-      const defNode = _core.types.variableDeclaration("let", [_core.types.variableDeclarator(param.node, uid)]);
+      const defNode = _core.types.variableDeclaration("let", [
+        _core.types.variableDeclarator(param.node, uid),
+      ]);
 
       body.push(defNode);
       param.replaceWith(_core.types.cloneNode(uid));
@@ -201,5 +220,10 @@ function buildScopeIIFE(shadowedParams, body) {
     params.push(_core.types.identifier(name));
   }
 
-  return _core.types.returnStatement(_core.types.callExpression(_core.types.arrowFunctionExpression(params, body), args));
+  return _core.types.returnStatement(
+    _core.types.callExpression(
+      _core.types.arrowFunctionExpression(params, body),
+      args
+    )
+  );
 }

@@ -4,8 +4,7 @@ function _classApplyDescriptorDestructureSet(receiver, descriptor) {
       descriptor.__destrObj = {
         set value(v) {
           descriptor.set.call(receiver, v);
-        }
-
+        },
       };
     }
 
@@ -20,4 +19,5 @@ function _classApplyDescriptorDestructureSet(receiver, descriptor) {
 }
 
 module.exports = _classApplyDescriptorDestructureSet;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

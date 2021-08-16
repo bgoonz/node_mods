@@ -9,7 +9,12 @@ export default function _typeof(obj) {
     };
   } else {
     _typeof = function _typeof(obj) {
-      return obj && typeof _Symbol === "function" && obj.constructor === _Symbol && obj !== _Symbol.prototype ? "symbol" : typeof obj;
+      return obj &&
+        typeof _Symbol === "function" &&
+        obj.constructor === _Symbol &&
+        obj !== _Symbol.prototype
+        ? "symbol"
+        : typeof obj;
     };
   }
 

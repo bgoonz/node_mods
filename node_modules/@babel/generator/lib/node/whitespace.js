@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.list = exports.nodes = void 0;
 
@@ -20,7 +20,7 @@ const {
   isObjectExpression,
   isOptionalCallExpression,
   isOptionalMemberExpression,
-  isStringLiteral
+  isStringLiteral,
 } = t;
 
 function crawl(node, state = {}) {
@@ -50,24 +50,32 @@ function isHelper(node) {
   } else if (isCallExpression(node)) {
     return isHelper(node.callee);
   } else if (isBinary(node) || isAssignmentExpression(node)) {
-    return isIdentifier(node.left) && isHelper(node.left) || isHelper(node.right);
+    return (
+      (isIdentifier(node.left) && isHelper(node.left)) || isHelper(node.right)
+    );
   } else {
     return false;
   }
 }
 
 function isType(node) {
-  return isLiteral(node) || isObjectExpression(node) || isArrayExpression(node) || isIdentifier(node) || isMemberExpression(node);
+  return (
+    isLiteral(node) ||
+    isObjectExpression(node) ||
+    isArrayExpression(node) ||
+    isIdentifier(node) ||
+    isMemberExpression(node)
+  );
 }
 
 const nodes = {
   AssignmentExpression(node) {
     const state = crawl(node.right);
 
-    if (state.hasCall && state.hasHelper || state.hasFunction) {
+    if ((state.hasCall && state.hasHelper) || state.hasFunction) {
       return {
         before: state.hasFunction,
-        after: true
+        after: true,
       };
     }
   },
@@ -75,14 +83,16 @@ const nodes = {
   SwitchCase(node, parent) {
     return {
       before: !!node.consequent.length || parent.cases[0] === node,
-      after: !node.consequent.length && parent.cases[parent.cases.length - 1] === node
+      after:
+        !node.consequent.length &&
+        parent.cases[parent.cases.length - 1] === node,
     };
   },
 
   LogicalExpression(node) {
     if (isFunction(node.left) || isFunction(node.right)) {
       return {
-        after: true
+        after: true,
       };
     }
   },
@@ -90,7 +100,7 @@ const nodes = {
   Literal(node) {
     if (isStringLiteral(node) && node.value === "use strict") {
       return {
-        after: true
+        after: true,
       };
     }
   },
@@ -99,7 +109,7 @@ const nodes = {
     if (isFunction(node.callee) || isHelper(node)) {
       return {
         before: true,
-        after: true
+        after: true,
       };
     }
   },
@@ -108,7 +118,7 @@ const nodes = {
     if (isFunction(node.callee)) {
       return {
         before: true,
-        after: true
+        after: true,
       };
     }
   },
@@ -120,13 +130,13 @@ const nodes = {
 
       if (!enabled) {
         const state = crawl(declar.init);
-        enabled = isHelper(declar.init) && state.hasCall || state.hasFunction;
+        enabled = (isHelper(declar.init) && state.hasCall) || state.hasFunction;
       }
 
       if (enabled) {
         return {
           before: true,
-          after: true
+          after: true,
         };
       }
     }
@@ -136,28 +146,36 @@ const nodes = {
     if (isBlockStatement(node.consequent)) {
       return {
         before: true,
-        after: true
+        after: true,
       };
     }
-  }
-
+  },
 };
 exports.nodes = nodes;
 
-nodes.ObjectProperty = nodes.ObjectTypeProperty = nodes.ObjectMethod = function (node, parent) {
-  if (parent.properties[0] === node) {
-    return {
-      before: true
+nodes.ObjectProperty =
+  nodes.ObjectTypeProperty =
+  nodes.ObjectMethod =
+    function (node, parent) {
+      if (parent.properties[0] === node) {
+        return {
+          before: true,
+        };
+      }
     };
-  }
-};
 
 nodes.ObjectTypeCallProperty = function (node, parent) {
   var _parent$properties;
 
-  if (parent.callProperties[0] === node && !((_parent$properties = parent.properties) != null && _parent$properties.length)) {
+  if (
+    parent.callProperties[0] === node &&
+    !(
+      (_parent$properties = parent.properties) != null &&
+      _parent$properties.length
+    )
+  ) {
     return {
-      before: true
+      before: true,
     };
   }
 };
@@ -165,9 +183,19 @@ nodes.ObjectTypeCallProperty = function (node, parent) {
 nodes.ObjectTypeIndexer = function (node, parent) {
   var _parent$properties2, _parent$callPropertie;
 
-  if (parent.indexers[0] === node && !((_parent$properties2 = parent.properties) != null && _parent$properties2.length) && !((_parent$callPropertie = parent.callProperties) != null && _parent$callPropertie.length)) {
+  if (
+    parent.indexers[0] === node &&
+    !(
+      (_parent$properties2 = parent.properties) != null &&
+      _parent$properties2.length
+    ) &&
+    !(
+      (_parent$callPropertie = parent.callProperties) != null &&
+      _parent$callPropertie.length
+    )
+  ) {
     return {
-      before: true
+      before: true,
     };
   }
 };
@@ -175,16 +203,27 @@ nodes.ObjectTypeIndexer = function (node, parent) {
 nodes.ObjectTypeInternalSlot = function (node, parent) {
   var _parent$properties3, _parent$callPropertie2, _parent$indexers;
 
-  if (parent.internalSlots[0] === node && !((_parent$properties3 = parent.properties) != null && _parent$properties3.length) && !((_parent$callPropertie2 = parent.callProperties) != null && _parent$callPropertie2.length) && !((_parent$indexers = parent.indexers) != null && _parent$indexers.length)) {
+  if (
+    parent.internalSlots[0] === node &&
+    !(
+      (_parent$properties3 = parent.properties) != null &&
+      _parent$properties3.length
+    ) &&
+    !(
+      (_parent$callPropertie2 = parent.callProperties) != null &&
+      _parent$callPropertie2.length
+    ) &&
+    !((_parent$indexers = parent.indexers) != null && _parent$indexers.length)
+  ) {
     return {
-      before: true
+      before: true,
     };
   }
 };
 
 const list = {
   VariableDeclaration(node) {
-    return node.declarations.map(decl => decl.init);
+    return node.declarations.map((decl) => decl.init);
   },
 
   ArrayExpression(node) {
@@ -193,15 +232,21 @@ const list = {
 
   ObjectExpression(node) {
     return node.properties;
-  }
-
+  },
 };
 exports.list = list;
-[["Function", true], ["Class", true], ["Loop", true], ["LabeledStatement", true], ["SwitchStatement", true], ["TryStatement", true]].forEach(function ([type, amounts]) {
+[
+  ["Function", true],
+  ["Class", true],
+  ["Loop", true],
+  ["LabeledStatement", true],
+  ["SwitchStatement", true],
+  ["TryStatement", true],
+].forEach(function ([type, amounts]) {
   if (typeof amounts === "boolean") {
     amounts = {
       after: amounts,
-      before: amounts
+      before: amounts,
     };
   }
 

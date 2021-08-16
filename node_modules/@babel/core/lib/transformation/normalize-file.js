@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = normalizeFile;
 
@@ -108,7 +108,9 @@ function* normalizeFile(pluginPasses, options, code, ast) {
         try {
           const match = EXTERNAL_SOURCEMAP_REGEX.exec(lastComment);
 
-          const inputMapContent = _fs().readFileSync(_path().resolve(_path().dirname(options.filename), match[1]));
+          const inputMapContent = _fs().readFileSync(
+            _path().resolve(_path().dirname(options.filename), match[1])
+          );
 
           if (inputMapContent.length > LARGE_INPUT_SOURCEMAP_THRESHOLD) {
             debug("skip merging input map > 1 MB");
@@ -127,18 +129,18 @@ function* normalizeFile(pluginPasses, options, code, ast) {
   return new _file.default(options, {
     code,
     ast,
-    inputMap
+    inputMap,
   });
 }
 
-const INLINE_SOURCEMAP_REGEX = /^[@#]\s+sourceMappingURL=data:(?:application|text)\/json;(?:charset[:=]\S+?;)?base64,(?:.*)$/;
-const EXTERNAL_SOURCEMAP_REGEX = /^[@#][ \t]+sourceMappingURL=([^\s'"`]+)[ \t]*$/;
+const INLINE_SOURCEMAP_REGEX =
+  /^[@#]\s+sourceMappingURL=data:(?:application|text)\/json;(?:charset[:=]\S+?;)?base64,(?:.*)$/;
+const EXTERNAL_SOURCEMAP_REGEX =
+  /^[@#][ \t]+sourceMappingURL=([^\s'"`]+)[ \t]*$/;
 
 function extractCommentsFromList(regex, comments, lastComment) {
   if (comments) {
-    comments = comments.filter(({
-      value
-    }) => {
+    comments = comments.filter(({ value }) => {
       if (regex.test(value)) {
         lastComment = value;
         return false;
@@ -153,10 +155,22 @@ function extractCommentsFromList(regex, comments, lastComment) {
 
 function extractComments(regex, ast) {
   let lastComment = null;
-  t().traverseFast(ast, node => {
-    [node.leadingComments, lastComment] = extractCommentsFromList(regex, node.leadingComments, lastComment);
-    [node.innerComments, lastComment] = extractCommentsFromList(regex, node.innerComments, lastComment);
-    [node.trailingComments, lastComment] = extractCommentsFromList(regex, node.trailingComments, lastComment);
+  t().traverseFast(ast, (node) => {
+    [node.leadingComments, lastComment] = extractCommentsFromList(
+      regex,
+      node.leadingComments,
+      lastComment
+    );
+    [node.innerComments, lastComment] = extractCommentsFromList(
+      regex,
+      node.innerComments,
+      lastComment
+    );
+    [node.trailingComments, lastComment] = extractCommentsFromList(
+      regex,
+      node.trailingComments,
+      lastComment
+    );
   });
   return lastComment;
 }

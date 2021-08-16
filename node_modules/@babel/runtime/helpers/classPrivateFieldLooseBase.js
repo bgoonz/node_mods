@@ -7,4 +7,5 @@ function _classPrivateFieldBase(receiver, privateKey) {
 }
 
 module.exports = _classPrivateFieldBase;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = convertFunctionRest;
 
@@ -55,9 +55,7 @@ const memberExpressionOptimisationVisitor = {
   },
 
   ReferencedIdentifier(path, state) {
-    const {
-      node
-    } = path;
+    const { node } = path;
 
     if (node.name === "arguments") {
       state.deopted = true;
@@ -68,35 +66,47 @@ const memberExpressionOptimisationVisitor = {
     if (state.noOptimise) {
       state.deopted = true;
     } else {
-      const {
-        parentPath
-      } = path;
+      const { parentPath } = path;
 
       if (parentPath.listKey === "params" && parentPath.key < state.offset) {
         return;
       }
 
-      if (parentPath.isMemberExpression({
-        object: node
-      })) {
+      if (
+        parentPath.isMemberExpression({
+          object: node,
+        })
+      ) {
         const grandparentPath = parentPath.parentPath;
-        const argsOptEligible = !state.deopted && !(grandparentPath.isAssignmentExpression() && parentPath.node === grandparentPath.node.left || grandparentPath.isLVal() || grandparentPath.isForXStatement() || grandparentPath.isUpdateExpression() || grandparentPath.isUnaryExpression({
-          operator: "delete"
-        }) || (grandparentPath.isCallExpression() || grandparentPath.isNewExpression()) && parentPath.node === grandparentPath.node.callee);
+        const argsOptEligible =
+          !state.deopted &&
+          !(
+            (grandparentPath.isAssignmentExpression() &&
+              parentPath.node === grandparentPath.node.left) ||
+            grandparentPath.isLVal() ||
+            grandparentPath.isForXStatement() ||
+            grandparentPath.isUpdateExpression() ||
+            grandparentPath.isUnaryExpression({
+              operator: "delete",
+            }) ||
+            ((grandparentPath.isCallExpression() ||
+              grandparentPath.isNewExpression()) &&
+              parentPath.node === grandparentPath.node.callee)
+          );
 
         if (argsOptEligible) {
           if (parentPath.node.computed) {
             if (parentPath.get("property").isBaseType("number")) {
               state.candidates.push({
                 cause: "indexGetter",
-                path
+                path,
               });
               return;
             }
           } else if (parentPath.node.property.name === "length") {
             state.candidates.push({
               cause: "lengthGetter",
-              path
+              path,
             });
             return;
           }
@@ -109,7 +119,7 @@ const memberExpressionOptimisationVisitor = {
         if (call.isCallExpression() && call.node.arguments.length === 1) {
           state.candidates.push({
             cause: "argSpread",
-            path
+            path,
           });
           return;
         }
@@ -123,16 +133,18 @@ const memberExpressionOptimisationVisitor = {
     if (referencesRest(path, state)) {
       state.deopted = true;
     }
-  }
-
+  },
 };
 
 function getParamsCount(node) {
   let count = node.params.length;
 
-  if (count > 0 && _core.types.isIdentifier(node.params[0], {
-    name: "this"
-  })) {
+  if (
+    count > 0 &&
+    _core.types.isIdentifier(node.params[0], {
+      name: "this",
+    })
+  ) {
     count -= 1;
   }
 
@@ -154,32 +166,38 @@ function optimiseIndexGetter(path, argsId, offset) {
   } else if (offset === 0) {
     index = path.parent.property;
   } else {
-    index = _core.types.binaryExpression("+", path.parent.property, _core.types.cloneNode(offsetLiteral));
+    index = _core.types.binaryExpression(
+      "+",
+      path.parent.property,
+      _core.types.cloneNode(offsetLiteral)
+    );
   }
 
-  const {
-    scope
-  } = path;
+  const { scope } = path;
 
   if (!scope.isPure(index)) {
     const temp = scope.generateUidIdentifierBasedOnNode(index);
     scope.push({
       id: temp,
-      kind: "var"
+      kind: "var",
     });
-    path.parentPath.replaceWith(restIndexImpure({
-      ARGUMENTS: argsId,
-      OFFSET: offsetLiteral,
-      INDEX: index,
-      REF: _core.types.cloneNode(temp)
-    }));
+    path.parentPath.replaceWith(
+      restIndexImpure({
+        ARGUMENTS: argsId,
+        OFFSET: offsetLiteral,
+        INDEX: index,
+        REF: _core.types.cloneNode(temp),
+      })
+    );
   } else {
     const parentPath = path.parentPath;
-    parentPath.replaceWith(restIndex({
-      ARGUMENTS: argsId,
-      OFFSET: offsetLiteral,
-      INDEX: index
-    }));
+    parentPath.replaceWith(
+      restIndex({
+        ARGUMENTS: argsId,
+        OFFSET: offsetLiteral,
+        INDEX: index,
+      })
+    );
     const offsetTestPath = parentPath.get("test").get("left");
     const valRes = offsetTestPath.evaluate();
 
@@ -195,20 +213,19 @@ function optimiseIndexGetter(path, argsId, offset) {
 
 function optimiseLengthGetter(path, argsId, offset) {
   if (offset) {
-    path.parentPath.replaceWith(restLength({
-      ARGUMENTS: argsId,
-      OFFSET: _core.types.numericLiteral(offset)
-    }));
+    path.parentPath.replaceWith(
+      restLength({
+        ARGUMENTS: argsId,
+        OFFSET: _core.types.numericLiteral(offset),
+      })
+    );
   } else {
     path.replaceWith(argsId);
   }
 }
 
 function convertFunctionRest(path) {
-  const {
-    node,
-    scope
-  } = path;
+  const { node, scope } = path;
   if (!hasRest(node)) return false;
   let rest = node.params.pop().argument;
 
@@ -218,7 +235,9 @@ function convertFunctionRest(path) {
     const pattern = rest;
     rest = scope.generateUidIdentifier("ref");
 
-    const declar = _core.types.variableDeclaration("let", [_core.types.variableDeclarator(pattern, rest)]);
+    const declar = _core.types.variableDeclaration("let", [
+      _core.types.variableDeclarator(pattern, rest),
+    ]);
 
     node.body.body.unshift(declar);
   }
@@ -231,15 +250,12 @@ function convertFunctionRest(path) {
     outerBinding: scope.getBindingIdentifier(rest.name),
     candidates: [],
     name: rest.name,
-    deopted: false
+    deopted: false,
   };
   path.traverse(memberExpressionOptimisationVisitor, state);
 
   if (!state.deopted && !state.references.length) {
-    for (const {
-      path,
-      cause
-    } of state.candidates) {
+    for (const { path, cause } of state.candidates) {
       const clonedArgsId = _core.types.cloneNode(argsId);
 
       switch (cause) {
@@ -259,9 +275,9 @@ function convertFunctionRest(path) {
     return true;
   }
 
-  state.references = state.references.concat(state.candidates.map(({
-    path
-  }) => path));
+  state.references = state.references.concat(
+    state.candidates.map(({ path }) => path)
+  );
 
   const start = _core.types.numericLiteral(paramsCount);
 
@@ -270,8 +286,24 @@ function convertFunctionRest(path) {
   let arrKey, arrLen;
 
   if (paramsCount) {
-    arrKey = _core.types.binaryExpression("-", _core.types.cloneNode(key), _core.types.cloneNode(start));
-    arrLen = _core.types.conditionalExpression(_core.types.binaryExpression(">", _core.types.cloneNode(len), _core.types.cloneNode(start)), _core.types.binaryExpression("-", _core.types.cloneNode(len), _core.types.cloneNode(start)), _core.types.numericLiteral(0));
+    arrKey = _core.types.binaryExpression(
+      "-",
+      _core.types.cloneNode(key),
+      _core.types.cloneNode(start)
+    );
+    arrLen = _core.types.conditionalExpression(
+      _core.types.binaryExpression(
+        ">",
+        _core.types.cloneNode(len),
+        _core.types.cloneNode(start)
+      ),
+      _core.types.binaryExpression(
+        "-",
+        _core.types.cloneNode(len),
+        _core.types.cloneNode(start)
+      ),
+      _core.types.numericLiteral(0)
+    );
   } else {
     arrKey = _core.types.identifier(key.name);
     arrLen = _core.types.identifier(len.name);
@@ -284,14 +316,16 @@ function convertFunctionRest(path) {
     START: start,
     ARRAY: rest,
     KEY: key,
-    LEN: len
+    LEN: len,
   });
 
   if (state.deopted) {
     node.body.body.unshift(loop);
   } else {
-    let target = path.getEarliestCommonAncestorFrom(state.references).getStatementParent();
-    target.findParent(path => {
+    let target = path
+      .getEarliestCommonAncestorFrom(state.references)
+      .getStatementParent();
+    target.findParent((path) => {
       if (path.isLoop()) {
         target = path;
       } else {

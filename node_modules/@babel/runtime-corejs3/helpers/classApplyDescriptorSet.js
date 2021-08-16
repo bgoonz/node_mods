@@ -11,4 +11,5 @@ function _classApplyDescriptorSet(receiver, descriptor, value) {
 }
 
 module.exports = _classApplyDescriptorSet;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

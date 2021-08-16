@@ -7,4 +7,5 @@ function _classApplyDescriptorGet(receiver, descriptor) {
 }
 
 module.exports = _classApplyDescriptorGet;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

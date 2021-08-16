@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -16,30 +16,43 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
   api.assertVersion(7);
   {
-    const {
-      assumeArray,
-      allowArrayLike,
-      loose
-    } = options;
+    const { assumeArray, allowArrayLike, loose } = options;
 
     if (loose === true && assumeArray === true) {
-      throw new Error(`The loose and assumeArray options cannot be used together in @babel/plugin-transform-for-of`);
+      throw new Error(
+        `The loose and assumeArray options cannot be used together in @babel/plugin-transform-for-of`
+      );
     }
 
     if (assumeArray === true && allowArrayLike === true) {
-      throw new Error(`The assumeArray and allowArrayLike options cannot be used together in @babel/plugin-transform-for-of`);
+      throw new Error(
+        `The assumeArray and allowArrayLike options cannot be used together in @babel/plugin-transform-for-of`
+      );
     }
 
     if (allowArrayLike && /^7\.\d\./.test(api.version)) {
-      throw new Error(`The allowArrayLike is only supported when using @babel/core@^7.10.0`);
+      throw new Error(
+        `The allowArrayLike is only supported when using @babel/core@^7.10.0`
+      );
     }
   }
-  const iterableIsArray = (_options$assumeArray = options.assumeArray) != null ? _options$assumeArray : !options.loose && api.assumption("iterableIsArray");
-  const arrayLikeIsIterable = (_options$allowArrayLi = options.allowArrayLike) != null ? _options$allowArrayLi : api.assumption("arrayLikeIsIterable");
-  const skipteratorClosing = (_api$assumption = api.assumption("skipForOfIteratorClosing")) != null ? _api$assumption : options.loose;
+  const iterableIsArray =
+    (_options$assumeArray = options.assumeArray) != null
+      ? _options$assumeArray
+      : !options.loose && api.assumption("iterableIsArray");
+  const arrayLikeIsIterable =
+    (_options$allowArrayLi = options.allowArrayLike) != null
+      ? _options$allowArrayLi
+      : api.assumption("arrayLikeIsIterable");
+  const skipteratorClosing =
+    (_api$assumption = api.assumption("skipForOfIteratorClosing")) != null
+      ? _api$assumption
+      : options.loose;
 
   if (iterableIsArray && arrayLikeIsIterable) {
-    throw new Error(`The "iterableIsArray" and "arrayLikeIsIterable" assumptions are not compatible.`);
+    throw new Error(
+      `The "iterableIsArray" and "arrayLikeIsIterable" assumptions are not compatible.`
+    );
   }
 
   if (iterableIsArray) {
@@ -47,14 +60,8 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       name: "transform-for-of",
       visitor: {
         ForOfStatement(path) {
-          const {
-            scope
-          } = path;
-          const {
-            left,
-            right,
-            await: isAwait
-          } = path.node;
+          const { scope } = path;
+          const { left, right, await: isAwait } = path.node;
 
           if (isAwait) {
             return;
@@ -62,7 +69,9 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
 
           const i = scope.generateUidIdentifier("i");
           let array = scope.maybeGenerateMemoised(right, true);
-          const inits = [_core.types.variableDeclarator(i, _core.types.numericLiteral(0))];
+          const inits = [
+            _core.types.variableDeclarator(i, _core.types.numericLiteral(0)),
+          ];
 
           if (array) {
             inits.push(_core.types.variableDeclarator(array, right));
@@ -70,7 +79,11 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
             array = right;
           }
 
-          const item = _core.types.memberExpression(_core.types.cloneNode(array), _core.types.cloneNode(i), true);
+          const item = _core.types.memberExpression(
+            _core.types.cloneNode(array),
+            _core.types.cloneNode(i),
+            true
+          );
 
           let assignment;
 
@@ -78,23 +91,43 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
             assignment = left;
             assignment.declarations[0].init = item;
           } else {
-            assignment = _core.types.expressionStatement(_core.types.assignmentExpression("=", left, item));
+            assignment = _core.types.expressionStatement(
+              _core.types.assignmentExpression("=", left, item)
+            );
           }
 
           let blockBody;
           const body = path.get("body");
 
-          if (body.isBlockStatement() && Object.keys(path.getBindingIdentifiers()).some(id => body.scope.hasOwnBinding(id))) {
+          if (
+            body.isBlockStatement() &&
+            Object.keys(path.getBindingIdentifiers()).some((id) =>
+              body.scope.hasOwnBinding(id)
+            )
+          ) {
             blockBody = _core.types.blockStatement([assignment, body.node]);
           } else {
             blockBody = _core.types.toBlock(body.node);
             blockBody.body.unshift(assignment);
           }
 
-          path.replaceWith(_core.types.forStatement(_core.types.variableDeclaration("let", inits), _core.types.binaryExpression("<", _core.types.cloneNode(i), _core.types.memberExpression(_core.types.cloneNode(array), _core.types.identifier("length"))), _core.types.updateExpression("++", _core.types.cloneNode(i)), blockBody));
-        }
-
-      }
+          path.replaceWith(
+            _core.types.forStatement(
+              _core.types.variableDeclaration("let", inits),
+              _core.types.binaryExpression(
+                "<",
+                _core.types.cloneNode(i),
+                _core.types.memberExpression(
+                  _core.types.cloneNode(array),
+                  _core.types.identifier("length")
+                )
+              ),
+              _core.types.updateExpression("++", _core.types.cloneNode(i)),
+              blockBody
+            )
+          );
+        },
+      },
     };
   }
 
@@ -115,35 +148,38 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       ITERATOR_HELPER.f();
     }
   `;
-  const builder = skipteratorClosing ? {
-    build: buildForOfNoIteratorClosing,
-    helper: "createForOfIteratorHelperLoose",
-    getContainer: nodes => nodes
-  } : {
-    build: buildForOf,
-    helper: "createForOfIteratorHelper",
-    getContainer: nodes => nodes[1].block.body
-  };
+  const builder = skipteratorClosing
+    ? {
+        build: buildForOfNoIteratorClosing,
+        helper: "createForOfIteratorHelperLoose",
+        getContainer: (nodes) => nodes,
+      }
+    : {
+        build: buildForOf,
+        helper: "createForOfIteratorHelper",
+        getContainer: (nodes) => nodes[1].block.body,
+      };
 
   function _ForOfStatementArray(path) {
-    const {
-      node,
-      scope
-    } = path;
+    const { node, scope } = path;
     const right = scope.generateUidIdentifierBasedOnNode(node.right, "arr");
     const iterationKey = scope.generateUidIdentifier("i");
     const loop = buildForOfArray({
       BODY: node.body,
       KEY: iterationKey,
       NAME: right,
-      ARR: node.right
+      ARR: node.right,
     });
 
     _core.types.inherits(loop, node);
 
     _core.types.ensureBlock(loop);
 
-    const iterationValue = _core.types.memberExpression(_core.types.cloneNode(right), _core.types.cloneNode(iterationKey), true);
+    const iterationValue = _core.types.memberExpression(
+      _core.types.cloneNode(right),
+      _core.types.cloneNode(iterationKey),
+      true
+    );
 
     const left = node.left;
 
@@ -151,7 +187,11 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       left.declarations[0].init = iterationValue;
       loop.body.body.unshift(left);
     } else {
-      loop.body.body.unshift(_core.types.expressionStatement(_core.types.assignmentExpression("=", left, iterationValue)));
+      loop.body.body.unshift(
+        _core.types.expressionStatement(
+          _core.types.assignmentExpression("=", left, iterationValue)
+        )
+      );
     }
 
     return loop;
@@ -163,7 +203,11 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
       ForOfStatement(path, state) {
         const right = path.get("right");
 
-        if (right.isArrayExpression() || right.isGenericType("Array") || _core.types.isArrayTypeAnnotation(right.getTypeAnnotation())) {
+        if (
+          right.isArrayExpression() ||
+          right.isGenericType("Array") ||
+          _core.types.isArrayTypeAnnotation(right.getTypeAnnotation())
+        ) {
           path.replaceWith(_ForOfStatementArray(path));
           return;
         }
@@ -173,21 +217,24 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
           return;
         }
 
-        const {
-          node,
-          parent,
-          scope
-        } = path;
+        const { node, parent, scope } = path;
         const left = node.left;
         let declar;
         const stepKey = scope.generateUid("step");
 
-        const stepValue = _core.types.memberExpression(_core.types.identifier(stepKey), _core.types.identifier("value"));
+        const stepValue = _core.types.memberExpression(
+          _core.types.identifier(stepKey),
+          _core.types.identifier("value")
+        );
 
         if (_core.types.isVariableDeclaration(left)) {
-          declar = _core.types.variableDeclaration(left.kind, [_core.types.variableDeclarator(left.declarations[0].id, stepValue)]);
+          declar = _core.types.variableDeclaration(left.kind, [
+            _core.types.variableDeclarator(left.declarations[0].id, stepValue),
+          ]);
         } else {
-          declar = _core.types.expressionStatement(_core.types.assignmentExpression("=", left, stepValue));
+          declar = _core.types.expressionStatement(
+            _core.types.assignmentExpression("=", left, stepValue)
+          );
         }
 
         path.ensureBlock();
@@ -195,10 +242,12 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         const nodes = builder.build({
           CREATE_ITERATOR_HELPER: state.addHelper(builder.helper),
           ITERATOR_HELPER: scope.generateUidIdentifier("iterator"),
-          ARRAY_LIKE_IS_ITERABLE: arrayLikeIsIterable ? _core.types.booleanLiteral(true) : null,
+          ARRAY_LIKE_IS_ITERABLE: arrayLikeIsIterable
+            ? _core.types.booleanLiteral(true)
+            : null,
           STEP_KEY: _core.types.identifier(stepKey),
           OBJECT: node.right,
-          BODY: node.body
+          BODY: node.body,
         });
         const container = builder.getContainer(nodes);
 
@@ -207,15 +256,17 @@ var _default = (0, _helperPluginUtils.declare)((api, options) => {
         _core.types.inherits(container[0].body, node.body);
 
         if (_core.types.isLabeledStatement(parent)) {
-          container[0] = _core.types.labeledStatement(parent.label, container[0]);
+          container[0] = _core.types.labeledStatement(
+            parent.label,
+            container[0]
+          );
           path.parentPath.replaceWithMultiple(nodes);
           path.skip();
         } else {
           path.replaceWithMultiple(nodes);
         }
-      }
-
-    }
+      },
+    },
   };
 });
 

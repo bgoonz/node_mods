@@ -1,20 +1,18 @@
 const [major, minor] = process.versions.node.split(".").map(Number);
 
-if (major < 12 || major === 12 && minor < 3) {
-  throw new Error("@babel/eslint-parser/experimental-worker requires Node.js >= 12.3.0");
+if (major < 12 || (major === 12 && minor < 3)) {
+  throw new Error(
+    "@babel/eslint-parser/experimental-worker requires Node.js >= 12.3.0"
+  );
 }
 
-const {
-  normalizeESLintConfig
-} = require("./configuration.cjs");
+const { normalizeESLintConfig } = require("./configuration.cjs");
 
 const analyzeScope = require("./analyze-scope.cjs");
 
 const baseParse = require("./parse.cjs");
 
-const {
-  WorkerClient
-} = require("./client.cjs");
+const { WorkerClient } = require("./client.cjs");
 
 const client = new WorkerClient();
 
@@ -25,6 +23,6 @@ exports.parseForESLint = function (code, options = {}) {
   return {
     ast,
     scopeManager,
-    visitorKeys: client.getVisitorKeys()
+    visitorKeys: client.getVisitorKeys(),
   };
 };
