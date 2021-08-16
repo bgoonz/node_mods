@@ -33,7 +33,7 @@
   "deprecated": false,
   "description": "Allow parsing of import.meta",
   "devDependencies": {
-    "@babel/core": "^7.10.4"
+    "@babel/core": "7.15.0"
   },
   "gitHead": "7fd40d86a0d03ff0e9c3ea16b29689945433d4df",
   "homepage": "https://github.com/babel/babel#readme",

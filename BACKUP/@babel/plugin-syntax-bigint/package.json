@@ -30,7 +30,7 @@
   "deprecated": false,
   "description": "Allow parsing of BigInt literals",
   "devDependencies": {
-    "@babel/core": "^7.8.0"
+    "@babel/core": "7.15.0"
   },
   "keywords": [
     "babel-plugin"
