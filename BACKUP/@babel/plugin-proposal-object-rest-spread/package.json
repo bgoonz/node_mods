@@ -41,7 +41,7 @@
   "deprecated": false,
   "description": "Compile object rest and spread to ES5",
   "devDependencies": {
-    "@babel/core": "7.14.6",
+    "@babel/core": "7.15.0",
     "@babel/helper-plugin-test-runner": "7.14.5"
   },
   "engines": {
