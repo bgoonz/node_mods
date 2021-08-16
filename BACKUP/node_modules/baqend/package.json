@@ -1,0 +1,173 @@
+{
+  "_from": "baqend@^3.0.0",
+  "_id": "baqend@3.1.4",
+  "_inBundle": false,
+  "_integrity": "sha512-GPcw0h9mCv7Kb2fugwzUD3tVcrxvp2xXvAk26iORknwbP0EzL/3ImuDe4ClN6ilvfb4+3AVg3BaLbIRPeB8+bA==",
+  "_location": "/baqend",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "baqend@^3.0.0",
+    "name": "baqend",
+    "escapedName": "baqend",
+    "rawSpec": "^3.0.0",
+    "saveSpec": null,
+    "fetchSpec": "^3.0.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/baqend/-/baqend-3.1.4.tgz",
+  "_shasum": "e831ce3ac8d6c6b50630a10c1d02eff9d5f308da",
+  "_spec": "baqend@^3.0.0",
+  "_where": "/workspace/node_mods",
+  "author": {
+    "name": "Baqend.com",
+    "email": "info@baqend.com"
+  },
+  "bin": {
+    "baqend": "cli/index.js"
+  },
+  "browser": {
+    ".": "./dist/baqend.es5.js",
+    "./lib/util/atob.ts": "./lib/util/atob-browser.ts",
+    "./lib/util/is-node.ts": "./lib/util/is-node-browser.ts",
+    "./lib/util/hmac.ts": "./lib/util/hmac-browser.ts",
+    "./lib/util/websocket.ts": "./lib/util/websocket-browser.ts",
+    "./lib/connector/NodeConnector": false,
+    "./lib/connector/FetchConnector": false
+  },
+  "bugs": {
+    "url": "https://github.com/Baqend/js-sdk/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "commander": "^7.2.0",
+    "glob": "^7.1.7",
+    "open": "^8.2.0",
+    "rimraf": "^3.0.2",
+    "rxjs": "^6.6.3",
+    "tslib": "^2.3.0",
+    "uuid": "^8.3.2",
+    "validator": "^13.6.0",
+    "websocket": "^1.0.34"
+  },
+  "deprecated": false,
+  "description": "Baqend JavaScript SDK",
+  "devDependencies": {
+    "@purtuga/esm-webpack-plugin": "^1.5.0",
+    "@types/node": "^10.17.60",
+    "@types/uuid": "^8.3.0",
+    "@types/validator": "^13.1.4",
+    "@types/webpack": "^4.41.25",
+    "@types/websocket": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^7.29.0",
+    "eslint-config-airbnb-typescript": "^12.3.1",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "events": "^3.3.0",
+    "html-webpack-plugin": "^4.5.0",
+    "jquery": "^3.5.1",
+    "karma": "^5.2.3",
+    "karma-browserstack-launcher": "^1.6.0",
+    "karma-chai": "^0.1.0",
+    "karma-chai-plugins": "^0.9.0",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coffee-preprocessor": "^1.0.1",
+    "karma-firefox-launcher": "^1.3.0",
+    "karma-html2js-preprocessor": "^1.1.0",
+    "karma-ie-launcher": "^1.0.0",
+    "karma-junit-reporter": "^2.0.1",
+    "karma-mocha": "^2.0.1",
+    "karma-safari-launcher": "^1.0.0",
+    "karma-testingbot-launcher": "^1.0.3",
+    "karma-webdriver-launcher": "^1.0.8",
+    "mocha": "^8.2.1",
+    "mocha-jenkins-reporter": "^0.4.5",
+    "puppeteer": "^4.0.1",
+    "shelljs": "^0.8.4",
+    "shx": "^0.3.3",
+    "source-map-support": "^0.5.19",
+    "terser-webpack-plugin": "^3.1.0",
+    "ts-loader": "^8.3.0",
+    "ts-node": "^10.1.0",
+    "typedoc": "^0.20.36",
+    "typescript": "^4.2.4",
+    "utils": "^0.3.1",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "exports": {
+    "./cli": "./cli/index.js",
+    ".": {
+      "browser": {
+        "import": "./dist/baqend.es2015.js",
+        "require": "./dist/baqend.es5.js"
+      },
+      "default": {
+        "import": "./esm/lib/index.js",
+        "require": "./commonjs/lib/index.js"
+      }
+    }
+  },
+  "homepage": "https://www.baqend.com",
+  "keywords": [
+    "backend",
+    "baqend",
+    "mongodb",
+    "sdk",
+    "backend-as-a-service"
+  ],
+  "license": "MIT",
+  "main": "./commonjs/lib/index.js",
+  "module": "./dist/baqend.es2015.js",
+  "name": "baqend",
+  "react-native": {
+    ".": "./commonjs/lib/index.js",
+    "./commonjs/lib/util/atob.js": "./commonjs/lib/util/atob-rn.js",
+    "./commonjs/lib/util/is-node.js": "./commonjs/lib/util/is-node-browser.js",
+    "./commonjs/lib/util/hmac.js": "./commonjs/lib/util/hmac-browser.js",
+    "./commonjs/lib/util/websocket.ts": "./commonjs/lib/util/websocket-browser.ts",
+    "./commonjs/lib/connector/XMLHttpConnector": false,
+    "./commonjs/lib/connector/IFrameConnector": false
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Baqend/js-sdk.git"
+  },
+  "scripts": {
+    "_build-esm": "UNSUDED FOR NOW -> https://nodejs.org/api/packages.html#packages_dual_package_hazard tsc -m es2015 --target es6 --outDir esm --project tsconfig.lib.json",
+    "_dev-node-esm": "UNSUDED FOR NOW -> https://nodejs.org/api/packages.html#packages_dual_package_hazard tsc --watch -m es2015 --target es6 --outDir esm --project tsconfig.lib.json",
+    "baqend": "npm run build-cli && node cli",
+    "build-cli": "tsc -m commonjs --target es6 --project tsconfig.cli.json",
+    "build-commonjs": "tsc -m commonjs --target es5 --declaration --outDir commonjs --project tsconfig.lib.json",
+    "build-dist": "webpack --config-name=es5 && webpack --config-name=es2015",
+    "clean": "shx rm -rf dist commonjs doc",
+    "dev-browser": "webpack-dev-server --config webpack.config.js --open --project tsconfig.lib.json",
+    "dev-node-commonjs": "tsc --watch -m commonjs --target es5 --declaration --outDir commonjs --declaration --project tsconfig.lib.json",
+    "dist": "npm run build-commonjs && npm run build-dist && npm run build-cli && npm run docs",
+    "docs": "typedoc --out doc lib",
+    "docs-actian": "typedoc --readme README-ACTIAN.md --out doc lib",
+    "lint": "eslint --ext .ts lib/ cli/",
+    "prepack": "npm install && npm run dist",
+    "prepare": "",
+    "release": "node scripts/release",
+    "test": "npm run test:node && npm run test:karma",
+    "test:build": "",
+    "test:karma": "karma start",
+    "test:node": "mocha --config mocharc.json --exit",
+    "typings": "npm run typings:test",
+    "typings:test": "tsc --version && tsc -p spec-ts/tsconfig.json --noEmit"
+  },
+  "types": "./commonjs/lib/index.d.ts",
+  "version": "3.1.4"
+}
