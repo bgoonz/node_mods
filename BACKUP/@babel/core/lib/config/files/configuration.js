@@ -3,11 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-export {findConfigUpwards};
-export {findRelativeConfig};
-export {findRootConfig};
-export {loadConfig};
-export {resolveShowConfigPath};
+export { findConfigUpwards };
+export { findRelativeConfig };
+export { findRootConfig };
+export { loadConfig };
+export { resolveShowConfigPath };
 export var ROOT_CONFIG_FILENAMES = void 0;
 
 function _debug() {
@@ -85,7 +85,7 @@ const ROOT_CONFIG_FILENAMES = [
   "babel.config.mjs",
   "babel.config.json",
 ];
-export {ROOT_CONFIG_FILENAMES};
+export { ROOT_CONFIG_FILENAMES };
 const RELATIVE_CONFIG_FILENAMES = [
   ".babelrc",
   ".babelrc.js",

@@ -3,8 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-export {buildPresetChain};
-export {buildRootChain};
+export { buildPresetChain };
+export { buildRootChain };
 export var buildPresetChainWalker = void 0;
 
 function _path() {
@@ -55,7 +55,7 @@ const buildPresetChainWalker = makeChainWalker({
     loadPresetOverridesEnvDescriptors(preset)(index)(envName),
   createLogger: () => () => {},
 });
-export {buildPresetChainWalker};
+export { buildPresetChainWalker };
 const loadPresetDescriptors = (0, _caching.makeWeakCacheSync)((preset) =>
   buildRootDescriptors(
     preset,

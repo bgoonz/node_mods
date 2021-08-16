@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-export {createCachedDescriptors};
-export {createUncachedDescriptors};
-export {createDescriptor};
+export { createCachedDescriptors };
+export { createUncachedDescriptors };
+export { createDescriptor };
 
 function _gensync() {
   const data = require("gensync");

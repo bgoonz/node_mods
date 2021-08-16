@@ -3,11 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-export {makeWeakCache};
-export {makeWeakCacheSync};
-export {makeStrongCache};
-export {makeStrongCacheSync};
-export {assertSimpleType};
+export { makeWeakCache };
+export { makeWeakCacheSync };
+export { makeStrongCache };
+export { makeStrongCacheSync };
+export { assertSimpleType };
 
 function _gensync() {
   const data = require("gensync");

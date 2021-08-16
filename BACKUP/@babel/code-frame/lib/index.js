@@ -3,8 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-export {codeFrameColumns};
-export {_default as default};
+export { codeFrameColumns };
+export { _default as default };
 
 const _highlight = _interopRequireWildcard(require("@babel/highlight"));
 
@@ -52,7 +52,7 @@ function _interopRequireWildcard(obj) {
 
 let deprecationWarningShown = false;
 
-function getDefs({grey, red}) {
+function getDefs({ grey, red }) {
   return {
     gutter: grey,
     marker: red.bold,
