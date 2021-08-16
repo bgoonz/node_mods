@@ -1,2 +1,4 @@
-import { GraphQLSchema } from 'graphql';
-export declare function addCatchUndefinedToSchema(schema: GraphQLSchema): GraphQLSchema;
+import { GraphQLSchema } from "graphql";
+export declare function addCatchUndefinedToSchema(
+  schema: GraphQLSchema
+): GraphQLSchema;

@@ -60,17 +60,17 @@ function _gensync() {
   return data;
 }
 
-var _caching = require("../caching");
+const _caching = require("../caching");
 
-var _configApi = require("../helpers/config-api");
+const _configApi = require("../helpers/config-api");
 
-var _utils = require("./utils");
+const _utils = require("./utils");
 
-var _moduleTypes = require("./module-types");
+const _moduleTypes = require("./module-types");
 
-var _patternToRegex = require("../pattern-to-regex");
+const _patternToRegex = require("../pattern-to-regex");
 
-var fs = require("../../gensync-utils/fs");
+const fs = require("../../gensync-utils/fs");
 
 function _module() {
   const data = require("module");
@@ -127,7 +127,7 @@ function* findRelativeConfig(packageData, envName, caller) {
 
   for (const loc of packageData.directories) {
     if (!config) {
-      var _packageData$pkg;
+      let _packageData$pkg;
 
       config = yield* loadOneConfig(
         RELATIVE_CONFIG_FILENAMES,

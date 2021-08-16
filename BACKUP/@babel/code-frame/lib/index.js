@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", {
 exports.codeFrameColumns = codeFrameColumns;
 exports.default = _default;
 
-var _highlight = _interopRequireWildcard(require("@babel/highlight"));
+const _highlight = _interopRequireWildcard(require("@babel/highlight"));
 
 function _getRequireWildcardCache() {
   if (typeof WeakMap !== "function") return null;
-  var cache = new WeakMap();
+  const cache = new WeakMap();
   _getRequireWildcardCache = () => {
     return cache;
   };
@@ -24,16 +24,16 @@ function _interopRequireWildcard(obj) {
   if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
     return { default: obj };
   }
-  var cache = _getRequireWildcardCache();
+  const cache = _getRequireWildcardCache();
   if (cache && cache.has(obj)) {
     return cache.get(obj);
   }
-  var newObj = {};
-  var hasPropertyDescriptor =
+  const newObj = {};
+  const hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
-  for (var key in obj) {
+  for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      var desc = hasPropertyDescriptor
+      const desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
       if (desc && (desc.get || desc.set)) {

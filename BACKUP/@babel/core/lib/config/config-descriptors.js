@@ -17,13 +17,13 @@ function _gensync() {
   return data;
 }
 
-var _files = require("./files");
+const _files = require("./files");
 
-var _item = require("./item");
+const _item = require("./item");
 
-var _caching = require("./caching");
+const _caching = require("./caching");
 
-var _resolveTargets = require("./resolve-targets");
+const _resolveTargets = require("./resolve-targets");
 
 function isEqualDescriptor(a, b) {
   return (

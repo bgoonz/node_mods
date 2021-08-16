@@ -27,17 +27,17 @@ function _debug() {
   return data;
 }
 
-var _options = require("./validation/options");
+const _options = require("./validation/options");
 
-var _patternToRegex = require("./pattern-to-regex");
+const _patternToRegex = require("./pattern-to-regex");
 
-var _printer = require("./printer");
+const _printer = require("./printer");
 
-var _files = require("./files");
+const _files = require("./files");
 
-var _caching = require("./caching");
+const _caching = require("./caching");
 
-var _configDescriptors = require("./config-descriptors");
+const _configDescriptors = require("./config-descriptors");
 
 const debug = _debug()("babel:config:config-chain");
 
@@ -409,7 +409,7 @@ function buildRootDescriptors({ dirname, options }, alias, descriptors) {
 }
 
 function buildProgrammaticLogger(_, context, baseLogger) {
-  var _context$caller;
+  let _context$caller;
 
   if (!baseLogger) {
     return () => {};
@@ -687,7 +687,7 @@ function configFieldIsApplicable(context, test, dirname) {
 
 function shouldIgnore(context, ignore, only, dirname) {
   if (ignore && matchesPatterns(context, ignore, dirname)) {
-    var _context$filename;
+    let _context$filename;
 
     const message = `No config is applied to "${
       (_context$filename = context.filename) != null
@@ -706,7 +706,7 @@ function shouldIgnore(context, ignore, only, dirname) {
   }
 
   if (only && !matchesPatterns(context, only, dirname)) {
-    var _context$filename2;
+    let _context$filename2;
 
     const message = `No config is applied to "${
       (_context$filename2 = context.filename) != null
