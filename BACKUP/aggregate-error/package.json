@@ -1,29 +1,27 @@
 {
-  "_from": "@ardatan/aggregate-error@0.0.6",
-  "_id": "@ardatan/aggregate-error@0.0.6",
+  "_from": "aggregate-error@^3.0.0",
+  "_id": "aggregate-error@3.1.0",
   "_inBundle": false,
-  "_integrity": "sha512-vyrkEHG1jrukmzTPtyWB4NLPauUw5bQeg4uhn8f+1SSynmrOcyvlb1GKQjjgoBzElLdfXCRYX8UnBlhklOHYRQ==",
-  "_location": "/@ardatan/aggregate-error",
+  "_integrity": "sha512-4I7Td01quW/RpocfNayFdFVk1qSuoh0E7JrbRJ16nH01HhKFQ88INq9Sd+nd72zqRySlr9BmDA8xlEJ6vJMrYA==",
+  "_location": "/aggregate-error",
   "_phantomChildren": {},
   "_requested": {
-    "type": "version",
+    "type": "range",
     "registry": true,
-    "raw": "@ardatan/aggregate-error@0.0.6",
-    "name": "@ardatan/aggregate-error",
-    "escapedName": "@ardatan%2faggregate-error",
-    "scope": "@ardatan",
-    "rawSpec": "0.0.6",
+    "raw": "aggregate-error@^3.0.0",
+    "name": "aggregate-error",
+    "escapedName": "aggregate-error",
+    "rawSpec": "^3.0.0",
     "saveSpec": null,
-    "fetchSpec": "0.0.6"
+    "fetchSpec": "^3.0.0"
   },
   "_requiredBy": [
-    "/@graphql-tools/delegate",
-    "/@graphql-tools/utils"
+    "/p-map"
   ],
-  "_resolved": "https://registry.npmjs.org/@ardatan/aggregate-error/-/aggregate-error-0.0.6.tgz",
-  "_shasum": "fe6924771ea40fc98dc7a7045c2e872dc8527609",
-  "_spec": "@ardatan/aggregate-error@0.0.6",
-  "_where": "/workspace/node_mods/node_modules/@graphql-tools/utils",
+  "_resolved": "https://registry.npmjs.org/aggregate-error/-/aggregate-error-3.1.0.tgz",
+  "_shasum": "92670ff50f5359bdb7a3e0d40d0ec30c5737687a",
+  "_spec": "aggregate-error@^3.0.0",
+  "_where": "/workspace/node_mods/node_modules/p-map",
   "author": {
     "name": "Sindre Sorhus",
     "email": "sindresorhus@gmail.com",
@@ -34,13 +32,23 @@
   },
   "bundleDependencies": false,
   "dependencies": {
-    "tslib": "~2.0.1"
+    "clean-stack": "^2.0.0",
+    "indent-string": "^4.0.0"
   },
   "deprecated": false,
   "description": "Create an error from multiple errors",
+  "devDependencies": {
+    "ava": "^2.4.0",
+    "tsd": "^0.7.1",
+    "xo": "^0.25.3"
+  },
   "engines": {
     "node": ">=8"
   },
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
   "homepage": "https://github.com/sindresorhus/aggregate-error#readme",
   "keywords": [
     "aggregate",
@@ -53,17 +61,13 @@
     "iterator"
   ],
   "license": "MIT",
-  "main": "index.cjs.js",
-  "module": "index.esm.js",
-  "name": "@ardatan/aggregate-error",
+  "name": "aggregate-error",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sindresorhus/aggregate-error.git"
   },
-  "sideEffects": false,
-  "typescript": {
-    "definition": "index.d.ts"
+  "scripts": {
+    "test": "xo && ava && tsd"
   },
-  "typings": "index.d.ts",
-  "version": "0.0.6"
+  "version": "3.1.0"
 }
