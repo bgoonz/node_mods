@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
@@ -11,7 +11,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -29,7 +29,7 @@ function _defineProperty(obj, key, value) {
 /* eslint-disable local/ban-types-eventually */
 class ReporterDispatcher {
   constructor() {
-    _defineProperty(this, '_reporters', void 0);
+    _defineProperty(this, "_reporters", void 0);
 
     this._reporters = [];
   }
@@ -40,7 +40,7 @@ class ReporterDispatcher {
 
   unregister(ReporterClass) {
     this._reporters = this._reporters.filter(
-      reporter => !(reporter instanceof ReporterClass)
+      (reporter) => !(reporter instanceof ReporterClass)
     );
   }
 

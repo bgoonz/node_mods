@@ -1,5 +1,4 @@
-@koa/cors
-=======
+# @koa/cors
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -34,8 +33,8 @@ Enable cors with default options:
 - allowMethods: GET,HEAD,PUT,POST,DELETE,PATCH
 
 ```js
-const Koa = require('koa');
-const cors = require('@koa/cors');
+const Koa = require("koa");
+const cors = require("@koa/cors");
 
 const app = new Koa();
 app.use(cors());

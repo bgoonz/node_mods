@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,7 +16,7 @@ function _chalk() {
 }
 
 function _jestMessageUtil() {
-  const data = require('jest-message-util');
+  const data = require("jest-message-util");
 
   _jestMessageUtil = function () {
     return data;
@@ -26,7 +26,7 @@ function _jestMessageUtil() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -36,18 +36,18 @@ function _interopRequireDefault(obj) {
  * LICENSE file in the root directory of this source tree.
  */
 var _default = (buffer, config, globalConfig) => {
-  const TITLE_INDENT = globalConfig.verbose ? '  ' : '    ';
-  const CONSOLE_INDENT = TITLE_INDENT + '  ';
-  const logEntries = buffer.reduce((output, {type, message, origin}) => {
+  const TITLE_INDENT = globalConfig.verbose ? "  " : "    ";
+  const CONSOLE_INDENT = TITLE_INDENT + "  ";
+  const logEntries = buffer.reduce((output, { type, message, origin }) => {
     message = message
       .split(/\n/)
-      .map(line => CONSOLE_INDENT + line)
-      .join('\n');
-    let typeMessage = 'console.' + type;
+      .map((line) => CONSOLE_INDENT + line)
+      .join("\n");
+    let typeMessage = "console." + type;
     let noStackTrace = true;
     let noCodeFrame = true;
 
-    if (type === 'warn') {
+    if (type === "warn") {
       var _globalConfig$noStack;
 
       message = _chalk().default.yellow(message);
@@ -61,7 +61,7 @@ var _default = (buffer, config, globalConfig) => {
           ? _globalConfig$noStack
           : false;
       noCodeFrame = false;
-    } else if (type === 'error') {
+    } else if (type === "error") {
       var _globalConfig$noStack2;
 
       message = _chalk().default.red(message);
@@ -79,7 +79,7 @@ var _default = (buffer, config, globalConfig) => {
 
     const options = {
       noCodeFrame,
-      noStackTrace
+      noStackTrace,
     };
     const formattedStackTrace = (0, _jestMessageUtil().formatStackTrace)(
       origin,
@@ -90,14 +90,14 @@ var _default = (buffer, config, globalConfig) => {
       output +
       TITLE_INDENT +
       _chalk().default.dim(typeMessage) +
-      '\n' +
+      "\n" +
       message.trimRight() +
-      '\n' +
+      "\n" +
       _chalk().default.dim(formattedStackTrace.trimRight()) +
-      '\n\n'
+      "\n\n"
     );
-  }, '');
-  return logEntries.trimRight() + '\n';
+  }, "");
+  return logEntries.trimRight() + "\n";
 };
 
 exports.default = _default;

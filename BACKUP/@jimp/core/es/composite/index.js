@@ -3,7 +3,7 @@
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = composite;
 
@@ -23,36 +23,41 @@ var compositeModes = _interopRequireWildcard(require("./composite-modes"));
  * @returns {Jimp} this for chaining of methods
  */
 function composite(src, x, y) {
-  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  var options =
+    arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
   var cb = arguments.length > 4 ? arguments[4] : undefined;
 
-  if (typeof options === 'function') {
+  if (typeof options === "function") {
     cb = options;
     options = {};
   }
 
   if (!(src instanceof this.constructor)) {
-    return _utils.throwError.call(this, 'The source must be a Jimp image', cb);
+    return _utils.throwError.call(this, "The source must be a Jimp image", cb);
   }
 
-  if (typeof x !== 'number' || typeof y !== 'number') {
-    return _utils.throwError.call(this, 'x and y must be numbers', cb);
+  if (typeof x !== "number" || typeof y !== "number") {
+    return _utils.throwError.call(this, "x and y must be numbers", cb);
   }
 
   var _options = options,
-      mode = _options.mode,
-      opacitySource = _options.opacitySource,
-      opacityDest = _options.opacityDest;
+    mode = _options.mode,
+    opacitySource = _options.opacitySource,
+    opacityDest = _options.opacityDest;
 
   if (!mode) {
     mode = constants.BLEND_SOURCE_OVER;
   }
 
-  if (typeof opacitySource !== 'number' || opacitySource < 0 || opacitySource > 1) {
+  if (
+    typeof opacitySource !== "number" ||
+    opacitySource < 0 ||
+    opacitySource > 1
+  ) {
     opacitySource = 1.0;
   }
 
-  if (typeof opacityDest !== 'number' || opacityDest < 0 || opacityDest > 1) {
+  if (typeof opacityDest !== "number" || opacityDest < 0 || opacityDest > 1) {
     opacityDest = 1.0;
   }
 
@@ -66,24 +71,42 @@ function composite(src, x, y) {
     baseImage.opacity(opacityDest);
   }
 
-  src.scanQuiet(0, 0, src.bitmap.width, src.bitmap.height, function (sx, sy, idx) {
-    var dstIdx = baseImage.getPixelIndex(x + sx, y + sy, constants.EDGE_CROP);
-    var blended = blendmode({
-      r: this.bitmap.data[idx + 0] / 255,
-      g: this.bitmap.data[idx + 1] / 255,
-      b: this.bitmap.data[idx + 2] / 255,
-      a: this.bitmap.data[idx + 3] / 255
-    }, {
-      r: baseImage.bitmap.data[dstIdx + 0] / 255,
-      g: baseImage.bitmap.data[dstIdx + 1] / 255,
-      b: baseImage.bitmap.data[dstIdx + 2] / 255,
-      a: baseImage.bitmap.data[dstIdx + 3] / 255
-    }, opacitySource);
-    baseImage.bitmap.data[dstIdx + 0] = this.constructor.limit255(blended.r * 255);
-    baseImage.bitmap.data[dstIdx + 1] = this.constructor.limit255(blended.g * 255);
-    baseImage.bitmap.data[dstIdx + 2] = this.constructor.limit255(blended.b * 255);
-    baseImage.bitmap.data[dstIdx + 3] = this.constructor.limit255(blended.a * 255);
-  });
+  src.scanQuiet(
+    0,
+    0,
+    src.bitmap.width,
+    src.bitmap.height,
+    function (sx, sy, idx) {
+      var dstIdx = baseImage.getPixelIndex(x + sx, y + sy, constants.EDGE_CROP);
+      var blended = blendmode(
+        {
+          r: this.bitmap.data[idx + 0] / 255,
+          g: this.bitmap.data[idx + 1] / 255,
+          b: this.bitmap.data[idx + 2] / 255,
+          a: this.bitmap.data[idx + 3] / 255,
+        },
+        {
+          r: baseImage.bitmap.data[dstIdx + 0] / 255,
+          g: baseImage.bitmap.data[dstIdx + 1] / 255,
+          b: baseImage.bitmap.data[dstIdx + 2] / 255,
+          a: baseImage.bitmap.data[dstIdx + 3] / 255,
+        },
+        opacitySource
+      );
+      baseImage.bitmap.data[dstIdx + 0] = this.constructor.limit255(
+        blended.r * 255
+      );
+      baseImage.bitmap.data[dstIdx + 1] = this.constructor.limit255(
+        blended.g * 255
+      );
+      baseImage.bitmap.data[dstIdx + 2] = this.constructor.limit255(
+        blended.b * 255
+      );
+      baseImage.bitmap.data[dstIdx + 3] = this.constructor.limit255(
+        blended.a * 255
+      );
+    }
+  );
 
   if ((0, _utils.isNodePattern)(cb)) {
     cb.call(this, null, this);

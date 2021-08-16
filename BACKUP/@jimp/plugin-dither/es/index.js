@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
@@ -14,13 +14,25 @@ var _utils = require("@jimp/utils");
  */
 function dither(cb) {
   var rgb565Matrix = [1, 9, 3, 11, 13, 5, 15, 7, 4, 12, 2, 10, 16, 8, 14, 6];
-  this.scanQuiet(0, 0, this.bitmap.width, this.bitmap.height, function (x, y, idx) {
-    var thresholdId = ((y & 3) << 2) + x % 4;
-    var dither = rgb565Matrix[thresholdId];
-    this.bitmap.data[idx] = Math.min(this.bitmap.data[idx] + dither, 0xff);
-    this.bitmap.data[idx + 1] = Math.min(this.bitmap.data[idx + 1] + dither, 0xff);
-    this.bitmap.data[idx + 2] = Math.min(this.bitmap.data[idx + 2] + dither, 0xff);
-  });
+  this.scanQuiet(
+    0,
+    0,
+    this.bitmap.width,
+    this.bitmap.height,
+    function (x, y, idx) {
+      var thresholdId = ((y & 3) << 2) + (x % 4);
+      var dither = rgb565Matrix[thresholdId];
+      this.bitmap.data[idx] = Math.min(this.bitmap.data[idx] + dither, 0xff);
+      this.bitmap.data[idx + 1] = Math.min(
+        this.bitmap.data[idx + 1] + dither,
+        0xff
+      );
+      this.bitmap.data[idx + 2] = Math.min(
+        this.bitmap.data[idx + 2] + dither,
+        0xff
+      );
+    }
+  );
 
   if ((0, _utils.isNodePattern)(cb)) {
     cb.call(this, null, this);
@@ -32,7 +44,7 @@ function dither(cb) {
 var _default = function _default() {
   return {
     dither565: dither,
-    dither16: dither
+    dither16: dither,
   };
 };
 

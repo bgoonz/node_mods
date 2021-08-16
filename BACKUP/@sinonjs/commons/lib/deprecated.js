@@ -9,15 +9,15 @@
  * @param  {string} msg
  * @returns {Function}
  */
-exports.wrap = function(func, msg) {
-    var wrapped = function() {
-        exports.printWarning(msg);
-        return func.apply(this, arguments);
-    };
-    if (func.prototype) {
-        wrapped.prototype = func.prototype;
-    }
-    return wrapped;
+exports.wrap = function (func, msg) {
+  var wrapped = function () {
+    exports.printWarning(msg);
+    return func.apply(this, arguments);
+  };
+  if (func.prototype) {
+    wrapped.prototype = func.prototype;
+  }
+  return wrapped;
 };
 
 /**
@@ -28,15 +28,15 @@ exports.wrap = function(func, msg) {
  * @param  {string} funcName
  * @returns {string}
  */
-exports.defaultMsg = function(packageName, funcName) {
-    return (
-        packageName +
-        "." +
-        funcName +
-        " is deprecated and will be removed from the public API in a future version of " +
-        packageName +
-        "."
-    );
+exports.defaultMsg = function (packageName, funcName) {
+  return (
+    packageName +
+    "." +
+    funcName +
+    " is deprecated and will be removed from the public API in a future version of " +
+    packageName +
+    "."
+  );
 };
 
 /**
@@ -45,14 +45,14 @@ exports.defaultMsg = function(packageName, funcName) {
  * @param  {string} msg
  * @returns {undefined}
  */
-exports.printWarning = function(msg) {
-    /* istanbul ignore next */
-    if (typeof process === "object" && process.emitWarning) {
-        // Emit Warnings in Node
-        process.emitWarning(msg);
-    } else if (console.info) {
-        console.info(msg);
-    } else {
-        console.log(msg);
-    }
+exports.printWarning = function (msg) {
+  /* istanbul ignore next */
+  if (typeof process === "object" && process.emitWarning) {
+    // Emit Warnings in Node
+    process.emitWarning(msg);
+  } else if (console.info) {
+    console.info(msg);
+  } else {
+    console.log(msg);
+  }
 };

@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.runCLI = runCLI;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,7 +16,7 @@ function _chalk() {
 }
 
 function _exit() {
-  const data = _interopRequireDefault(require('exit'));
+  const data = _interopRequireDefault(require("exit"));
 
   _exit = function () {
     return data;
@@ -26,7 +26,7 @@ function _exit() {
 }
 
 function _rimraf() {
-  const data = _interopRequireDefault(require('rimraf'));
+  const data = _interopRequireDefault(require("rimraf"));
 
   _rimraf = function () {
     return data;
@@ -36,7 +36,7 @@ function _rimraf() {
 }
 
 function _console() {
-  const data = require('@jest/console');
+  const data = require("@jest/console");
 
   _console = function () {
     return data;
@@ -46,7 +46,7 @@ function _console() {
 }
 
 function _jestConfig() {
-  const data = require('jest-config');
+  const data = require("jest-config");
 
   _jestConfig = function () {
     return data;
@@ -56,7 +56,7 @@ function _jestConfig() {
 }
 
 function _jestRuntime() {
-  const data = _interopRequireDefault(require('jest-runtime'));
+  const data = _interopRequireDefault(require("jest-runtime"));
 
   _jestRuntime = function () {
     return data;
@@ -66,7 +66,7 @@ function _jestRuntime() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -76,7 +76,7 @@ function _jestUtil() {
 }
 
 function _TestWatcher() {
-  const data = _interopRequireDefault(require('../TestWatcher'));
+  const data = _interopRequireDefault(require("../TestWatcher"));
 
   _TestWatcher = function () {
     return data;
@@ -86,7 +86,7 @@ function _TestWatcher() {
 }
 
 function _collectHandles() {
-  const data = require('../collectHandles');
+  const data = require("../collectHandles");
 
   _collectHandles = function () {
     return data;
@@ -96,7 +96,7 @@ function _collectHandles() {
 }
 
 function _getChangedFilesPromise() {
-  const data = _interopRequireDefault(require('../getChangedFilesPromise'));
+  const data = _interopRequireDefault(require("../getChangedFilesPromise"));
 
   _getChangedFilesPromise = function () {
     return data;
@@ -106,7 +106,7 @@ function _getChangedFilesPromise() {
 }
 
 function _getConfigsOfProjectsToRun() {
-  const data = _interopRequireDefault(require('../getConfigsOfProjectsToRun'));
+  const data = _interopRequireDefault(require("../getConfigsOfProjectsToRun"));
 
   _getConfigsOfProjectsToRun = function () {
     return data;
@@ -117,7 +117,7 @@ function _getConfigsOfProjectsToRun() {
 
 function _getProjectNamesMissingWarning() {
   const data = _interopRequireDefault(
-    require('../getProjectNamesMissingWarning')
+    require("../getProjectNamesMissingWarning")
   );
 
   _getProjectNamesMissingWarning = function () {
@@ -128,7 +128,7 @@ function _getProjectNamesMissingWarning() {
 }
 
 function _getSelectProjectsMessage() {
-  const data = _interopRequireDefault(require('../getSelectProjectsMessage'));
+  const data = _interopRequireDefault(require("../getSelectProjectsMessage"));
 
   _getSelectProjectsMessage = function () {
     return data;
@@ -138,7 +138,7 @@ function _getSelectProjectsMessage() {
 }
 
 function _createContext() {
-  const data = _interopRequireDefault(require('../lib/createContext'));
+  const data = _interopRequireDefault(require("../lib/createContext"));
 
   _createContext = function () {
     return data;
@@ -149,7 +149,7 @@ function _createContext() {
 
 function _handleDeprecationWarnings() {
   const data = _interopRequireDefault(
-    require('../lib/handleDeprecationWarnings')
+    require("../lib/handleDeprecationWarnings")
   );
 
   _handleDeprecationWarnings = function () {
@@ -160,7 +160,7 @@ function _handleDeprecationWarnings() {
 }
 
 function _logDebugMessages() {
-  const data = _interopRequireDefault(require('../lib/logDebugMessages'));
+  const data = _interopRequireDefault(require("../lib/logDebugMessages"));
 
   _logDebugMessages = function () {
     return data;
@@ -170,7 +170,7 @@ function _logDebugMessages() {
 }
 
 function _pluralize() {
-  const data = _interopRequireDefault(require('../pluralize'));
+  const data = _interopRequireDefault(require("../pluralize"));
 
   _pluralize = function () {
     return data;
@@ -180,7 +180,7 @@ function _pluralize() {
 }
 
 function _runJest() {
-  const data = _interopRequireDefault(require('../runJest'));
+  const data = _interopRequireDefault(require("../runJest"));
 
   _runJest = function () {
     return data;
@@ -190,7 +190,7 @@ function _runJest() {
 }
 
 function _watch() {
-  const data = _interopRequireDefault(require('../watch'));
+  const data = _interopRequireDefault(require("../watch"));
 
   _watch = function () {
     return data;
@@ -200,7 +200,7 @@ function _watch() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -209,7 +209,7 @@ function _interopRequireDefault(obj) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const {print: preRunMessagePrint} = _jestUtil().preRunMessage;
+const { print: preRunMessagePrint } = _jestUtil().preRunMessage;
 
 async function runCLI(argv, projects) {
   let results; // If we output a JSON object, we can't write anything to stdout, since
@@ -217,7 +217,7 @@ async function runCLI(argv, projects) {
 
   const outputStream =
     argv.json || argv.useStderr ? process.stderr : process.stdout;
-  const {globalConfig, configs, hasDeprecationWarnings} = await (0,
+  const { globalConfig, configs, hasDeprecationWarnings } = await (0,
   _jestConfig().readConfigs)(argv, projects);
 
   if (argv.debug) {
@@ -230,7 +230,7 @@ async function runCLI(argv, projects) {
   }
 
   if (argv.clearCache) {
-    configs.forEach(config => {
+    configs.forEach((config) => {
       _rimraf().default.sync(config.cacheDirectory);
 
       process.stdout.write(`Cleared ${config.cacheDirectory}\n`);
@@ -263,7 +263,7 @@ async function runCLI(argv, projects) {
     configsOfProjectsToRun,
     hasDeprecationWarnings,
     outputStream,
-    r => {
+    (r) => {
       results = r;
     }
   );
@@ -277,11 +277,11 @@ async function runCLI(argv, projects) {
 
   if (!results) {
     throw new Error(
-      'AggregatedResult must be present after test run is complete'
+      "AggregatedResult must be present after test run is complete"
     );
   }
 
-  const {openHandles} = results;
+  const { openHandles } = results;
 
   if (openHandles && openHandles.length) {
     const formatted = (0, _collectHandles().formatHandleErrors)(
@@ -289,20 +289,20 @@ async function runCLI(argv, projects) {
       configs[0]
     );
     const openHandlesString = (0, _pluralize().default)(
-      'open handle',
+      "open handle",
       formatted.length,
-      's'
+      "s"
     );
     const message =
       _chalk().default.red(
         `\nJest has detected the following ${openHandlesString} potentially keeping Jest from exiting:\n\n`
-      ) + formatted.join('\n\n');
+      ) + formatted.join("\n\n");
     console.error(message);
   }
 
   return {
     globalConfig,
-    results
+    results,
   };
 }
 
@@ -324,7 +324,7 @@ const buildContextsAndHasteMaps = async (
         ),
         resetCache: !config.cache,
         watch: globalConfig.watch || globalConfig.watchAll,
-        watchman: globalConfig.watchman
+        watchman: globalConfig.watchman,
       });
 
       hasteMapInstances[index] = hasteMapInstance;
@@ -336,7 +336,7 @@ const buildContextsAndHasteMaps = async (
   );
   return {
     contexts,
-    hasteMapInstances
+    hasteMapInstances,
   };
 };
 
@@ -376,7 +376,7 @@ const _run10000 = async (
       })();
     }
 
-    filter = async testPaths => {
+    filter = async (testPaths) => {
       if (filterSetupPromise) {
         // Expect an undefined return value unless there was an error.
         const err = await filterSetupPromise;
@@ -390,7 +390,7 @@ const _run10000 = async (
     };
   }
 
-  const {contexts, hasteMapInstances} = await buildContextsAndHasteMaps(
+  const { contexts, hasteMapInstances } = await buildContextsAndHasteMaps(
     configs,
     globalConfig,
     outputStream
@@ -478,8 +478,8 @@ const runWithoutWatch = async (
       outputStream,
       startRun,
       testWatcher: new (_TestWatcher().default)({
-        isWatchMode: false
-      })
+        isWatchMode: false,
+      }),
     });
   };
 

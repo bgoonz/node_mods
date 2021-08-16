@@ -3,11 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-exports.makeWeakCache = makeWeakCache;
-exports.makeWeakCacheSync = makeWeakCacheSync;
-exports.makeStrongCache = makeStrongCache;
-exports.makeStrongCacheSync = makeStrongCacheSync;
-exports.assertSimpleType = assertSimpleType;
+export {makeWeakCache};
+export {makeWeakCacheSync};
+export {makeStrongCache};
+export {makeStrongCacheSync};
+export {assertSimpleType};
 
 function _gensync() {
   const data = require("gensync");
@@ -19,9 +19,8 @@ function _gensync() {
   return data;
 }
 
-const _async = require("../gensync-utils/async");
-
-const _util = require("./util");
+import _async from "../gensync-utils/async";
+import _util from "./util";
 
 const synchronize = (gen) => {
   return _gensync()(gen).sync;

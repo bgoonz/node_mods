@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = luid;
 
@@ -10,8 +10,17 @@ exports.default = luid;
 // retry with a new id.
 function luid() {
   function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000).toString(36).substring(1);
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(36)
+      .substring(1);
   }
 
-  return "".concat(s4() + s4(), "-").concat(s4(), "-").concat(s4(), "-").concat(s4(), "-").concat(s4()).concat(s4()).concat(s4());
+  return ""
+    .concat(s4() + s4(), "-")
+    .concat(s4(), "-")
+    .concat(s4(), "-")
+    .concat(s4(), "-")
+    .concat(s4())
+    .concat(s4())
+    .concat(s4());
 }

@@ -1,1 +1,1 @@
-exports.reduce = require('rxjs/internal/operators/reduce').reduce
+exports.reduce = require("rxjs/internal/operators/reduce").reduce;

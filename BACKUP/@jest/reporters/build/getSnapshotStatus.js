@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,7 +16,7 @@ function _chalk() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -26,7 +26,7 @@ function _jestUtil() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -35,8 +35,8 @@ function _interopRequireDefault(obj) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const ARROW = ' \u203A ';
-const DOT = ' \u2022 ';
+const ARROW = " \u203A ";
+const DOT = " \u2022 ";
 
 const FAIL_COLOR = _chalk().default.bold.red;
 
@@ -53,8 +53,8 @@ var _default = (snapshot, afterUpdate) => {
     statuses.push(
       SNAPSHOT_ADDED(
         ARROW +
-          (0, _jestUtil().pluralize)('snapshot', snapshot.added) +
-          ' written.'
+          (0, _jestUtil().pluralize)("snapshot", snapshot.added) +
+          " written."
       )
     );
   }
@@ -63,8 +63,8 @@ var _default = (snapshot, afterUpdate) => {
     statuses.push(
       SNAPSHOT_UPDATED(
         ARROW +
-          (0, _jestUtil().pluralize)('snapshot', snapshot.updated) +
-          ' updated.'
+          (0, _jestUtil().pluralize)("snapshot", snapshot.updated) +
+          " updated."
       )
     );
   }
@@ -73,8 +73,8 @@ var _default = (snapshot, afterUpdate) => {
     statuses.push(
       FAIL_COLOR(
         ARROW +
-          (0, _jestUtil().pluralize)('snapshot', snapshot.unmatched) +
-          ' failed.'
+          (0, _jestUtil().pluralize)("snapshot", snapshot.unmatched) +
+          " failed."
       )
     );
   }
@@ -84,27 +84,27 @@ var _default = (snapshot, afterUpdate) => {
       statuses.push(
         SNAPSHOT_UPDATED(
           ARROW +
-            (0, _jestUtil().pluralize)('snapshot', snapshot.unchecked) +
-            ' removed.'
+            (0, _jestUtil().pluralize)("snapshot", snapshot.unchecked) +
+            " removed."
         )
       );
     } else {
       statuses.push(
         SNAPSHOT_OUTDATED(
           ARROW +
-            (0, _jestUtil().pluralize)('snapshot', snapshot.unchecked) +
-            ' obsolete'
-        ) + '.'
+            (0, _jestUtil().pluralize)("snapshot", snapshot.unchecked) +
+            " obsolete"
+        ) + "."
       );
     }
 
-    snapshot.uncheckedKeys.forEach(key => {
+    snapshot.uncheckedKeys.forEach((key) => {
       statuses.push(`  ${DOT}${key}`);
     });
   }
 
   if (snapshot.fileDeleted) {
-    statuses.push(SNAPSHOT_UPDATED(ARROW + 'snapshot file removed.'));
+    statuses.push(SNAPSHOT_UPDATED(ARROW + "snapshot file removed."));
   }
 
   return statuses;

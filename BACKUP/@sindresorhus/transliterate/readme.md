@@ -13,18 +13,18 @@ $ npm install @sindresorhus/transliterate
 ## Usage
 
 ```js
-const transliterate = require('@sindresorhus/transliterate');
+const transliterate = require("@sindresorhus/transliterate");
 
-transliterate('Fußgängerübergänge');
+transliterate("Fußgängerübergänge");
 //=> 'Fussgaengeruebergaenge'
 
-transliterate('Я люблю единорогов');
+transliterate("Я люблю единорогов");
 //=> 'Ya lyublyu edinorogov'
 
-transliterate('أنا أحب حيدات');
+transliterate("أنا أحب حيدات");
 //=> 'ana ahb hydat'
 
-transliterate('tôi yêu những chú kỳ lân');
+transliterate("tôi yêu những chú kỳ lân");
 //=> 'toi yeu nhung chu ky lan'
 ```
 
@@ -54,13 +54,11 @@ The replacements are run on the original string before any other transformations
 This only overrides a default replacement if you set an item with the same key.
 
 ```js
-const transliterate = require('@sindresorhus/transliterate');
+const transliterate = require("@sindresorhus/transliterate");
 
-transliterate('Я люблю единорогов', {
-	customReplacements: [
-		['единорогов', '🦄']
-	]
-})
+transliterate("Я люблю единорогов", {
+  customReplacements: [["единорогов", "🦄"]],
+});
 //=> 'Ya lyublyu 🦄'
 ```
 

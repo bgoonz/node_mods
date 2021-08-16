@@ -8,7 +8,10 @@
  * @returns {T[Property]} The defaulted property value.
  */
 const d = (object, property, defaultValue) => {
-  if (typeof object[property] === 'undefined' && typeof defaultValue !== 'undefined') {
+  if (
+    typeof object[property] === "undefined" &&
+    typeof defaultValue !== "undefined"
+  ) {
     object[property] = defaultValue;
   }
   return object[property];
@@ -36,42 +39,42 @@ const nestedOption = (object, property, fn) => {
  */
 const normalizeOptions = (options) => {
   // Show deprecation notice for the `disableRefreshCheck` option and remove it
-  if (typeof options.disableRefreshCheck !== 'undefined') {
+  if (typeof options.disableRefreshCheck !== "undefined") {
     delete options.disableRefreshCheck;
     console.warn(
       [
         'The "disableRefreshCheck" option has been deprecated and will not have any effect on how the plugin parses files.',
-        'Please remove it from your configuration.',
-      ].join(' ')
+        "Please remove it from your configuration.",
+      ].join(" ")
     );
   }
 
-  d(options, 'exclude', /node_modules/i);
-  d(options, 'include', /\.([jt]sx?|flow)$/i);
-  d(options, 'forceEnable');
+  d(options, "exclude", /node_modules/i);
+  d(options, "include", /\.([jt]sx?|flow)$/i);
+  d(options, "forceEnable");
 
-  nestedOption(options, 'overlay', (overlay) => {
+  nestedOption(options, "overlay", (overlay) => {
     /** @type {import('../types').NormalizedErrorOverlayOptions} */
     const defaults = {
-      entry: require.resolve('../../client/ErrorOverlayEntry'),
-      module: require.resolve('../../overlay'),
-      sockIntegration: 'wds',
+      entry: require.resolve("../../client/ErrorOverlayEntry"),
+      module: require.resolve("../../overlay"),
+      sockIntegration: "wds",
     };
 
     if (overlay === false) {
       return false;
     }
-    if (typeof overlay === 'undefined' || overlay === true) {
+    if (typeof overlay === "undefined" || overlay === true) {
       return defaults;
     }
 
-    d(overlay, 'entry', defaults.entry);
-    d(overlay, 'module', defaults.module);
-    d(overlay, 'sockIntegration', defaults.sockIntegration);
-    d(overlay, 'sockHost');
-    d(overlay, 'sockPath');
-    d(overlay, 'sockPort');
-    d(options, 'useLegacyWDSSockets');
+    d(overlay, "entry", defaults.entry);
+    d(overlay, "module", defaults.module);
+    d(overlay, "sockIntegration", defaults.sockIntegration);
+    d(overlay, "sockHost");
+    d(overlay, "sockPath");
+    d(overlay, "sockPort");
+    d(options, "useLegacyWDSSockets");
 
     return overlay;
   });

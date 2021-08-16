@@ -6,7 +6,7 @@ If you find this useful, please consider supporting my work with a [donation](ht
 
 ## Description
 
-A config array is a way of managing configurations that are based on glob pattern matching of filenames. Each config array contains the information needed to determine the correct configuration for any file based on the filename. 
+A config array is a way of managing configurations that are based on glob pattern matching of filenames. Each config array contains the information needed to determine the correct configuration for any file based on the filename.
 
 ## Background
 
@@ -16,20 +16,19 @@ The basic idea is that all configuration, including overrides, can be represente
 
 ```js
 export default [
+  // match all JSON files
+  {
+    name: "JSON Handler",
+    files: ["**/*.json"],
+    handler: jsonHandler,
+  },
 
-    // match all JSON files
-    {
-        name: "JSON Handler",
-        files: ["**/*.json"],
-        handler: jsonHandler
-    },
-
-    // match only package.json
-    {
-        name: "package.json Handler",
-        files: ["package.json"],
-        handler: packageJsonHandler
-    }
+  // match only package.json
+  {
+    name: "package.json Handler",
+    files: ["package.json"],
+    handler: packageJsonHandler,
+  },
 ];
 ```
 
@@ -65,12 +64,11 @@ When you create a new instance of `ConfigArray`, you must pass in two arguments:
 const configFilename = path.resolve(process.cwd(), "my.config.js");
 const { default: rawConfigs } = await import(configFilename);
 const configs = new ConfigArray(rawConfigs, {
-    
-    // the path to match filenames from
-    basePath: process.cwd(),
+  // the path to match filenames from
+  basePath: process.cwd(),
 
-    // additional items in each config
-    schema: mySchema
+  // additional items in each config
+  schema: mySchema,
 });
 ```
 
@@ -85,29 +83,27 @@ const configFilename = path.resolve(process.cwd(), "my.config.js");
 const { default: rawConfigs } = await import(configFilename);
 
 const mySchema = {
-
-    // define the handler key in configs
-    handler: {
-        required: true,
-        merge(a, b) {
-            if (!b) return a;
-            if (!a) return b;
-        },
-        validate(value) {
-            if (typeof value !== "function") {
-                throw new TypeError("Function expected.");
-            }
-        }
-    }
+  // define the handler key in configs
+  handler: {
+    required: true,
+    merge(a, b) {
+      if (!b) return a;
+      if (!a) return b;
+    },
+    validate(value) {
+      if (typeof value !== "function") {
+        throw new TypeError("Function expected.");
+      }
+    },
+  },
 };
 
 const configs = new ConfigArray(rawConfigs, {
-    
-    // the path to match filenames from
-    basePath: process.cwd(),
+  // the path to match filenames from
+  basePath: process.cwd(),
 
-    // additional items in each config
-    schema: mySchema
+  // additional items in each config
+  schema: mySchema,
 });
 ```
 
@@ -117,51 +113,49 @@ Config arrays can be multidimensional, so it's possible for a config array to co
 
 ```js
 export default [
-    
-    // JS config
+  // JS config
+  {
+    files: ["**/*.js"],
+    handler: jsHandler,
+  },
+
+  // JSON configs
+  [
+    // match all JSON files
     {
-        files: ["**/*.js"],
-        handler: jsHandler
+      name: "JSON Handler",
+      files: ["**/*.json"],
+      handler: jsonHandler,
     },
 
-    // JSON configs
-    [
-
-        // match all JSON files
-        {
-            name: "JSON Handler",
-            files: ["**/*.json"],
-            handler: jsonHandler
-        },
-
-        // match only package.json
-        {
-            name: "package.json Handler",
-            files: ["package.json"],
-            handler: packageJsonHandler
-        }
-    ],
-
-    // filename must match function
+    // match only package.json
     {
-        files: [ filePath => filePath.endsWith(".md") ],
-        handler: markdownHandler
+      name: "package.json Handler",
+      files: ["package.json"],
+      handler: packageJsonHandler,
     },
+  ],
 
-    // filename must match all patterns in subarray
-    {
-        files: [ ["*.test.*", "*.js"] ],
-        handler: jsTestHandler
+  // filename must match function
+  {
+    files: [(filePath) => filePath.endsWith(".md")],
+    handler: markdownHandler,
+  },
+
+  // filename must match all patterns in subarray
+  {
+    files: [["*.test.*", "*.js"]],
+    handler: jsTestHandler,
+  },
+
+  // filename must not match patterns beginning with !
+  {
+    name: "Non-JS files",
+    files: ["!*.js"],
+    settings: {
+      js: false,
     },
-
-    // filename must not match patterns beginning with !
-    {
-        name: "Non-JS files",
-        files: ["!*.js"],
-        settings: {
-            js: false
-        }
-    }
+  },
 ];
 ```
 
@@ -179,32 +173,30 @@ Config arrays can also include config functions. A config function accepts a sin
 
 ```js
 export default [
-    
-    // JS config
-    {
-        files: ["**/*.js"],
-        handler: jsHandler
-    },
+  // JS config
+  {
+    files: ["**/*.js"],
+    handler: jsHandler,
+  },
 
-    // JSON configs
-    function (context) {
-        return [
+  // JSON configs
+  function (context) {
+    return [
+      // match all JSON files
+      {
+        name: context.name + " JSON Handler",
+        files: ["**/*.json"],
+        handler: jsonHandler,
+      },
 
-            // match all JSON files
-            {
-                name: context.name + " JSON Handler",
-                files: ["**/*.json"],
-                handler: jsonHandler
-            },
-
-            // match only package.json
-            {
-                name: context.name + " package.json Handler",
-                files: ["package.json"],
-                handler: packageJsonHandler
-            }
-        ];
-    }
+      // match only package.json
+      {
+        name: context.name + " package.json Handler",
+        files: ["package.json"],
+        handler: packageJsonHandler,
+      },
+    ];
+  },
 ];
 ```
 
@@ -220,7 +212,7 @@ To normalize a config array, call the `normalize()` method and pass in a context
 
 ```js
 await configs.normalize({
-    name: "MyApp"
+  name: "MyApp",
 });
 ```
 
@@ -234,24 +226,26 @@ To get the config for a file, use the `getConfig()` method on a normalized confi
 
 ```js
 // pass in absolute filename
-const fileConfig = configs.getConfig(path.resolve(process.cwd(), "package.json"));
+const fileConfig = configs.getConfig(
+  path.resolve(process.cwd(), "package.json")
+);
 ```
 
 The config array always returns an object, even if there are no configs matching the given filename. You can then inspect the returned config object to determine how to proceed.
 
 A few things to keep in mind:
 
-* You must pass in the absolute filename to get a config for.
-* The returned config object never has `files`, `ignores`, or `name` properties; the only properties on the object will be the other configuration options specified.
-* The config array caches configs, so subsequent calls to `getConfig()` with the same filename will return in a fast lookup rather than another calculation.
+- You must pass in the absolute filename to get a config for.
+- The returned config object never has `files`, `ignores`, or `name` properties; the only properties on the object will be the other configuration options specified.
+- The config array caches configs, so subsequent calls to `getConfig()` with the same filename will return in a fast lookup rather than another calculation.
 
 ## Acknowledgements
 
 The design of this project was influenced by feedback on the ESLint RFC, and incorporates ideas from:
 
-* Teddy Katz (@not-an-aardvark)
-* Toru Nagashima (@mysticatea)
-* Kai Cataldo (@kaicataldo)
+- Teddy Katz (@not-an-aardvark)
+- Toru Nagashima (@mysticatea)
+- Kai Cataldo (@kaicataldo)
 
 ## License
 

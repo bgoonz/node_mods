@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function os() {
-  const data = _interopRequireWildcard(require('os'));
+  const data = _interopRequireWildcard(require("os"));
 
   os = function () {
     return data;
@@ -16,7 +16,7 @@ function os() {
 }
 
 function path() {
-  const data = _interopRequireWildcard(require('path'));
+  const data = _interopRequireWildcard(require("path"));
 
   path = function () {
     return data;
@@ -26,7 +26,7 @@ function path() {
 }
 
 function _micromatch() {
-  const data = _interopRequireDefault(require('micromatch'));
+  const data = _interopRequireDefault(require("micromatch"));
 
   _micromatch = function () {
     return data;
@@ -36,7 +36,7 @@ function _micromatch() {
 }
 
 function _jestConfig() {
-  const data = require('jest-config');
+  const data = require("jest-config");
 
   _jestConfig = function () {
     return data;
@@ -46,7 +46,7 @@ function _jestConfig() {
 }
 
 function _jestRegexUtil() {
-  const data = require('jest-regex-util');
+  const data = require("jest-regex-util");
 
   _jestRegexUtil = function () {
     return data;
@@ -56,7 +56,7 @@ function _jestRegexUtil() {
 }
 
 function _jestResolveDependencies() {
-  const data = require('jest-resolve-dependencies');
+  const data = require("jest-resolve-dependencies");
 
   _jestResolveDependencies = function () {
     return data;
@@ -66,7 +66,7 @@ function _jestResolveDependencies() {
 }
 
 function _jestSnapshot() {
-  const data = require('jest-snapshot');
+  const data = require("jest-snapshot");
 
   _jestSnapshot = function () {
     return data;
@@ -76,7 +76,7 @@ function _jestSnapshot() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -86,11 +86,11 @@ function _jestUtil() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -102,8 +102,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -113,7 +113,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -137,7 +137,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -145,10 +145,10 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-const regexToMatcher = testRegex => {
-  const regexes = testRegex.map(testRegex => new RegExp(testRegex));
-  return path =>
-    regexes.some(regex => {
+const regexToMatcher = (testRegex) => {
+  const regexes = testRegex.map((testRegex) => new RegExp(testRegex));
+  return (path) =>
+    regexes.some((regex) => {
       const result = regex.test(path); // prevent stateful regexes from breaking, just in case
 
       regex.lastIndex = 0;
@@ -157,63 +157,65 @@ const regexToMatcher = testRegex => {
 };
 
 const toTests = (context, tests) =>
-  tests.map(path => ({
+  tests.map((path) => ({
     context,
     duration: undefined,
-    path
+    path,
   }));
 
-const hasSCM = changedFilesInfo => {
-  const {repos} = changedFilesInfo; // no SCM (git/hg/...) is found in any of the roots.
+const hasSCM = (changedFilesInfo) => {
+  const { repos } = changedFilesInfo; // no SCM (git/hg/...) is found in any of the roots.
 
-  const noSCM = Object.values(repos).every(scm => scm.size === 0);
+  const noSCM = Object.values(repos).every((scm) => scm.size === 0);
   return !noSCM;
 };
 
 class SearchSource {
   constructor(context) {
-    _defineProperty(this, '_context', void 0);
+    _defineProperty(this, "_context", void 0);
 
-    _defineProperty(this, '_dependencyResolver', void 0);
+    _defineProperty(this, "_dependencyResolver", void 0);
 
-    _defineProperty(this, '_testPathCases', []);
+    _defineProperty(this, "_testPathCases", []);
 
-    const {config} = context;
+    const { config } = context;
     this._context = context;
     this._dependencyResolver = null;
     const rootPattern = new RegExp(
       config.roots
-        .map(dir => (0, _jestRegexUtil().escapePathForRegex)(dir + path().sep))
-        .join('|')
+        .map((dir) =>
+          (0, _jestRegexUtil().escapePathForRegex)(dir + path().sep)
+        )
+        .join("|")
     );
 
     this._testPathCases.push({
-      isMatch: path => rootPattern.test(path),
-      stat: 'roots'
+      isMatch: (path) => rootPattern.test(path),
+      stat: "roots",
     });
 
     if (config.testMatch.length) {
       this._testPathCases.push({
         isMatch: (0, _jestUtil().globsToMatcher)(config.testMatch),
-        stat: 'testMatch'
+        stat: "testMatch",
       });
     }
 
     if (config.testPathIgnorePatterns.length) {
       const testIgnorePatternsRegex = new RegExp(
-        config.testPathIgnorePatterns.join('|')
+        config.testPathIgnorePatterns.join("|")
       );
 
       this._testPathCases.push({
-        isMatch: path => !testIgnorePatternsRegex.test(path),
-        stat: 'testPathIgnorePatterns'
+        isMatch: (path) => !testIgnorePatternsRegex.test(path),
+        stat: "testPathIgnorePatterns",
       });
     }
 
     if (config.testRegex.length) {
       this._testPathCases.push({
         isMatch: regexToMatcher(config.testRegex),
-        stat: 'testRegex'
+        stat: "testRegex",
       });
     }
   }
@@ -237,26 +239,26 @@ class SearchSource {
         roots: 0,
         testMatch: 0,
         testPathIgnorePatterns: 0,
-        testRegex: 0
+        testRegex: 0,
       },
       tests: [],
-      total: allPaths.length
+      total: allPaths.length,
     };
     const testCases = Array.from(this._testPathCases); // clone
 
     if (testPathPattern) {
       const regex = (0, _jestUtil().testPathPatternToRegExp)(testPathPattern);
       testCases.push({
-        isMatch: path => regex.test(path),
-        stat: 'testPathPattern'
+        isMatch: (path) => regex.test(path),
+        stat: "testPathPattern",
       });
       data.stats.testPathPattern = 0;
     }
 
-    data.tests = allPaths.filter(test => {
+    data.tests = allPaths.filter((test) => {
       let filterResult = true;
 
-      for (const {isMatch, stat} of testCases) {
+      for (const { isMatch, stat } of testCases) {
         if (isMatch(test.path)) {
           data.stats[stat]++;
         } else {
@@ -277,7 +279,7 @@ class SearchSource {
   }
 
   isTestFilePath(path) {
-    return this._testPathCases.every(testCase => testCase.isMatch(path));
+    return this._testPathCases.every((testCase) => testCase.isMatch(path));
   }
 
   findMatchingTests(testPathPattern) {
@@ -295,10 +297,10 @@ class SearchSource {
             allPaths,
             this.isTestFilePath.bind(this),
             {
-              skipNodeResolution: this._context.config.skipNodeResolution
+              skipNodeResolution: this._context.config.skipNodeResolution,
             }
           )
-        )
+        ),
       };
     }
 
@@ -306,17 +308,17 @@ class SearchSource {
       allPaths,
       this.isTestFilePath.bind(this),
       {
-        skipNodeResolution: this._context.config.skipNodeResolution
+        skipNodeResolution: this._context.config.skipNodeResolution,
       }
     );
-    const allPathsAbsolute = Array.from(allPaths).map(p => path().resolve(p));
+    const allPathsAbsolute = Array.from(allPaths).map((p) => path().resolve(p));
     const collectCoverageFrom = new Set();
-    testModulesMap.forEach(testModule => {
+    testModulesMap.forEach((testModule) => {
       if (!testModule.dependencies) {
         return;
       }
 
-      testModule.dependencies.forEach(p => {
+      testModule.dependencies.forEach((p) => {
         if (!allPathsAbsolute.includes(p)) {
           return;
         }
@@ -336,8 +338,8 @@ class SearchSource {
       collectCoverageFrom,
       tests: toTests(
         this._context,
-        testModulesMap.map(testModule => testModule.file)
-      )
+        testModulesMap.map((testModule) => testModule.file)
+      ),
     };
   }
 
@@ -346,22 +348,22 @@ class SearchSource {
       tests: toTests(
         this._context,
         paths
-          .map(p => path().resolve(this._context.config.cwd, p))
+          .map((p) => path().resolve(this._context.config.cwd, p))
           .filter(this.isTestFilePath.bind(this))
-      )
+      ),
     };
   }
 
   async findRelatedTestsFromPattern(paths, collectCoverage) {
     if (Array.isArray(paths) && paths.length) {
-      const resolvedPaths = paths.map(p =>
+      const resolvedPaths = paths.map((p) =>
         path().resolve(this._context.config.cwd, p)
       );
       return this.findRelatedTests(new Set(resolvedPaths), collectCoverage);
     }
 
     return {
-      tests: []
+      tests: [],
     };
   }
 
@@ -369,18 +371,18 @@ class SearchSource {
     if (!hasSCM(changedFilesInfo)) {
       return {
         noSCM: true,
-        tests: []
+        tests: [],
       };
     }
 
-    const {changedFiles} = changedFilesInfo;
+    const { changedFiles } = changedFilesInfo;
     return this.findRelatedTests(changedFiles, collectCoverage);
   }
 
   async _getTestPaths(globalConfig, changedFiles) {
     if (globalConfig.onlyChanged) {
       if (!changedFiles) {
-        throw new Error('Changed files must be set when running with -o.');
+        throw new Error("Changed files must be set when running with -o.");
       }
 
       return this.findTestRelatedToChangedFiles(
@@ -391,7 +393,7 @@ class SearchSource {
 
     let paths = globalConfig.nonFlagArgs;
 
-    if (globalConfig.findRelatedTests && 'win32' === os().platform()) {
+    if (globalConfig.findRelatedTests && "win32" === os().platform()) {
       paths = this.filterPathsWin32(paths);
     }
 
@@ -406,7 +408,7 @@ class SearchSource {
       return this.findMatchingTests(globalConfig.testPathPattern);
     } else {
       return {
-        tests: []
+        tests: [],
       };
     }
   }
@@ -416,15 +418,15 @@ class SearchSource {
 
     const options = {
       nocase: true,
-      windows: false
+      windows: false,
     };
 
     function normalizePosix(filePath) {
-      return filePath.replace(/\\/g, '/');
+      return filePath.replace(/\\/g, "/");
     }
 
     paths = paths
-      .map(p => {
+      .map((p) => {
         // micromatch works with forward slashes: https://github.com/micromatch/micromatch#backslashes
         const normalizedPath = normalizePosix(
           path().resolve(this._context.config.cwd, p)
@@ -437,7 +439,7 @@ class SearchSource {
         return match[0];
       })
       .filter(Boolean)
-      .map(p => path().resolve(p));
+      .map((p) => path().resolve(p));
     return paths;
   }
 
@@ -447,7 +449,7 @@ class SearchSource {
 
     if (filter) {
       const tests = searchResult.tests;
-      const filterResult = await filter(tests.map(test => test.path));
+      const filterResult = await filter(tests.map((test) => test.path));
 
       if (!Array.isArray(filterResult.filtered)) {
         throw new Error(
@@ -456,11 +458,11 @@ class SearchSource {
       }
 
       const filteredSet = new Set(
-        filterResult.filtered.map(result => result.test)
+        filterResult.filtered.map((result) => result.test)
       );
       return {
         ...searchResult,
-        tests: tests.filter(test => filteredSet.has(test.path))
+        tests: tests.filter((test) => filteredSet.has(test.path)),
       };
     }
 
@@ -472,15 +474,15 @@ class SearchSource {
       return [];
     }
 
-    const {changedFiles} = changedFilesInfo;
+    const { changedFiles } = changedFilesInfo;
     const dependencyResolver = await this._getOrBuildDependencyResolver();
     const relatedSourcesSet = new Set();
-    changedFiles.forEach(filePath => {
+    changedFiles.forEach((filePath) => {
       if (this.isTestFilePath(filePath)) {
         const sourcePaths = dependencyResolver.resolve(filePath, {
-          skipNodeResolution: this._context.config.skipNodeResolution
+          skipNodeResolution: this._context.config.skipNodeResolution,
         });
-        sourcePaths.forEach(sourcePath => relatedSourcesSet.add(sourcePath));
+        sourcePaths.forEach((sourcePath) => relatedSourcesSet.add(sourcePath));
       }
     });
     return Array.from(relatedSourcesSet);

@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
 module.exports = [
-	['&', ' and '],
-	['🦄', ' unicorn '],
-	['♥', ' love ']
+  ["&", " and "],
+  ["🦄", " unicorn "],
+  ["♥", " love "],
 ];

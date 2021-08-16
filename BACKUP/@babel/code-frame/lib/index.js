@@ -3,8 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-exports.codeFrameColumns = codeFrameColumns;
-exports.default = _default;
+export {codeFrameColumns};
+export {_default as default};
 
 const _highlight = _interopRequireWildcard(require("@babel/highlight"));
 
@@ -52,11 +52,11 @@ function _interopRequireWildcard(obj) {
 
 let deprecationWarningShown = false;
 
-function getDefs(chalk) {
+function getDefs({grey, red}) {
   return {
-    gutter: chalk.grey,
-    marker: chalk.red.bold,
-    message: chalk.red.bold,
+    gutter: grey,
+    marker: red.bold,
+    message: red.bold,
   };
 }
 
@@ -169,7 +169,7 @@ function codeFrameColumns(rawLines, loc, opts = {}) {
           ].join("");
 
           if (lastMarkerLine && opts.message) {
-            markerLine += " " + maybeHighlight(defs.message, opts.message);
+            markerLine += ` ${maybeHighlight(defs.message, opts.message)}`;
           }
         }
 

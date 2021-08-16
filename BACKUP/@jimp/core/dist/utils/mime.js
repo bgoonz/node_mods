@@ -1,15 +1,17 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.getExtension = exports.getType = exports.addType = void 0;
 var mimeTypes = {};
 
 var findType = function findType(extension) {
-  return Object.entries(mimeTypes).find(function (type) {
-    return type[1].includes(extension);
-  }) || [];
+  return (
+    Object.entries(mimeTypes).find(function (type) {
+      return type[1].includes(extension);
+    }) || []
+  );
 };
 
 var addType = function addType(mime, extensions) {
@@ -21,12 +23,11 @@ var addType = function addType(mime, extensions) {
  * @returns {string} mime found mime type
  */
 
-
 exports.addType = addType;
 
 var getType = function getType(path) {
-  var pathParts = path.split('/').slice(-1);
-  var extension = pathParts[pathParts.length - 1].split('.').pop();
+  var pathParts = path.split("/").slice(-1);
+  var extension = pathParts[pathParts.length - 1].split(".").pop();
   var type = findType(extension);
   return type[0];
 };
@@ -35,7 +36,6 @@ var getType = function getType(path) {
  * @param {string} type mime type to look up
  * @returns {string} extension file extension
  */
-
 
 exports.getType = getType;
 

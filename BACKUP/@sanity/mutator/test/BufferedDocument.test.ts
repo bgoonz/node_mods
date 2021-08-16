@@ -1,289 +1,307 @@
-import {test} from 'tap'
+import { test } from "tap";
 
-import BufferedDocumentTester from './util/BufferedDocumentTester'
+import BufferedDocumentTester from "./util/BufferedDocumentTester";
 
-test('simple edit cycle', (tap) => {
+test("simple edit cycle", (tap) => {
   new BufferedDocumentTester(tap, {
-    _id: 'a',
-    _rev: '1',
-    title: 'Hello',
+    _id: "a",
+    _rev: "1",
+    title: "Hello",
   })
     .hasNoLocalEdits()
-    .stage('when applying first local edit')
+    .stage("when applying first local edit")
     .localPatch({
-      id: 'a',
+      id: "a",
       set: {
-        title: 'Good bye',
+        title: "Good bye",
       },
     })
     .onMutationFired()
     .hasLocalEdits()
-    .stage('when applying second local edit')
+    .stage("when applying second local edit")
     .localPatch({
-      id: 'a',
+      id: "a",
       set: {
-        body: 'My friend',
+        body: "My friend",
       },
     })
     .onMutationFired()
     .hasLocalEdits()
-    .assertLOCAL('title', 'Good bye')
-    .assertEDGE('title', 'Hello')
-    .stage('when committing local edits')
+    .assertLOCAL("title", "Good bye")
+    .assertEDGE("title", "Hello")
+    .stage("when committing local edits")
     .commit()
     .onMutationDidNotFire()
     .hasPendingCommit()
     .hasNoLocalEdits()
-    .assertHEAD('title', 'Hello')
-    .assertEDGE('title', 'Good bye')
-    .assertLOCAL('title', 'Good bye')
-    .stage('when commit suceeds')
+    .assertHEAD("title", "Hello")
+    .assertEDGE("title", "Good bye")
+    .assertLOCAL("title", "Good bye")
+    .stage("when commit suceeds")
     .commitSucceeds()
     .onMutationDidNotFire()
-    .assertALL('title', 'Good bye')
-    .assertALL('body', 'My friend')
+    .assertALL("title", "Good bye")
+    .assertALL("body", "My friend")
     .isConsistent()
-    .end()
-})
+    .end();
+});
 
-test('simple remote edit', (tap) => {
+test("simple remote edit", (tap) => {
   new BufferedDocumentTester(tap, {
-    _id: 'a',
-    _rev: '1',
+    _id: "a",
+    _rev: "1",
     numbers: [0],
   })
     .hasNoLocalEdits()
-    .stage('when remote patch appear')
-    .remotePatch('1', '2', {
-      id: 'a',
+    .stage("when remote patch appear")
+    .remotePatch("1", "2", {
+      id: "a",
       insert: {
-        before: 'numbers[0]',
+        before: "numbers[0]",
         items: [-1],
       },
     })
     .onMutationFired()
     .didNotRebase()
     .hasNoLocalEdits()
-    .assertLOCAL('numbers', [-1, 0])
-    .assertEDGE('numbers', [-1, 0])
+    .assertLOCAL("numbers", [-1, 0])
+    .assertEDGE("numbers", [-1, 0])
     .isConsistent()
-    .end()
-})
+    .end();
+});
 
-test('simple edit cycle with remote edits causing rebase', (tap) => {
+test("simple edit cycle with remote edits causing rebase", (tap) => {
   new BufferedDocumentTester(tap, {
-    _id: 'a',
-    _rev: '1',
+    _id: "a",
+    _rev: "1",
     numbers: [0],
   })
     .hasNoLocalEdits()
-    .stage('when applying first local edit')
+    .stage("when applying first local edit")
     .localPatch({
-      id: 'a',
+      id: "a",
       insert: {
-        after: 'numbers[-1]',
+        after: "numbers[-1]",
         items: [1],
       },
     })
     .onMutationFired()
     .hasLocalEdits()
-    .assertLOCAL('numbers', [0, 1])
-    .stage('when remote patch appear')
-    .remotePatch('1', '2', {
-      id: 'a',
+    .assertLOCAL("numbers", [0, 1])
+    .stage("when remote patch appear")
+    .remotePatch("1", "2", {
+      id: "a",
       insert: {
-        before: 'numbers[0]',
+        before: "numbers[0]",
         items: [-1],
       },
     })
     .didRebase()
     .hasLocalEdits()
-    .assertLOCAL('numbers', [-1, 0, 1])
-    .assertEDGE('numbers', [-1, 0])
-    .stage('when committing local edits')
+    .assertLOCAL("numbers", [-1, 0, 1])
+    .assertEDGE("numbers", [-1, 0])
+    .stage("when committing local edits")
     .commit()
     .onMutationDidNotFire()
     .didNotRebase()
-    .assertLOCAL('numbers', [-1, 0, 1])
-    .assertEDGE('numbers', [-1, 0, 1])
-    .assertHEAD('numbers', [-1, 0])
-    .stage('when commit suceeds')
+    .assertLOCAL("numbers", [-1, 0, 1])
+    .assertEDGE("numbers", [-1, 0, 1])
+    .assertHEAD("numbers", [-1, 0])
+    .stage("when commit suceeds")
     .commitSucceeds()
     .onMutationDidNotFire()
-    .assertALL('numbers', [-1, 0, 1])
+    .assertALL("numbers", [-1, 0, 1])
     .isConsistent()
-    .end()
-})
+    .end();
+});
 
-test('document being deleted by remote', (tap) => {
+test("document being deleted by remote", (tap) => {
   new BufferedDocumentTester(tap, {
-    _id: 'a',
-    _rev: '1',
-    text: 'hello',
+    _id: "a",
+    _rev: "1",
+    text: "hello",
   })
     .hasNoLocalEdits()
-    .stage('when applying first local edit')
+    .stage("when applying first local edit")
     .localPatch({
-      id: 'a',
+      id: "a",
       set: {
-        text: 'goodbye',
+        text: "goodbye",
       },
     })
     .onMutationFired()
     .hasLocalEdits()
-    .assertLOCAL('text', 'goodbye')
-    .stage('when remote delete patch appear')
-    .remoteMutation('1', '2', {
-      delete: {id: 'a'},
+    .assertLOCAL("text", "goodbye")
+    .stage("when remote delete patch appear")
+    .remoteMutation("1", "2", {
+      delete: { id: "a" },
     })
     .didRebase()
     .onDeleteDidFire()
     .hasNoLocalEdits()
     .assertALLDeleted()
-    .stage('when local user creates document')
-    .localMutation(null, '3', {
-      create: {_id: 'a', text: 'good morning', _createdAt: '2018-01-25T15:18:12.114Z'},
+    .stage("when local user creates document")
+    .localMutation(null, "3", {
+      create: {
+        _id: "a",
+        text: "good morning",
+        _createdAt: "2018-01-25T15:18:12.114Z",
+      },
     })
     .assert((tap, bufDoc) => {
-      tap.type(bufDoc.LOCAL._createdAt, 'string', 'New documents must have a _createdAt time')
+      tap.type(
+        bufDoc.LOCAL._createdAt,
+        "string",
+        "New documents must have a _createdAt time"
+      );
     })
-    .assertLOCAL('text', 'good morning')
-    .assertLOCAL('_rev', '3')
+    .assertLOCAL("text", "good morning")
+    .assertLOCAL("_rev", "3")
     .assertHEADDeleted()
     .assertEDGEDeleted()
-    .stage('when committing local create')
+    .stage("when committing local create")
     .commit()
     .assertHEADDeleted()
-    .assertEDGE('text', 'good morning')
-    .stage('when commit succeeds')
+    .assertEDGE("text", "good morning")
+    .stage("when commit succeeds")
     .commitSucceeds()
-    .assertALL('text', 'good morning')
-    .end()
-})
+    .assertALL("text", "good morning")
+    .end();
+});
 
-test('document being created with `createOrReplace`', (tap) => {
-  const createdAt = '2018-01-25T15:18:12.114Z'
+test("document being created with `createOrReplace`", (tap) => {
+  const createdAt = "2018-01-25T15:18:12.114Z";
   new BufferedDocumentTester(tap, {
-    _id: 'a',
-    _rev: '1',
-    text: 'hello',
+    _id: "a",
+    _rev: "1",
+    text: "hello",
   })
     .hasNoLocalEdits()
-    .stage('when applying createOrReplace mutation')
-    .localMutation(null, '2', {
-      createOrReplace: {_id: 'a', text: 'good morning', _createdAt: createdAt},
+    .stage("when applying createOrReplace mutation")
+    .localMutation(null, "2", {
+      createOrReplace: {
+        _id: "a",
+        text: "good morning",
+        _createdAt: createdAt,
+      },
     })
     .onMutationFired()
     .hasLocalEdits()
-    .assertLOCAL('_createdAt', createdAt)
-    .assertLOCAL('_rev', '2')
-    .end()
-})
+    .assertLOCAL("_createdAt", createdAt)
+    .assertLOCAL("_rev", "2")
+    .end();
+});
 
-test('document being created with `createIfNotExists`', (tap) => {
-  const createdAt = '2018-01-25T15:18:12.114Z'
+test("document being created with `createIfNotExists`", (tap) => {
+  const createdAt = "2018-01-25T15:18:12.114Z";
   new BufferedDocumentTester(tap, {
-    _id: 'a',
-    _rev: '1',
-    text: 'hello',
+    _id: "a",
+    _rev: "1",
+    text: "hello",
   })
     .hasNoLocalEdits()
-    .localMutation('1', '2', {
-      delete: {id: 'a'},
+    .localMutation("1", "2", {
+      delete: { id: "a" },
     })
-    .stage('when applying createIfNotExists mutation')
-    .localMutation(null, '3', {
-      createIfNotExists: {_id: 'a', text: 'good morning', _createdAt: createdAt},
+    .stage("when applying createIfNotExists mutation")
+    .localMutation(null, "3", {
+      createIfNotExists: {
+        _id: "a",
+        text: "good morning",
+        _createdAt: createdAt,
+      },
     })
     .onMutationFired()
     .hasLocalEdits()
-    .assertLOCAL('_rev', '3')
-    .assertLOCAL('_createdAt', createdAt)
-    .end()
-})
+    .assertLOCAL("_rev", "3")
+    .assertLOCAL("_createdAt", createdAt)
+    .end();
+});
 
-test('document being created with `create`', (tap) => {
-  const createdAt = '2018-01-25T15:18:12.114Z'
+test("document being created with `create`", (tap) => {
+  const createdAt = "2018-01-25T15:18:12.114Z";
   new BufferedDocumentTester(tap, {
-    _id: 'a',
-    _rev: '1',
-    text: 'hello',
+    _id: "a",
+    _rev: "1",
+    text: "hello",
   })
     .hasNoLocalEdits()
-    .localMutation('1', '2', {
-      delete: {id: 'a'},
+    .localMutation("1", "2", {
+      delete: { id: "a" },
     })
-    .stage('when applying create mutation')
-    .localMutation(null, '2', {
-      create: {_id: 'a', text: 'good morning', _createdAt: createdAt},
+    .stage("when applying create mutation")
+    .localMutation(null, "2", {
+      create: { _id: "a", text: "good morning", _createdAt: createdAt },
     })
     .onMutationFired()
     .hasLocalEdits()
-    .assertLOCAL('_createdAt', createdAt)
-    .end()
-})
+    .assertLOCAL("_createdAt", createdAt)
+    .end();
+});
 
-test('document being deleted by local', (tap) => {
+test("document being deleted by local", (tap) => {
   new BufferedDocumentTester(tap, {
-    _id: 'a',
-    _rev: '1',
-    text: 'hello',
+    _id: "a",
+    _rev: "1",
+    text: "hello",
   })
     .hasNoLocalEdits()
-    .stage('when local deletes document')
-    .localMutation('1', '2', {
-      delete: {id: 'a'},
+    .stage("when local deletes document")
+    .localMutation("1", "2", {
+      delete: { id: "a" },
     })
     .onMutationFired()
     .onDeleteDidFire()
     .hasLocalEdits()
-    .stage('when local commits delete')
+    .stage("when local commits delete")
     .commit()
     .onMutationDidNotFire()
-    .stage('when local delete commits succeed, but the txn arrives before commit completes')
+    .stage(
+      "when local delete commits succeed, but the txn arrives before commit completes"
+    )
     .commitSucceedsButMutationArriveDuringCommitProcess()
     .onMutationDidNotFire()
     .assertALLDeleted()
-    .end()
-})
+    .end();
+});
 
-test('no-op-patch only changes _rev of target document', (tap) => {
+test("no-op-patch only changes _rev of target document", (tap) => {
   new BufferedDocumentTester(tap, {
-    _id: 'a',
-    _rev: '1',
-    text: 'hello',
+    _id: "a",
+    _rev: "1",
+    text: "hello",
   })
     .hasNoLocalEdits()
-    .stage('when local fires a no-op patch')
-    .localMutation('1', '2', {
-      id: 'a',
+    .stage("when local fires a no-op patch")
+    .localMutation("1", "2", {
+      id: "a",
       patch: {
-        unset: ['nonExistent'],
+        unset: ["nonExistent"],
       },
     })
-    .assertLOCAL('_rev', '2')
-    .assertEDGE('_rev', '1')
-    .assertHEAD('_rev', '1')
+    .assertLOCAL("_rev", "2")
+    .assertEDGE("_rev", "1")
+    .assertHEAD("_rev", "1")
     .onMutationFired()
     .hasLocalEdits()
-    .stage('when no-op patch commits')
+    .stage("when no-op patch commits")
     .commit()
-    .end()
-})
+    .end();
+});
 
-test('remotely created documents has _rev', (tap) => {
+test("remotely created documents has _rev", (tap) => {
   new BufferedDocumentTester(tap, {
-    _id: 'a',
-    _rev: '1',
+    _id: "a",
+    _rev: "1",
   })
-    .remoteMutation('1', '2', {
-      delete: {id: 'a'},
+    .remoteMutation("1", "2", {
+      delete: { id: "a" },
     })
-    .remoteMutation(null, '2', {
+    .remoteMutation(null, "2", {
       create: {
-        _id: 'a',
+        _id: "a",
       },
     })
-    .assertHEAD('_rev', '2')
-    .end()
-})
+    .assertHEAD("_rev", "2")
+    .end();
+});

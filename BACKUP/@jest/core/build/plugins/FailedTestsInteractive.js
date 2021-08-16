@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _jestWatcher() {
-  const data = require('jest-watcher');
+  const data = require("jest-watcher");
 
   _jestWatcher = function () {
     return data;
@@ -16,7 +16,7 @@ function _jestWatcher() {
 }
 
 function _FailedTestsInteractiveMode() {
-  const data = _interopRequireDefault(require('../FailedTestsInteractiveMode'));
+  const data = _interopRequireDefault(require("../FailedTestsInteractiveMode"));
 
   _FailedTestsInteractiveMode = function () {
     return data;
@@ -26,7 +26,7 @@ function _FailedTestsInteractiveMode() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -35,7 +35,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -47,17 +47,17 @@ class FailedTestsInteractivePlugin extends _jestWatcher().BaseWatchPlugin {
   constructor(...args) {
     super(...args);
 
-    _defineProperty(this, '_failedTestAssertions', void 0);
+    _defineProperty(this, "_failedTestAssertions", void 0);
 
     _defineProperty(
       this,
-      '_manager',
+      "_manager",
       new (_FailedTestsInteractiveMode().default)(this._stdout)
     );
   }
 
   apply(hooks) {
-    hooks.onTestRunComplete(results => {
+    hooks.onTestRunComplete((results) => {
       this._failedTestAssertions = this.getFailedTestAssertions(results);
       if (this._manager.isActive()) this._manager.updateWithResults(results);
     });
@@ -72,8 +72,8 @@ class FailedTestsInteractivePlugin extends _jestWatcher().BaseWatchPlugin {
       _this$_failedTestAsse.length
     ) {
       return {
-        key: 'i',
-        prompt: 'run failing tests interactively'
+        key: "i",
+        prompt: "run failing tests interactively",
       };
     }
 
@@ -87,7 +87,7 @@ class FailedTestsInteractivePlugin extends _jestWatcher().BaseWatchPlugin {
   }
 
   run(_, updateConfigAndRun) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (
         !this._failedTestAssertions ||
         this._failedTestAssertions.length === 0
@@ -96,13 +96,13 @@ class FailedTestsInteractivePlugin extends _jestWatcher().BaseWatchPlugin {
         return;
       }
 
-      this._manager.run(this._failedTestAssertions, failure => {
+      this._manager.run(this._failedTestAssertions, (failure) => {
         updateConfigAndRun({
-          mode: 'watch',
-          testNamePattern: failure ? `^${failure.fullName}$` : '',
+          mode: "watch",
+          testNamePattern: failure ? `^${failure.fullName}$` : "",
           testPathPattern:
             (failure === null || failure === void 0 ? void 0 : failure.path) ||
-            ''
+            "",
         });
 
         if (!this._manager.isActive()) {
@@ -124,12 +124,12 @@ class FailedTestsInteractivePlugin extends _jestWatcher().BaseWatchPlugin {
       return failedTestPaths;
     }
 
-    results.testResults.forEach(testResult => {
-      testResult.testResults.forEach(result => {
-        if (result.status === 'failed') {
+    results.testResults.forEach((testResult) => {
+      testResult.testResults.forEach((result) => {
+        if (result.status === "failed") {
           failedTestPaths.push({
             fullName: result.fullName,
-            path: testResult.testFilePath
+            path: testResult.testFilePath,
           });
         }
       });

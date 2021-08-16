@@ -1,13 +1,13 @@
-import defaultConfig from '../default-config';
+import defaultConfig from "../default-config";
 
-import { mergeData } from './merge-data';
+import { mergeData } from "./merge-data";
 
 const stipFromDeps = (data, config, root = true) => {
   if (Array.isArray(data)) {
-    return data.map(v => stipFromDeps(v, config));
+    return data.map((v) => stipFromDeps(v, config));
   }
 
-  if (data !== null && typeof data === 'object') {
+  if (data !== null && typeof data === "object") {
     if (config.shouldObjectBeNormalized(data) && root) {
       return `@@${config.getNormalisationObjectKey(data)}`;
     }
@@ -25,7 +25,7 @@ export const getDependencies = (
   data,
   config = defaultConfig,
   usedKeys,
-  path = '',
+  path = ""
 ) => {
   usedKeys = usedKeys || {};
 
@@ -36,13 +36,13 @@ export const getDependencies = (
           ...prev,
           ...getDependencies(current, config, usedKeys, path)[0],
         ],
-        [],
+        []
       ),
       usedKeys,
     ];
   }
 
-  if (data !== null && typeof data === 'object') {
+  if (data !== null && typeof data === "object") {
     if (config.shouldObjectBeNormalized(data)) {
       usedKeys[path] = Object.keys(data);
     }
@@ -53,7 +53,7 @@ export const getDependencies = (
           ...prev,
           ...getDependencies(v, config, usedKeys, `${path}.${k}`)[0],
         ],
-        config.shouldObjectBeNormalized(data) ? [data] : [],
+        config.shouldObjectBeNormalized(data) ? [data] : []
       ),
       usedKeys,
     ];

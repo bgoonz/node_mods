@@ -1,5 +1,5 @@
-import { GraphQLObjectType, SelectionSetNode, FieldNode } from 'graphql';
-import { GraphQLExecutionContext } from './Interfaces';
+import { GraphQLObjectType, SelectionSetNode, FieldNode } from "graphql";
+import { GraphQLExecutionContext } from "./Interfaces";
 /**
  * Given a selectionSet, adds all of the fields in that selection to
  * the passed in map of fields, and returns it at the end.
@@ -10,4 +10,10 @@ import { GraphQLExecutionContext } from './Interfaces';
  *
  * @internal
  */
-export declare function collectFields(exeContext: GraphQLExecutionContext, runtimeType: GraphQLObjectType, selectionSet: SelectionSetNode, fields: Record<string, Array<FieldNode>>, visitedFragmentNames: Record<string, boolean>): Record<string, Array<FieldNode>>;
+export declare function collectFields(
+  exeContext: GraphQLExecutionContext,
+  runtimeType: GraphQLObjectType,
+  selectionSet: SelectionSetNode,
+  fields: Record<string, Array<FieldNode>>,
+  visitedFragmentNames: Record<string, boolean>
+): Record<string, Array<FieldNode>>;

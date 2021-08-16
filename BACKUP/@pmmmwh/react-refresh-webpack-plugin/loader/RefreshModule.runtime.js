@@ -12,7 +12,10 @@
  */
 module.exports = function () {
   const currentExports = __react_refresh_utils__.getModuleExports(module.id);
-  __react_refresh_utils__.registerExportsForReactRefresh(currentExports, module.id);
+  __react_refresh_utils__.registerExportsForReactRefresh(
+    currentExports,
+    module.id
+  );
 
   if (module.hot) {
     const isHotUpdate = !!module.hot.data;
@@ -39,13 +42,16 @@ module.exports = function () {
          */
         function hotErrorHandler(error) {
           if (
-            typeof __react_refresh_error_overlay__ !== 'undefined' &&
+            typeof __react_refresh_error_overlay__ !== "undefined" &&
             __react_refresh_error_overlay__
           ) {
             __react_refresh_error_overlay__.handleRuntimeError(error);
           }
 
-          if (typeof __react_refresh_test__ !== 'undefined' && __react_refresh_test__) {
+          if (
+            typeof __react_refresh_test__ !== "undefined" &&
+            __react_refresh_test__
+          ) {
             if (window.onHotAcceptError) {
               window.onHotAcceptError(error.message);
             }
@@ -58,7 +64,10 @@ module.exports = function () {
       if (isHotUpdate) {
         if (
           __react_refresh_utils__.isReactRefreshBoundary(prevExports) &&
-          __react_refresh_utils__.shouldInvalidateReactRefreshBoundary(prevExports, currentExports)
+          __react_refresh_utils__.shouldInvalidateReactRefreshBoundary(
+            prevExports,
+            currentExports
+          )
         ) {
           module.hot.invalidate();
         } else {
@@ -69,7 +78,7 @@ module.exports = function () {
              */
             function updateCallback() {
               if (
-                typeof __react_refresh_error_overlay__ !== 'undefined' &&
+                typeof __react_refresh_error_overlay__ !== "undefined" &&
                 __react_refresh_error_overlay__
               ) {
                 __react_refresh_error_overlay__.clearRuntimeErrors();
@@ -79,7 +88,10 @@ module.exports = function () {
         }
       }
     } else {
-      if (isHotUpdate && __react_refresh_utils__.isReactRefreshBoundary(prevExports)) {
+      if (
+        isHotUpdate &&
+        __react_refresh_utils__.isReactRefreshBoundary(prevExports)
+      ) {
         module.hot.invalidate();
       }
     }

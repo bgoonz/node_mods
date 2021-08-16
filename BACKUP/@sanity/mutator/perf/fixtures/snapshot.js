@@ -1,65 +1,68 @@
 module.exports = {
-  _createdAt: '2018-09-10T14:53:55Z',
-  _id: 'drafts.5b559770-af25-4475-981e-376c6847638d',
-  _rev: 'yk9has-9e5-zk5-xqd-pxnx8wncc',
-  _type: 'recursiveObjectTest',
-  _updatedAt: '2018-09-10T16:45:03Z',
+  _createdAt: "2018-09-10T14:53:55Z",
+  _id: "drafts.5b559770-af25-4475-981e-376c6847638d",
+  _rev: "yk9has-9e5-zk5-xqd-pxnx8wncc",
+  _type: "recursiveObjectTest",
+  _updatedAt: "2018-09-10T16:45:03Z",
   recursiveObject: {
-    _type: 'recursiveObject',
-    first: 'dskfsdjafjsdfhasjkdfhasjkfhaskdjfhsadklfhasd',
+    _type: "recursiveObject",
+    first: "dskfsdjafjsdfhasjkdfhasjkfhaskdjfhsadklfhasd",
     myself: {
-      _type: 'recursiveObject',
-      first: 'ss',
+      _type: "recursiveObject",
+      first: "ss",
       myself: {
-        _type: 'recursiveObject',
-        first: 'jasdfdsahfu sahdfusiad fhiusadfhiosauhdf soiauhf',
+        _type: "recursiveObject",
+        first: "jasdfdsahfu sahdfusiad fhiusadfhiosauhdf soiauhf",
         myself: {
-          _type: 'recursiveObject',
-          first: 'jsadfhadskjfhakjsfhkjsahfkjhaskdfjhadksjfhsadkjfh',
+          _type: "recursiveObject",
+          first: "jsadfhadskjfhakjsfhkjsahfkjhaskdfjhadksjfhsadkjfh",
           myself: {
-            _type: 'recursiveObject',
+            _type: "recursiveObject",
             myself: {
-              _type: 'recursiveObject',
+              _type: "recursiveObject",
               myself: {
-                _type: 'recursiveObject',
-                first: 'siduhs duafhsaiudfhas iufhsaiufhdsiufhsaiufhsadifu',
+                _type: "recursiveObject",
+                first: "siduhs duafhsaiudfhas iufhsaiufhdsiufhsaiufhsadifu",
                 myself: {
-                  _type: 'recursiveObject',
-                  first: 'hhhhhhhjguh iouh ouh hoh oh ohiuo hoiuh oiuh iouh iohoiu hiou',
+                  _type: "recursiveObject",
+                  first:
+                    "hhhhhhhjguh iouh ouh hoh oh ohiuo hoiuh oiuh iouh iohoiu hiou",
                   myself: {
-                    _type: 'recursiveObject',
-                    first: 'dfhdsfiu hsadfui hasfdiouh safdiuhdsf uihsafiouhads fuasfd',
+                    _type: "recursiveObject",
+                    first:
+                      "dfhdsfiu hsadfui hasfdiouh safdiuhdsf uihsafiouhads fuasfd",
                     myself: {
-                      _type: 'recursiveObject',
+                      _type: "recursiveObject",
                       first:
-                        'siudofhad isuofhaisufhsaidufhsiufhaoisufhosaufhuidsafhiusadhfuidshfuasdhfoiuashfiusadhfuasdhfaisuodfhiusfhsoidaufh',
+                        "siudofhad isuofhaisufhsaidufhsiufhaoisufhosaufhuidsafhiusadhfuidshfuasdhfoiuashfiusadhfuasdhfaisuodfhiusfhsoidaufh",
                       myself: {
-                        _type: 'recursiveObject',
-                        first: 'usyafguyadsfuyadsgfyusdagfsdoiaufhadiufhiuadshf',
+                        _type: "recursiveObject",
+                        first:
+                          "usyafguyadsfuyadsgfyusdagfsdoiaufhadiufhiuadshf",
                         myself: {
-                          _type: 'recursiveObject',
-                          first: 'ksadfjasfhjashfjkashfjkashfasdf',
+                          _type: "recursiveObject",
+                          first: "ksadfjasfhjashfjkashfjkashfasdf",
                           myself: {
-                            _type: 'recursiveObject',
-                            second: 'dsdfsadfsafsadfasfaskdfhkjdsahfkjashdf',
+                            _type: "recursiveObject",
+                            second: "dsdfsadfsafsadfasfaskdfhkjdsahfkjashdf",
                           },
                         },
-                        second: 'jdshfaisdhuifhsaudihfiudos',
+                        second: "jdshfaisdhuifhsaudihfiudos",
                       },
                       second:
-                        'lsijadfha djksdaf jksdfhaskjd fhaskjfhaskjfhaskjfhaskjfhasjkfhisufhiuasd fiusahf',
+                        "lsijadfha djksdaf jksdfhaskjd fhaskjfhaskjfhaskjfhaskjfhasjkfhisufhiuasd fiusahf",
                     },
-                    second: 'a',
+                    second: "a",
                   },
-                  second: 'øaslkdfjaødsklfjsadlkfjaøslkdf',
+                  second: "øaslkdfjaødsklfjsadlkfjaøslkdf",
                 },
               },
-              second: 'sdafdasiofhasuifhasuifhaiusfhiusahfisdufhui',
+              second: "sdafdasiofhasuifhasuifhaiusfhiusahfisdufhui",
             },
           },
         },
-        second: 'oasidfhasifasufhuiasfh aisoufhasiuof hasiufhsadfiuh',
+        second: "oasidfhasifasufhuiasfh aisoufhasiuof hasiufhsadfiuh",
       },
     },
   },
-}
+};

@@ -5,13 +5,15 @@ var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWild
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.parseBitmap = parseBitmap;
 exports.getBuffer = getBuffer;
 exports.getBufferAsync = getBufferAsync;
 
-var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+var _slicedToArray2 = _interopRequireDefault(
+  require("@babel/runtime/helpers/slicedToArray")
+);
 
 var _fileType = _interopRequireDefault(require("file-type"));
 
@@ -49,9 +51,8 @@ function getMIMEFromBuffer(buffer, path) {
  *          in particular 1 if orientation tag is missing
  */
 
-
 function getExifOrientation(img) {
-  return img._exif && img._exif.tags && img._exif.tags.Orientation || 1;
+  return (img._exif && img._exif.tags && img._exif.tags.Orientation) || 1;
 }
 /**
  * Returns a function which translates EXIF-rotated coordinates into
@@ -62,7 +63,6 @@ function getExifOrientation(img) {
  * @param img {Jimp} a Jimp image object
  * @returns {function} transformation function for transformBitmap().
  */
-
 
 function getExifOrientationTransformation(img) {
   var w = img.getWidth();
@@ -135,7 +135,6 @@ function getExifOrientationTransformation(img) {
  *        `function(new_x, new_y) { return [src_x, src_y] }`.
  */
 
-
 function transformBitmap(img, width, height, transformation) {
   // Underscore-prefixed values are related to the source bitmap
   // Their counterparts with no prefix are related to the target bitmap
@@ -146,13 +145,13 @@ function transformBitmap(img, width, height, transformation) {
   for (var x = 0; x < width; x++) {
     for (var y = 0; y < height; y++) {
       var _transformation = transformation(x, y),
-          _transformation2 = (0, _slicedToArray2["default"])(_transformation, 2),
-          _x = _transformation2[0],
-          _y = _transformation2[1];
+        _transformation2 = (0, _slicedToArray2["default"])(_transformation, 2),
+        _x = _transformation2[0],
+        _y = _transformation2[1];
 
-      var idx = width * y + x << 2;
+      var idx = (width * y + x) << 2;
 
-      var _idx = _width * _y + _x << 2;
+      var _idx = (_width * _y + _x) << 2;
 
       var pixel = _data.readUInt32BE(_idx);
 
@@ -169,7 +168,6 @@ function transformBitmap(img, width, height, transformation) {
  * @param img {Jimp} a Jimp image object
  */
 
-
 function exifRotate(img) {
   if (getExifOrientation(img) < 2) return;
   var transformation = getExifOrientationTransformation(img);
@@ -179,12 +177,11 @@ function exifRotate(img) {
   transformBitmap(img, newWidth, newHeight, transformation);
 } // parses a bitmap from the constructor to the JIMP bitmap property
 
-
 function parseBitmap(data, path, cb) {
   var mime = getMIMEFromBuffer(data, path);
 
-  if (typeof mime !== 'string') {
-    return cb(new Error('Could not find MIME for Buffer <' + path + '>'));
+  if (typeof mime !== "string") {
+    return cb(new Error("Could not find MIME for Buffer <" + path + ">"));
   }
 
   this._originalMime = mime.toLowerCase();
@@ -195,7 +192,11 @@ function parseBitmap(data, path, cb) {
     if (this.constructor.decoders[_mime]) {
       this.bitmap = this.constructor.decoders[_mime](data);
     } else {
-      return _utils.throwError.call(this, 'Unsupported MIME type: ' + _mime, cb);
+      return _utils.throwError.call(
+        this,
+        "Unsupported MIME type: " + _mime,
+        cb
+      );
     }
   } catch (error) {
     return cb.call(this, error, this);
@@ -213,7 +214,11 @@ function parseBitmap(data, path, cb) {
 }
 
 function compositeBitmapOverBackground(Jimp, image) {
-  return new Jimp(image.bitmap.width, image.bitmap.height, image._background).composite(image, 0, 0).bitmap;
+  return new Jimp(
+    image.bitmap.width,
+    image.bitmap.height,
+    image._background
+  ).composite(image, 0, 0).bitmap;
 }
 /**
  * Converts the image to a buffer
@@ -222,19 +227,18 @@ function compositeBitmapOverBackground(Jimp, image) {
  * @returns {Jimp} this for chaining of methods
  */
 
-
 function getBuffer(mime, cb) {
   if (mime === constants.AUTO) {
     // allow auto MIME detection
     mime = this.getMIME();
   }
 
-  if (typeof mime !== 'string') {
-    return _utils.throwError.call(this, 'mime must be a string', cb);
+  if (typeof mime !== "string") {
+    return _utils.throwError.call(this, "mime must be a string", cb);
   }
 
-  if (typeof cb !== 'function') {
-    return _utils.throwError.call(this, 'cb must be a function', cb);
+  if (typeof cb !== "function") {
+    return _utils.throwError.call(this, "cb must be a function", cb);
   }
 
   mime = mime.toLowerCase();
@@ -244,14 +248,17 @@ function getBuffer(mime, cb) {
   } else {
     // when format doesn't support alpha
     // composite onto a new image so that the background shows through alpha channels
-    this.bitmap.data = compositeBitmapOverBackground(this.constructor, this).data;
+    this.bitmap.data = compositeBitmapOverBackground(
+      this.constructor,
+      this
+    ).data;
   }
 
   if (this.constructor.encoders[mime]) {
     var buffer = this.constructor.encoders[mime](this);
     cb.call(this, null, buffer);
   } else {
-    cb.call(this, 'Unsupported MIME type: ' + mime);
+    cb.call(this, "Unsupported MIME type: " + mime);
   }
 
   return this;

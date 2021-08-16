@@ -1,4 +1,4 @@
-import defaultConfig from '../default-config';
+import defaultConfig from "../default-config";
 import {
   success,
   error,
@@ -7,13 +7,13 @@ import {
   getRequestActionFromResponse,
   isErrorAction,
   isSuccessAction,
-} from '../actions';
-import { getQuery } from '../selectors';
-import { normalize, mergeData } from '../normalizers';
+} from "../actions";
+import { getQuery } from "../selectors";
+import { normalize, mergeData } from "../normalizers";
 
-import updateData from './update-data';
+import updateData from "./update-data";
 
-const getInitialQuery = normalized => ({
+const getInitialQuery = (normalized) => ({
   data: null,
   pending: 0,
   error: null,
@@ -23,7 +23,7 @@ const getInitialQuery = normalized => ({
   usedKeys: normalized ? {} : null,
 });
 
-const getDataFromResponseAction = action =>
+const getDataFromResponseAction = (action) =>
   action.payload ? action.payload.data : action.response.data;
 
 const shouldBeNormalized = (action, config) =>
@@ -49,11 +49,11 @@ const queryReducer = (state, action, actionType, config, normalizedData) => {
                 uploadProgress: {},
               },
             },
-            { type: actionType },
+            { type: actionType }
           ).data
         : state.data,
       action,
-      mutationConfig,
+      mutationConfig
     );
     return data === state.data ? state : { ...state, data };
   }
@@ -140,7 +140,7 @@ const updateNormalizedData = (normalizedData, action, config) => {
   ) {
     const [, newNormalizedData] = normalize(
       getDataFromResponseAction(action),
-      config,
+      config
     );
     return mergeData(normalizedData, newNormalizedData);
   }
@@ -157,7 +157,7 @@ export default (state, action, config = defaultConfig) => {
   let normalizedData = updateNormalizedData(
     state.normalizedData,
     action,
-    config,
+    config
   );
 
   if (action.meta?.mutations) {
@@ -165,14 +165,14 @@ export default (state, action, config = defaultConfig) => {
       queries: {
         ...state.queries,
         ...Object.keys(action.meta.mutations)
-          .filter(actionType => !!state.queries[actionType])
+          .filter((actionType) => !!state.queries[actionType])
           .reduce((prev, actionType) => {
             const updatedQuery = queryReducer(
               state.queries[actionType],
               action,
               actionType,
               config,
-              normalizedData,
+              normalizedData
             );
 
             if (
@@ -181,7 +181,7 @@ export default (state, action, config = defaultConfig) => {
             ) {
               const [newdata, newNormalizedData, usedKeys] = normalize(
                 updatedQuery.data,
-                config,
+                config
               );
               normalizedData = mergeData(normalizedData, newNormalizedData);
               prev[actionType] = { ...updatedQuery, data: newdata, usedKeys };
@@ -206,7 +206,7 @@ export default (state, action, config = defaultConfig) => {
       state.queries[queryType],
       action,
       queryActionType,
-      config,
+      config
     );
 
     if (updatedQuery === undefined) {
@@ -227,7 +227,7 @@ export default (state, action, config = defaultConfig) => {
     ) {
       const [data, newNormalizedData, usedKeys] = normalize(
         updatedQuery.data,
-        config,
+        config
       );
 
       return {

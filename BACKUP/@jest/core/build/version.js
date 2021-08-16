@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = getVersion;
 
@@ -12,7 +12,7 @@ exports.default = getVersion;
  * LICENSE file in the root directory of this source tree.
  */
 // Cannot be `import` as it's not under TS root dir
-const {version: VERSION} = require('../package.json');
+const { version: VERSION } = require("../package.json");
 
 function getVersion() {
   return VERSION;

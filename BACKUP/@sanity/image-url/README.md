@@ -29,11 +29,7 @@ function urlFor(source) {
 Then you can use the handy builder syntax to generate your urls:
 
 ```js
-<img
-  src={urlFor(author.image)
-    .width(200)
-    .url()}
-/>
+<img src={urlFor(author.image).width(200).url()} />
 ```
 
 This will ensure that the author image is alway 200 pixels wide, automatically applying any crop specified by the editor and cropping towards the hot-spot she drew. You can specify both width and height like this:

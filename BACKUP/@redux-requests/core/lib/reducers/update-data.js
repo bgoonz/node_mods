@@ -6,7 +6,7 @@ exports["default"] = void 0;
 var _actions = require("../actions");
 
 var getDataUpdater = function getDataUpdater(mutationConfig) {
-  if (typeof mutationConfig === 'function') {
+  if (typeof mutationConfig === "function") {
     return mutationConfig;
   } else if (mutationConfig.updateData) {
     return mutationConfig.updateData;
@@ -19,9 +19,13 @@ var _default = function _default(data, action, mutationConfig) {
   if ((0, _actions.isResponseAction)(action)) {
     if ((0, _actions.isSuccessAction)(action)) {
       var dataUpdater = getDataUpdater(mutationConfig);
-      return dataUpdater ? dataUpdater(data, action.payload ? action.payload.data : action.response.data) : data;
+      return dataUpdater
+        ? dataUpdater(
+            data,
+            action.payload ? action.payload.data : action.response.data
+          )
+        : data;
     } // error or abort case
-
 
     return mutationConfig.revertData ? mutationConfig.revertData(data) : data;
   }

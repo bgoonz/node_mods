@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
@@ -11,7 +11,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -27,7 +27,7 @@ function _defineProperty(obj, key, value) {
  */
 class FailedTestsCache {
   constructor() {
-    _defineProperty(this, '_enabledTestsMap', void 0);
+    _defineProperty(this, "_enabledTestsMap", void 0);
   }
 
   filterTests(tests) {
@@ -37,15 +37,15 @@ class FailedTestsCache {
       return tests;
     }
 
-    return tests.filter(testResult => enabledTestsMap[testResult.path]);
+    return tests.filter((testResult) => enabledTestsMap[testResult.path]);
   }
 
   setTestResults(testResults) {
     this._enabledTestsMap = (testResults || [])
-      .filter(testResult => testResult.numFailingTests)
+      .filter((testResult) => testResult.numFailingTests)
       .reduce((suiteMap, testResult) => {
         suiteMap[testResult.testFilePath] = testResult.testResults
-          .filter(test => test.status === 'failed')
+          .filter((test) => test.status === "failed")
           .reduce((testMap, test) => {
             testMap[test.fullName] = true;
             return testMap;

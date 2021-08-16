@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,7 +16,7 @@ function _chalk() {
 }
 
 function _console() {
-  const data = require('@jest/console');
+  const data = require("@jest/console");
 
   _console = function () {
     return data;
@@ -26,7 +26,7 @@ function _console() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -35,16 +35,16 @@ function _jestUtil() {
   return data;
 }
 
-var _BaseReporter = _interopRequireDefault(require('./BaseReporter'));
+var _BaseReporter = _interopRequireDefault(require("./BaseReporter"));
 
-var _Status = _interopRequireDefault(require('./Status'));
+var _Status = _interopRequireDefault(require("./Status"));
 
-var _getResultHeader = _interopRequireDefault(require('./getResultHeader'));
+var _getResultHeader = _interopRequireDefault(require("./getResultHeader"));
 
-var _getSnapshotStatus = _interopRequireDefault(require('./getSnapshotStatus'));
+var _getSnapshotStatus = _interopRequireDefault(require("./getSnapshotStatus"));
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -53,7 +53,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -61,27 +61,27 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-const TITLE_BULLET = _chalk().default.bold('\u25cf ');
+const TITLE_BULLET = _chalk().default.bold("\u25cf ");
 
 class DefaultReporter extends _BaseReporter.default {
   // ANSI clear sequence for the last printed status
   constructor(globalConfig) {
     super();
 
-    _defineProperty(this, '_clear', void 0);
+    _defineProperty(this, "_clear", void 0);
 
-    _defineProperty(this, '_err', void 0);
+    _defineProperty(this, "_err", void 0);
 
-    _defineProperty(this, '_globalConfig', void 0);
+    _defineProperty(this, "_globalConfig", void 0);
 
-    _defineProperty(this, '_out', void 0);
+    _defineProperty(this, "_out", void 0);
 
-    _defineProperty(this, '_status', void 0);
+    _defineProperty(this, "_status", void 0);
 
-    _defineProperty(this, '_bufferedOutput', void 0);
+    _defineProperty(this, "_bufferedOutput", void 0);
 
     this._globalConfig = globalConfig;
-    this._clear = '';
+    this._clear = "";
     this._out = process.stdout.write.bind(process.stdout);
     this._err = process.stderr.write.bind(process.stderr);
     this._status = new _Status.default();
@@ -104,7 +104,7 @@ class DefaultReporter extends _BaseReporter.default {
     let timeout = null;
 
     const flushBufferedOutput = () => {
-      const string = buffer.join('');
+      const string = buffer.join("");
       buffer = []; // This is to avoid conflicts between random output and status text
 
       this._clearStatus();
@@ -136,7 +136,7 @@ class DefaultReporter extends _BaseReporter.default {
       }
     };
 
-    stream.write = chunk => {
+    stream.write = (chunk) => {
       buffer.push(chunk);
       debouncedFlush();
       return true;
@@ -160,7 +160,7 @@ class DefaultReporter extends _BaseReporter.default {
   }
 
   _printStatus() {
-    const {content, clear} = this._status.get();
+    const { content, clear } = this._status.get();
 
     this._clear = clear;
 
@@ -223,9 +223,9 @@ class DefaultReporter extends _BaseReporter.default {
 
     if (result.console) {
       this.log(
-        '  ' +
+        "  " +
           TITLE_BULLET +
-          'Console\n\n' +
+          "Console\n\n" +
           (0, _console().getConsoleOutput)(
             result.console,
             config,
@@ -240,7 +240,7 @@ class DefaultReporter extends _BaseReporter.default {
       this.log(result.failureMessage);
     }
 
-    const didUpdate = this._globalConfig.updateSnapshot === 'all';
+    const didUpdate = this._globalConfig.updateSnapshot === "all";
     const snapshotStatuses = (0, _getSnapshotStatus.default)(
       result.snapshot,
       didUpdate
@@ -251,4 +251,4 @@ class DefaultReporter extends _BaseReporter.default {
 
 exports.default = DefaultReporter;
 
-_defineProperty(DefaultReporter, 'filename', __filename);
+_defineProperty(DefaultReporter, "filename", __filename);

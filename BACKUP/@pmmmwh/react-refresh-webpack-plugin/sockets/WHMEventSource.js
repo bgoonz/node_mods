@@ -3,7 +3,7 @@
  *
  * [Ref](https://github.com/webpack-contrib/webpack-hot-middleware/blob/cb29abb9dde435a1ac8e9b19f82d7d36b1093198/client.js#L152)
  */
-const singletonKey = '__webpack_hot_middleware_reporter__';
+const singletonKey = "__webpack_hot_middleware_reporter__";
 
 /**
  * Initializes a socket server for HMR for webpack-hot-middleware.
@@ -11,7 +11,8 @@ const singletonKey = '__webpack_hot_middleware_reporter__';
  * @returns {void}
  */
 function initWHMEventSource(messageHandler) {
-  const client = window[singletonKey] || require('webpack-hot-middleware/client');
+  const client =
+    window[singletonKey] || require("webpack-hot-middleware/client");
 
   client.useCustomOverlay({
     showProblems: function showProblems(type, data) {
@@ -23,7 +24,7 @@ function initWHMEventSource(messageHandler) {
       messageHandler(error);
     },
     clear: function clear() {
-      messageHandler({ type: 'ok' });
+      messageHandler({ type: "ok" });
     },
   });
 }

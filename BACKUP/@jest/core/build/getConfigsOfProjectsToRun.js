@@ -1,16 +1,16 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = getConfigsOfProjectsToRun;
 
 var _getProjectDisplayName = _interopRequireDefault(
-  require('./getProjectDisplayName')
+  require("./getProjectDisplayName")
 );
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -21,7 +21,7 @@ function _interopRequireDefault(obj) {
  */
 function getConfigsOfProjectsToRun(namesOfProjectsToRun, projectConfigs) {
   const setOfProjectsToRun = new Set(namesOfProjectsToRun);
-  return projectConfigs.filter(config => {
+  return projectConfigs.filter((config) => {
     const name = (0, _getProjectDisplayName.default)(config);
     return name && setOfProjectsToRun.has(name);
   });

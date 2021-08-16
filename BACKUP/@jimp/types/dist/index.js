@@ -3,7 +3,7 @@
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
@@ -20,7 +20,13 @@ var _tiff = _interopRequireDefault(require("@jimp/tiff"));
 var _gif = _interopRequireDefault(require("@jimp/gif"));
 
 var _default = function _default() {
-  return (0, _timm.mergeDeep)((0, _jpeg["default"])(), (0, _png["default"])(), (0, _bmp["default"])(), (0, _tiff["default"])(), (0, _gif["default"])());
+  return (0, _timm.mergeDeep)(
+    (0, _jpeg["default"])(),
+    (0, _png["default"])(),
+    (0, _bmp["default"])(),
+    (0, _tiff["default"])(),
+    (0, _gif["default"])()
+  );
 };
 
 exports["default"] = _default;

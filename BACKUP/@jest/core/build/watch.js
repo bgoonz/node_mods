@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = watch;
 
 function path() {
-  const data = _interopRequireWildcard(require('path'));
+  const data = _interopRequireWildcard(require("path"));
 
   path = function () {
     return data;
@@ -16,7 +16,7 @@ function path() {
 }
 
 function _ansiEscapes() {
-  const data = _interopRequireDefault(require('ansi-escapes'));
+  const data = _interopRequireDefault(require("ansi-escapes"));
 
   _ansiEscapes = function () {
     return data;
@@ -26,7 +26,7 @@ function _ansiEscapes() {
 }
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -36,7 +36,7 @@ function _chalk() {
 }
 
 function _exit() {
-  const data = _interopRequireDefault(require('exit'));
+  const data = _interopRequireDefault(require("exit"));
 
   _exit = function () {
     return data;
@@ -46,7 +46,7 @@ function _exit() {
 }
 
 function _slash() {
-  const data = _interopRequireDefault(require('slash'));
+  const data = _interopRequireDefault(require("slash"));
 
   _slash = function () {
     return data;
@@ -56,7 +56,7 @@ function _slash() {
 }
 
 function _jestMessageUtil() {
-  const data = require('jest-message-util');
+  const data = require("jest-message-util");
 
   _jestMessageUtil = function () {
     return data;
@@ -66,7 +66,7 @@ function _jestMessageUtil() {
 }
 
 function _jestResolve() {
-  const data = _interopRequireDefault(require('jest-resolve'));
+  const data = _interopRequireDefault(require("jest-resolve"));
 
   _jestResolve = function () {
     return data;
@@ -76,7 +76,7 @@ function _jestResolve() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -86,7 +86,7 @@ function _jestUtil() {
 }
 
 function _jestValidate() {
-  const data = require('jest-validate');
+  const data = require("jest-validate");
 
   _jestValidate = function () {
     return data;
@@ -96,7 +96,7 @@ function _jestValidate() {
 }
 
 function _jestWatcher() {
-  const data = require('jest-watcher');
+  const data = require("jest-watcher");
 
   _jestWatcher = function () {
     return data;
@@ -105,60 +105,60 @@ function _jestWatcher() {
   return data;
 }
 
-var _FailedTestsCache = _interopRequireDefault(require('./FailedTestsCache'));
+var _FailedTestsCache = _interopRequireDefault(require("./FailedTestsCache"));
 
-var _SearchSource = _interopRequireDefault(require('./SearchSource'));
+var _SearchSource = _interopRequireDefault(require("./SearchSource"));
 
-var _TestWatcher = _interopRequireDefault(require('./TestWatcher'));
+var _TestWatcher = _interopRequireDefault(require("./TestWatcher"));
 
 var _getChangedFilesPromise = _interopRequireDefault(
-  require('./getChangedFilesPromise')
+  require("./getChangedFilesPromise")
 );
 
 var _activeFiltersMessage = _interopRequireDefault(
-  require('./lib/activeFiltersMessage')
+  require("./lib/activeFiltersMessage")
 );
 
-var _createContext = _interopRequireDefault(require('./lib/createContext'));
+var _createContext = _interopRequireDefault(require("./lib/createContext"));
 
-var _isValidPath = _interopRequireDefault(require('./lib/isValidPath'));
+var _isValidPath = _interopRequireDefault(require("./lib/isValidPath"));
 
 var _updateGlobalConfig = _interopRequireDefault(
-  require('./lib/updateGlobalConfig')
+  require("./lib/updateGlobalConfig")
 );
 
-var _watchPluginsHelpers = require('./lib/watchPluginsHelpers');
+var _watchPluginsHelpers = require("./lib/watchPluginsHelpers");
 
 var _FailedTestsInteractive = _interopRequireDefault(
-  require('./plugins/FailedTestsInteractive')
+  require("./plugins/FailedTestsInteractive")
 );
 
-var _Quit = _interopRequireDefault(require('./plugins/Quit'));
+var _Quit = _interopRequireDefault(require("./plugins/Quit"));
 
 var _TestNamePattern = _interopRequireDefault(
-  require('./plugins/TestNamePattern')
+  require("./plugins/TestNamePattern")
 );
 
 var _TestPathPattern = _interopRequireDefault(
-  require('./plugins/TestPathPattern')
+  require("./plugins/TestPathPattern")
 );
 
 var _UpdateSnapshots = _interopRequireDefault(
-  require('./plugins/UpdateSnapshots')
+  require("./plugins/UpdateSnapshots")
 );
 
 var _UpdateSnapshotsInteractive = _interopRequireDefault(
-  require('./plugins/UpdateSnapshotsInteractive')
+  require("./plugins/UpdateSnapshotsInteractive")
 );
 
-var _runJest = _interopRequireDefault(require('./runJest'));
+var _runJest = _interopRequireDefault(require("./runJest"));
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -170,8 +170,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -181,7 +181,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -205,7 +205,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const {print: preRunMessagePrint} = _jestUtil().preRunMessage;
+const { print: preRunMessagePrint } = _jestUtil().preRunMessage;
 
 let hasExitListener = false;
 const INTERNAL_PLUGINS = [
@@ -214,29 +214,29 @@ const INTERNAL_PLUGINS = [
   _TestNamePattern.default,
   _UpdateSnapshots.default,
   _UpdateSnapshotsInteractive.default,
-  _Quit.default
+  _Quit.default,
 ];
 const RESERVED_KEY_PLUGINS = new Map([
   [
     _UpdateSnapshots.default,
     {
-      forbiddenOverwriteMessage: 'updating snapshots',
-      key: 'u'
-    }
+      forbiddenOverwriteMessage: "updating snapshots",
+      key: "u",
+    },
   ],
   [
     _UpdateSnapshotsInteractive.default,
     {
-      forbiddenOverwriteMessage: 'updating snapshots interactively',
-      key: 'i'
-    }
+      forbiddenOverwriteMessage: "updating snapshots interactively",
+      key: "i",
+    },
   ],
   [
     _Quit.default,
     {
-      forbiddenOverwriteMessage: 'quitting watch mode'
-    }
-  ]
+      forbiddenOverwriteMessage: "quitting watch mode",
+    },
+  ],
 ]);
 
 async function watch(
@@ -253,8 +253,8 @@ async function watch(
   let globalConfig = initialGlobalConfig;
   let activePlugin;
   globalConfig = (0, _updateGlobalConfig.default)(globalConfig, {
-    mode: globalConfig.watch ? 'watch' : 'watchAll',
-    passWithNoTests: true
+    mode: globalConfig.watch ? "watch" : "watchAll",
+    passWithNoTests: true,
   });
 
   const updateConfigAndRun = ({
@@ -275,7 +275,7 @@ async function watch(
     testNamePattern,
     testPathPattern,
     updateSnapshot,
-    verbose
+    verbose,
   } = {}) => {
     const previousUpdateSnapshot = globalConfig.updateSnapshot;
     globalConfig = (0, _updateGlobalConfig.default)(globalConfig, {
@@ -296,24 +296,24 @@ async function watch(
       testNamePattern,
       testPathPattern,
       updateSnapshot,
-      verbose
+      verbose,
     });
     startRun(globalConfig);
     globalConfig = (0, _updateGlobalConfig.default)(globalConfig, {
       // updateSnapshot is not sticky after a run.
       updateSnapshot:
-        previousUpdateSnapshot === 'all' ? 'none' : previousUpdateSnapshot
+        previousUpdateSnapshot === "all" ? "none" : previousUpdateSnapshot,
     });
   };
 
   const watchPlugins = INTERNAL_PLUGINS.map(
-    InternalPlugin =>
+    (InternalPlugin) =>
       new InternalPlugin({
         stdin,
-        stdout: outputStream
+        stdout: outputStream,
       })
   );
-  watchPlugins.forEach(plugin => {
+  watchPlugins.forEach((plugin) => {
     const hookSubscriber = hooks.getSubscriber();
 
     if (plugin.apply) {
@@ -332,11 +332,11 @@ async function watch(
         continue;
       }
 
-      const {forbiddenOverwriteMessage} = reservedInfo;
+      const { forbiddenOverwriteMessage } = reservedInfo;
       watchPluginKeys.set(key, {
         forbiddenOverwriteMessage,
         overwritable: forbiddenOverwriteMessage == null,
-        plugin
+        plugin,
       });
     }
 
@@ -350,7 +350,7 @@ async function watch(
         plugin = new ThirdPartyPlugin({
           config: pluginWithConfig.config,
           stdin,
-          stdout: outputStream
+          stdout: outputStream,
         });
       } catch (error) {
         const errorWithContext = new Error(
@@ -362,7 +362,7 @@ async function watch(
             error,
             contexts[0].config,
             {
-              noStackTrace: false
+              noStackTrace: false,
             }
           )}`
         );
@@ -382,9 +382,9 @@ async function watch(
   }
 
   const failedTestsCache = new _FailedTestsCache.default();
-  let searchSources = contexts.map(context => ({
+  let searchSources = contexts.map((context) => ({
     context,
-    searchSource: new _SearchSource.default(context)
+    searchSource: new _SearchSource.default(context),
   }));
   let isRunning = false;
   let testWatcher;
@@ -392,21 +392,21 @@ async function watch(
   let isWatchUsageDisplayed = false;
 
   const emitFileChange = () => {
-    if (hooks.isUsed('onFileChange')) {
-      const projects = searchSources.map(({context, searchSource}) => ({
+    if (hooks.isUsed("onFileChange")) {
+      const projects = searchSources.map(({ context, searchSource }) => ({
         config: context.config,
-        testPaths: searchSource.findMatchingTests('').tests.map(t => t.path)
+        testPaths: searchSource.findMatchingTests("").tests.map((t) => t.path),
       }));
       hooks.getEmitter().onFileChange({
-        projects
+        projects,
       });
     }
   };
 
   emitFileChange();
   hasteMapInstances.forEach((hasteMapInstance, index) => {
-    hasteMapInstance.on('change', ({eventsQueue, hasteFS, moduleMap}) => {
-      const validPaths = eventsQueue.filter(({filePath}) =>
+    hasteMapInstance.on("change", ({ eventsQueue, hasteFS, moduleMap }) => {
+      const validPaths = eventsQueue.filter(({ filePath }) =>
         (0, _isValidPath.default)(globalConfig, filePath)
       );
 
@@ -415,14 +415,14 @@ async function watch(
           contexts[index].config,
           {
             hasteFS,
-            moduleMap
+            moduleMap,
           }
         ));
         activePlugin = null;
         searchSources = searchSources.slice();
         searchSources[index] = {
           context,
-          searchSource: new _SearchSource.default(context)
+          searchSource: new _SearchSource.default(context),
         };
         emitFileChange();
         startRun(globalConfig);
@@ -432,7 +432,7 @@ async function watch(
 
   if (!hasExitListener) {
     hasExitListener = true;
-    process.on('exit', () => {
+    process.on("exit", () => {
       if (activePlugin) {
         outputStream.write(_ansiEscapes().default.cursorDown());
         outputStream.write(_ansiEscapes().default.eraseDown);
@@ -440,19 +440,19 @@ async function watch(
     });
   }
 
-  const startRun = globalConfig => {
+  const startRun = (globalConfig) => {
     if (isRunning) {
       return Promise.resolve(null);
     }
 
     testWatcher = new _TestWatcher.default({
-      isWatchMode: true
+      isWatchMode: true,
     });
     _jestUtil().isInteractive &&
       outputStream.write(_jestUtil().specialChars.CLEAR);
     preRunMessagePrint(outputStream);
     isRunning = true;
-    const configs = contexts.map(context => context.config);
+    const configs = contexts.map((context) => context.config);
     const changedFilesPromise = (0, _getChangedFilesPromise.default)(
       globalConfig,
       configs
@@ -467,14 +467,14 @@ async function watch(
       filter,
       globalConfig,
       jestHooks: hooks.getEmitter(),
-      onComplete: results => {
+      onComplete: (results) => {
         isRunning = false;
         hooks.getEmitter().onTestRunComplete(results); // Create a new testWatcher instance so that re-runs won't be blocked.
         // The old instance that was passed to Jest will still be interrupted
         // and prevent test runs from the previous run.
 
         testWatcher = new _TestWatcher.default({
-          isWatchMode: true
+          isWatchMode: true,
         }); // Do not show any Watch Usage related stuff when running in a
         // non-interactive environment
 
@@ -490,14 +490,14 @@ async function watch(
             isWatchUsageDisplayed = false;
           }
         } else {
-          outputStream.write('\n');
+          outputStream.write("\n");
         }
 
         failedTestsCache.setTestResults(results.testResults);
       },
       outputStream,
       startRun,
-      testWatcher
+      testWatcher,
     }).catch(
       (
         error // Errors thrown inside `runJest`, e.g. by resolvers, are caught here for
@@ -506,24 +506,24 @@ async function watch(
         // terminal and give just a little bit of extra space so they fit below
         // `preRunMessagePrint` message nicely.
         console.error(
-          '\n\n' +
+          "\n\n" +
             (0, _jestMessageUtil().formatExecError)(error, contexts[0].config, {
-              noStackTrace: false
+              noStackTrace: false,
             })
         )
     );
   };
 
-  const onKeypress = key => {
+  const onKeypress = (key) => {
     if (
       key === _jestWatcher().KEYS.CONTROL_C ||
       key === _jestWatcher().KEYS.CONTROL_D
     ) {
-      if (typeof stdin.setRawMode === 'function') {
+      if (typeof stdin.setRawMode === "function") {
         stdin.setRawMode(false);
       }
 
-      outputStream.write('\n');
+      outputStream.write("\n");
       (0, _exit().default)(0);
       return;
     }
@@ -538,17 +538,17 @@ async function watch(
     const pluginKeys = (0, _watchPluginsHelpers.getSortedUsageRows)(
       watchPlugins,
       globalConfig
-    ).map(usage => Number(usage.key).toString(16));
+    ).map((usage) => Number(usage.key).toString(16));
 
     if (
       isRunning &&
       testWatcher &&
-      ['q', _jestWatcher().KEYS.ENTER, 'a', 'o', 'f']
+      ["q", _jestWatcher().KEYS.ENTER, "a", "o", "f"]
         .concat(pluginKeys)
         .includes(key)
     ) {
       testWatcher.setState({
-        interrupted: true
+        interrupted: true,
       });
       return;
     }
@@ -557,12 +557,12 @@ async function watch(
     _watchPluginsHelpers.filterInteractivePlugins)(
       watchPlugins,
       globalConfig
-    ).find(plugin => getPluginKey(plugin, globalConfig) === key);
+    ).find((plugin) => getPluginKey(plugin, globalConfig) === key);
 
     if (matchingWatchPlugin != null) {
       if (isRunning) {
         testWatcher.setState({
-          interrupted: true
+          interrupted: true,
         });
         return;
       } // "activate" the plugin, which has jest ignore keystrokes so the plugin
@@ -572,7 +572,7 @@ async function watch(
 
       if (activePlugin.run) {
         activePlugin.run(globalConfig, updateConfigAndRun).then(
-          shouldRerun => {
+          (shouldRerun) => {
             activePlugin = null;
 
             if (shouldRerun) {
@@ -594,43 +594,43 @@ async function watch(
         startRun(globalConfig);
         break;
 
-      case 'a':
+      case "a":
         globalConfig = (0, _updateGlobalConfig.default)(globalConfig, {
-          mode: 'watchAll',
-          testNamePattern: '',
-          testPathPattern: ''
+          mode: "watchAll",
+          testNamePattern: "",
+          testPathPattern: "",
         });
         startRun(globalConfig);
         break;
 
-      case 'c':
+      case "c":
         updateConfigAndRun({
-          mode: 'watch',
-          testNamePattern: '',
-          testPathPattern: ''
+          mode: "watch",
+          testNamePattern: "",
+          testPathPattern: "",
         });
         break;
 
-      case 'f':
+      case "f":
         globalConfig = (0, _updateGlobalConfig.default)(globalConfig, {
-          onlyFailures: !globalConfig.onlyFailures
+          onlyFailures: !globalConfig.onlyFailures,
         });
         startRun(globalConfig);
         break;
 
-      case 'o':
+      case "o":
         globalConfig = (0, _updateGlobalConfig.default)(globalConfig, {
-          mode: 'watch',
-          testNamePattern: '',
-          testPathPattern: ''
+          mode: "watch",
+          testNamePattern: "",
+          testPathPattern: "",
         });
         startRun(globalConfig);
         break;
 
-      case '?':
+      case "?":
         break;
 
-      case 'w':
+      case "w":
         if (!shouldDisplayWatchUsage && !isWatchUsageDisplayed) {
           outputStream.write(_ansiEscapes().default.cursorUp());
           outputStream.write(_ansiEscapes().default.eraseDown);
@@ -650,11 +650,11 @@ async function watch(
     outputStream.write(_ansiEscapes().default.cursorShow);
   };
 
-  if (typeof stdin.setRawMode === 'function') {
+  if (typeof stdin.setRawMode === "function") {
     stdin.setRawMode(true);
     stdin.resume();
-    stdin.setEncoding('utf8');
-    stdin.on('data', onKeypress);
+    stdin.setEncoding("utf8");
+    stdin.on("data", onKeypress);
   }
 
   startRun(globalConfig);
@@ -673,7 +673,7 @@ const checkForConflicts = (watchPluginKeys, plugin, globalConfig) => {
   if (!conflictor || conflictor.overwritable) {
     watchPluginKeys.set(key, {
       overwritable: false,
-      plugin
+      plugin,
     });
     return;
   }
@@ -691,8 +691,8 @@ const checkForConflicts = (watchPluginKeys, plugin, globalConfig) => {
   Please change the configuration key for this plugin.`.trim();
   } else {
     const plugins = [conflictor.plugin, plugin]
-      .map(p => _chalk().default.bold.red(getPluginIdentifier(p)))
-      .join(' and ');
+      .map((p) => _chalk().default.bold.red(getPluginIdentifier(p)))
+      .join(" and ");
     error = `
   Watch plugins ${plugins} both attempted to register key ${_chalk().default.bold.red(
       `<${key}>`
@@ -701,7 +701,7 @@ const checkForConflicts = (watchPluginKeys, plugin, globalConfig) => {
   }
 
   throw new (_jestValidate().ValidationError)(
-    'Watch plugin configuration error',
+    "Watch plugin configuration error",
     error
   );
 };
@@ -716,10 +716,10 @@ const getPluginIdentifier = (
   plugin.constructor.displayName || plugin.constructor.name;
 
 const getPluginKey = (plugin, globalConfig) => {
-  if (typeof plugin.getUsageInfo === 'function') {
+  if (typeof plugin.getUsageInfo === "function") {
     return (
       plugin.getUsageInfo(globalConfig) || {
-        key: null
+        key: null,
       }
     ).key;
   }
@@ -727,56 +727,56 @@ const getPluginKey = (plugin, globalConfig) => {
   return null;
 };
 
-const usage = (globalConfig, watchPlugins, delimiter = '\n') => {
+const usage = (globalConfig, watchPlugins, delimiter = "\n") => {
   const messages = [
     (0, _activeFiltersMessage.default)(globalConfig),
     globalConfig.testPathPattern || globalConfig.testNamePattern
-      ? _chalk().default.dim(' \u203A Press ') +
-        'c' +
-        _chalk().default.dim(' to clear filters.')
+      ? _chalk().default.dim(" \u203A Press ") +
+        "c" +
+        _chalk().default.dim(" to clear filters.")
       : null,
-    '\n' + _chalk().default.bold('Watch Usage'),
+    "\n" + _chalk().default.bold("Watch Usage"),
     globalConfig.watch
-      ? _chalk().default.dim(' \u203A Press ') +
-        'a' +
-        _chalk().default.dim(' to run all tests.')
+      ? _chalk().default.dim(" \u203A Press ") +
+        "a" +
+        _chalk().default.dim(" to run all tests.")
       : null,
     globalConfig.onlyFailures
-      ? _chalk().default.dim(' \u203A Press ') +
-        'f' +
+      ? _chalk().default.dim(" \u203A Press ") +
+        "f" +
         _chalk().default.dim(' to quit "only failed tests" mode.')
-      : _chalk().default.dim(' \u203A Press ') +
-        'f' +
-        _chalk().default.dim(' to run only failed tests.'),
+      : _chalk().default.dim(" \u203A Press ") +
+        "f" +
+        _chalk().default.dim(" to run only failed tests."),
     (globalConfig.watchAll ||
       globalConfig.testPathPattern ||
       globalConfig.testNamePattern) &&
     !globalConfig.noSCM
-      ? _chalk().default.dim(' \u203A Press ') +
-        'o' +
-        _chalk().default.dim(' to only run tests related to changed files.')
+      ? _chalk().default.dim(" \u203A Press ") +
+        "o" +
+        _chalk().default.dim(" to only run tests related to changed files.")
       : null,
     ...(0, _watchPluginsHelpers.getSortedUsageRows)(
       watchPlugins,
       globalConfig
     ).map(
-      plugin =>
-        _chalk().default.dim(' \u203A Press') +
-        ' ' +
+      (plugin) =>
+        _chalk().default.dim(" \u203A Press") +
+        " " +
         plugin.key +
-        ' ' +
+        " " +
         _chalk().default.dim(`to ${plugin.prompt}.`)
     ),
-    _chalk().default.dim(' \u203A Press ') +
-      'Enter' +
-      _chalk().default.dim(' to trigger a test run.')
+    _chalk().default.dim(" \u203A Press ") +
+      "Enter" +
+      _chalk().default.dim(" to trigger a test run."),
   ];
-  return messages.filter(message => !!message).join(delimiter) + '\n';
+  return messages.filter((message) => !!message).join(delimiter) + "\n";
 };
 
 const showToggleUsagePrompt = () =>
-  '\n' +
-  _chalk().default.bold('Watch Usage: ') +
-  _chalk().default.dim('Press ') +
-  'w' +
-  _chalk().default.dim(' to show more.');
+  "\n" +
+  _chalk().default.bold("Watch Usage: ") +
+  _chalk().default.dim("Press ") +
+  "w" +
+  _chalk().default.dim(" to show more.");

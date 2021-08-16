@@ -1,1 +1,1 @@
-module.exports = require("./data/corejs3-shipped-proposals.json");
+export default require("./data/corejs3-shipped-proposals.json");

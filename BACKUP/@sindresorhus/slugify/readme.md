@@ -15,18 +15,18 @@ $ npm install @sindresorhus/slugify
 ## Usage
 
 ```js
-const slugify = require('@sindresorhus/slugify');
+const slugify = require("@sindresorhus/slugify");
 
-slugify('I ♥ Dogs');
+slugify("I ♥ Dogs");
 //=> 'i-love-dogs'
 
-slugify('  Déjà Vu!  ');
+slugify("  Déjà Vu!  ");
 //=> 'deja-vu'
 
-slugify('fooBar 123 $#%');
+slugify("fooBar 123 $#%");
 //=> 'foo-bar-123'
 
-slugify('я люблю единорогов');
+slugify("я люблю единорогов");
 //=> 'ya-lyublyu-edinorogov'
 ```
 
@@ -50,15 +50,15 @@ Type: `string`\
 Default: `'-'`
 
 ```js
-const slugify = require('@sindresorhus/slugify');
+const slugify = require("@sindresorhus/slugify");
 
-slugify('BAR and baz');
+slugify("BAR and baz");
 //=> 'bar-and-baz'
 
-slugify('BAR and baz', {separator: '_'});
+slugify("BAR and baz", { separator: "_" });
 //=> 'bar_and_baz'
 
-slugify('BAR and baz', {separator: ''});
+slugify("BAR and baz", { separator: "" });
 //=> 'barandbaz'
 ```
 
@@ -70,12 +70,12 @@ Default: `true`
 Make the slug lowercase.
 
 ```js
-const slugify = require('@sindresorhus/slugify');
+const slugify = require("@sindresorhus/slugify");
 
-slugify('Déjà Vu!');
+slugify("Déjà Vu!");
 //=> 'deja-vu'
 
-slugify('Déjà Vu!', {lowercase: false});
+slugify("Déjà Vu!", { lowercase: false });
 //=> 'Deja-Vu'
 ```
 
@@ -87,23 +87,19 @@ Default: `true`
 Convert camelcase to separate words. Internally it does `fooBar` → `foo bar`.
 
 ```js
-const slugify = require('@sindresorhus/slugify');
+const slugify = require("@sindresorhus/slugify");
 
-slugify('fooBar');
+slugify("fooBar");
 //=> 'foo-bar'
 
-slugify('fooBar', {decamelize: false});
+slugify("fooBar", { decamelize: false });
 //=> 'foobar'
 ```
 
 ##### customReplacements
 
 Type: `Array<string[]>`\
-Default: `[
-	['&', ' and '],
-	['🦄', ' unicorn '],
-	['♥', ' love ']
-]`
+Default: `[ ['&', ' and '], ['🦄', ' unicorn '], ['♥', ' love '] ]`
 
 Add your own custom replacements.
 
@@ -112,12 +108,10 @@ The replacements are run on the original string before any other transformations
 This only overrides a default replacement if you set an item with the same key, like `&`.
 
 ```js
-const slugify = require('@sindresorhus/slugify');
+const slugify = require("@sindresorhus/slugify");
 
-slugify('Foo@unicorn', {
-	customReplacements: [
-		['@', 'at']
-	]
+slugify("Foo@unicorn", {
+  customReplacements: [["@", "at"]],
 });
 //=> 'fooatunicorn'
 ```
@@ -125,12 +119,10 @@ slugify('Foo@unicorn', {
 Add a leading and trailing space to the replacement to have it separated by dashes:
 
 ```js
-const slugify = require('@sindresorhus/slugify');
+const slugify = require("@sindresorhus/slugify");
 
-slugify('foo@unicorn', {
-	customReplacements: [
-		['@', ' at ']
-	]
+slugify("foo@unicorn", {
+  customReplacements: [["@", " at "]],
 });
 //=> 'foo-at-unicorn'
 ```
@@ -138,12 +130,10 @@ slugify('foo@unicorn', {
 Another example:
 
 ```js
-const slugify = require('@sindresorhus/slugify');
+const slugify = require("@sindresorhus/slugify");
 
-slugify('I love 🐶', {
-	customReplacements: [
-		['🐶', 'dogs']
-	]
+slugify("I love 🐶", {
+  customReplacements: [["🐶", "dogs"]],
 });
 //=> 'i-love-dogs'
 ```
@@ -158,12 +148,12 @@ If your string starts with an underscore, it will be preserved in the slugified 
 Sometimes leading underscores are intentional, for example, filenames representing hidden paths on a website.
 
 ```js
-const slugify = require('@sindresorhus/slugify');
+const slugify = require("@sindresorhus/slugify");
 
-slugify('_foo_bar');
+slugify("_foo_bar");
 //=> 'foo-bar'
 
-slugify('_foo_bar', {preserveLeadingUnderscore: true});
+slugify("_foo_bar", { preserveLeadingUnderscore: true });
 //=> '_foo-bar'
 ```
 
@@ -174,19 +164,19 @@ Returns a new instance of `slugify(string, options?)` with a counter to handle m
 #### Example
 
 ```js
-const slugify = require('@sindresorhus/slugify');
+const slugify = require("@sindresorhus/slugify");
 
 const countableSlugify = slugify.counter();
 
-countableSlugify('foo bar');
+countableSlugify("foo bar");
 //=> 'foo-bar'
 
-countableSlugify('foo bar');
+countableSlugify("foo bar");
 //=> 'foo-bar-2'
 
 countableSlugify.reset();
 
-countableSlugify('foo bar');
+countableSlugify("foo bar");
 //=> 'foo-bar'
 ```
 
@@ -213,19 +203,19 @@ Reset the counter
 #### Example
 
 ```js
-const slugify = require('@sindresorhus/slugify');
+const slugify = require("@sindresorhus/slugify");
 
 const countableSlugify = slugify.counter();
 
-countableSlugify('foo bar');
+countableSlugify("foo bar");
 //=> 'foo-bar'
 
-countableSlugify('foo bar');
+countableSlugify("foo bar");
 //=> 'foo-bar-2'
 
 countableSlugify.reset();
 
-countableSlugify('foo bar');
+countableSlugify("foo bar");
 //=> 'foo-bar'
 ```
 

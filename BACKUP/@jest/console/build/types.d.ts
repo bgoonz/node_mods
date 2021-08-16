@@ -6,15 +6,27 @@
  */
 export declare type LogMessage = string;
 export declare type LogEntry = {
-    message: LogMessage;
-    origin: string;
-    type: LogType;
+  message: LogMessage;
+  origin: string;
+  type: LogType;
 };
 export declare type LogCounters = {
-    [label: string]: number;
+  [label: string]: number;
 };
 export declare type LogTimers = {
-    [label: string]: Date;
+  [label: string]: Date;
 };
-export declare type LogType = 'assert' | 'count' | 'debug' | 'dir' | 'dirxml' | 'error' | 'group' | 'groupCollapsed' | 'info' | 'log' | 'time' | 'warn';
+export declare type LogType =
+  | "assert"
+  | "count"
+  | "debug"
+  | "dir"
+  | "dirxml"
+  | "error"
+  | "group"
+  | "groupCollapsed"
+  | "info"
+  | "log"
+  | "time"
+  | "warn";
 export declare type ConsoleBuffer = Array<LogEntry>;

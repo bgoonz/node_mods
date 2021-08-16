@@ -1,6 +1,5 @@
 # Contributing
 
-
 ### Releasing a new version:
 
 - Ensure tests are passing on travis and appveyor

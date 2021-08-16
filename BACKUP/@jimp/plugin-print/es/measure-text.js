@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.measureText = measureText;
 exports.measureTextHeight = measureTextHeight;
@@ -11,7 +11,10 @@ function measureText(font, text) {
 
   for (var i = 0; i < text.length; i++) {
     if (font.chars[text[i]]) {
-      var kerning = font.kernings[text[i]] && font.kernings[text[i]][text[i + 1]] ? font.kernings[text[i]][text[i + 1]] : 0;
+      var kerning =
+        font.kernings[text[i]] && font.kernings[text[i]][text[i + 1]]
+          ? font.kernings[text[i]][text[i + 1]]
+          : 0;
       x += (font.chars[text[i]].xadvance || 0) + kerning;
     }
   }
@@ -20,17 +23,17 @@ function measureText(font, text) {
 }
 
 function measureTextHeight(font, text, maxWidth) {
-  var words = text.split(' ');
-  var line = '';
+  var words = text.split(" ");
+  var line = "";
   var textTotalHeight = font.common.lineHeight;
 
   for (var n = 0; n < words.length; n++) {
-    var testLine = line + words[n] + ' ';
+    var testLine = line + words[n] + " ";
     var testWidth = measureText(font, testLine);
 
     if (testWidth > maxWidth && n > 0) {
       textTotalHeight += font.common.lineHeight;
-      line = words[n] + ' ';
+      line = words[n] + " ";
     } else {
       line = testLine;
     }

@@ -1,20 +1,20 @@
-import { mapObject } from '../helpers';
+import { mapObject } from "../helpers";
 import {
   websocketOpened,
   websocketClosed,
   openWebsocket,
   closeWebsocket,
   getActionPayload,
-} from '../actions';
+} from "../actions";
 import {
   GET_WEBSOCKET,
   STOP_SUBSCRIPTIONS,
   OPEN_WEBSOCKET,
   CLOSE_WEBSOCKET,
   WEBSOCKET_OPENED,
-} from '../constants';
+} from "../constants";
 
-import createRequestsStore from './create-requests-store';
+import createRequestsStore from "./create-requests-store";
 
 const shouldBeNormalized = (action, globalNormalize) =>
   action.meta?.normalize !== undefined
@@ -25,7 +25,7 @@ const transformIntoLocalMutation = (
   subscriptionAction,
   subscriptionData,
   message,
-  globalNormalize,
+  globalNormalize
 ) => {
   const meta = {};
 
@@ -36,7 +36,7 @@ const transformIntoLocalMutation = (
   if (subscriptionAction.meta?.mutations) {
     meta.mutations = mapObject(subscriptionAction.meta.mutations, (k, v) => ({
       local: true,
-      updateData: data => v(data, subscriptionData, message),
+      updateData: (data) => v(data, subscriptionData, message),
     }));
   }
 
@@ -64,41 +64,41 @@ class CleanableWebsocket {
   }
 
   addEventListener(type, callback) {
-    if (type === 'error') {
+    if (type === "error") {
       this.onError = callback;
-    } else if (type === 'close') {
+    } else if (type === "close") {
       // we make sure onClose could be called only once
-      this.onClose = e => {
+      this.onClose = (e) => {
         if (!this.killed) {
           this.killed = true;
           callback(e);
           this.removeAllListeners();
         }
       };
-    } else if (type === 'open') {
+    } else if (type === "open") {
       this.onOpen = callback;
-    } else if (type === 'message') {
+    } else if (type === "message") {
       this.onMessage = callback;
     }
 
-    this.ws.addEventListener(type, type === 'close' ? this.onClose : callback);
+    this.ws.addEventListener(type, type === "close" ? this.onClose : callback);
   }
 
   removeAllListeners() {
     if (this.onError) {
-      this.ws.removeEventListener('error', this.onError);
+      this.ws.removeEventListener("error", this.onError);
     }
 
     if (this.onMessage) {
-      this.ws.removeEventListener('message', this.onMessage);
+      this.ws.removeEventListener("message", this.onMessage);
     }
 
     if (this.onOpen) {
-      this.ws.removeEventListener('open', this.onOpen);
+      this.ws.removeEventListener("open", this.onOpen);
     }
 
     if (this.onClose) {
-      this.ws.removeEventListener('close', this.onClose);
+      this.ws.removeEventListener("close", this.onClose);
     }
   }
 
@@ -129,7 +129,7 @@ class CleanableWebsocket {
 }
 
 const getDefaultWebSocket = () =>
-  typeof WebSocket === 'undefined' ? undefined : WebSocket;
+  typeof WebSocket === "undefined" ? undefined : WebSocket;
 
 export default ({
   normalize = false,
@@ -172,7 +172,7 @@ export default ({
     }
   };
 
-  return store => next => action => {
+  return (store) => (next) => (action) => {
     if (action.type === OPEN_WEBSOCKET) {
       lastOpenWebsocketAction = action;
     }
@@ -189,7 +189,7 @@ export default ({
 
       ws = new CleanableWebsocket(url, protocols, WS);
 
-      ws.addEventListener('open', () => {
+      ws.addEventListener("open", () => {
         if (!activateOn) {
           store.dispatch(websocketOpened());
           active = true;
@@ -199,7 +199,7 @@ export default ({
           onOpen(
             requestsStore,
             ws,
-            action.type === OPEN_WEBSOCKET ? action.props : null,
+            action.type === OPEN_WEBSOCKET ? action.props : null
           );
         }
 
@@ -212,13 +212,13 @@ export default ({
         }
       });
 
-      ws.addEventListener('error', e => {
+      ws.addEventListener("error", (e) => {
         if (onError) {
           onError(e, requestsStore, ws);
         }
       });
 
-      ws.addEventListener('close', e => {
+      ws.addEventListener("close", (e) => {
         store.dispatch(websocketClosed(e.code));
         active = false;
         clearLastReconnectTimeout();
@@ -235,7 +235,7 @@ export default ({
         }
       });
 
-      ws.addEventListener('message', message => {
+      ws.addEventListener("message", (message) => {
         if (!active && activateOn && activateOn(message)) {
           store.dispatch(websocketOpened());
           active = true;
@@ -275,12 +275,7 @@ export default ({
             shouldBeNormalized(subscription, normalize)
           ) {
             store.dispatch(
-              transformIntoLocalMutation(
-                subscription,
-                data,
-                message,
-                normalize,
-              ),
+              transformIntoLocalMutation(subscription, data, message, normalize)
             );
           }
         }
@@ -299,7 +294,7 @@ export default ({
       ws = null;
       return response;
     } else if (action.type === WEBSOCKET_OPENED) {
-      Object.values(subscriptions).forEach(subscriptionAction => {
+      Object.values(subscriptions).forEach((subscriptionAction) => {
         const actionPayload = getActionPayload(subscriptionAction);
 
         if (actionPayload.subscription) {
@@ -307,8 +302,8 @@ export default ({
             JSON.stringify(
               onSend
                 ? onSend(actionPayload.subscription, subscriptionAction)
-                : actionPayload.subscription,
-            ),
+                : actionPayload.subscription
+            )
           );
         }
       });
@@ -321,7 +316,7 @@ export default ({
             Object.keys(subscriptions),
             action,
             ws,
-            requestsStore,
+            requestsStore
           );
         }
 
@@ -332,7 +327,7 @@ export default ({
         }
 
         subscriptions = mapObject(subscriptions, (k, v) =>
-          action.subscriptions.includes(k) ? undefined : v,
+          action.subscriptions.includes(k) ? undefined : v
         );
       }
     } else if (
@@ -346,7 +341,7 @@ export default ({
       ) {
         subscriptions = {
           ...subscriptions,
-          [action.type + (action.meta?.requestKey || '')]: action,
+          [action.type + (action.meta?.requestKey || "")]: action,
         };
       }
 
@@ -357,8 +352,8 @@ export default ({
           JSON.stringify(
             onSend
               ? onSend(actionPayload.subscription, action)
-              : actionPayload.subscription,
-          ),
+              : actionPayload.subscription
+          )
         );
       }
     }

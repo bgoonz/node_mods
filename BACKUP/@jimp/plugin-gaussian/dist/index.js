@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
@@ -17,12 +17,12 @@ var _default = function _default() {
   return {
     gaussian: function gaussian(r, cb) {
       // http://blog.ivank.net/fastest-gaussian-blur.html
-      if (typeof r !== 'number') {
-        return _utils.throwError.call(this, 'r must be a number', cb);
+      if (typeof r !== "number") {
+        return _utils.throwError.call(this, "r must be a number", cb);
       }
 
       if (r < 1) {
-        return _utils.throwError.call(this, 'r must be greater than 0', cb);
+        return _utils.throwError.call(this, "r must be greater than 0", cb);
       }
 
       var rs = Math.ceil(r * 2.57); // significant radius
@@ -51,11 +51,17 @@ var _default = function _default() {
 
           for (var iy = 0; iy < range; iy++) {
             for (var ix = 0; ix < range; ix++) {
-              var x1 = Math.min(this.bitmap.width - 1, Math.max(0, ix + _x - rs));
-              var y1 = Math.min(this.bitmap.height - 1, Math.max(0, iy + _y - rs));
+              var x1 = Math.min(
+                this.bitmap.width - 1,
+                Math.max(0, ix + _x - rs)
+              );
+              var y1 = Math.min(
+                this.bitmap.height - 1,
+                Math.max(0, iy + _y - rs)
+              );
               var weight = weights[iy][ix];
 
-              var _idx = y1 * this.bitmap.width + x1 << 2;
+              var _idx = (y1 * this.bitmap.width + x1) << 2;
 
               red += this.bitmap.data[_idx] * weight;
               green += this.bitmap.data[_idx + 1] * weight;
@@ -64,7 +70,7 @@ var _default = function _default() {
               wsum += weight;
             }
 
-            var idx = _y * this.bitmap.width + _x << 2;
+            var idx = (_y * this.bitmap.width + _x) << 2;
             this.bitmap.data[idx] = Math.round(red / wsum);
             this.bitmap.data[idx + 1] = Math.round(green / wsum);
             this.bitmap.data[idx + 2] = Math.round(blue / wsum);
@@ -78,7 +84,7 @@ var _default = function _default() {
       }
 
       return this;
-    }
+    },
   };
 };
 

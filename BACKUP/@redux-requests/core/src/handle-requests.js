@@ -1,4 +1,4 @@
-import { requestsReducer } from './reducers';
+import { requestsReducer } from "./reducers";
 import {
   createRequestsCacheMiddleware,
   createClientSsrMiddleware,
@@ -6,8 +6,8 @@ import {
   createSendRequestsMiddleware,
   createPollingMiddleware,
   createSubscriptionsMiddleware,
-} from './middleware';
-import defaultConfig from './default-config';
+} from "./middleware";
+import defaultConfig from "./default-config";
 
 const defer = () => {
   let res;
@@ -21,22 +21,22 @@ const defer = () => {
   return promise;
 };
 
-const handleRequests = userConfig => {
+const handleRequests = (userConfig) => {
   const config = { ...defaultConfig, ...userConfig };
   const requestsPromise =
-    config.ssr === 'server' && !config.disableRequestsPromise ? defer() : null;
+    config.ssr === "server" && !config.disableRequestsPromise ? defer() : null;
 
   return {
     requestsReducer: requestsReducer(config),
     requestsMiddleware: [
-      config.ssr !== 'server' &&
+      config.ssr !== "server" &&
         config.subscriber &&
         createSubscriptionsMiddleware(config),
-      config.ssr !== 'server' && createPollingMiddleware(config),
-      config.ssr === 'server' &&
+      config.ssr !== "server" && createPollingMiddleware(config),
+      config.ssr === "server" &&
         !config.disableRequestsPromise &&
         createServerSsrMiddleware(requestsPromise, config),
-      config.ssr === 'client' && createClientSsrMiddleware(config),
+      config.ssr === "client" && createClientSsrMiddleware(config),
       config.cache && createRequestsCacheMiddleware(config),
       createSendRequestsMiddleware(config),
     ].filter(Boolean),

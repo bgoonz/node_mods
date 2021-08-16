@@ -1,4 +1,4 @@
-import { isRequestActionQuery, isRequestAction } from './actions';
+import { isRequestActionQuery, isRequestAction } from "./actions";
 export default {
   driver: null,
   onRequest: null,
@@ -18,5 +18,5 @@ export default {
   shouldObjectBeNormalized: function shouldObjectBeNormalized(obj) {
     return obj.id !== undefined;
   },
-  subscriber: null
+  subscriber: null,
 };

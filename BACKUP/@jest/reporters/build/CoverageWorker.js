@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.worker = worker;
 
 function _exit() {
-  const data = _interopRequireDefault(require('exit'));
+  const data = _interopRequireDefault(require("exit"));
 
   _exit = function () {
     return data;
@@ -16,7 +16,7 @@ function _exit() {
 }
 
 function fs() {
-  const data = _interopRequireWildcard(require('graceful-fs'));
+  const data = _interopRequireWildcard(require("graceful-fs"));
 
   fs = function () {
     return data;
@@ -26,11 +26,11 @@ function fs() {
 }
 
 var _generateEmptyCoverage = _interopRequireDefault(
-  require('./generateEmptyCoverage')
+  require("./generateEmptyCoverage")
 );
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -42,8 +42,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -53,7 +53,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -72,7 +72,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -82,14 +82,14 @@ function _interopRequireDefault(obj) {
  * LICENSE file in the root directory of this source tree.
  */
 // Make sure uncaught errors are logged before we exit.
-process.on('uncaughtException', err => {
+process.on("uncaughtException", (err) => {
   console.error(err.stack);
   (0, _exit().default)(1);
 });
 
-function worker({config, globalConfig, path, options}) {
+function worker({ config, globalConfig, path, options }) {
   return (0, _generateEmptyCoverage.default)(
-    fs().readFileSync(path, 'utf8'),
+    fs().readFileSync(path, "utf8"),
     path,
     globalConfig,
     config,

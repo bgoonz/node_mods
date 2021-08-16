@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _assert() {
-  const data = _interopRequireDefault(require('assert'));
+  const data = _interopRequireDefault(require("assert"));
 
   _assert = function () {
     return data;
@@ -16,7 +16,7 @@ function _assert() {
 }
 
 function _console() {
-  const data = require('console');
+  const data = require("console");
 
   _console = function () {
     return data;
@@ -26,7 +26,7 @@ function _console() {
 }
 
 function _util() {
-  const data = require('util');
+  const data = require("util");
 
   _util = function () {
     return data;
@@ -36,7 +36,7 @@ function _util() {
 }
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -46,7 +46,7 @@ function _chalk() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -56,7 +56,7 @@ function _jestUtil() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -65,7 +65,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -76,21 +76,21 @@ function _defineProperty(obj, key, value) {
 class BufferedConsole extends _console().Console {
   constructor() {
     super({
-      write: message => {
-        BufferedConsole.write(this._buffer, 'log', message, null);
+      write: (message) => {
+        BufferedConsole.write(this._buffer, "log", message, null);
         return true;
-      }
+      },
     });
 
-    _defineProperty(this, '_buffer', []);
+    _defineProperty(this, "_buffer", []);
 
-    _defineProperty(this, '_counters', {});
+    _defineProperty(this, "_counters", {});
 
-    _defineProperty(this, '_timers', {});
+    _defineProperty(this, "_timers", {});
 
-    _defineProperty(this, '_groupDepth', 0);
+    _defineProperty(this, "_groupDepth", 0);
 
-    _defineProperty(this, 'Console', _console().Console);
+    _defineProperty(this, "Console", _console().Console);
   }
 
   static write(buffer, type, message, level) {
@@ -99,16 +99,16 @@ class BufferedConsole extends _console().Console {
       undefined,
       BufferedConsole.write
     ).stack;
-    invariant(rawStack, 'always have a stack trace');
+    invariant(rawStack, "always have a stack trace");
     const origin = rawStack
-      .split('\n')
+      .split("\n")
       .slice(stackLevel)
       .filter(Boolean)
-      .join('\n');
+      .join("\n");
     buffer.push({
       message,
       origin,
-      type
+      type,
     });
     return buffer;
   }
@@ -117,7 +117,7 @@ class BufferedConsole extends _console().Console {
     BufferedConsole.write(
       this._buffer,
       type,
-      '  '.repeat(this._groupDepth) + message,
+      "  ".repeat(this._groupDepth) + message,
       3
     );
   }
@@ -126,41 +126,41 @@ class BufferedConsole extends _console().Console {
     try {
       (0, _assert().default)(value, message);
     } catch (error) {
-      this._log('assert', error.toString());
+      this._log("assert", error.toString());
     }
   }
 
-  count(label = 'default') {
+  count(label = "default") {
     if (!this._counters[label]) {
       this._counters[label] = 0;
     }
 
     this._log(
-      'count',
+      "count",
       (0, _util().format)(`${label}: ${++this._counters[label]}`)
     );
   }
 
-  countReset(label = 'default') {
+  countReset(label = "default") {
     this._counters[label] = 0;
   }
 
   debug(firstArg, ...rest) {
-    this._log('debug', (0, _util().format)(firstArg, ...rest));
+    this._log("debug", (0, _util().format)(firstArg, ...rest));
   }
 
   dir(firstArg, options = {}) {
     const representation = (0, _util().inspect)(firstArg, options);
 
-    this._log('dir', (0, _util().formatWithOptions)(options, representation));
+    this._log("dir", (0, _util().formatWithOptions)(options, representation));
   }
 
   dirxml(firstArg, ...rest) {
-    this._log('dirxml', (0, _util().format)(firstArg, ...rest));
+    this._log("dirxml", (0, _util().format)(firstArg, ...rest));
   }
 
   error(firstArg, ...rest) {
-    this._log('error', (0, _util().format)(firstArg, ...rest));
+    this._log("error", (0, _util().format)(firstArg, ...rest));
   }
 
   group(title, ...rest) {
@@ -168,7 +168,7 @@ class BufferedConsole extends _console().Console {
 
     if (title || rest.length > 0) {
       this._log(
-        'group',
+        "group",
         _chalk().default.bold((0, _util().format)(title, ...rest))
       );
     }
@@ -179,7 +179,7 @@ class BufferedConsole extends _console().Console {
 
     if (title || rest.length > 0) {
       this._log(
-        'groupCollapsed',
+        "groupCollapsed",
         _chalk().default.bold((0, _util().format)(title, ...rest))
       );
     }
@@ -192,14 +192,14 @@ class BufferedConsole extends _console().Console {
   }
 
   info(firstArg, ...rest) {
-    this._log('info', (0, _util().format)(firstArg, ...rest));
+    this._log("info", (0, _util().format)(firstArg, ...rest));
   }
 
   log(firstArg, ...rest) {
-    this._log('log', (0, _util().format)(firstArg, ...rest));
+    this._log("log", (0, _util().format)(firstArg, ...rest));
   }
 
-  time(label = 'default') {
+  time(label = "default") {
     if (this._timers[label]) {
       return;
     }
@@ -207,7 +207,7 @@ class BufferedConsole extends _console().Console {
     this._timers[label] = new Date();
   }
 
-  timeEnd(label = 'default') {
+  timeEnd(label = "default") {
     const startTime = this._timers[label];
 
     if (startTime) {
@@ -215,7 +215,7 @@ class BufferedConsole extends _console().Console {
       const time = endTime.getTime() - startTime.getTime();
 
       this._log(
-        'time',
+        "time",
         (0, _util().format)(`${label}: ${(0, _jestUtil().formatTime)(time)}`)
       );
 
@@ -223,7 +223,7 @@ class BufferedConsole extends _console().Console {
     }
   }
 
-  timeLog(label = 'default', ...data) {
+  timeLog(label = "default", ...data) {
     const startTime = this._timers[label];
 
     if (startTime) {
@@ -231,7 +231,7 @@ class BufferedConsole extends _console().Console {
       const time = endTime.getTime() - startTime.getTime();
 
       this._log(
-        'time',
+        "time",
         (0, _util().format)(
           `${label}: ${(0, _jestUtil().formatTime)(time)}`,
           ...data
@@ -241,7 +241,7 @@ class BufferedConsole extends _console().Console {
   }
 
   warn(firstArg, ...rest) {
-    this._log('warn', (0, _util().format)(firstArg, ...rest));
+    this._log("warn", (0, _util().format)(firstArg, ...rest));
   }
 
   getBuffer() {

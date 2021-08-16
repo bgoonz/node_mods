@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -21,7 +21,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -29,15 +29,15 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-const {remove: preRunMessageRemove} = _jestUtil().preRunMessage;
+const { remove: preRunMessageRemove } = _jestUtil().preRunMessage;
 
 class BaseReporter {
   constructor() {
-    _defineProperty(this, '_error', void 0);
+    _defineProperty(this, "_error", void 0);
   }
 
   log(message) {
-    process.stderr.write(message + '\n');
+    process.stderr.write(message + "\n");
   }
 
   onRunStart(_results, _options) {

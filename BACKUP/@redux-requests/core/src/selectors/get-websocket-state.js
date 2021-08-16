@@ -1,1 +1,1 @@
-export default state => state.requests.websocket;
+export default (state) => state.requests.websocket;

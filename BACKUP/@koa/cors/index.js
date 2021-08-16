@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-const vary = require('vary');
+const vary = require("vary");
 
 /**
  * CORS middleware
@@ -16,9 +16,9 @@ const vary = require('vary');
  * @return {Function} cors middleware
  * @api public
  */
-module.exports = function(options) {
+module.exports = function (options) {
   const defaults = {
-    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH",
   };
 
   options = {
@@ -27,36 +27,37 @@ module.exports = function(options) {
   };
 
   if (Array.isArray(options.exposeHeaders)) {
-    options.exposeHeaders = options.exposeHeaders.join(',');
+    options.exposeHeaders = options.exposeHeaders.join(",");
   }
 
   if (Array.isArray(options.allowMethods)) {
-    options.allowMethods = options.allowMethods.join(',');
+    options.allowMethods = options.allowMethods.join(",");
   }
 
   if (Array.isArray(options.allowHeaders)) {
-    options.allowHeaders = options.allowHeaders.join(',');
+    options.allowHeaders = options.allowHeaders.join(",");
   }
 
   if (options.maxAge) {
     options.maxAge = String(options.maxAge);
   }
 
-  options.keepHeadersOnError = options.keepHeadersOnError === undefined || !!options.keepHeadersOnError;
+  options.keepHeadersOnError =
+    options.keepHeadersOnError === undefined || !!options.keepHeadersOnError;
 
   return async function cors(ctx, next) {
     // If the Origin header is not present terminate this set of steps.
     // The request is outside the scope of this specification.
-    const requestOrigin = ctx.get('Origin');
+    const requestOrigin = ctx.get("Origin");
 
     // Always set Vary header
     // https://github.com/rs/cors/issues/10
-    ctx.vary('Origin');
+    ctx.vary("Origin");
 
     if (!requestOrigin) return await next();
 
     let origin;
-    if (typeof options.origin === 'function') {
+    if (typeof options.origin === "function") {
       origin = options.origin(ctx);
       if (origin instanceof Promise) origin = await origin;
       if (!origin) return await next();
@@ -65,7 +66,7 @@ module.exports = function(options) {
     }
 
     let credentials;
-    if (typeof options.credentials === 'function') {
+    if (typeof options.credentials === "function") {
       credentials = options.credentials(ctx);
       if (credentials instanceof Promise) credentials = await credentials;
     } else {
@@ -79,16 +80,16 @@ module.exports = function(options) {
       headersSet[key] = value;
     }
 
-    if (ctx.method !== 'OPTIONS') {
+    if (ctx.method !== "OPTIONS") {
       // Simple Cross-Origin Request, Actual Request, and Redirects
-      set('Access-Control-Allow-Origin', origin);
+      set("Access-Control-Allow-Origin", origin);
 
       if (credentials === true) {
-        set('Access-Control-Allow-Credentials', 'true');
+        set("Access-Control-Allow-Credentials", "true");
       }
 
       if (options.exposeHeaders) {
-        set('Access-Control-Expose-Headers', options.exposeHeaders);
+        set("Access-Control-Expose-Headers", options.exposeHeaders);
       }
 
       if (!options.keepHeadersOnError) {
@@ -98,7 +99,10 @@ module.exports = function(options) {
         return await next();
       } catch (err) {
         const errHeadersSet = err.headers || {};
-        const varyWithOrigin = vary.append(errHeadersSet.vary || errHeadersSet.Vary || '', 'Origin');
+        const varyWithOrigin = vary.append(
+          errHeadersSet.vary || errHeadersSet.Vary || "",
+          "Origin"
+        );
         delete errHeadersSet.Vary;
 
         err.headers = {
@@ -114,31 +118,31 @@ module.exports = function(options) {
       // If there is no Access-Control-Request-Method header or if parsing failed,
       // do not set any additional headers and terminate this set of steps.
       // The request is outside the scope of this specification.
-      if (!ctx.get('Access-Control-Request-Method')) {
+      if (!ctx.get("Access-Control-Request-Method")) {
         // this not preflight request, ignore it
         return await next();
       }
 
-      ctx.set('Access-Control-Allow-Origin', origin);
+      ctx.set("Access-Control-Allow-Origin", origin);
 
       if (credentials === true) {
-        ctx.set('Access-Control-Allow-Credentials', 'true');
+        ctx.set("Access-Control-Allow-Credentials", "true");
       }
 
       if (options.maxAge) {
-        ctx.set('Access-Control-Max-Age', options.maxAge);
+        ctx.set("Access-Control-Max-Age", options.maxAge);
       }
 
       if (options.allowMethods) {
-        ctx.set('Access-Control-Allow-Methods', options.allowMethods);
+        ctx.set("Access-Control-Allow-Methods", options.allowMethods);
       }
 
       let allowHeaders = options.allowHeaders;
       if (!allowHeaders) {
-        allowHeaders = ctx.get('Access-Control-Request-Headers');
+        allowHeaders = ctx.get("Access-Control-Request-Headers");
       }
       if (allowHeaders) {
-        ctx.set('Access-Control-Allow-Headers', allowHeaders);
+        ctx.set("Access-Control-Allow-Headers", allowHeaders);
       }
 
       ctx.status = 204;

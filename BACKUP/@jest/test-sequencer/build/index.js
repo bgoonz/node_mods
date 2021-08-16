@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function fs() {
-  const data = _interopRequireWildcard(require('graceful-fs'));
+  const data = _interopRequireWildcard(require("graceful-fs"));
 
   fs = function () {
     return data;
@@ -16,7 +16,7 @@ function fs() {
 }
 
 function _jestHasteMap() {
-  const data = _interopRequireDefault(require('jest-haste-map'));
+  const data = _interopRequireDefault(require("jest-haste-map"));
 
   _jestHasteMap = function () {
     return data;
@@ -26,11 +26,11 @@ function _jestHasteMap() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -42,8 +42,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -53,7 +53,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -77,7 +77,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -103,22 +103,22 @@ const SUCCESS = 1;
  */
 class TestSequencer {
   constructor() {
-    _defineProperty(this, '_cache', new Map());
+    _defineProperty(this, "_cache", new Map());
   }
 
   _getCachePath(context) {
-    const {config} = context;
+    const { config } = context;
 
     const HasteMapClass = _jestHasteMap().default.getStatic(config);
 
     return HasteMapClass.getCacheFilePath(
       config.cacheDirectory,
-      'perf-cache-' + config.name
+      "perf-cache-" + config.name
     );
   }
 
   _getCache(test) {
-    const {context} = test;
+    const { context } = test;
 
     if (!this._cache.has(context) && context.config.cache) {
       const cachePath = this._getCachePath(context);
@@ -127,7 +127,7 @@ class TestSequencer {
         try {
           this._cache.set(
             context,
-            JSON.parse(fs().readFileSync(cachePath, 'utf8'))
+            JSON.parse(fs().readFileSync(cachePath, "utf8"))
           );
         } catch {}
       }
@@ -165,7 +165,7 @@ class TestSequencer {
   sort(tests) {
     const stats = {};
 
-    const fileSize = ({path, context: {hasteFS}}) =>
+    const fileSize = ({ path, context: { hasteFS } }) =>
       stats[path] || (stats[path] = hasteFS.getSize(path) || 0);
 
     const hasFailed = (cache, test) =>
@@ -173,7 +173,7 @@ class TestSequencer {
 
     const time = (cache, test) => cache[test.path] && cache[test.path][1];
 
-    tests.forEach(test => (test.duration = time(this._getCache(test), test)));
+    tests.forEach((test) => (test.duration = time(this._getCache(test), test)));
     return tests.sort((testA, testB) => {
       const cacheA = this._getCache(testA);
 
@@ -209,21 +209,21 @@ class TestSequencer {
     };
 
     return this.sort(
-      tests.filter(test => hasFailed(this._getCache(test), test))
+      tests.filter((test) => hasFailed(this._getCache(test), test))
     );
   }
 
   cacheResults(tests, results) {
     const map = Object.create(null);
-    tests.forEach(test => (map[test.path] = test));
-    results.testResults.forEach(testResult => {
+    tests.forEach((test) => (map[test.path] = test));
+    results.testResults.forEach((testResult) => {
       if (testResult && map[testResult.testFilePath] && !testResult.skipped) {
         const cache = this._getCache(map[testResult.testFilePath]);
 
         const perf = testResult.perfStats;
         cache[testResult.testFilePath] = [
           testResult.numFailingTests ? FAIL : SUCCESS,
-          perf.runtime || 0
+          perf.runtime || 0,
         ];
       }
     });

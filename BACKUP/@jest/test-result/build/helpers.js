@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.createEmptyTestResult =
   exports.addResult =
@@ -43,12 +43,12 @@ const makeEmptyAggregatedTestResult = () => ({
     unchecked: 0,
     uncheckedKeysByFile: [],
     unmatched: 0,
-    updated: 0
+    updated: 0,
   },
   startTime: 0,
   success: true,
   testResults: [],
-  wasInterrupted: false
+  wasInterrupted: false,
 });
 
 exports.makeEmptyAggregatedTestResult = makeEmptyAggregatedTestResult;
@@ -67,7 +67,7 @@ const buildFailureTestResult = (testPath, err) => ({
     end: 0,
     runtime: 0,
     slow: false,
-    start: 0
+    start: 0,
   },
   skipped: false,
   snapshot: {
@@ -77,11 +77,11 @@ const buildFailureTestResult = (testPath, err) => ({
     unchecked: 0,
     uncheckedKeys: [],
     unmatched: 0,
-    updated: 0
+    updated: 0,
   },
   testExecError: err,
   testFilePath: testPath,
-  testResults: []
+  testResults: [],
 }); // Add individual test result to an aggregated test result
 
 exports.buildFailureTestResult = buildFailureTestResult;
@@ -142,7 +142,7 @@ const addResult = (aggregatedResults, testResult) => {
   ) {
     aggregatedResults.snapshot.uncheckedKeysByFile.push({
       filePath: testResult.testFilePath,
-      keys: testResult.snapshot.uncheckedKeys
+      keys: testResult.snapshot.uncheckedKeys,
     });
   }
 
@@ -169,7 +169,7 @@ const createEmptyTestResult = () => ({
     end: 0,
     runtime: 0,
     slow: false,
-    start: 0
+    start: 0,
   },
   skipped: false,
   snapshot: {
@@ -179,10 +179,10 @@ const createEmptyTestResult = () => ({
     unchecked: 0,
     uncheckedKeys: [],
     unmatched: 0,
-    updated: 0
+    updated: 0,
   },
-  testFilePath: '',
-  testResults: []
+  testFilePath: "",
+  testResults: [],
 });
 
 exports.createEmptyTestResult = createEmptyTestResult;

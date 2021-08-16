@@ -3,7 +3,7 @@
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
@@ -21,30 +21,43 @@ var _utils = require("@jimp/utils");
 var _default = function _default() {
   return {
     displace: function displace(map, offset, cb) {
-      if ((0, _typeof2["default"])(map) !== 'object' || map.constructor !== this.constructor) {
-        return _utils.throwError.call(this, 'The source must be a Jimp image', cb);
+      if (
+        (0, _typeof2["default"])(map) !== "object" ||
+        map.constructor !== this.constructor
+      ) {
+        return _utils.throwError.call(
+          this,
+          "The source must be a Jimp image",
+          cb
+        );
       }
 
-      if (typeof offset !== 'number') {
-        return _utils.throwError.call(this, 'factor must be a number', cb);
+      if (typeof offset !== "number") {
+        return _utils.throwError.call(this, "factor must be a number", cb);
       }
 
       var source = this.cloneQuiet();
-      this.scanQuiet(0, 0, this.bitmap.width, this.bitmap.height, function (x, y, idx) {
-        var displacement = map.bitmap.data[idx] / 256 * offset;
-        displacement = Math.round(displacement);
-        var ids = this.getPixelIndex(x + displacement, y);
-        this.bitmap.data[ids] = source.bitmap.data[idx];
-        this.bitmap.data[ids + 1] = source.bitmap.data[idx + 1];
-        this.bitmap.data[ids + 2] = source.bitmap.data[idx + 2];
-      });
+      this.scanQuiet(
+        0,
+        0,
+        this.bitmap.width,
+        this.bitmap.height,
+        function (x, y, idx) {
+          var displacement = (map.bitmap.data[idx] / 256) * offset;
+          displacement = Math.round(displacement);
+          var ids = this.getPixelIndex(x + displacement, y);
+          this.bitmap.data[ids] = source.bitmap.data[idx];
+          this.bitmap.data[ids + 1] = source.bitmap.data[idx + 1];
+          this.bitmap.data[ids + 2] = source.bitmap.data[idx + 2];
+        }
+      );
 
       if ((0, _utils.isNodePattern)(cb)) {
         cb.call(this, null, this);
       }
 
       return this;
-    }
+    },
   };
 };
 

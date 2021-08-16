@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from "reselect";
 
 const defaultMutation = {
   loading: false,
@@ -8,23 +8,24 @@ const defaultMutation = {
   uploadProgress: null,
 };
 
-const getMutationState = (state, type, requestKey = '') =>
+const getMutationState = (state, type, requestKey = "") =>
   state.requests.mutations[type + requestKey];
 
 const mutationSelectors = new WeakMap();
 
 const createMutationSelector = (type, requestKey) =>
   createSelector(
-    state => getMutationState(state, type, requestKey),
-    state => state.requests.downloadProgress[type + (requestKey || '')] ?? null,
-    state => state.requests.uploadProgress[type + (requestKey || '')] ?? null,
+    (state) => getMutationState(state, type, requestKey),
+    (state) =>
+      state.requests.downloadProgress[type + (requestKey || "")] ?? null,
+    (state) => state.requests.uploadProgress[type + (requestKey || "")] ?? null,
     (mutationState, downloadProgress, uploadProgress) => ({
       pending: mutationState.pending,
       loading: mutationState.pending > 0,
       error: mutationState.error,
       downloadProgress,
       uploadProgress,
-    }),
+    })
   );
 
 export default (state, { type, requestKey }) => {
@@ -37,7 +38,7 @@ export default (state, { type, requestKey }) => {
   if (!mutationSelectors.get(mutationState.ref)) {
     mutationSelectors.set(
       mutationState.ref,
-      createMutationSelector(type, requestKey),
+      createMutationSelector(type, requestKey)
     );
   }
 

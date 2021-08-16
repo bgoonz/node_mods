@@ -1,6 +1,6 @@
-const url = require('native-url');
-const getCurrentScriptSource = require('./getCurrentScriptSource');
-const parseQuery = require('./parseQuery');
+const url = require("native-url");
+const getCurrentScriptSource = require("./getCurrentScriptSource");
+const parseQuery = require("./parseQuery");
 
 /**
  * @typedef {Object} SocketUrlParts
@@ -25,7 +25,7 @@ function getSocketUrlParts(resourceQuery) {
   let auth;
   let hostname = urlParts.hostname;
   let protocol = urlParts.protocol;
-  let pathname = '/sockjs-node'; // This is hard-coded in WDS
+  let pathname = "/sockjs-node"; // This is hard-coded in WDS
   let port = urlParts.port;
 
   // FIXME:
@@ -35,7 +35,7 @@ function getSocketUrlParts(resourceQuery) {
   // Ref: GoogleChromeLabs/native-url#32
   // The placeholder `baseURL` is to allow parsing of relative paths,
   // and will have no effect if `scriptSource` is a proper URL.
-  const authUrlParts = new URL(scriptSource, 'http://foo.bar');
+  const authUrlParts = new URL(scriptSource, "http://foo.bar");
   // Parse authentication credentials in case we need them
   if (authUrlParts.username) {
     auth = authUrlParts.username;
@@ -44,7 +44,7 @@ function getSocketUrlParts(resourceQuery) {
     // we only include password if the username is not empty.
     if (authUrlParts.password) {
       // Result: <username>:<password>
-      auth = auth.concat(':', authUrlParts.password);
+      auth = auth.concat(":", authUrlParts.password);
     }
   }
 
@@ -52,13 +52,15 @@ function getSocketUrlParts(resourceQuery) {
   // This is important because `hostname` can be empty for some hosts,
   // such as `about:blank` or `file://` URLs.
   const isEmptyHostname =
-    urlParts.hostname === '0.0.0.0' || urlParts.hostname === '::' || urlParts.hostname === null;
+    urlParts.hostname === "0.0.0.0" ||
+    urlParts.hostname === "::" ||
+    urlParts.hostname === null;
 
   // We only re-assign the hostname if we are using HTTP/HTTPS protocols
   if (
     isEmptyHostname &&
     window.location.hostname &&
-    window.location.protocol.indexOf('http') !== -1
+    window.location.protocol.indexOf("http") !== -1
   ) {
     hostname = window.location.hostname;
   }
@@ -66,18 +68,18 @@ function getSocketUrlParts(resourceQuery) {
   // We only re-assign `protocol` when `hostname` is available and is empty,
   // since otherwise we risk creating an invalid URL.
   // We also do this when `https` is used as it mandates the use of secure sockets.
-  if (hostname && (isEmptyHostname || window.location.protocol === 'https:')) {
+  if (hostname && (isEmptyHostname || window.location.protocol === "https:")) {
     protocol = window.location.protocol;
   }
 
   // We only re-assign port when it is not available or `empty`
-  if (!port || port === '0') {
+  if (!port || port === "0") {
     port = window.location.port;
   }
 
   // If the resource query is available,
   // parse it and overwrite everything we received from the script host.
-  const parsedQuery = parseQuery(resourceQuery || '');
+  const parsedQuery = parseQuery(resourceQuery || "");
   hostname = parsedQuery.sockHost || hostname;
   pathname = parsedQuery.sockPath || pathname;
   port = parsedQuery.sockPort || port;

@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = isValidPath;
 
 function _jestSnapshot() {
-  const data = require('jest-snapshot');
+  const data = require("jest-snapshot");
 
   _jestSnapshot = function () {
     return data;

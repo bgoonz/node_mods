@@ -1,2 +1,2 @@
-export { fetchEventSource, EventStreamContentType } from './fetch';
+export { fetchEventSource, EventStreamContentType } from "./fetch";
 //# sourceMappingURL=index.js.map

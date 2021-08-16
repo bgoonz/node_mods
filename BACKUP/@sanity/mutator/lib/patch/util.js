@@ -1,13 +1,13 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.targetsToIndicies = targetsToIndicies;
 
 function targetsToIndicies(targets, accessor) {
   var result = [];
-  targets.forEach(target => {
+  targets.forEach((target) => {
     if (target.isIndexReference()) {
       result.push(...target.toIndicies(accessor));
     }

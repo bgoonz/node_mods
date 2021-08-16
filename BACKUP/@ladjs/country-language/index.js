@@ -1,12 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-var _ = require('underscore')
-  , _d = require('underscore.deep')
-  , utils = require('./utils')
-  , data = require('./data.json');
+var _ = require("underscore"),
+  _d = require("underscore.deep"),
+  utils = require("./utils"),
+  data = require("./data.json");
 
 _.mixin(_d);
 
-var noop = function(err, value) {
+var noop = function (err, value) {
   if (err) return err;
   return value;
 };
@@ -24,17 +24,19 @@ exports.getLanguageFamilies = function () {
 };
 
 exports.getLanguageCodes = function (codeType, cb) {
-  var languages = data.languages
-    , cType
-    , cTypeNames = [ 'iso639_1', 'iso639_2en', 'iso639_3']
-    , codes = [];
+  var languages = data.languages,
+    cType,
+    cTypeNames = ["iso639_1", "iso639_2en", "iso639_3"],
+    codes = [];
 
   cb = cb || (utils.isFunction(codeType) ? codeType : noop);
 
-  codeType = (codeType && !utils.isFunction(codeType)) ? codeType : 1;
+  codeType = codeType && !utils.isFunction(codeType) ? codeType : 1;
   codeType = Math.floor(Number(codeType));
   if (isNaN(codeType) || codeType < 1 || codeType > cTypeNames.length) {
-    return cb('Wrong language code type provided. Valid values: 1, 2, 3 for iso639-1, iso639-2, iso639-3 respectively');
+    return cb(
+      "Wrong language code type provided. Valid values: 1, 2, 3 for iso639-1, iso639-2, iso639-3 respectively"
+    );
   }
   cType = cTypeNames[codeType - 1];
   _.each(languages, function (language) {
@@ -45,17 +47,19 @@ exports.getLanguageCodes = function (codeType, cb) {
 };
 
 exports.getCountryCodes = function (codeType, cb) {
-  var countries = data.countries
-    , cType
-    , cTypeNames = [ 'numCode', 'code_2', 'code_3' ]
-    , codes = [];
+  var countries = data.countries,
+    cType,
+    cTypeNames = ["numCode", "code_2", "code_3"],
+    codes = [];
 
   cb = cb || (utils.isFunction(codeType) ? codeType : noop);
 
-  codeType = (codeType && !utils.isFunction(codeType)) ? codeType : 2;
+  codeType = codeType && !utils.isFunction(codeType) ? codeType : 2;
   codeType = Math.floor(Number(codeType));
   if (isNaN(codeType) || codeType < 1 || codeType > cTypeNames.length) {
-    return cb('Wrong country code type provided. Valid values: 1, 2, 3 for numeric code, alpha-2, alpha-3 respectively');
+    return cb(
+      "Wrong country code type provided. Valid values: 1, 2, 3 for numeric code, alpha-2, alpha-3 respectively"
+    );
   }
   cType = cTypeNames[codeType - 1];
   _.each(countries, function (country) {
@@ -66,8 +70,7 @@ exports.getCountryCodes = function (codeType, cb) {
 };
 
 exports.languageCodeExists = function (code) {
-  var codes
-    , exists;
+  var codes, exists;
 
   if (!code) return false;
   code = code.toLowerCase();
@@ -81,8 +84,7 @@ exports.languageCodeExists = function (code) {
 };
 
 exports.countryCodeExists = function (code) {
-  var codes
-    , exists;
+  var codes, exists;
 
   if (!code) return false;
   code = code.toUpperCase();
@@ -95,22 +97,22 @@ exports.countryCodeExists = function (code) {
   return exists;
 };
 
-exports.getCountry  = function (code, cb, noLangInfo) {
-  var countries = data.countries
-    , country
-    , codeFld
-    , langs;
+exports.getCountry = function (code, cb, noLangInfo) {
+  var countries = data.countries,
+    country,
+    codeFld,
+    langs;
 
-  if ('string' !== typeof code) {
-    return cb('No country code provided');
+  if ("string" !== typeof code) {
+    return cb("No country code provided");
   }
   cb = cb || noop;
   code = code.toUpperCase();
 
   if (code.length === 2) {
-    codeFld = 'code_2';
+    codeFld = "code_2";
   } else if (code.length === 3) {
-    codeFld = 'code_3';
+    codeFld = "code_3";
   }
 
   if (codeFld) {
@@ -130,29 +132,29 @@ exports.getCountry  = function (code, cb, noLangInfo) {
     }
     return cb(null, country);
   } else {
-    return cb('Wrong type of country code provided');
+    return cb("Wrong type of country code provided");
   }
 };
 
 exports.getLanguage = function (code, cb, noCountryInfo) {
-  var languages = data.languages
-    , language
-    , codeFld = []
-    , countrs;
+  var languages = data.languages,
+    language,
+    codeFld = [],
+    countrs;
 
   cb = cb || noop;
 
-  if ('string' !== typeof code) {
-    return cb('No language code provided');
+  if ("string" !== typeof code) {
+    return cb("No language code provided");
   }
   code = code.toLowerCase();
 
   if (code.length === 2) {
-    codeFld.push('iso639_1');
+    codeFld.push("iso639_1");
   } else if (code.length === 3) {
-    codeFld.push('iso639_2');
-    codeFld.push('iso639_2en');
-    codeFld.push('iso639_3');
+    codeFld.push("iso639_2");
+    codeFld.push("iso639_2en");
+    codeFld.push("iso639_3");
   }
 
   if (codeFld) {
@@ -175,7 +177,7 @@ exports.getLanguage = function (code, cb, noCountryInfo) {
     }
     return cb(null, language);
   } else {
-    return cb('Wrong type of language code provided');
+    return cb("Wrong type of language code provided");
   }
 };
 
@@ -188,9 +190,9 @@ exports.getCountryLanguages = function (code, cb) {
     if (err) return cb(err);
     _.each(country.languages, function (l) {
       codes.push({
-        iso639_1: l.iso639_1
-        , iso639_2: l.iso639_2en
-        , iso639_3: l.iso639_3
+        iso639_1: l.iso639_1,
+        iso639_2: l.iso639_2en,
+        iso639_3: l.iso639_3,
       });
     });
   });
@@ -206,9 +208,9 @@ exports.getLanguageCountries = function (code, cb) {
     if (err) return cb(err);
     _.each(language.countries, function (c) {
       codes.push({
-        code_2: c.code_2
-        , code_3: c.code_3
-        , numCode: c.numCode
+        code_2: c.code_2,
+        code_3: c.code_3,
+        numCode: c.numCode,
       });
     });
   });
@@ -240,15 +242,15 @@ exports.getLanguageMsLocales = function (code, cb) {
 };
 
 exports.getLanguageFamilyMembers = function (family, cb) {
-  var languages = data.languages
-    , check
-    , members
-    , ret = [];
+  var languages = data.languages,
+    check,
+    members,
+    ret = [];
 
   cb = cb || noop;
 
-  if ('string' !== typeof family) {
-    return cb('No language family provided');
+  if ("string" !== typeof family) {
+    return cb("No language family provided");
   }
   family = family.toLowerCase();
 
@@ -269,15 +271,15 @@ exports.getLanguageFamilyMembers = function (family, cb) {
 };
 
 exports.getLocales = function (mode) {
-  var locales = data.locales
-    , ret = []
-    , loc2;
+  var locales = data.locales,
+    ret = [],
+    loc2;
   locales.forEach(function (loc) {
-    loc2 = loc[2] ? '-' + loc[2] : '';
+    loc2 = loc[2] ? "-" + loc[2] : "";
     if (mode) {
-      ret.push(loc[0] + loc2 + '-' + loc[1]);
+      ret.push(loc[0] + loc2 + "-" + loc[1]);
     } else {
-      ret.push(loc[0] + '-' + loc[1] + loc2);
+      ret.push(loc[0] + "-" + loc[1] + loc2);
     }
   });
   return ret;

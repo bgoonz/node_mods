@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("path");
 
 /**
  * @callback MatchObject
@@ -6,7 +6,7 @@ const path = require('path');
  * @returns {boolean}
  */
 
-const resolvedLoader = require.resolve('../../loader');
+const resolvedLoader = require.resolve("../../loader");
 
 /**
  * Injects refresh loader to all JavaScript-like and user-specified files.
@@ -20,7 +20,7 @@ function injectRefreshLoader(data, matchObject) {
     matchObject(data.resource) &&
     // Skip plugin's runtime utils to prevent self-referencing -
     // this is useful when using the plugin as a direct dependency.
-    !data.resource.includes(path.join(__dirname, '../runtime/RefreshUtils')) &&
+    !data.resource.includes(path.join(__dirname, "../runtime/RefreshUtils")) &&
     // Check to prevent double injection
     !data.loaders.find(({ loader }) => loader === resolvedLoader)
   ) {

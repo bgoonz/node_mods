@@ -1,4 +1,4 @@
-import { GraphQLSchema, GraphQLObjectType } from 'graphql';
+import { GraphQLSchema, GraphQLObjectType } from "graphql";
 /**
  * Get all GraphQL types from schema without:
  *
@@ -7,4 +7,6 @@ import { GraphQLSchema, GraphQLObjectType } from 'graphql';
  *
  * @param schema
  */
-export declare function getUserTypesFromSchema(schema: GraphQLSchema): GraphQLObjectType[];
+export declare function getUserTypesFromSchema(
+  schema: GraphQLSchema
+): GraphQLObjectType[];

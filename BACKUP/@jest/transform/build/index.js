@@ -1,41 +1,41 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
-Object.defineProperty(exports, 'createScriptTransformer', {
+Object.defineProperty(exports, "createScriptTransformer", {
   enumerable: true,
   get: function () {
     return _ScriptTransformer.createScriptTransformer;
-  }
+  },
 });
-Object.defineProperty(exports, 'createTranspilingRequire', {
+Object.defineProperty(exports, "createTranspilingRequire", {
   enumerable: true,
   get: function () {
     return _ScriptTransformer.createTranspilingRequire;
-  }
+  },
 });
-Object.defineProperty(exports, 'shouldInstrument', {
+Object.defineProperty(exports, "shouldInstrument", {
   enumerable: true,
   get: function () {
     return _shouldInstrument.default;
-  }
+  },
 });
-Object.defineProperty(exports, 'handlePotentialSyntaxError', {
+Object.defineProperty(exports, "handlePotentialSyntaxError", {
   enumerable: true,
   get: function () {
     return _enhanceUnexpectedTokenMessage.default;
-  }
+  },
 });
 
-var _ScriptTransformer = require('./ScriptTransformer');
+var _ScriptTransformer = require("./ScriptTransformer");
 
-var _shouldInstrument = _interopRequireDefault(require('./shouldInstrument'));
+var _shouldInstrument = _interopRequireDefault(require("./shouldInstrument"));
 
 var _enhanceUnexpectedTokenMessage = _interopRequireDefault(
-  require('./enhanceUnexpectedTokenMessage')
+  require("./enhanceUnexpectedTokenMessage")
 );
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }

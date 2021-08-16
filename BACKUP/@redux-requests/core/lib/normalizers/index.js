@@ -1,7 +1,12 @@
 "use strict";
 
 exports.__esModule = true;
-exports.getDependentKeys = exports.mergeData = exports.updateNormalizedData = exports.denormalize = exports.normalize = void 0;
+exports.getDependentKeys =
+  exports.mergeData =
+  exports.updateNormalizedData =
+  exports.denormalize =
+  exports.normalize =
+    void 0;
 
 var _normalize = require("./normalize");
 

@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-exports.buildPresetChain = buildPresetChain;
-exports.buildRootChain = buildRootChain;
-exports.buildPresetChainWalker = void 0;
+export {buildPresetChain};
+export {buildRootChain};
+export var buildPresetChainWalker = void 0;
 
 function _path() {
   const data = require("path");
@@ -27,17 +27,12 @@ function _debug() {
   return data;
 }
 
-const _options = require("./validation/options");
-
-const _patternToRegex = require("./pattern-to-regex");
-
-const _printer = require("./printer");
-
-const _files = require("./files");
-
-const _caching = require("./caching");
-
-const _configDescriptors = require("./config-descriptors");
+import _options from "./validation/options";
+import _patternToRegex from "./pattern-to-regex";
+import _printer from "./printer";
+import _files from "./files";
+import _caching from "./caching";
+import _configDescriptors from "./config-descriptors";
 
 const debug = _debug()("babel:config:config-chain");
 
@@ -60,7 +55,7 @@ const buildPresetChainWalker = makeChainWalker({
     loadPresetOverridesEnvDescriptors(preset)(index)(envName),
   createLogger: () => () => {},
 });
-exports.buildPresetChainWalker = buildPresetChainWalker;
+export {buildPresetChainWalker};
 const loadPresetDescriptors = (0, _caching.makeWeakCacheSync)((preset) =>
   buildRootDescriptors(
     preset,

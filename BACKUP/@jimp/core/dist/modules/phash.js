@@ -49,7 +49,6 @@ ImagePHash.prototype.distance = function (s1, s2) {
   return counter / s1.length;
 }; // Returns a 'binary string' (like. 001010111011100010) which is easy to do a hamming distance on.
 
-
 ImagePHash.prototype.getHash = function (img) {
   /* 1. Reduce size.
    * Like Average Hash, pHash starts with a small image.
@@ -78,7 +77,6 @@ ImagePHash.prototype.getHash = function (img) {
    * and scalars. While JPEG uses an 8x8 DCT, this algorithm uses
    * a 32x32 DCT.
    */
-
 
   var dctVals = applyDCT(vals, this.size);
   /* 4. Reduce the DCT.
@@ -114,24 +112,32 @@ ImagePHash.prototype.getHash = function (img) {
    * adjustments without a problem.
    */
 
-  var hash = '';
+  var hash = "";
 
   for (var _x2 = 0; _x2 < this.smallerSize; _x2++) {
     for (var _y2 = 0; _y2 < this.smallerSize; _y2++) {
-      hash += dctVals[_x2][_y2] > avg ? '1' : '0';
+      hash += dctVals[_x2][_y2] > avg ? "1" : "0";
     }
   }
 
   return hash;
 }; // DCT function stolen from http://stackoverflow.com/questions/4240490/problems-with-dct-and-idct-algorithm-in-java
 
-
 function intToRGBA(i) {
   var rgba = {};
   rgba.r = Math.floor(i / Math.pow(256, 3));
   rgba.g = Math.floor((i - rgba.r * Math.pow(256, 3)) / Math.pow(256, 2));
-  rgba.b = Math.floor((i - rgba.r * Math.pow(256, 3) - rgba.g * Math.pow(256, 2)) / Math.pow(256, 1));
-  rgba.a = Math.floor((i - rgba.r * Math.pow(256, 3) - rgba.g * Math.pow(256, 2) - rgba.b * Math.pow(256, 1)) / Math.pow(256, 0));
+  rgba.b = Math.floor(
+    (i - rgba.r * Math.pow(256, 3) - rgba.g * Math.pow(256, 2)) /
+      Math.pow(256, 1)
+  );
+  rgba.a = Math.floor(
+    (i -
+      rgba.r * Math.pow(256, 3) -
+      rgba.g * Math.pow(256, 2) -
+      rgba.b * Math.pow(256, 1)) /
+      Math.pow(256, 0)
+  );
   return rgba;
 }
 
@@ -157,11 +163,14 @@ function applyDCT(f, size) {
 
       for (var i = 0; i < N; i++) {
         for (var j = 0; j < N; j++) {
-          sum += Math.cos((2 * i + 1) / (2.0 * N) * u * Math.PI) * Math.cos((2 * j + 1) / (2.0 * N) * v * Math.PI) * f[i][j];
+          sum +=
+            Math.cos(((2 * i + 1) / (2.0 * N)) * u * Math.PI) *
+            Math.cos(((2 * j + 1) / (2.0 * N)) * v * Math.PI) *
+            f[i][j];
         }
       }
 
-      sum *= c[u] * c[v] / 4;
+      sum *= (c[u] * c[v]) / 4;
       F[u][v] = sum;
     }
   }

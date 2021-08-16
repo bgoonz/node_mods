@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _fakeTimers() {
-  const data = require('@sinonjs/fake-timers');
+  const data = require("@sinonjs/fake-timers");
 
   _fakeTimers = function () {
     return data;
@@ -16,7 +16,7 @@ function _fakeTimers() {
 }
 
 function _jestMessageUtil() {
-  const data = require('jest-message-util');
+  const data = require("jest-message-util");
 
   _jestMessageUtil = function () {
     return data;
@@ -31,7 +31,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -40,18 +40,18 @@ function _defineProperty(obj, key, value) {
 }
 
 class FakeTimers {
-  constructor({global, config, maxLoops}) {
-    _defineProperty(this, '_clock', void 0);
+  constructor({ global, config, maxLoops }) {
+    _defineProperty(this, "_clock", void 0);
 
-    _defineProperty(this, '_config', void 0);
+    _defineProperty(this, "_config", void 0);
 
-    _defineProperty(this, '_fakingTime', void 0);
+    _defineProperty(this, "_fakingTime", void 0);
 
-    _defineProperty(this, '_global', void 0);
+    _defineProperty(this, "_global", void 0);
 
-    _defineProperty(this, '_fakeTimers', void 0);
+    _defineProperty(this, "_fakeTimers", void 0);
 
-    _defineProperty(this, '_maxLoops', void 0);
+    _defineProperty(this, "_maxLoops", void 0);
 
     this._global = global;
     this._config = config;
@@ -123,7 +123,7 @@ class FakeTimers {
       this._clock = this._fakeTimers.install({
         loopLimit: this._maxLoops,
         now: Date.now(),
-        toFake
+        toFake,
       });
       this._fakingTime = true;
     }
@@ -131,7 +131,7 @@ class FakeTimers {
 
   reset() {
     if (this._checkFakeTimers()) {
-      const {now} = this._clock;
+      const { now } = this._clock;
 
       this._clock.reset();
 
@@ -160,15 +160,15 @@ class FakeTimers {
   _checkFakeTimers() {
     if (!this._fakingTime) {
       this._global.console.warn(
-        'A function to advance timers was called but the timers API is not ' +
-          'mocked with fake timers. Call `jest.useFakeTimers()` in this test or ' +
+        "A function to advance timers was called but the timers API is not " +
+          "mocked with fake timers. Call `jest.useFakeTimers()` in this test or " +
           'enable fake timers globally by setting `"timers": "fake"` in the ' +
-          'configuration file\nStack Trace:\n' +
+          "configuration file\nStack Trace:\n" +
           (0, _jestMessageUtil().formatStackTrace)(
             new Error().stack,
             this._config,
             {
-              noStackTrace: false
+              noStackTrace: false,
             }
           )
       );

@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = getWatermarks;
 
 function _istanbulLibReport() {
-  const data = _interopRequireDefault(require('istanbul-lib-report'));
+  const data = _interopRequireDefault(require("istanbul-lib-report"));
 
   _istanbulLibReport = function () {
     return data;
@@ -16,7 +16,7 @@ function _istanbulLibReport() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -28,13 +28,13 @@ function _interopRequireDefault(obj) {
 function getWatermarks(config) {
   const defaultWatermarks = _istanbulLibReport().default.getDefaultWatermarks();
 
-  const {coverageThreshold} = config;
+  const { coverageThreshold } = config;
 
   if (!coverageThreshold || !coverageThreshold.global) {
     return defaultWatermarks;
   }
 
-  const keys = ['branches', 'functions', 'lines', 'statements'];
+  const keys = ["branches", "functions", "lines", "statements"];
   return keys.reduce((watermarks, key) => {
     const value = coverageThreshold.global[key];
 

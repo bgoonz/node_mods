@@ -1,59 +1,59 @@
-import {test} from 'tap'
+import { test } from "tap";
 
-import parse from '../src/jsonpath/parse'
+import parse from "../src/jsonpath/parse";
 
 const cases = {
   a: {
-    type: 'attribute',
-    name: 'a',
+    type: "attribute",
+    name: "a",
   },
-  'a.b': {
-    type: 'path',
+  "a.b": {
+    type: "path",
     nodes: [
       {
-        type: 'attribute',
-        name: 'a',
+        type: "attribute",
+        name: "a",
       },
       {
-        type: 'attribute',
-        name: 'b',
+        type: "attribute",
+        name: "b",
       },
     ],
   },
-  '[7]': {
-    type: 'union',
+  "[7]": {
+    type: "union",
     nodes: [
       {
-        type: 'index',
+        type: "index",
         value: 7,
       },
     ],
   },
-  '[-4]': {
-    type: 'union',
+  "[-4]": {
+    type: "union",
     nodes: [
       {
-        type: 'index',
+        type: "index",
         value: -4,
       },
     ],
   },
-  'a.b[7]': {
-    type: 'path',
+  "a.b[7]": {
+    type: "path",
     nodes: [
       {
-        type: 'attribute',
-        name: 'a',
+        type: "attribute",
+        name: "a",
       },
       {
-        type: 'attribute',
-        name: 'b',
+        type: "attribute",
+        name: "b",
       },
       {
-        type: 'union',
+        type: "union",
         nodes: [
           {
-            type: 'index',
+            type: "index",
             value: 7,
           },
         ],
@@ -61,108 +61,108 @@ const cases = {
     ],
   },
   'some.array[@ == "snafu"]': {
-    type: 'path',
+    type: "path",
     nodes: [
       {
-        type: 'attribute',
-        name: 'some',
+        type: "attribute",
+        name: "some",
       },
       {
-        type: 'attribute',
-        name: 'array',
+        type: "attribute",
+        name: "array",
       },
       {
-        type: 'union',
+        type: "union",
         nodes: [
           {
-            type: 'constraint',
-            operator: '==',
+            type: "constraint",
+            operator: "==",
             lhs: {
-              type: 'alias',
-              target: 'self',
+              type: "alias",
+              target: "self",
             },
             rhs: {
-              type: 'string',
-              value: 'snafu',
+              type: "string",
+              value: "snafu",
             },
           },
         ],
       },
     ],
   },
-  '[count > 5]': {
-    type: 'union',
+  "[count > 5]": {
+    type: "union",
     nodes: [
       {
-        type: 'constraint',
-        operator: '>',
+        type: "constraint",
+        operator: ">",
         lhs: {
-          type: 'attribute',
-          name: 'count',
+          type: "attribute",
+          name: "count",
         },
         rhs: {
-          type: 'number',
+          type: "number",
           value: 5,
         },
       },
     ],
   },
-  '..a': {
-    type: 'recursive',
+  "..a": {
+    type: "recursive",
     term: {
-      type: 'attribute',
-      name: 'a',
+      type: "attribute",
+      name: "a",
     },
   },
-  '[]': {
-    type: 'union',
+  "[]": {
+    type: "union",
     nodes: [],
   },
-  '[0,1]._weak': {
-    type: 'path',
+  "[0,1]._weak": {
+    type: "path",
     nodes: [
       {
-        type: 'union',
+        type: "union",
         nodes: [
           {
-            type: 'index',
+            type: "index",
             value: 0,
           },
           {
-            type: 'index',
+            type: "index",
             value: 1,
           },
         ],
       },
       {
-        type: 'attribute',
-        name: '_weak',
+        type: "attribute",
+        name: "_weak",
       },
     ],
   },
-  '[_ref?]': {
+  "[_ref?]": {
     nodes: [
       {
         lhs: {
-          name: '_ref',
-          type: 'attribute',
+          name: "_ref",
+          type: "attribute",
         },
-        operator: '?',
-        type: 'constraint',
+        operator: "?",
+        type: "constraint",
       },
     ],
-    type: 'union',
+    type: "union",
   },
-}
+};
 
 Object.keys(cases).forEach((path) => {
   test(`Parsing jsonpath ${path}`, (tap) => {
-    const expect = cases[path]
+    const expect = cases[path];
     if (expect) {
-      tap.same(parse(path), expect, `Tokenization failed for '${path}'`)
+      tap.same(parse(path), expect, `Tokenization failed for '${path}'`);
     } else {
-      console.log(`Result of parsing '${path}'`, JSON.stringify(parse(path)))
+      console.log(`Result of parsing '${path}'`, JSON.stringify(parse(path)));
     }
-    tap.end()
-  })
-})
+    tap.end();
+  });
+});

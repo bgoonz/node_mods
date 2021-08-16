@@ -1,4 +1,4 @@
-import deepmerge from 'deepmerge';
+import deepmerge from "deepmerge";
 
 const mergeOptions = {
   arrayMerge: (destinationArray, sourceArray) => sourceArray,

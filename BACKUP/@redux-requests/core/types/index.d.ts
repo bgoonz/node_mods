@@ -1,8 +1,8 @@
-import { AnyAction, Reducer, Middleware, Store } from 'redux';
+import { AnyAction, Reducer, Middleware, Store } from "redux";
 
 export interface DispatchRequest {
   <QueryStateData = any>(
-    requestAction: RequestAction<any, QueryStateData>,
+    requestAction: RequestAction<any, QueryStateData>
   ): Promise<{
     data?: QueryStateData;
     error?: any;
@@ -56,12 +56,12 @@ interface RequestActionMeta<Data, TransformedData> {
   onRequest?: (
     request: any,
     action: RequestAction,
-    store: RequestsStore,
+    store: RequestsStore
   ) => any;
   onSuccess?: (
     response: any,
     action: RequestAction,
-    store: RequestsStore,
+    store: RequestsStore
   ) => any;
   onError?: (error: any, action: RequestAction, store: RequestsStore) => any;
   onAbort?: (action: RequestAction, store: RequestsStore) => void;
@@ -109,7 +109,7 @@ interface SubscriptionActionMeta {
     [actionType: string]: (
       data: any,
       subscriptionData: any,
-      message: any,
+      message: any
     ) => any;
   };
   getData?: (data: any) => any;
@@ -131,9 +131,8 @@ export type SubscriptionAction =
       meta?: SubscriptionActionMeta;
     };
 
-type ResponseData<
-  Request extends (...args: any[]) => RequestAction
-> = ReturnType<ReturnType<Request>['meta']['getData']>;
+type ResponseData<Request extends (...args: any[]) => RequestAction> =
+  ReturnType<ReturnType<Request>["meta"]["getData"]>;
 
 type ActionTypeModifier = (actionType: string) => string;
 
@@ -152,7 +151,7 @@ export interface Driver {
   (
     requestConfig: any,
     requestAction: RequestAction,
-    driverActions: DriverActions,
+    driverActions: DriverActions
   ): Promise<any>;
 }
 
@@ -171,7 +170,7 @@ export interface Subscriber {
     stoppedSubscriptions: string[],
     action: AnyAction,
     ws: any,
-    store: RequestsStore,
+    store: RequestsStore
   ) => void;
   lazy?: boolean;
   isHeartbeatMessage?: (message: any) => boolean;
@@ -184,17 +183,17 @@ export interface HandleRequestConfig {
   onRequest?: (
     request: any,
     action: RequestAction,
-    store: RequestsStore,
+    store: RequestsStore
   ) => any;
   onSuccess?: (
     response: any,
     action: RequestAction,
-    store: RequestsStore,
+    store: RequestsStore
   ) => any;
   onError?: (error: any, action: RequestAction, store: RequestsStore) => any;
   onAbort?: (action: RequestAction, store: RequestsStore) => void;
   cache?: boolean;
-  ssr?: null | 'client' | 'server';
+  ssr?: null | "client" | "server";
   disableRequestsPromise?: boolean;
   isRequestAction?: (action: AnyAction) => boolean;
   isRequestActionQuery?: (requestAction: RequestAction) => boolean;
@@ -212,11 +211,11 @@ interface handleRequestsResponse {
 }
 
 export function handleRequests(
-  config: HandleRequestConfig,
+  config: HandleRequestConfig
 ): handleRequestsResponse;
 
 export const clearRequestsCache: (
-  requests?: (string | { requestType: string; requestKey: string })[],
+  requests?: (string | { requestType: string; requestKey: string })[]
 ) => {
   type: string;
   requests: (string | { requestType: string; requestKey: string })[];
@@ -225,7 +224,7 @@ export const clearRequestsCache: (
 export const resetRequests: (
   requests?: (string | { requestType: string; requestKey: string })[],
   abortPending?: boolean,
-  resetCached?: boolean,
+  resetCached?: boolean
 ) => {
   type: string;
   requests: (string | { requestType: string; requestKey: string })[];
@@ -234,57 +233,47 @@ export const resetRequests: (
 };
 
 export const abortRequests: (
-  requests?: (string | { requestType: string; requestKey: string })[],
+  requests?: (string | { requestType: string; requestKey: string })[]
 ) => {
   type: string;
   requests: (string | { requestType: string; requestKey: string })[];
 };
 
 export const stopPolling: (
-  requests?: (string | { requestType: string; requestKey: string })[],
+  requests?: (string | { requestType: string; requestKey: string })[]
 ) => {
   type: string;
   requests: (string | { requestType: string; requestKey: string })[];
 };
 
-export const openWebsocket: (
-  props?: any,
-) => {
+export const openWebsocket: (props?: any) => {
   type: string;
   props: any;
 };
 
-export const closeWebsocket: (
-  code?: number,
-) => {
+export const closeWebsocket: (code?: number) => {
   type: string;
   code: string | null;
 };
 
-export const stopSubscriptions: (
-  subscriptions?: string[],
-) => {
+export const stopSubscriptions: (subscriptions?: string[]) => {
   type: string;
   subscriptions?: string[] | null;
 };
 
-export const addWatcher: (
-  requestType: string,
-) => {
+export const addWatcher: (requestType: string) => {
   type: string;
   requestType: string;
 };
 
-export const removeWatcher: (
-  requestType: string,
-) => {
+export const removeWatcher: (requestType: string) => {
   type: string;
   requestType: string;
 };
 
 export const joinRequest: (
   requestType: string,
-  rehydrate?: boolean,
+  rehydrate?: boolean
 ) => {
   type: string;
   requestType: string;
@@ -309,7 +298,7 @@ export function getQuery<QueryStateData = any>(
     requestKey?: string;
     multiple?: boolean;
     defaultData?: any;
-  },
+  }
 ): QueryState<QueryStateData>;
 
 export function getQuerySelector<QueryStateData = any>(props: {
@@ -333,7 +322,7 @@ export function getMutation(
   props: {
     type: string | ((...params: any[]) => RequestAction);
     requestKey?: string;
-  },
+  }
 ): MutationState;
 
 export function getMutationSelector(props: {

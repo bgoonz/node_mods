@@ -24,6 +24,6 @@ var _default = {
   shouldObjectBeNormalized: function shouldObjectBeNormalized(obj) {
     return obj.id !== undefined;
   },
-  subscriber: null
+  subscriber: null,
 };
 exports["default"] = _default;

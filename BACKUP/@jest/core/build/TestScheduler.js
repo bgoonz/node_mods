@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.createTestScheduler = createTestScheduler;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,7 +16,7 @@ function _chalk() {
 }
 
 function _exit() {
-  const data = _interopRequireDefault(require('exit'));
+  const data = _interopRequireDefault(require("exit"));
 
   _exit = function () {
     return data;
@@ -26,7 +26,7 @@ function _exit() {
 }
 
 function _reporters() {
-  const data = require('@jest/reporters');
+  const data = require("@jest/reporters");
 
   _reporters = function () {
     return data;
@@ -36,7 +36,7 @@ function _reporters() {
 }
 
 function _testResult() {
-  const data = require('@jest/test-result');
+  const data = require("@jest/test-result");
 
   _testResult = function () {
     return data;
@@ -46,7 +46,7 @@ function _testResult() {
 }
 
 function _transform() {
-  const data = require('@jest/transform');
+  const data = require("@jest/transform");
 
   _transform = function () {
     return data;
@@ -56,7 +56,7 @@ function _transform() {
 }
 
 function _jestMessageUtil() {
-  const data = require('jest-message-util');
+  const data = require("jest-message-util");
 
   _jestMessageUtil = function () {
     return data;
@@ -66,7 +66,7 @@ function _jestMessageUtil() {
 }
 
 function _jestSnapshot() {
-  const data = _interopRequireDefault(require('jest-snapshot'));
+  const data = _interopRequireDefault(require("jest-snapshot"));
 
   _jestSnapshot = function () {
     return data;
@@ -76,7 +76,7 @@ function _jestSnapshot() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -86,13 +86,13 @@ function _jestUtil() {
 }
 
 var _ReporterDispatcher = _interopRequireDefault(
-  require('./ReporterDispatcher')
+  require("./ReporterDispatcher")
 );
 
-var _testSchedulerHelper = require('./testSchedulerHelper');
+var _testSchedulerHelper = require("./testSchedulerHelper");
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -101,7 +101,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -117,13 +117,13 @@ async function createTestScheduler(globalConfig, options, context) {
 
 class TestScheduler {
   constructor(globalConfig, options, context) {
-    _defineProperty(this, '_dispatcher', void 0);
+    _defineProperty(this, "_dispatcher", void 0);
 
-    _defineProperty(this, '_globalConfig', void 0);
+    _defineProperty(this, "_globalConfig", void 0);
 
-    _defineProperty(this, '_options', void 0);
+    _defineProperty(this, "_options", void 0);
 
-    _defineProperty(this, '_context', void 0);
+    _defineProperty(this, "_context", void 0);
 
     this._dispatcher = new _ReporterDispatcher.default();
     this._globalConfig = globalConfig;
@@ -146,7 +146,7 @@ class TestScheduler {
 
     const timings = [];
     const contexts = new Set();
-    tests.forEach(test => {
+    tests.forEach((test) => {
       contexts.add(test.context);
 
       if (test.duration) {
@@ -169,25 +169,25 @@ class TestScheduler {
       }
 
       if (testResult.testResults.length === 0) {
-        const message = 'Your test suite must contain at least one test.';
+        const message = "Your test suite must contain at least one test.";
         return onFailure(test, {
           message,
-          stack: new Error(message).stack
+          stack: new Error(message).stack,
         });
       } // Throws when the context is leaked after executing a test.
 
       if (testResult.leaks) {
         const message =
-          _chalk().default.red.bold('EXPERIMENTAL FEATURE!\n') +
-          'Your test suite is leaking memory. Please ensure all references are cleaned.\n' +
-          '\n' +
-          'There is a number of things that can leak memory:\n' +
-          '  - Async operations that have not finished (e.g. fs.readFile).\n' +
-          '  - Timers not properly mocked (e.g. setInterval, setTimeout).\n' +
-          '  - Keeping references to the global scope.';
+          _chalk().default.red.bold("EXPERIMENTAL FEATURE!\n") +
+          "Your test suite is leaking memory. Please ensure all references are cleaned.\n" +
+          "\n" +
+          "There is a number of things that can leak memory:\n" +
+          "  - Async operations that have not finished (e.g. fs.readFile).\n" +
+          "  - Timers not properly mocked (e.g. setInterval, setTimeout).\n" +
+          "  - Keeping references to the global scope.";
         return onFailure(test, {
           message,
-          stack: new Error(message).stack
+          stack: new Error(message).stack,
         });
       }
 
@@ -225,9 +225,9 @@ class TestScheduler {
 
     const updateSnapshotState = async () => {
       const contextsWithSnapshotResolvers = await Promise.all(
-        Array.from(contexts).map(async context => [
+        Array.from(contexts).map(async (context) => [
           context,
-          await _jestSnapshot().default.buildSnapshotResolver(context.config)
+          await _jestSnapshot().default.buildSnapshotResolver(context.config),
         ])
       );
       contextsWithSnapshotResolvers.forEach(([context, snapshotResolver]) => {
@@ -243,7 +243,7 @@ class TestScheduler {
           aggregatedResults.snapshot.filesRemovedList || []
         ).concat(status.filesRemovedList);
       });
-      const updateAll = this._globalConfig.updateSnapshot === 'all';
+      const updateAll = this._globalConfig.updateSnapshot === "all";
       aggregatedResults.snapshot.didUpdate = updateAll;
       aggregatedResults.snapshot.failure = !!(
         !updateAll &&
@@ -255,13 +255,13 @@ class TestScheduler {
 
     await this._dispatcher.onRunStart(aggregatedResults, {
       estimatedTime,
-      showStatus: !runInBand
+      showStatus: !runInBand,
     });
     const testRunners = Object.create(null);
     const contextsByTestRunner = new WeakMap();
     await Promise.all(
-      Array.from(contexts).map(async context => {
-        const {config} = context;
+      Array.from(contexts).map(async (context) => {
+        const { config } = context;
 
         if (!testRunners[config.runner]) {
           var _this$_context, _this$_context2;
@@ -282,7 +282,7 @@ class TestScheduler {
               (_this$_context2 = this._context) === null ||
               _this$_context2 === void 0
                 ? void 0
-                : _this$_context2.sourcesRelatedToTestsInChangedFiles
+                : _this$_context2.sourcesRelatedToTestsInChangedFiles,
           });
           testRunners[config.runner] = runner;
           contextsByTestRunner.set(runner, context);
@@ -300,7 +300,7 @@ class TestScheduler {
           invariant(context);
           const tests = testsByRunner[runner];
           const testRunnerOptions = {
-            serial: runInBand || Boolean(testRunner.isSerial)
+            serial: runInBand || Boolean(testRunner.isSerial),
           };
           /**
            * Test runners with event emitters are still not supported
@@ -309,26 +309,26 @@ class TestScheduler {
 
           if (testRunner.__PRIVATE_UNSTABLE_API_supportsEventEmitters__) {
             const unsubscribes = [
-              testRunner.on('test-file-start', ([test]) =>
+              testRunner.on("test-file-start", ([test]) =>
                 onTestFileStart(test)
               ),
-              testRunner.on('test-file-success', ([test, testResult]) =>
+              testRunner.on("test-file-success", ([test, testResult]) =>
                 onResult(test, testResult)
               ),
-              testRunner.on('test-file-failure', ([test, error]) =>
+              testRunner.on("test-file-failure", ([test, error]) =>
                 onFailure(test, error)
               ),
               testRunner.on(
-                'test-case-result',
+                "test-case-result",
                 ([testPath, testCaseResult]) => {
                   const test = {
                     context,
-                    path: testPath
+                    path: testPath,
                   };
 
                   this._dispatcher.onTestCaseResult(test, testCaseResult);
                 }
-              )
+              ),
             ];
             await testRunner.runTests(
               tests,
@@ -338,7 +338,7 @@ class TestScheduler {
               undefined,
               testRunnerOptions
             );
-            unsubscribes.forEach(sub => sub());
+            unsubscribes.forEach((sub) => sub());
           } else {
             await testRunner.runTests(
               tests,
@@ -390,7 +390,7 @@ class TestScheduler {
     } else if (tests.length > 0 && tests[0] != null) {
       // If there is only one runner, don't partition the tests.
       return Object.assign(Object.create(null), {
-        [tests[0].context.config.runner]: tests
+        [tests[0].context.config.runner]: tests,
       });
     } else {
       return null;
@@ -401,13 +401,13 @@ class TestScheduler {
     return (
       !reporters ||
       !!reporters.find(
-        reporter => this._getReporterProps(reporter).path === 'default'
+        (reporter) => this._getReporterProps(reporter).path === "default"
       )
     );
   }
 
   async _setupReporters() {
-    const {collectCoverage, notify, reporters} = this._globalConfig;
+    const { collectCoverage, notify, reporters } = this._globalConfig;
 
     const isDefault = this._shouldAddDefaultReporters(reporters);
 
@@ -429,7 +429,7 @@ class TestScheduler {
             (_this$_context4 = this._context) === null ||
             _this$_context4 === void 0
               ? void 0
-              : _this$_context4.sourcesRelatedToTestsInChangedFiles
+              : _this$_context4.sourcesRelatedToTestsInChangedFiles,
         })
       );
     }
@@ -470,7 +470,7 @@ class TestScheduler {
             (_this$_context6 = this._context) === null ||
             _this$_context6 === void 0
               ? void 0
-              : _this$_context6.sourcesRelatedToTestsInChangedFiles
+              : _this$_context6.sourcesRelatedToTestsInChangedFiles,
         })
       );
     }
@@ -480,9 +480,9 @@ class TestScheduler {
 
   async _addCustomReporters(reporters) {
     for (const reporter of reporters) {
-      const {options, path} = this._getReporterProps(reporter);
+      const { options, path } = this._getReporterProps(reporter);
 
-      if (path === 'default') continue;
+      if (path === "default") continue;
 
       try {
         const Reporter = await (0, _jestUtil().requireOrImportModule)(
@@ -506,20 +506,20 @@ class TestScheduler {
    */
 
   _getReporterProps(reporter) {
-    if (typeof reporter === 'string') {
+    if (typeof reporter === "string") {
       return {
         options: this._options,
-        path: reporter
+        path: reporter,
       };
     } else if (Array.isArray(reporter)) {
       const [path, options] = reporter;
       return {
         options,
-        path
+        path,
       };
     }
 
-    throw new Error('Reporter should be either a string or an array');
+    throw new Error("Reporter should be either a string or an array");
   }
 
   async _bailIfNeeded(contexts, aggregatedResults, watcher) {
@@ -529,7 +529,7 @@ class TestScheduler {
     ) {
       if (watcher.isWatchMode()) {
         await watcher.setState({
-          interrupted: true
+          interrupted: true,
         });
         return;
       }
@@ -550,7 +550,7 @@ function invariant(condition, message) {
   }
 }
 
-const createAggregatedResults = numTotalTestSuites => {
+const createAggregatedResults = (numTotalTestSuites) => {
   const result = (0, _testResult().makeEmptyAggregatedTestResult)();
   result.numTotalTestSuites = numTotalTestSuites;
   result.startTime = Date.now();

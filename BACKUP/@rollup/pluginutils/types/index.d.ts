@@ -1,11 +1,15 @@
 // eslint-disable-next-line import/no-unresolved
-import { BaseNode } from 'estree';
+import { BaseNode } from "estree";
 
 export interface AttachedScope {
   parent?: AttachedScope;
   isBlockScope: boolean;
   declarations: { [key: string]: boolean };
-  addDeclaration(node: BaseNode, isBlockDeclaration: boolean, isVar: boolean): void;
+  addDeclaration(
+    node: BaseNode,
+    isBlockDeclaration: boolean,
+    isVar: boolean
+  ): void;
   contains(name: string): boolean;
 }
 
@@ -20,7 +24,11 @@ export interface DataToEsmOptions {
 /**
  * A valid `minimatch` pattern, or array of patterns.
  */
-export type FilterPattern = ReadonlyArray<string | RegExp> | string | RegExp | null;
+export type FilterPattern =
+  | ReadonlyArray<string | RegExp>
+  | string
+  | RegExp
+  | null;
 
 /**
  * Adds an extension to a module ID if one does not exist.
@@ -32,7 +40,10 @@ export function addExtension(filename: string, ext?: string): string;
  * Each `Scope` object has a `scope.contains(name)` method that returns `true`
  * if a given name is defined in the current scope or a parent scope.
  */
-export function attachScopes(ast: BaseNode, propertyName?: string): AttachedScope;
+export function attachScopes(
+  ast: BaseNode,
+  propertyName?: string
+): AttachedScope;
 
 /**
  * Constructs a filter function which can be used to determine whether or not

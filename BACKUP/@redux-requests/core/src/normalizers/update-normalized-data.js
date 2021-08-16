@@ -1,12 +1,12 @@
-import defaultConfig from '../default-config';
+import defaultConfig from "../default-config";
 
-import { normalize } from './normalize';
-import { mergeData } from './merge-data';
+import { normalize } from "./normalize";
+import { mergeData } from "./merge-data";
 
 export const updateNormalizedData = (
   mutation,
   normalizedData,
-  config = defaultConfig,
+  config = defaultConfig
 ) => {
   const [, dataToMerge] = normalize(mutation, config);
 

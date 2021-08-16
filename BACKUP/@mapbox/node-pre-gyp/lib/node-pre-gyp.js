@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * Module exports.
@@ -12,50 +12,49 @@ module.exports = exports;
 
 // load mocking control function for accessing s3 via https. the function is a noop always returning
 // false if not mocking.
-exports.mockS3Http = require('./util/s3_setup').get_mockS3Http();
-exports.mockS3Http('on');
-const mocking = exports.mockS3Http('get');
+exports.mockS3Http = require("./util/s3_setup").get_mockS3Http();
+exports.mockS3Http("on");
+const mocking = exports.mockS3Http("get");
 
-
-const fs = require('fs');
-const path = require('path');
-const nopt = require('nopt');
-const log = require('npmlog');
+const fs = require("fs");
+const path = require("path");
+const nopt = require("nopt");
+const log = require("npmlog");
 log.disableProgress();
-const napi = require('./util/napi.js');
+const napi = require("./util/napi.js");
 
-const EE = require('events').EventEmitter;
-const inherits = require('util').inherits;
+const EE = require("events").EventEmitter;
+const inherits = require("util").inherits;
 const cli_commands = [
-  'clean',
-  'install',
-  'reinstall',
-  'build',
-  'rebuild',
-  'package',
-  'testpackage',
-  'publish',
-  'unpublish',
-  'info',
-  'testbinary',
-  'reveal',
-  'configure'
+  "clean",
+  "install",
+  "reinstall",
+  "build",
+  "rebuild",
+  "package",
+  "testpackage",
+  "publish",
+  "unpublish",
+  "info",
+  "testbinary",
+  "reveal",
+  "configure",
 ];
 const aliases = {};
 
 // differentiate node-pre-gyp's logs from npm's
-log.heading = 'node-pre-gyp';
+log.heading = "node-pre-gyp";
 
 if (mocking) {
   log.warn(`mocking s3 to ${process.env.node_pre_gyp_mock_s3}`);
 }
 
 // this is a getter to avoid circular reference warnings with node v14.
-Object.defineProperty(exports, 'find', {
-  get: function() {
-    return require('./pre-binding').find;
+Object.defineProperty(exports, "find", {
+  get: function () {
+    return require("./pre-binding").find;
   },
-  enumerable: true
+  enumerable: true,
 });
 
 // in the following, "my_module" is using node-pre-gyp to
@@ -75,15 +74,15 @@ Object.defineProperty(exports, 'find', {
 //
 // that's why "find()" must pass the path to package.json.
 //
-function Run({ package_json_path = './package.json', argv }) {
+function Run({ package_json_path = "./package.json", argv }) {
   this.package_json_path = package_json_path;
   this.commands = {};
 
   const self = this;
   cli_commands.forEach((command) => {
-    self.commands[command] = function(argvx, callback) {
-      log.verbose('command', command, argvx);
-      return require('./' + command)(self, argvx, callback);
+    self.commands[command] = function (argvx, callback) {
+      log.verbose("command", command, argvx);
+      return require("./" + command)(self, argvx, callback);
     };
   });
 
@@ -101,19 +100,19 @@ const proto = Run.prototype;
  * Export the contents of the package.json.
  */
 
-proto.package = require('../package.json');
+proto.package = require("../package.json");
 
 /**
  * nopt configuration definitions
  */
 
 proto.configDefs = {
-  help: Boolean,     // everywhere
-  arch: String,      // 'configure'
-  debug: Boolean,    // 'build'
+  help: Boolean, // everywhere
+  arch: String, // 'configure'
+  debug: Boolean, // 'build'
   directory: String, // bin
-  proxy: String,     // 'install'
-  loglevel: String  // everywhere
+  proxy: String, // 'install'
+  loglevel: String, // everywhere
 };
 
 /**
@@ -121,13 +120,13 @@ proto.configDefs = {
  */
 
 proto.shorthands = {
-  release: '--no-debug',
-  C: '--directory',
-  debug: '--debug',
-  j: '--jobs',
-  silent: '--loglevel=silent',
-  silly: '--loglevel=silly',
-  verbose: '--loglevel=verbose'
+  release: "--no-debug",
+  C: "--directory",
+  debug: "--debug",
+  j: "--jobs",
+  silent: "--loglevel=silent",
+  silly: "--loglevel=silly",
+  verbose: "--loglevel=verbose",
 };
 
 /**
@@ -144,7 +143,7 @@ proto.aliases = aliases;
 proto.parseArgv = function parseOpts(argv) {
   this.opts = nopt(this.configDefs, this.shorthands, argv);
   this.argv = this.opts.argv.remain.slice();
-  const commands = this.todo = [];
+  const commands = (this.todo = []);
 
   // create a copy of the argv array with aliases mapped
   argv = this.argv.map((arg) => {
@@ -170,7 +169,6 @@ proto.parseArgv = function parseOpts(argv) {
     commands[commands.length - 1].args = argv.splice(0);
   }
 
-
   // if a directory was specified package.json is assumed to be relative
   // to it.
   let package_json_path = this.package_json_path;
@@ -184,11 +182,11 @@ proto.parseArgv = function parseOpts(argv) {
   this.todo = napi.expand_commands(this.package_json, this.opts, commands);
 
   // support for inheriting config env variables from npm
-  const npm_config_prefix = 'npm_config_';
+  const npm_config_prefix = "npm_config_";
   Object.keys(process.env).forEach((name) => {
     if (name.indexOf(npm_config_prefix) !== 0) return;
     const val = process.env[name];
-    if (name === npm_config_prefix + 'loglevel') {
+    if (name === npm_config_prefix + "loglevel") {
       log.level = val;
     } else {
       // add the user-defined options to the config
@@ -196,10 +194,12 @@ proto.parseArgv = function parseOpts(argv) {
       // avoid npm argv clobber already present args
       // which avoids problem of 'npm test' calling
       // script that runs unique npm install commands
-      if (name === 'argv') {
-        if (this.opts.argv &&
-             this.opts.argv.remain &&
-             this.opts.argv.remain.length) {
+      if (name === "argv") {
+        if (
+          this.opts.argv &&
+          this.opts.argv.remain &&
+          this.opts.argv.remain.length
+        ) {
           // do nothing
         } else {
           this.opts[name] = val;
@@ -243,32 +243,35 @@ proto.parseArgv = function parseOpts(argv) {
  * '--s3_host production_host' to be specified in order to *really* publish. publishing
  * to staging can be done freely without worrying about disturbing any production releases.
  */
-proto.setBinaryHostProperty = function(command) {
+proto.setBinaryHostProperty = function (command) {
   if (this.binaryHostSet) {
     return this.package_json.binary.host;
   }
   const p = this.package_json;
   // don't set anything if host is present. it must be left blank to trigger this.
   if (!p || !p.binary || p.binary.host) {
-    return '';
+    return "";
   }
   // and both staging and production must be present. errors will be reported later.
   if (!p.binary.staging_host || !p.binary.production_host) {
-    return '';
+    return "";
   }
-  let target = 'production_host';
-  if (command === 'publish') {
-    target = 'staging_host';
+  let target = "production_host";
+  if (command === "publish") {
+    target = "staging_host";
   }
   // the environment variable has priority over the default or the command line. if
   // either the env var or the command line option are invalid throw an error.
   const npg_s3_host = process.env.node_pre_gyp_s3_host;
-  if (npg_s3_host === 'staging' || npg_s3_host === 'production') {
+  if (npg_s3_host === "staging" || npg_s3_host === "production") {
     target = `${npg_s3_host}_host`;
-  } else if (this.opts['s3_host'] === 'staging' || this.opts['s3_host'] === 'production') {
-    target = `${this.opts['s3_host']}_host`;
-  } else if (this.opts['s3_host'] || npg_s3_host) {
-    throw new Error(`invalid s3_host ${this.opts['s3_host'] || npg_s3_host}`);
+  } else if (
+    this.opts["s3_host"] === "staging" ||
+    this.opts["s3_host"] === "production"
+  ) {
+    target = `${this.opts["s3_host"]}_host`;
+  } else if (this.opts["s3_host"] || npg_s3_host) {
+    throw new Error(`invalid s3_host ${this.opts["s3_host"] || npg_s3_host}`);
   }
 
   p.binary.host = p.binary[target];
@@ -283,17 +286,19 @@ proto.setBinaryHostProperty = function(command) {
 
 proto.usage = function usage() {
   const str = [
-    '',
-    '  Usage: node-pre-gyp <command> [options]',
-    '',
-    '  where <command> is one of:',
-    cli_commands.map((c) => {
-      return '    - ' + c + ' - ' + require('./' + c).usage;
-    }).join('\n'),
-    '',
-    'node-pre-gyp@' + this.version + '  ' + path.resolve(__dirname, '..'),
-    'node@' + process.versions.node
-  ].join('\n');
+    "",
+    "  Usage: node-pre-gyp <command> [options]",
+    "",
+    "  where <command> is one of:",
+    cli_commands
+      .map((c) => {
+        return "    - " + c + " - " + require("./" + c).usage;
+      })
+      .join("\n"),
+    "",
+    "node-pre-gyp@" + this.version + "  " + path.resolve(__dirname, ".."),
+    "node@" + process.versions.node,
+  ].join("\n");
   return str;
 };
 
@@ -301,9 +306,9 @@ proto.usage = function usage() {
  * Version number getter.
  */
 
-Object.defineProperty(proto, 'version', {
-  get: function() {
+Object.defineProperty(proto, "version", {
+  get: function () {
     return this.package.version;
   },
-  enumerable: true
+  enumerable: true,
 });

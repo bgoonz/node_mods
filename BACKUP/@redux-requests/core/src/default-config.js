@@ -1,4 +1,4 @@
-import { isRequestActionQuery, isRequestAction } from './actions';
+import { isRequestActionQuery, isRequestAction } from "./actions";
 
 export default {
   driver: null,
@@ -13,7 +13,7 @@ export default {
   isRequestActionQuery,
   takeLatest: isRequestActionQuery,
   normalize: false,
-  getNormalisationObjectKey: obj => obj.id,
-  shouldObjectBeNormalized: obj => obj.id !== undefined,
+  getNormalisationObjectKey: (obj) => obj.id,
+  shouldObjectBeNormalized: (obj) => obj.id !== undefined,
   subscriber: null,
 };

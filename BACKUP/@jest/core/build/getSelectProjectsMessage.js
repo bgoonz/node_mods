@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = getSelectProjectsMessage;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,11 +16,11 @@ function _chalk() {
 }
 
 var _getProjectDisplayName = _interopRequireDefault(
-  require('./getProjectDisplayName')
+  require("./getProjectDisplayName")
 );
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -39,7 +39,7 @@ function getSelectProjectsMessage(projectConfigs) {
 
 function getNoSelectionWarning() {
   return _chalk().default.yellow(
-    'You provided values for --selectProjects but no projects were found matching the selection.\n'
+    "You provided values for --selectProjects but no projects were found matching the selection.\n"
   );
 }
 
@@ -52,7 +52,7 @@ function getProjectsRunningMessage(projectConfigs) {
   const projectsList = projectConfigs
     .map(getProjectNameListElement)
     .sort()
-    .join('\n');
+    .join("\n");
   return `Running ${projectConfigs.length} projects:\n${projectsList}\n`;
 }
 
@@ -60,6 +60,6 @@ function getProjectNameListElement(projectConfig) {
   const name = (0, _getProjectDisplayName.default)(projectConfig);
   const elementContent = name
     ? _chalk().default.bold(name)
-    : '<unnamed project>';
+    : "<unnamed project>";
   return `- ${elementContent}`;
 }

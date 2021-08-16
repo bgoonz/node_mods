@@ -1,11 +1,23 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 
 // An immutable probe/writer for plain JS objects that will never mutate
 // the provided _value in place. Each setter returns a new (wrapped) version
@@ -22,22 +34,20 @@ class ImmutableAccessor {
 
   containerType() {
     if (Array.isArray(this._value)) {
-      return 'array';
-    } else if (this._value !== null && typeof this._value == 'object') {
-      return 'object';
+      return "array";
+    } else if (this._value !== null && typeof this._value == "object") {
+      return "object";
     }
 
-    return 'primitive';
+    return "primitive";
   } // Common reader, supported by all containers
-
 
   get() {
     return this._value;
   } // Array reader
 
-
   length() {
-    if (this.containerType() !== 'array') {
+    if (this.containerType() !== "array") {
       throw new Error("Won't return length of non-indexable _value");
     }
 
@@ -45,7 +55,7 @@ class ImmutableAccessor {
   }
 
   getIndex(i) {
-    if (this.containerType() !== 'array') {
+    if (this.containerType() !== "array") {
       return false;
     }
 
@@ -56,9 +66,8 @@ class ImmutableAccessor {
     return new ImmutableAccessor(this._value[i], this.path.concat(i));
   } // Object reader
 
-
   hasAttribute(key) {
-    if (this.containerType() !== 'object') {
+    if (this.containerType() !== "object") {
       return false;
     }
 
@@ -66,7 +75,7 @@ class ImmutableAccessor {
   }
 
   attributeKeys() {
-    if (this.containerType() !== 'object') {
+    if (this.containerType() !== "object") {
       return [];
     }
 
@@ -74,8 +83,8 @@ class ImmutableAccessor {
   }
 
   getAttribute(key) {
-    if (this.containerType() !== 'object') {
-      throw new Error('getAttribute only applies to plain objects');
+    if (this.containerType() !== "object") {
+      throw new Error("getAttribute only applies to plain objects");
     }
 
     if (!this.hasAttribute(key)) {
@@ -84,7 +93,6 @@ class ImmutableAccessor {
 
     return new ImmutableAccessor(this._value[key], this.path.concat(key));
   } // Common writer, supported by all containers
-
 
   set(value) {
     if (value === this._value) {
@@ -97,7 +105,6 @@ class ImmutableAccessor {
   setAccessor(accessor) {
     return accessor;
   } // array writer interface
-
 
   setIndex(i, value) {
     if (value === this._value[i]) {
@@ -133,16 +140,18 @@ class ImmutableAccessor {
     if (this.length() === 0 && pos === 0) {
       nextValue = items;
     } else {
-      nextValue = this._value.slice(0, pos).concat(items).concat(this._value.slice(pos));
+      nextValue = this._value
+        .slice(0, pos)
+        .concat(items)
+        .concat(this._value.slice(pos));
     }
 
     return new ImmutableAccessor(nextValue, this.path);
   } // Object writer interface
 
-
   setAttribute(key, value) {
-    if (this.containerType() !== 'object') {
-      throw new Error('Unable to set attribute of non-object container');
+    if (this.containerType() !== "object") {
+      throw new Error("Unable to set attribute of non-object container");
     }
 
     if (value === this._value[key]) {
@@ -159,8 +168,8 @@ class ImmutableAccessor {
   }
 
   unsetAttribute(key) {
-    if (this.containerType() != 'object') {
-      throw new Error('Unable to unset attribute of non-object container');
+    if (this.containerType() != "object") {
+      throw new Error("Unable to unset attribute of non-object container");
     }
 
     var nextValue = Object.assign({}, this._value);
@@ -168,16 +177,14 @@ class ImmutableAccessor {
     return new ImmutableAccessor(nextValue, this.path);
   } // primitive writer interface
 
-
   mutate(fn) {
-    if (this.containerType() != 'primitive') {
+    if (this.containerType() != "primitive") {
       throw new Error("Won't mutate container types");
     }
 
     var nextValue = fn(this._value);
     return new ImmutableAccessor(nextValue, this.path);
   }
-
 }
 
 exports.default = ImmutableAccessor;

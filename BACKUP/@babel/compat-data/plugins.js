@@ -1,1 +1,1 @@
-module.exports = require("./data/plugins.json");
+export default require("./data/plugins.json");

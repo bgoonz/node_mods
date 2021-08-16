@@ -1,4 +1,4 @@
-const { webpackVersion } = require('../globals');
+const { webpackVersion } = require("../globals");
 
 /**
  * @callback EvaluateToString
@@ -29,7 +29,7 @@ function getParserHelpers() {
     const {
       evaluateToString,
       toConstantDependencyWithWebpackRequire,
-    } = require('webpack/lib/ParserHelpers');
+    } = require("webpack/lib/ParserHelpers");
     return {
       evaluateToString,
       toConstantDependency: toConstantDependencyWithWebpackRequire,
@@ -37,7 +37,7 @@ function getParserHelpers() {
   }
 
   if (webpackVersion === 5) {
-    return require('webpack/lib/javascript/JavascriptParserHelpers');
+    return require("webpack/lib/javascript/JavascriptParserHelpers");
   }
 }
 

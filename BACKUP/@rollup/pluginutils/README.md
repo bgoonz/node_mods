@@ -26,7 +26,7 @@ npm install @rollup/pluginutils --save-dev
 ## Usage
 
 ```js
-import utils from '@rollup/pluginutils';
+import utils from "@rollup/pluginutils";
 //...
 ```
 
@@ -44,15 +44,15 @@ Parameters: `(filename: String, ext?: String)`<br>
 Returns: `String`
 
 ```js
-import { addExtension } from '@rollup/pluginutils';
+import { addExtension } from "@rollup/pluginutils";
 
 export default function myPlugin(options = {}) {
   return {
     resolveId(code, id) {
       // only adds an extension if there isn't one already
       id = addExtension(id); // `foo` -> `foo.js`, `foo.js` -> `foo.js`
-      id = addExtension(id, '.myext'); // `foo` -> `foo.myext`, `foo.js` -> `foo.js`
-    }
+      id = addExtension(id, ".myext"); // `foo` -> `foo.myext`, `foo.js` -> `foo.js`
+    },
   };
 }
 ```
@@ -67,30 +67,30 @@ Returns: `Object`
 See [rollup-plugin-inject](https://github.com/rollup/rollup-plugin-inject) or [rollup-plugin-commonjs](https://github.com/rollup/rollup-plugin-commonjs) for an example of usage.
 
 ```js
-import { attachScopes } from '@rollup/pluginutils';
-import { walk } from 'estree-walker';
+import { attachScopes } from "@rollup/pluginutils";
+import { walk } from "estree-walker";
 
 export default function myPlugin(options = {}) {
   return {
     transform(code) {
       const ast = this.parse(code);
 
-      let scope = attachScopes(ast, 'scope');
+      let scope = attachScopes(ast, "scope");
 
       walk(ast, {
         enter(node) {
           if (node.scope) scope = node.scope;
 
-          if (!scope.contains('foo')) {
+          if (!scope.contains("foo")) {
             // `foo` is not defined, so if we encounter it,
             // we assume it's a global
           }
         },
         leave(node) {
           if (node.scope) scope = scope.parent;
-        }
+        },
       });
-    }
+    },
   };
 }
 ```
@@ -121,12 +121,12 @@ Optionally resolves the patterns against a directory other than `process.cwd()`.
 #### Usage
 
 ```js
-import { createFilter } from '@rollup/pluginutils';
+import { createFilter } from "@rollup/pluginutils";
 
 export default function myPlugin(options = {}) {
   // assume that the myPlugin accepts options of `options.include` and `options.exclude`
   var filter = createFilter(options.include, options.exclude, {
-    resolve: '/my/base/dir'
+    resolve: "/my/base/dir",
   });
 
   return {
@@ -134,7 +134,7 @@ export default function myPlugin(options = {}) {
       if (!filter(id)) return;
 
       // proceed with the transformation...
-    }
+    },
   };
 }
 ```
@@ -155,19 +155,19 @@ An object to transform into an ES module.
 #### Usage
 
 ```js
-import { dataToEsm } from '@rollup/pluginutils';
+import { dataToEsm } from "@rollup/pluginutils";
 
 const esModuleSource = dataToEsm(
   {
-    custom: 'data',
-    to: ['treeshake']
+    custom: "data",
+    to: ["treeshake"],
   },
   {
     compact: false,
-    indent: '\t',
+    indent: "\t",
     preferConst: false,
     objectShorthand: false,
-    namedExports: true
+    namedExports: true,
   }
 );
 /*
@@ -194,8 +194,8 @@ An `acorn` AST Node.
 #### Usage
 
 ```js
-import { extractAssignedNames } from '@rollup/pluginutils';
-import { walk } from 'estree-walker';
+import { extractAssignedNames } from "@rollup/pluginutils";
+import { walk } from "estree-walker";
 
 export default function myPlugin(options = {}) {
   return {
@@ -204,14 +204,14 @@ export default function myPlugin(options = {}) {
 
       walk(ast, {
         enter(node) {
-          if (node.type === 'VariableDeclarator') {
+          if (node.type === "VariableDeclarator") {
             const declaredNames = extractAssignedNames(node.id);
             // do something with the declared names
             // e.g. for `const {x, y: z} = ...` => declaredNames = ['x', 'z']
           }
-        }
+        },
       });
-    }
+    },
   };
 }
 ```
@@ -226,10 +226,10 @@ Returns: `String`
 #### Usage
 
 ```js
-import { makeLegalIdentifier } from '@rollup/pluginutils';
+import { makeLegalIdentifier } from "@rollup/pluginutils";
 
-makeLegalIdentifier('foo-bar'); // 'foo_bar'
-makeLegalIdentifier('typeof'); // '_typeof'
+makeLegalIdentifier("foo-bar"); // 'foo_bar'
+makeLegalIdentifier("typeof"); // '_typeof'
 ```
 
 ### normalizePath
@@ -242,10 +242,10 @@ Returns: `String`
 #### Usage
 
 ```js
-import { normalizePath } from '@rollup/pluginutils';
+import { normalizePath } from "@rollup/pluginutils";
 
-normalizePath('foo\\bar'); // 'foo/bar'
-normalizePath('foo/bar'); // 'foo/bar'
+normalizePath("foo\\bar"); // 'foo/bar'
+normalizePath("foo/bar"); // 'foo/bar'
 ```
 
 ## Meta

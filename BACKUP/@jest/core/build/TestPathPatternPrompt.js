@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _jestWatcher() {
-  const data = require('jest-watcher');
+  const data = require("jest-watcher");
 
   _jestWatcher = function () {
     return data;
@@ -21,7 +21,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -34,9 +34,9 @@ class TestPathPatternPrompt extends _jestWatcher().PatternPrompt {
   constructor(pipe, prompt) {
     super(pipe, prompt);
 
-    _defineProperty(this, '_searchSources', void 0);
+    _defineProperty(this, "_searchSources", void 0);
 
-    this._entityName = 'filenames';
+    this._entityName = "filenames";
   }
 
   _onChange(pattern, options) {
@@ -59,13 +59,13 @@ class TestPathPatternPrompt extends _jestWatcher().PatternPrompt {
     let regex;
 
     try {
-      regex = new RegExp(pattern, 'i');
+      regex = new RegExp(pattern, "i");
     } catch {}
 
     let tests = [];
 
     if (regex && this._searchSources) {
-      this._searchSources.forEach(({searchSource}) => {
+      this._searchSources.forEach(({ searchSource }) => {
         tests = tests.concat(searchSource.findMatchingTests(pattern).tests);
       });
     }

@@ -3,17 +3,19 @@
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+var _defineProperty2 = _interopRequireDefault(
+  require("@babel/runtime/helpers/defineProperty")
+);
 
 var _pngjs = require("pngjs");
 
 var _utils = require("@jimp/utils");
 
-var MIME_TYPE = 'image/png'; // PNG filter types
+var MIME_TYPE = "image/png"; // PNG filter types
 
 var PNG_FILTER_AUTO = -1;
 var PNG_FILTER_NONE = 0;
@@ -24,7 +26,7 @@ var PNG_FILTER_PATH = 4;
 
 var _default = function _default() {
   return {
-    mime: (0, _defineProperty2["default"])({}, MIME_TYPE, ['png']),
+    mime: (0, _defineProperty2["default"])({}, MIME_TYPE, ["png"]),
     constants: {
       MIME_PNG: MIME_TYPE,
       PNG_FILTER_AUTO: PNG_FILTER_AUTO,
@@ -32,14 +34,18 @@ var _default = function _default() {
       PNG_FILTER_SUB: PNG_FILTER_SUB,
       PNG_FILTER_UP: PNG_FILTER_UP,
       PNG_FILTER_AVERAGE: PNG_FILTER_AVERAGE,
-      PNG_FILTER_PATH: PNG_FILTER_PATH
+      PNG_FILTER_PATH: PNG_FILTER_PATH,
     },
     hasAlpha: (0, _defineProperty2["default"])({}, MIME_TYPE, true),
-    decoders: (0, _defineProperty2["default"])({}, MIME_TYPE, _pngjs.PNG.sync.read),
+    decoders: (0, _defineProperty2["default"])(
+      {},
+      MIME_TYPE,
+      _pngjs.PNG.sync.read
+    ),
     encoders: (0, _defineProperty2["default"])({}, MIME_TYPE, function (data) {
       var png = new _pngjs.PNG({
         width: data.bitmap.width,
-        height: data.bitmap.height
+        height: data.bitmap.height,
       });
       png.data = data.bitmap.data;
       return _pngjs.PNG.sync.write(png, {
@@ -48,11 +54,16 @@ var _default = function _default() {
         deflateLevel: data._deflateLevel,
         deflateStrategy: data._deflateStrategy,
         filterType: data._filterType,
-        colorType: typeof data._colorType === 'number' ? data._colorType : data._rgba ? 6 : 2,
-        inputHasAlpha: data._rgba
+        colorType:
+          typeof data._colorType === "number"
+            ? data._colorType
+            : data._rgba
+            ? 6
+            : 2,
+        inputHasAlpha: data._rgba,
       });
     }),
-    "class": {
+    class: {
       _deflateLevel: 9,
       _deflateStrategy: 3,
       _filterType: PNG_FILTER_AUTO,
@@ -65,12 +76,12 @@ var _default = function _default() {
        * @returns {Jimp} this for chaining of methods
        */
       deflateLevel: function deflateLevel(l, cb) {
-        if (typeof l !== 'number') {
-          return _utils.throwError.call(this, 'l must be a number', cb);
+        if (typeof l !== "number") {
+          return _utils.throwError.call(this, "l must be a number", cb);
         }
 
         if (l < 0 || l > 9) {
-          return _utils.throwError.call(this, 'l must be a number 0 - 9', cb);
+          return _utils.throwError.call(this, "l must be a number 0 - 9", cb);
         }
 
         this._deflateLevel = Math.round(l);
@@ -89,12 +100,12 @@ var _default = function _default() {
        * @returns {Jimp} this for chaining of methods
        */
       deflateStrategy: function deflateStrategy(s, cb) {
-        if (typeof s !== 'number') {
-          return _utils.throwError.call(this, 's must be a number', cb);
+        if (typeof s !== "number") {
+          return _utils.throwError.call(this, "s must be a number", cb);
         }
 
         if (s < 0 || s > 3) {
-          return _utils.throwError.call(this, 's must be a number 0 - 3', cb);
+          return _utils.throwError.call(this, "s must be a number 0 - 3", cb);
         }
 
         this._deflateStrategy = Math.round(s);
@@ -113,12 +124,16 @@ var _default = function _default() {
        * @returns {Jimp} this for chaining of methods
        */
       filterType: function filterType(f, cb) {
-        if (typeof f !== 'number') {
-          return _utils.throwError.call(this, 'n must be a number', cb);
+        if (typeof f !== "number") {
+          return _utils.throwError.call(this, "n must be a number", cb);
         }
 
         if (f < -1 || f > 4) {
-          return _utils.throwError.call(this, 'n must be -1 (auto) or a number 0 - 4', cb);
+          return _utils.throwError.call(
+            this,
+            "n must be -1 (auto) or a number 0 - 4",
+            cb
+          );
         }
 
         this._filterType = Math.round(f);
@@ -137,12 +152,16 @@ var _default = function _default() {
        * @returns {Jimp} this for chaining of methods
        */
       colorType: function colorType(s, cb) {
-        if (typeof s !== 'number') {
-          return _utils.throwError.call(this, 's must be a number', cb);
+        if (typeof s !== "number") {
+          return _utils.throwError.call(this, "s must be a number", cb);
         }
 
         if (s !== 0 && s !== 2 && s !== 4 && s !== 6) {
-          return _utils.throwError.call(this, 's must be a number 0, 2, 4, 6.', cb);
+          return _utils.throwError.call(
+            this,
+            "s must be a number 0, 2, 4, 6.",
+            cb
+          );
         }
 
         this._colorType = Math.round(s);
@@ -152,8 +171,8 @@ var _default = function _default() {
         }
 
         return this;
-      }
-    }
+      },
+    },
   };
 };
 

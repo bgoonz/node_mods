@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _emittery() {
-  const data = _interopRequireDefault(require('emittery'));
+  const data = _interopRequireDefault(require("emittery"));
 
   _emittery = function () {
     return data;
@@ -16,7 +16,7 @@ function _emittery() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -25,7 +25,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -34,22 +34,22 @@ function _defineProperty(obj, key, value) {
 }
 
 class TestWatcher extends _emittery().default {
-  constructor({isWatchMode}) {
+  constructor({ isWatchMode }) {
     super();
 
-    _defineProperty(this, 'state', void 0);
+    _defineProperty(this, "state", void 0);
 
-    _defineProperty(this, '_isWatchMode', void 0);
+    _defineProperty(this, "_isWatchMode", void 0);
 
     this.state = {
-      interrupted: false
+      interrupted: false,
     };
     this._isWatchMode = isWatchMode;
   }
 
   async setState(state) {
     Object.assign(this.state, state);
-    await this.emit('change', this.state);
+    await this.emit("change", this.state);
   }
 
   isInterrupted() {

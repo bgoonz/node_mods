@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
@@ -18,22 +18,25 @@ var _default = function _default() {
     fisheye: function fisheye() {
       var _this = this;
 
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-        r: 2.5
-      };
+      var options =
+        arguments.length > 0 && arguments[0] !== undefined
+          ? arguments[0]
+          : {
+              r: 2.5,
+            };
       var cb = arguments.length > 1 ? arguments[1] : undefined;
 
-      if (typeof options === 'function') {
+      if (typeof options === "function") {
         cb = options;
         options = {
-          r: 2.5
+          r: 2.5,
         };
       }
 
       var source = this.cloneQuiet();
       var _source$bitmap = source.bitmap,
-          width = _source$bitmap.width,
-          height = _source$bitmap.height;
+        width = _source$bitmap.width,
+        height = _source$bitmap.height;
       source.scanQuiet(0, 0, width, height, function (x, y) {
         var hx = x / width;
         var hy = y / height;
@@ -49,14 +52,18 @@ var _default = function _default() {
       });
       /* Set center pixel color, otherwise it will be transparent */
 
-      this.setPixelColor(source.getPixelColor(width / 2, height / 2), width / 2, height / 2);
+      this.setPixelColor(
+        source.getPixelColor(width / 2, height / 2),
+        width / 2,
+        height / 2
+      );
 
       if ((0, _utils.isNodePattern)(cb)) {
         cb.call(this, null, this);
       }
 
       return this;
-    }
+    },
   };
 };
 

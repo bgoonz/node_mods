@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-exports.createCachedDescriptors = createCachedDescriptors;
-exports.createUncachedDescriptors = createUncachedDescriptors;
-exports.createDescriptor = createDescriptor;
+export {createCachedDescriptors};
+export {createUncachedDescriptors};
+export {createDescriptor};
 
 function _gensync() {
   const data = require("gensync");
@@ -17,13 +17,10 @@ function _gensync() {
   return data;
 }
 
-const _files = require("./files");
-
-const _item = require("./item");
-
-const _caching = require("./caching");
-
-const _resolveTargets = require("./resolve-targets");
+import _files from "./files";
+import _item from "./item";
+import _caching from "./caching";
+import _resolveTargets from "./resolve-targets";
 
 function isEqualDescriptor(a, b) {
   return (

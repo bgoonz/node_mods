@@ -1,13 +1,13 @@
-export const denormalize = (data, normalizedData, usedKeys, path = '') => {
-  if (typeof data === 'string' && data.startsWith('@@')) {
+export const denormalize = (data, normalizedData, usedKeys, path = "") => {
+  if (typeof data === "string" && data.startsWith("@@")) {
     return denormalize(normalizedData[data], normalizedData, usedKeys, path);
   }
 
   if (Array.isArray(data)) {
-    return data.map(v => denormalize(v, normalizedData, usedKeys, path));
+    return data.map((v) => denormalize(v, normalizedData, usedKeys, path));
   }
 
-  if (data !== null && typeof data === 'object') {
+  if (data !== null && typeof data === "object") {
     const objectEntries = usedKeys[path]
       ? Object.entries(data).filter(([k]) => usedKeys[path].includes(k))
       : Object.entries(data);

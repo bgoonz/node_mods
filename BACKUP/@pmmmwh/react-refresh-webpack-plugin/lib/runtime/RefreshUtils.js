@@ -1,5 +1,5 @@
 /* global __webpack_require__ */
-const Refresh = require('react-refresh/runtime');
+const Refresh = require("react-refresh/runtime");
 
 /**
  * Extracts exports from a webpack module object.
@@ -22,13 +22,13 @@ function getReactRefreshBoundarySignature(moduleExports) {
   const signature = [];
   signature.push(Refresh.getFamilyByType(moduleExports));
 
-  if (moduleExports == null || typeof moduleExports !== 'object') {
+  if (moduleExports == null || typeof moduleExports !== "object") {
     // Exit if we can't iterate over exports.
     return signature;
   }
 
   for (let key in moduleExports) {
-    if (key === '__esModule') {
+    if (key === "__esModule") {
       continue;
     }
 
@@ -56,7 +56,7 @@ function createDebounceUpdate() {
    * @returns {void}
    */
   function enqueueUpdate(callback) {
-    if (typeof refreshTimeout === 'undefined') {
+    if (typeof refreshTimeout === "undefined") {
       refreshTimeout = setTimeout(function () {
         refreshTimeout = undefined;
         Refresh.performReactRefresh();
@@ -79,7 +79,11 @@ function isReactRefreshBoundary(moduleExports) {
   if (Refresh.isLikelyComponentType(moduleExports)) {
     return true;
   }
-  if (moduleExports === undefined || moduleExports === null || typeof moduleExports !== 'object') {
+  if (
+    moduleExports === undefined ||
+    moduleExports === null ||
+    typeof moduleExports !== "object"
+  ) {
     // Exit if we can't iterate over exports.
     return false;
   }
@@ -90,7 +94,7 @@ function isReactRefreshBoundary(moduleExports) {
     hasExports = true;
 
     // This is the ES Module indicator flag
-    if (key === '__esModule') {
+    if (key === "__esModule") {
       continue;
     }
 
@@ -118,23 +122,27 @@ function isReactRefreshBoundary(moduleExports) {
 function registerExportsForReactRefresh(moduleExports, moduleId) {
   if (Refresh.isLikelyComponentType(moduleExports)) {
     // Register module.exports if it is likely a component
-    Refresh.register(moduleExports, moduleId + ' %exports%');
+    Refresh.register(moduleExports, moduleId + " %exports%");
   }
 
-  if (moduleExports === undefined || moduleExports === null || typeof moduleExports !== 'object') {
+  if (
+    moduleExports === undefined ||
+    moduleExports === null ||
+    typeof moduleExports !== "object"
+  ) {
     // Exit if we can't iterate over the exports.
     return;
   }
 
   for (let key in moduleExports) {
     // Skip registering the ES Module indicator
-    if (key === '__esModule') {
+    if (key === "__esModule") {
       continue;
     }
 
     const exportValue = moduleExports[key];
     if (Refresh.isLikelyComponentType(exportValue)) {
-      const typeID = moduleId + ' %exports% ' + key;
+      const typeID = moduleId + " %exports% " + key;
       Refresh.register(exportValue, typeID);
     }
   }

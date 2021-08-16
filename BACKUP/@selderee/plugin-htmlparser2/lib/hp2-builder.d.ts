@@ -1,5 +1,5 @@
-import { Element } from 'domhandler';
-import { Picker, Ast } from 'selderee';
+import { Element } from "domhandler";
+import { Picker, Ast } from "selderee";
 /**
  * A {@link BuilderFunction} implementation.
  *
@@ -13,4 +13,6 @@ import { Picker, Ast } from 'selderee';
  *
  * @returns a {@link Picker} object.
  */
-export declare function hp2Builder<V>(nodes: Ast.DecisionTreeNode<V>[]): Picker<Element, V>;
+export declare function hp2Builder<V>(
+  nodes: Ast.DecisionTreeNode<V>[]
+): Picker<Element, V>;

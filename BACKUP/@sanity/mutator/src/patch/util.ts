@@ -1,9 +1,9 @@
 export function targetsToIndicies(targets, accessor) {
-  const result = []
+  const result = [];
   targets.forEach((target) => {
     if (target.isIndexReference()) {
-      result.push(...target.toIndicies(accessor))
+      result.push(...target.toIndicies(accessor));
     }
-  })
-  return result.sort()
+  });
+  return result.sort();
 }

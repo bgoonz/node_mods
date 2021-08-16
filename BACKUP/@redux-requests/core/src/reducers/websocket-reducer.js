@@ -1,7 +1,7 @@
-import { WEBSOCKET_OPENED, WEBSOCKET_CLOSED } from '../constants';
+import { WEBSOCKET_OPENED, WEBSOCKET_CLOSED } from "../constants";
 
 export default (state, action, config) => {
-  if (config.ssr === 'server') {
+  if (config.ssr === "server") {
     return state;
   }
 

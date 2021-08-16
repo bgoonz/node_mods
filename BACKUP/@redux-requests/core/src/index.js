@@ -15,13 +15,13 @@ export {
   stopSubscriptions,
   openWebsocket,
   closeWebsocket,
-} from './actions';
-export { default as handleRequests } from './handle-requests';
+} from "./actions";
+export { default as handleRequests } from "./handle-requests";
 export {
   getQuery,
   getMutation,
   getQuerySelector,
   getMutationSelector,
   getWebsocketState,
-} from './selectors';
-export { createRequestsStore } from './middleware';
+} from "./selectors";
+export { createRequestsStore } from "./middleware";

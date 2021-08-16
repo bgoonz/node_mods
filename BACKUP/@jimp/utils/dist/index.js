@@ -3,37 +3,39 @@
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.isNodePattern = isNodePattern;
 exports.throwError = throwError;
 exports.scan = scan;
 exports.scanIterator = scanIterator;
 
-var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+var _regenerator = _interopRequireDefault(
+  require("@babel/runtime/regenerator")
+);
 
 var _marked =
-/*#__PURE__*/
-_regenerator["default"].mark(scanIterator);
+  /*#__PURE__*/
+  _regenerator["default"].mark(scanIterator);
 
 function isNodePattern(cb) {
-  if (typeof cb === 'undefined') {
+  if (typeof cb === "undefined") {
     return false;
   }
 
-  if (typeof cb !== 'function') {
-    throw new TypeError('Callback must be a function');
+  if (typeof cb !== "function") {
+    throw new TypeError("Callback must be a function");
   }
 
   return true;
 }
 
 function throwError(error, cb) {
-  if (typeof error === 'string') {
+  if (typeof error === "string") {
     error = new Error(error);
   }
 
-  if (typeof cb === 'function') {
+  if (typeof cb === "function") {
     return cb.call(this, error);
   }
 
@@ -49,7 +51,7 @@ function scan(image, x, y, w, h, f) {
 
   for (var _y = y; _y < y + h; _y++) {
     for (var _x = x; _x < x + w; _x++) {
-      var idx = image.bitmap.width * _y + _x << 2;
+      var idx = (image.bitmap.width * _y + _x) << 2;
       f.call(image, _x, _y, idx);
     }
   }
@@ -62,7 +64,7 @@ function scanIterator(image, x, y, w, h) {
 
   return _regenerator["default"].wrap(function scanIterator$(_context) {
     while (1) {
-      switch (_context.prev = _context.next) {
+      switch ((_context.prev = _context.next)) {
         case 0:
           // round input
           x = Math.round(x);
@@ -85,13 +87,13 @@ function scanIterator(image, x, y, w, h) {
             break;
           }
 
-          idx = image.bitmap.width * _y + _x << 2;
+          idx = (image.bitmap.width * _y + _x) << 2;
           _context.next = 11;
           return {
             x: _x,
             y: _y,
             idx: idx,
-            image: image
+            image: image,
           };
 
         case 11:

@@ -1,6 +1,6 @@
 declare namespace transliterate {
-	interface Options {
-		/**
+  interface Options {
+    /**
 		Add your own custom replacements.
 
 		The replacements are run on the original string before any other transformations.
@@ -21,8 +21,8 @@ declare namespace transliterate {
 		//=> 'Ya lyublyu 🦄'
 		```
 		*/
-		readonly customReplacements?: ReadonlyArray<[string, string]>;
-	}
+    readonly customReplacements?: ReadonlyArray<[string, string]>;
+  }
 }
 
 /**
@@ -48,8 +48,8 @@ transliterate('tôi yêu những chú kỳ lân');
 ```
 */
 declare function transliterate(
-	string: string,
-	options?: transliterate.Options
+  string: string,
+  options?: transliterate.Options
 ): string;
 
 export = transliterate;

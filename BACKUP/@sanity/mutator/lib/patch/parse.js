@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = parse;
 
@@ -17,7 +17,9 @@ var _UnsetPatch = _interopRequireDefault(require("./UnsetPatch"));
 
 var _DiffMatchPatch = _interopRequireDefault(require("./DiffMatchPatch"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 // Parses a Gradient patch into our own personal patch implementations
 function parse(patch) {
@@ -28,38 +30,41 @@ function parse(patch) {
   }
 
   if (patch.set) {
-    Object.keys(patch.set).forEach(path => {
+    Object.keys(patch.set).forEach((path) => {
       result.push(new _SetPatch.default(patch.id, path, patch.set[path]));
     });
   }
 
   if (patch.setIfMissing) {
-    Object.keys(patch.setIfMissing).forEach(path => {
-      result.push(new _SetIfMissingPatch.default(patch.id, path, patch.setIfMissing[path]));
+    Object.keys(patch.setIfMissing).forEach((path) => {
+      result.push(
+        new _SetIfMissingPatch.default(patch.id, path, patch.setIfMissing[path])
+      );
     });
   } // TODO: merge
 
-
   if (patch.unset) {
-    patch.unset.forEach(path => {
+    patch.unset.forEach((path) => {
       result.push(new _UnsetPatch.default(patch.id, path));
     });
   }
 
   if (patch.diffMatchPatch) {
-    Object.keys(patch.diffMatchPatch).forEach(path => {
-      result.push(new _DiffMatchPatch.default(patch.id, path, patch.diffMatchPatch[path]));
+    Object.keys(patch.diffMatchPatch).forEach((path) => {
+      result.push(
+        new _DiffMatchPatch.default(patch.id, path, patch.diffMatchPatch[path])
+      );
     });
   }
 
   if (patch.inc) {
-    Object.keys(patch.inc).forEach(path => {
+    Object.keys(patch.inc).forEach((path) => {
       result.push(new _IncPatch.default(patch.id, path, patch.inc[path]));
     });
   }
 
   if (patch.dec) {
-    Object.keys(patch.dec).forEach(path => {
+    Object.keys(patch.dec).forEach((path) => {
       result.push(new _IncPatch.default(patch.id, path, -patch.dec[path]));
     });
   }
@@ -70,13 +75,13 @@ function parse(patch) {
     var spec = patch.insert;
 
     if (spec.before) {
-      location = 'before';
+      location = "before";
       path = spec.before;
     } else if (spec.after) {
-      location = 'after';
+      location = "after";
       path = spec.after;
     } else if (spec.replace) {
-      location = 'replace';
+      location = "replace";
       path = spec.replace;
     }
 

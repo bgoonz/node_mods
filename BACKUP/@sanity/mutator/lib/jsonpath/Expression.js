@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -11,21 +11,89 @@ var _toPath = _interopRequireDefault(require("./toPath"));
 
 var _parse = _interopRequireDefault(require("./parse"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _slicedToArray(arr, i) {
+  return (
+    _arrayWithHoles(arr) ||
+    _iterableToArrayLimit(arr, i) ||
+    _unsupportedIterableToArray(arr, i) ||
+    _nonIterableRest()
+  );
+}
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _nonIterableRest() {
+  throw new TypeError(
+    "Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."
+  );
+}
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))
+    return _arrayLikeToArray(o, minLen);
+}
 
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+  return arr2;
+}
 
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function _iterableToArrayLimit(arr, i) {
+  var _i =
+    arr == null
+      ? null
+      : (typeof Symbol !== "undefined" && arr[Symbol.iterator]) ||
+        arr["@@iterator"];
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _s, _e;
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+  return _arr;
+}
 
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 
 class Expression {
   constructor(expr) {
@@ -39,16 +107,18 @@ class Expression {
     }
 
     if (!this.expr.type) {
-      throw new Error('Attempt to create Expression for expression with no type');
+      throw new Error(
+        "Attempt to create Expression for expression with no type"
+      );
     }
   }
 
   isPath() {
-    return this.expr.type == 'path';
+    return this.expr.type == "path";
   }
 
   isUnion() {
-    return this.expr.type == 'union';
+    return this.expr.type == "union";
   }
 
   isCollection() {
@@ -56,23 +126,23 @@ class Expression {
   }
 
   isConstraint() {
-    return this.expr.type == 'constraint';
+    return this.expr.type == "constraint";
   }
 
   isRecursive() {
-    return this.expr.type == 'recursive';
+    return this.expr.type == "recursive";
   }
 
   isExistenceConstraint() {
-    return this.isConstraint() && this.expr.operator == '?';
+    return this.isConstraint() && this.expr.operator == "?";
   }
 
   isIndex() {
-    return this.expr.type == 'index';
+    return this.expr.type == "index";
   }
 
   isRange() {
-    return this.expr.type == 'range';
+    return this.expr.type == "range";
   }
 
   expandRange(probe) {
@@ -84,14 +154,13 @@ class Expression {
     return {
       start,
       end,
-      step
+      step,
     };
   }
 
   isAttributeReference() {
-    return this.expr.type == 'attribute';
+    return this.expr.type == "attribute";
   } // Is a range or index -> something referencing indexes
-
 
   isIndexReference() {
     return this.isIndex() || this.isRange();
@@ -102,20 +171,24 @@ class Expression {
   }
 
   isSelfReference() {
-    return this.expr.type == 'alias' && this.expr.target == 'self';
+    return this.expr.type == "alias" && this.expr.target == "self";
   }
 
   constraintTargetIsSelf() {
-    return this.isConstraint() && this.expr.lhs.type == 'alias' && this.expr.lhs.target == 'self';
+    return (
+      this.isConstraint() &&
+      this.expr.lhs.type == "alias" &&
+      this.expr.lhs.target == "self"
+    );
   }
 
   constraintTargetIsAttribute() {
-    return this.isConstraint() && this.expr.lhs.type == 'attribute';
+    return this.isConstraint() && this.expr.lhs.type == "attribute";
   }
 
   testConstraint(probe) {
     if (this.constraintTargetIsSelf()) {
-      if (probe.containerType() != 'primitive') {
+      if (probe.containerType() != "primitive") {
         return false;
       }
 
@@ -130,16 +203,22 @@ class Expression {
     }
 
     if (!this.constraintTargetIsAttribute()) {
-      throw new Error("Constraint target ".concat(this.expr.lhs.type, " not supported"));
+      throw new Error(
+        "Constraint target ".concat(this.expr.lhs.type, " not supported")
+      );
     }
 
-    if (probe.containerType() != 'object') {
+    if (probe.containerType() != "object") {
       return false;
     }
 
     var lhs = probe.getAttribute(this.expr.lhs.name);
 
-    if (lhs === undefined || lhs === null || lhs.containerType() != 'primitive') {
+    if (
+      lhs === undefined ||
+      lhs === null ||
+      lhs.containerType() != "primitive"
+    ) {
       // LHS is void and empty, or it is a collection
       return false;
     }
@@ -167,8 +246,8 @@ class Expression {
     }
 
     return new Expression({
-      type: 'path',
-      nodes: node.pathNodes().concat(this.pathNodes())
+      type: "path",
+      nodes: node.pathNodes().concat(this.pathNodes()),
     });
   }
 
@@ -181,21 +260,23 @@ class Expression {
   }
 
   descend() {
-    return (0, _descend.default)(this.expr).map(headTail => {
+    return (0, _descend.default)(this.expr).map((headTail) => {
       var _headTail = _slicedToArray(headTail, 2),
-          head = _headTail[0],
-          tail = _headTail[1];
+        head = _headTail[0],
+        tail = _headTail[1];
 
       return {
         head: head ? new Expression(head) : null,
-        tail: tail ? new Expression(tail) : null
+        tail: tail ? new Expression(tail) : null,
       };
     });
   }
 
   unwrapRecursive() {
     if (!this.isRecursive()) {
-      throw new Error("Attempt to unwrap recursive on type ".concat(this.expr.type));
+      throw new Error(
+        "Attempt to unwrap recursive on type ".concat(this.expr.type)
+      );
     }
 
     return new Expression(this.expr.term);
@@ -203,21 +284,20 @@ class Expression {
 
   toIndicies(probe) {
     if (!this.isIndexReference()) {
-      throw new Error('Node cannot be converted to indexes');
+      throw new Error("Node cannot be converted to indexes");
     }
 
-    if (this.expr.type == 'index') {
+    if (this.expr.type == "index") {
       return [interpretNegativeIndex(this.expr.value, probe)];
-    } else if (this.expr.type == 'range') {
+    } else if (this.expr.type == "range") {
       var result = [];
 
       var _this$expandRange = this.expandRange(probe),
-          start = _this$expandRange.start,
-          end = _this$expandRange.end,
-          step = _this$expandRange.step;
+        start = _this$expandRange.start,
+        end = _this$expandRange.end,
+        step = _this$expandRange.step;
 
       if (step < 0) {
-        ;
         var _ref = [end, start];
         start = _ref[0];
         end = _ref[1];
@@ -242,7 +322,9 @@ class Expression {
       return [this.name()];
     }
 
-    throw new Error("Can't convert ".concat(this.expr.type, " to field references"));
+    throw new Error(
+      "Can't convert ".concat(this.expr.type, " to field references")
+    );
   }
 
   toString() {
@@ -255,41 +337,39 @@ class Expression {
 
   static attributeReference(name) {
     return new Expression({
-      type: 'attribute',
-      name: name
+      type: "attribute",
+      name: name,
     });
   }
 
   static indexReference(i) {
     return new Expression({
-      type: 'index',
-      value: i
+      type: "index",
+      value: i,
     });
   }
-
 } // Tests an operator on two given primitive values
-
 
 exports.default = Expression;
 
 function testBinaryOperator(lhsValue, operator, rhsValue) {
   switch (operator) {
-    case '>':
+    case ">":
       return lhsValue > rhsValue;
 
-    case '>=':
+    case ">=":
       return lhsValue >= rhsValue;
 
-    case '<':
+    case "<":
       return lhsValue < rhsValue;
 
-    case '<=':
+    case "<=":
       return lhsValue <= rhsValue;
 
-    case '==':
+    case "==":
       return lhsValue === rhsValue;
 
-    case '!=':
+    case "!=":
       return lhsValue != rhsValue;
 
     default:

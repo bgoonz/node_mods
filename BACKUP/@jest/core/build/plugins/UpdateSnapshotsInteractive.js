@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _jestWatcher() {
-  const data = require('jest-watcher');
+  const data = require("jest-watcher");
 
   _jestWatcher = function () {
     return data;
@@ -16,7 +16,7 @@ function _jestWatcher() {
 }
 
 function _SnapshotInteractiveMode() {
-  const data = _interopRequireDefault(require('../SnapshotInteractiveMode'));
+  const data = _interopRequireDefault(require("../SnapshotInteractiveMode"));
 
   _SnapshotInteractiveMode = function () {
     return data;
@@ -26,7 +26,7 @@ function _SnapshotInteractiveMode() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -35,7 +35,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -49,13 +49,13 @@ class UpdateSnapshotInteractivePlugin extends _jestWatcher().BaseWatchPlugin {
 
     _defineProperty(
       this,
-      '_snapshotInteractiveMode',
+      "_snapshotInteractiveMode",
       new (_SnapshotInteractiveMode().default)(this._stdout)
     );
 
-    _defineProperty(this, '_failedSnapshotTestAssertions', []);
+    _defineProperty(this, "_failedSnapshotTestAssertions", []);
 
-    _defineProperty(this, 'isInternal', true);
+    _defineProperty(this, "isInternal", true);
   }
 
   getFailedSnapshotTestAssertions(testResults) {
@@ -65,13 +65,13 @@ class UpdateSnapshotInteractivePlugin extends _jestWatcher().BaseWatchPlugin {
       return failedTestPaths;
     }
 
-    testResults.testResults.forEach(testResult => {
+    testResults.testResults.forEach((testResult) => {
       if (testResult.snapshot && testResult.snapshot.unmatched) {
-        testResult.testResults.forEach(result => {
-          if (result.status === 'failed') {
+        testResult.testResults.forEach((result) => {
+          if (result.status === "failed") {
             failedTestPaths.push({
               fullName: result.fullName,
-              path: testResult.testFilePath
+              path: testResult.testFilePath,
             });
           }
         });
@@ -81,7 +81,7 @@ class UpdateSnapshotInteractivePlugin extends _jestWatcher().BaseWatchPlugin {
   }
 
   apply(hooks) {
-    hooks.onTestRunComplete(results => {
+    hooks.onTestRunComplete((results) => {
       this._failedSnapshotTestAssertions =
         this.getFailedSnapshotTestAssertions(results);
 
@@ -99,15 +99,15 @@ class UpdateSnapshotInteractivePlugin extends _jestWatcher().BaseWatchPlugin {
 
   run(_globalConfig, updateConfigAndRun) {
     if (this._failedSnapshotTestAssertions.length) {
-      return new Promise(res => {
+      return new Promise((res) => {
         this._snapshotInteractiveMode.run(
           this._failedSnapshotTestAssertions,
           (assertion, shouldUpdateSnapshot) => {
             updateConfigAndRun({
-              mode: 'watch',
-              testNamePattern: assertion ? `^${assertion.fullName}$` : '',
-              testPathPattern: assertion ? assertion.path : '',
-              updateSnapshot: shouldUpdateSnapshot ? 'all' : 'none'
+              mode: "watch",
+              testNamePattern: assertion ? `^${assertion.fullName}$` : "",
+              testPathPattern: assertion ? assertion.path : "",
+              updateSnapshot: shouldUpdateSnapshot ? "all" : "none",
             });
 
             if (!this._snapshotInteractiveMode.isActive()) {
@@ -131,8 +131,8 @@ class UpdateSnapshotInteractivePlugin extends _jestWatcher().BaseWatchPlugin {
         : _this$_failedSnapshot.length) > 0
     ) {
       return {
-        key: 'i',
-        prompt: 'update failing snapshots interactively'
+        key: "i",
+        prompt: "update failing snapshots interactively",
       };
     }
 

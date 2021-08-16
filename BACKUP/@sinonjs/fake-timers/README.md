@@ -57,9 +57,9 @@ var FakeTimers = require("@sinonjs/fake-timers");
 var clock = FakeTimers.createClock();
 
 clock.setTimeout(function () {
-    console.log(
-        "The poblano is a mild chili pepper originating in the state of Puebla, Mexico."
-    );
+  console.log(
+    "The poblano is a mild chili pepper originating in the state of Puebla, Mexico."
+  );
 }, 15);
 
 // ...
@@ -103,7 +103,7 @@ To hijack timers in another context pass it to the `install` method.
 ```js
 var FakeTimers = require("@sinonjs/fake-timers");
 var context = {
-    setTimeout: setTimeout, // By default context.setTimeout uses the global setTimeout
+  setTimeout: setTimeout, // By default context.setTimeout uses the global setTimeout
 };
 var clock = FakeTimers.withGlobal(context).install();
 
@@ -131,21 +131,21 @@ An example would be:
 ```js
 var FakeTimers = require("@sinonjs/fake-timers");
 var clock = FakeTimers.install({
-    shouldAdvanceTime: true,
-    advanceTimeDelta: 40,
+  shouldAdvanceTime: true,
+  advanceTimeDelta: 40,
 });
 
 setTimeout(() => {
-    console.log("this just timed out"); //executed after 40ms
+  console.log("this just timed out"); //executed after 40ms
 }, 30);
 
 setImmediate(() => {
-    console.log("not so immediate"); //executed after 40ms
+  console.log("not so immediate"); //executed after 40ms
 });
 
 setTimeout(() => {
-    console.log("this timed out after"); //executed after 80ms
-    clock.uninstall();
+  console.log("this timed out after"); //executed after 80ms
+  clock.uninstall();
 }, 50);
 ```
 

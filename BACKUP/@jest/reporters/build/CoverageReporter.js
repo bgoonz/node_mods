@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function path() {
-  const data = _interopRequireWildcard(require('path'));
+  const data = _interopRequireWildcard(require("path"));
 
   path = function () {
     return data;
@@ -16,7 +16,7 @@ function path() {
 }
 
 function _v8Coverage() {
-  const data = require('@bcoe/v8-coverage');
+  const data = require("@bcoe/v8-coverage");
 
   _v8Coverage = function () {
     return data;
@@ -26,7 +26,7 @@ function _v8Coverage() {
 }
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -36,7 +36,7 @@ function _chalk() {
 }
 
 function _glob() {
-  const data = _interopRequireDefault(require('glob'));
+  const data = _interopRequireDefault(require("glob"));
 
   _glob = function () {
     return data;
@@ -46,7 +46,7 @@ function _glob() {
 }
 
 function fs() {
-  const data = _interopRequireWildcard(require('graceful-fs'));
+  const data = _interopRequireWildcard(require("graceful-fs"));
 
   fs = function () {
     return data;
@@ -56,7 +56,7 @@ function fs() {
 }
 
 function _istanbulLibCoverage() {
-  const data = _interopRequireDefault(require('istanbul-lib-coverage'));
+  const data = _interopRequireDefault(require("istanbul-lib-coverage"));
 
   _istanbulLibCoverage = function () {
     return data;
@@ -66,7 +66,7 @@ function _istanbulLibCoverage() {
 }
 
 function _istanbulLibReport() {
-  const data = _interopRequireDefault(require('istanbul-lib-report'));
+  const data = _interopRequireDefault(require("istanbul-lib-report"));
 
   _istanbulLibReport = function () {
     return data;
@@ -76,7 +76,7 @@ function _istanbulLibReport() {
 }
 
 function _istanbulLibSourceMaps() {
-  const data = _interopRequireDefault(require('istanbul-lib-source-maps'));
+  const data = _interopRequireDefault(require("istanbul-lib-source-maps"));
 
   _istanbulLibSourceMaps = function () {
     return data;
@@ -86,7 +86,7 @@ function _istanbulLibSourceMaps() {
 }
 
 function _istanbulReports() {
-  const data = _interopRequireDefault(require('istanbul-reports'));
+  const data = _interopRequireDefault(require("istanbul-reports"));
 
   _istanbulReports = function () {
     return data;
@@ -96,7 +96,7 @@ function _istanbulReports() {
 }
 
 function _v8ToIstanbul() {
-  const data = _interopRequireDefault(require('v8-to-istanbul'));
+  const data = _interopRequireDefault(require("v8-to-istanbul"));
 
   _v8ToIstanbul = function () {
     return data;
@@ -106,7 +106,7 @@ function _v8ToIstanbul() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -116,7 +116,7 @@ function _jestUtil() {
 }
 
 function _jestWorker() {
-  const data = require('jest-worker');
+  const data = require("jest-worker");
 
   _jestWorker = function () {
     return data;
@@ -125,16 +125,16 @@ function _jestWorker() {
   return data;
 }
 
-var _BaseReporter = _interopRequireDefault(require('./BaseReporter'));
+var _BaseReporter = _interopRequireDefault(require("./BaseReporter"));
 
-var _getWatermarks = _interopRequireDefault(require('./getWatermarks'));
+var _getWatermarks = _interopRequireDefault(require("./getWatermarks"));
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -146,8 +146,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -157,7 +157,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -181,7 +181,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -197,15 +197,15 @@ class CoverageReporter extends _BaseReporter.default {
   constructor(globalConfig, options) {
     super();
 
-    _defineProperty(this, '_coverageMap', void 0);
+    _defineProperty(this, "_coverageMap", void 0);
 
-    _defineProperty(this, '_globalConfig', void 0);
+    _defineProperty(this, "_globalConfig", void 0);
 
-    _defineProperty(this, '_sourceMapStore', void 0);
+    _defineProperty(this, "_sourceMapStore", void 0);
 
-    _defineProperty(this, '_options', void 0);
+    _defineProperty(this, "_options", void 0);
 
-    _defineProperty(this, '_v8CoverageResults', void 0);
+    _defineProperty(this, "_v8CoverageResults", void 0);
 
     this._coverageMap = _istanbulLibCoverage().default.createCoverageMap({});
     this._globalConfig = globalConfig;
@@ -229,16 +229,16 @@ class CoverageReporter extends _BaseReporter.default {
 
   async onRunComplete(contexts, aggregatedResults) {
     await this._addUntestedFiles(contexts);
-    const {map, reportContext} = await this._getCoverageResult();
+    const { map, reportContext } = await this._getCoverageResult();
 
     try {
       const coverageReporters = this._globalConfig.coverageReporters || [];
 
       if (!this._globalConfig.useStderr && coverageReporters.length < 1) {
-        coverageReporters.push('text-summary');
+        coverageReporters.push("text-summary");
       }
 
-      coverageReporters.forEach(reporter => {
+      coverageReporters.forEach((reporter) => {
         let additionalOptions = {};
 
         if (Array.isArray(reporter)) {
@@ -248,7 +248,7 @@ class CoverageReporter extends _BaseReporter.default {
         _istanbulReports()
           .default.create(reporter, {
             maxCols: process.stdout.columns || Infinity,
-            ...additionalOptions
+            ...additionalOptions,
           })
           .execute(reportContext);
       });
@@ -268,7 +268,7 @@ class CoverageReporter extends _BaseReporter.default {
 
   async _addUntestedFiles(contexts) {
     const files = [];
-    contexts.forEach(context => {
+    contexts.forEach((context) => {
       const config = context.config;
 
       if (
@@ -280,10 +280,10 @@ class CoverageReporter extends _BaseReporter.default {
             this._globalConfig.collectCoverageFrom,
             config.rootDir
           )
-          .forEach(filePath =>
+          .forEach((filePath) =>
             files.push({
               config,
-              path: filePath
+              path: filePath,
             })
           );
       }
@@ -295,34 +295,34 @@ class CoverageReporter extends _BaseReporter.default {
 
     if (_jestUtil().isInteractive) {
       process.stderr.write(
-        RUNNING_TEST_COLOR('Running coverage on untested files...')
+        RUNNING_TEST_COLOR("Running coverage on untested files...")
       );
     }
 
     let worker;
 
     if (this._globalConfig.maxWorkers <= 1) {
-      worker = require('./CoverageWorker');
+      worker = require("./CoverageWorker");
     } else {
-      worker = new (_jestWorker().Worker)(require.resolve('./CoverageWorker'), {
-        exposedMethods: ['worker'],
+      worker = new (_jestWorker().Worker)(require.resolve("./CoverageWorker"), {
+        exposedMethods: ["worker"],
         maxRetries: 2,
-        numWorkers: this._globalConfig.maxWorkers
+        numWorkers: this._globalConfig.maxWorkers,
       });
     }
 
-    const instrumentation = files.map(async fileObj => {
+    const instrumentation = files.map(async (fileObj) => {
       const filename = fileObj.path;
       const config = fileObj.config;
 
-      const hasCoverageData = this._v8CoverageResults.some(v8Res =>
-        v8Res.some(innerRes => innerRes.result.url === filename)
+      const hasCoverageData = this._v8CoverageResults.some((v8Res) =>
+        v8Res.some((innerRes) => innerRes.result.url === filename)
       );
 
       if (
         !hasCoverageData &&
         !this._coverageMap.data[filename] &&
-        'worker' in worker
+        "worker" in worker
       ) {
         try {
           const result = await worker.worker({
@@ -335,18 +335,18 @@ class CoverageReporter extends _BaseReporter.default {
                 Array.from(this._options.changedFiles),
               sourcesRelatedToTestsInChangedFiles:
                 this._options.sourcesRelatedToTestsInChangedFiles &&
-                Array.from(this._options.sourcesRelatedToTestsInChangedFiles)
+                Array.from(this._options.sourcesRelatedToTestsInChangedFiles),
             },
-            path: filename
+            path: filename,
           });
 
           if (result) {
-            if (result.kind === 'V8Coverage') {
+            if (result.kind === "V8Coverage") {
               this._v8CoverageResults.push([
                 {
                   codeTransformResult: undefined,
-                  result: result.result
-                }
+                  result: result.result,
+                },
               ]);
             } else {
               this._coverageMap.addFileCoverage(result.coverage);
@@ -358,8 +358,8 @@ class CoverageReporter extends _BaseReporter.default {
               [
                 `Failed to collect coverage from ${filename}`,
                 `ERROR: ${error.message}`,
-                `STACK: ${error.stack}`
-              ].join('\n')
+                `STACK: ${error.stack}`,
+              ].join("\n")
             )
           );
         }
@@ -376,17 +376,17 @@ class CoverageReporter extends _BaseReporter.default {
       (0, _jestUtil().clearLine)(process.stderr);
     }
 
-    if (worker && 'end' in worker && typeof worker.end === 'function') {
+    if (worker && "end" in worker && typeof worker.end === "function") {
       await worker.end();
     }
   }
 
   _checkThreshold(map) {
-    const {coverageThreshold} = this._globalConfig;
+    const { coverageThreshold } = this._globalConfig;
 
     if (coverageThreshold) {
       function check(name, thresholds, actuals) {
-        return ['statements', 'branches', 'lines', 'functions'].reduce(
+        return ["statements", "branches", "lines", "functions"].reduce(
           (errors, key) => {
             const actual = actuals[key].pct;
             const actualUncovered = actuals[key].total - actuals[key].covered;
@@ -414,9 +414,9 @@ class CoverageReporter extends _BaseReporter.default {
       }
 
       const THRESHOLD_GROUP_TYPES = {
-        GLOB: 'glob',
-        GLOBAL: 'global',
-        PATH: 'path'
+        GLOB: "glob",
+        GLOBAL: "global",
+        PATH: "path",
       };
       const coveredFiles = map.files();
       const thresholdGroups = Object.keys(coverageThreshold);
@@ -440,7 +440,7 @@ class CoverageReporter extends _BaseReporter.default {
               if (filesByGlob[absoluteThresholdGroup] === undefined) {
                 filesByGlob[absoluteThresholdGroup] = _glob()
                   .default.sync(absoluteThresholdGroup)
-                  .map(filePath => path().resolve(filePath));
+                  .map((filePath) => path().resolve(filePath));
               }
 
               if (filesByGlob[absoluteThresholdGroup].indexOf(file) > -1) {
@@ -469,14 +469,14 @@ class CoverageReporter extends _BaseReporter.default {
         []
       );
 
-      const getFilesInThresholdGroup = thresholdGroup =>
+      const getFilesInThresholdGroup = (thresholdGroup) =>
         coveredFilesSortedIntoThresholdGroup
-          .filter(fileAndGroup => fileAndGroup[1] === thresholdGroup)
-          .map(fileAndGroup => fileAndGroup[0]);
+          .filter((fileAndGroup) => fileAndGroup[1] === thresholdGroup)
+          .map((fileAndGroup) => fileAndGroup[0]);
 
       function combineCoverage(filePaths) {
         return filePaths
-          .map(filePath => map.fileCoverageFor(filePath))
+          .map((filePath) => map.fileCoverageFor(filePath))
           .reduce((combinedCoverage, nextFileCoverage) => {
             if (combinedCoverage === undefined || combinedCoverage === null) {
               return nextFileCoverage.toSummary();
@@ -487,7 +487,7 @@ class CoverageReporter extends _BaseReporter.default {
       }
 
       let errors = [];
-      thresholdGroups.forEach(thresholdGroup => {
+      thresholdGroups.forEach((thresholdGroup) => {
         switch (groupTypeByThresholdGroup[thresholdGroup]) {
           case THRESHOLD_GROUP_TYPES.GLOBAL: {
             const coverage = combineCoverage(
@@ -527,7 +527,7 @@ class CoverageReporter extends _BaseReporter.default {
 
           case THRESHOLD_GROUP_TYPES.GLOB:
             getFilesInThresholdGroup(thresholdGroup).forEach(
-              fileMatchingGlob => {
+              (fileMatchingGlob) => {
                 errors = errors.concat(
                   check(
                     fileMatchingGlob,
@@ -553,28 +553,28 @@ class CoverageReporter extends _BaseReporter.default {
         }
       });
       errors = errors.filter(
-        err => err !== undefined && err !== null && err.length > 0
+        (err) => err !== undefined && err !== null && err.length > 0
       );
 
       if (errors.length > 0) {
-        this.log(`${FAIL_COLOR(errors.join('\n'))}`);
+        this.log(`${FAIL_COLOR(errors.join("\n"))}`);
 
-        this._setError(new Error(errors.join('\n')));
+        this._setError(new Error(errors.join("\n")));
       }
     }
   }
 
   async _getCoverageResult() {
-    if (this._globalConfig.coverageProvider === 'v8') {
+    if (this._globalConfig.coverageProvider === "v8") {
       const mergedCoverages = (0, _v8Coverage().mergeProcessCovs)(
-        this._v8CoverageResults.map(cov => ({
-          result: cov.map(r => r.result)
+        this._v8CoverageResults.map((cov) => ({
+          result: cov.map((r) => r.result),
         }))
       );
       const fileTransforms = new Map();
 
-      this._v8CoverageResults.forEach(res =>
-        res.forEach(r => {
+      this._v8CoverageResults.forEach((res) =>
+        res.forEach((r) => {
           if (r.codeTransformResult && !fileTransforms.has(r.result.url)) {
             fileTransforms.set(r.result.url, r.codeTransformResult);
           }
@@ -582,7 +582,7 @@ class CoverageReporter extends _BaseReporter.default {
       );
 
       const transformedCoverage = await Promise.all(
-        mergedCoverages.result.map(async res => {
+        mergedCoverages.result.map(async (res) => {
           var _fileTransform$wrappe;
 
           const fileTransform = fileTransforms.get(res.url);
@@ -595,7 +595,7 @@ class CoverageReporter extends _BaseReporter.default {
             fs().existsSync(fileTransform.sourceMapPath)
           ) {
             sourcemapContent = JSON.parse(
-              fs().readFileSync(fileTransform.sourceMapPath, 'utf8')
+              fs().readFileSync(fileTransform.sourceMapPath, "utf8")
             );
           }
 
@@ -615,12 +615,12 @@ class CoverageReporter extends _BaseReporter.default {
                   sourceMap: {
                     sourcemap: {
                       file: res.url,
-                      ...sourcemapContent
-                    }
-                  }
+                      ...sourcemapContent,
+                    },
+                  },
                 }
               : {
-                  source: fs().readFileSync(res.url, 'utf8')
+                  source: fs().readFileSync(res.url, "utf8"),
                 }
           );
           await converter.load();
@@ -631,17 +631,17 @@ class CoverageReporter extends _BaseReporter.default {
 
       const map = _istanbulLibCoverage().default.createCoverageMap({});
 
-      transformedCoverage.forEach(res => map.merge(res));
+      transformedCoverage.forEach((res) => map.merge(res));
 
       const reportContext = _istanbulLibReport().default.createContext({
         coverageMap: map,
         dir: this._globalConfig.coverageDirectory,
-        watermarks: (0, _getWatermarks.default)(this._globalConfig)
+        watermarks: (0, _getWatermarks.default)(this._globalConfig),
       });
 
       return {
         map,
-        reportContext
+        reportContext,
       };
     }
 
@@ -651,16 +651,16 @@ class CoverageReporter extends _BaseReporter.default {
       coverageMap: map,
       dir: this._globalConfig.coverageDirectory,
       sourceFinder: this._sourceMapStore.sourceFinder,
-      watermarks: (0, _getWatermarks.default)(this._globalConfig)
+      watermarks: (0, _getWatermarks.default)(this._globalConfig),
     });
 
     return {
       map,
-      reportContext
+      reportContext,
     };
   }
 }
 
 exports.default = CoverageReporter;
 
-_defineProperty(CoverageReporter, 'filename', __filename);
+_defineProperty(CoverageReporter, "filename", __filename);

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -9,9 +9,23 @@ var _flatten2 = _interopRequireDefault(require("lodash/flatten"));
 
 var _Expression = _interopRequireDefault(require("./Expression"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 
 class Descender {
   constructor(head, tail) {
@@ -25,7 +39,6 @@ class Descender {
   // resolvable on the current value. Returns an array of new descenders
   // that are guaranteed to be without constraints in the head
 
-
   iterate(probe) {
     var result = [this];
 
@@ -33,10 +46,12 @@ class Descender {
       var anyConstraints = true; // Keep rewriting constraints until there are none left
 
       while (anyConstraints) {
-        result = (0, _flatten2.default)(result.map(descender => {
-          return descender.iterateConstraints(probe);
-        }));
-        anyConstraints = result.some(descender => {
+        result = (0, _flatten2.default)(
+          result.map((descender) => {
+            return descender.iterateConstraints(probe);
+          })
+        );
+        anyConstraints = result.some((descender) => {
           return descender.head && descender.head.isConstraint();
         });
       }
@@ -72,7 +87,10 @@ class Descender {
 
     var result = [];
 
-    if (probe.containerType() === 'primitive' && head.constraintTargetIsSelf()) {
+    if (
+      probe.containerType() === "primitive" &&
+      head.constraintTargetIsSelf()
+    ) {
       if (head.testConstraint(probe)) {
         result.push(...this.descend());
       }
@@ -80,26 +98,29 @@ class Descender {
       return result;
     } // The value is an array
 
-
-    if (probe.containerType() === 'array') {
+    if (probe.containerType() === "array") {
       var _length = probe.length();
 
       for (var i = 0; i < _length; i++) {
         // Push new descenders with constraint translated to literal indices
         // where they match
         if (head.testConstraint(probe.getIndex(i))) {
-          result.push(new Descender(new _Expression.default({
-            type: 'index',
-            value: i
-          }), this.tail));
+          result.push(
+            new Descender(
+              new _Expression.default({
+                type: "index",
+                value: i,
+              }),
+              this.tail
+            )
+          );
         }
       }
 
       return result;
     } // The value is an object
 
-
-    if (probe.containerType() == 'object') {
+    if (probe.containerType() == "object") {
       if (this.head.constraintTargetIsSelf()) {
         // There are no matches for target self ('@') on a plain object
         return [];
@@ -120,28 +141,27 @@ class Descender {
       return [new Descender(null, null)];
     }
 
-    return this.tail.descend().map(ht => {
+    return this.tail.descend().map((ht) => {
       return new Descender(ht.head, ht.tail);
     });
   }
 
   toString() {
-    var result = ['<'];
+    var result = ["<"];
 
     if (this.head) {
       result.push(this.head.toString());
     }
 
-    result.push('|');
+    result.push("|");
 
     if (this.tail) {
       result.push(this.tail.toString());
     }
 
-    result.push('>');
-    return result.join('');
+    result.push(">");
+    return result.join("");
   }
-
 }
 
 exports.default = Descender;

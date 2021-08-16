@@ -3,29 +3,39 @@
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+var _defineProperty2 = _interopRequireDefault(
+  require("@babel/runtime/helpers/defineProperty")
+);
 
 var _jpegJs = _interopRequireDefault(require("jpeg-js"));
 
 var _utils = require("@jimp/utils");
 
-var MIME_TYPE = 'image/jpeg';
+var MIME_TYPE = "image/jpeg";
 
 var _default = function _default() {
   return {
-    mime: (0, _defineProperty2["default"])({}, MIME_TYPE, ['jpeg', 'jpg', 'jpe']),
+    mime: (0, _defineProperty2["default"])({}, MIME_TYPE, [
+      "jpeg",
+      "jpg",
+      "jpe",
+    ]),
     constants: {
-      MIME_JPEG: MIME_TYPE
+      MIME_JPEG: MIME_TYPE,
     },
-    decoders: (0, _defineProperty2["default"])({}, MIME_TYPE, _jpegJs["default"].decode),
+    decoders: (0, _defineProperty2["default"])(
+      {},
+      MIME_TYPE,
+      _jpegJs["default"].decode
+    ),
     encoders: (0, _defineProperty2["default"])({}, MIME_TYPE, function (image) {
       return _jpegJs["default"].encode(image.bitmap, image._quality).data;
     }),
-    "class": {
+    class: {
       // The quality to be used when saving JPEG images
       _quality: 100,
 
@@ -36,12 +46,12 @@ var _default = function _default() {
        * @returns {Jimp} this for chaining of methods
        */
       quality: function quality(n, cb) {
-        if (typeof n !== 'number') {
-          return _utils.throwError.call(this, 'n must be a number', cb);
+        if (typeof n !== "number") {
+          return _utils.throwError.call(this, "n must be a number", cb);
         }
 
         if (n < 0 || n > 100) {
-          return _utils.throwError.call(this, 'n must be a number 0 - 100', cb);
+          return _utils.throwError.call(this, "n must be a number 0 - 100", cb);
         }
 
         this._quality = Math.round(n);
@@ -51,8 +61,8 @@ var _default = function _default() {
         }
 
         return this;
-      }
-    }
+      },
+    },
   };
 };
 

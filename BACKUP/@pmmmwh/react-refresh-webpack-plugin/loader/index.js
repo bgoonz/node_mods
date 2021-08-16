@@ -5,8 +5,12 @@
 const originalFetch = global.fetch;
 delete global.fetch;
 
-const { SourceMapConsumer, SourceMapGenerator, SourceNode } = require('source-map');
-const { Template } = require('webpack');
+const {
+  SourceMapConsumer,
+  SourceMapGenerator,
+  SourceNode,
+} = require("source-map");
+const { Template } = require("webpack");
 
 /**
  * Generates an identity source map from a source file.
@@ -18,7 +22,7 @@ function getIdentitySourceMap(source, resourcePath) {
   const sourceMap = new SourceMapGenerator();
   sourceMap.setSourceContent(resourcePath, source);
 
-  source.split('\n').forEach((line, index) => {
+  source.split("\n").forEach((line, index) => {
     sourceMap.addMapping({
       source: resourcePath,
       original: {
@@ -41,14 +45,16 @@ function getIdentitySourceMap(source, resourcePath) {
  * @returns {string} The "sanitized" runtime template.
  */
 function getTemplate(fn) {
-  return Template.getFunctionContent(fn).trim().replace(/^ {2}/gm, '');
+  return Template.getFunctionContent(fn).trim().replace(/^ {2}/gm, "");
 }
 
-const RefreshSetupRuntime = getTemplate(require('./RefreshSetup.runtime')).replace(
-  '$RefreshRuntimePath$',
-  require.resolve('react-refresh/runtime').replace(/\\/g, '/')
+const RefreshSetupRuntime = getTemplate(
+  require("./RefreshSetup.runtime")
+).replace(
+  "$RefreshRuntimePath$",
+  require.resolve("react-refresh/runtime").replace(/\\/g, "/")
 );
-const RefreshModuleRuntime = getTemplate(require('./RefreshModule.runtime'));
+const RefreshModuleRuntime = getTemplate(require("./RefreshModule.runtime"));
 
 /**
  * A simple Webpack loader to inject react-refresh HMR code into modules.
@@ -81,13 +87,16 @@ function ReactRefreshLoader(source, inputSourceMap, meta) {
         await new SourceMapConsumer(originalSourceMap)
       );
 
-      node.prepend([RefreshSetupRuntime, '\n\n']);
-      node.add(['\n\n', RefreshModuleRuntime]);
+      node.prepend([RefreshSetupRuntime, "\n\n"]);
+      node.add(["\n\n", RefreshModuleRuntime]);
 
       const { code, map } = node.toStringWithSourceMap();
       return [code, map.toJSON()];
     } else {
-      return [[RefreshSetupRuntime, source, RefreshModuleRuntime].join('\n\n'), inputSourceMap];
+      return [
+        [RefreshSetupRuntime, source, RefreshModuleRuntime].join("\n\n"),
+        inputSourceMap,
+      ];
     }
   }
 

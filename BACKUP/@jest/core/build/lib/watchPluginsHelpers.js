@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.getSortedUsageRows = exports.filterInteractivePlugins = void 0;
 
@@ -13,14 +13,14 @@ exports.getSortedUsageRows = exports.filterInteractivePlugins = void 0;
  */
 const filterInteractivePlugins = (watchPlugins, globalConfig) => {
   const usageInfos = watchPlugins.map(
-    p => p.getUsageInfo && p.getUsageInfo(globalConfig)
+    (p) => p.getUsageInfo && p.getUsageInfo(globalConfig)
   );
   return watchPlugins.filter((_plugin, i) => {
     const usageInfo = usageInfos[i];
 
     if (usageInfo) {
-      const {key} = usageInfo;
-      return !usageInfos.slice(i + 1).some(u => !!u && key === u.key);
+      const { key } = usageInfo;
+      return !usageInfos.slice(i + 1).some((u) => !!u && key === u.key);
     }
 
     return false;
@@ -56,7 +56,7 @@ const getSortedUsageRows = (watchPlugins, globalConfig) =>
 
       return 0;
     })
-    .map(p => p.getUsageInfo && p.getUsageInfo(globalConfig))
+    .map((p) => p.getUsageInfo && p.getUsageInfo(globalConfig))
     .filter(notEmpty);
 
 exports.getSortedUsageRows = getSortedUsageRows;

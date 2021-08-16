@@ -3,12 +3,12 @@
 Object.defineProperty(exports, "__esModule", {
   value: true,
 });
-exports.findConfigUpwards = findConfigUpwards;
-exports.findRelativeConfig = findRelativeConfig;
-exports.findRootConfig = findRootConfig;
-exports.loadConfig = loadConfig;
-exports.resolveShowConfigPath = resolveShowConfigPath;
-exports.ROOT_CONFIG_FILENAMES = void 0;
+export {findConfigUpwards};
+export {findRelativeConfig};
+export {findRootConfig};
+export {loadConfig};
+export {resolveShowConfigPath};
+export var ROOT_CONFIG_FILENAMES = void 0;
 
 function _debug() {
   const data = require("debug");
@@ -60,17 +60,12 @@ function _gensync() {
   return data;
 }
 
-const _caching = require("../caching");
-
-const _configApi = require("../helpers/config-api");
-
-const _utils = require("./utils");
-
-const _moduleTypes = require("./module-types");
-
-const _patternToRegex = require("../pattern-to-regex");
-
-const fs = require("../../gensync-utils/fs");
+import _caching from "../caching";
+import _configApi from "../helpers/config-api";
+import _utils from "./utils";
+import _moduleTypes from "./module-types";
+import _patternToRegex from "../pattern-to-regex";
+import fs from "../../gensync-utils/fs";
 
 function _module() {
   const data = require("module");
@@ -90,7 +85,7 @@ const ROOT_CONFIG_FILENAMES = [
   "babel.config.mjs",
   "babel.config.json",
 ];
-exports.ROOT_CONFIG_FILENAMES = ROOT_CONFIG_FILENAMES;
+export {ROOT_CONFIG_FILENAMES};
 const RELATIVE_CONFIG_FILENAMES = [
   ".babelrc",
   ".babelrc.js",

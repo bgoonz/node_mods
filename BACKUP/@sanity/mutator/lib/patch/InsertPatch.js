@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -11,9 +11,23 @@ var _min2 = _interopRequireDefault(require("lodash/min"));
 
 var _util = require("./util");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 
 class InsertPatch {
   constructor(id, location, path, items) {
@@ -34,56 +48,53 @@ class InsertPatch {
   apply(targets, accessor) {
     var result = accessor;
 
-    if (accessor.containerType() !== 'array') {
-      throw new Error('Attempt to apply insert patch to non-array value');
+    if (accessor.containerType() !== "array") {
+      throw new Error("Attempt to apply insert patch to non-array value");
     }
 
     switch (this.location) {
-      case 'before':
-        {
-          var pos = minIndex(targets, accessor);
-          result = result.insertItemsAt(pos, this.items);
-          break;
-        }
+      case "before": {
+        var pos = minIndex(targets, accessor);
+        result = result.insertItemsAt(pos, this.items);
+        break;
+      }
 
-      case 'after':
-        {
-          var _pos = maxIndex(targets, accessor);
+      case "after": {
+        var _pos = maxIndex(targets, accessor);
 
-          result = result.insertItemsAt(_pos + 1, this.items);
-          break;
-        }
+        result = result.insertItemsAt(_pos + 1, this.items);
+        break;
+      }
 
-      case 'replace':
-        {
-          // TODO: Properly implement ranges in compliance with Gradient
-          // This will only properly support single contiguous ranges
-          var indicies = (0, _util.targetsToIndicies)(targets, accessor);
-          result = result.unsetIndices(indicies);
-          result = result.insertItemsAt(indicies[0], this.items);
-          break;
-        }
+      case "replace": {
+        // TODO: Properly implement ranges in compliance with Gradient
+        // This will only properly support single contiguous ranges
+        var indicies = (0, _util.targetsToIndicies)(targets, accessor);
+        result = result.unsetIndices(indicies);
+        result = result.insertItemsAt(indicies[0], this.items);
+        break;
+      }
 
-      default:
-        {
-          throw new Error("Unsupported location atm: ".concat(this.location));
-        }
+      default: {
+        throw new Error("Unsupported location atm: ".concat(this.location));
+      }
     }
 
     return result;
   }
-
 }
 
 exports.default = InsertPatch;
 
 function minIndex(targets, accessor) {
-  var result = (0, _min2.default)((0, _util.targetsToIndicies)(targets, accessor)); // Ranges may be zero-length and not turn up in indices
+  var result = (0, _min2.default)(
+    (0, _util.targetsToIndicies)(targets, accessor)
+  ); // Ranges may be zero-length and not turn up in indices
 
-  targets.forEach(target => {
+  targets.forEach((target) => {
     if (target.isRange()) {
       var _target$expandRange = target.expandRange(),
-          start = _target$expandRange.start;
+        start = _target$expandRange.start;
 
       if (start < result) {
         result = start;
@@ -94,12 +105,14 @@ function minIndex(targets, accessor) {
 }
 
 function maxIndex(targets, accessor) {
-  var result = (0, _max2.default)((0, _util.targetsToIndicies)(targets, accessor)); // Ranges may be zero-length and not turn up in indices
+  var result = (0, _max2.default)(
+    (0, _util.targetsToIndicies)(targets, accessor)
+  ); // Ranges may be zero-length and not turn up in indices
 
-  targets.forEach(target => {
+  targets.forEach((target) => {
     if (target.isRange()) {
       var _target$expandRange2 = target.expandRange(),
-          end = _target$expandRange2.end;
+        end = _target$expandRange2.end;
 
       if (end > result) {
         result = end;
