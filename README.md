@@ -17,7 +17,18 @@
     "type": "git",
     "url": "git+https://github.com/bgoonz/node_mods.git"
   },
+<<<<<<< HEAD
+  "keywords": [
+    "node_modules",
+    "package",
+    "utilities",
+    "npm",
+    "npx",
+    "git"
+  ],
+=======
   "keywords": ["node_modules", "package", "utilities", "npm", "npx", "git"],
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
   "author": "Bryan Guner",
   "license": "MIT",
   "bugs": {
@@ -37,6 +48,25 @@
     "axios": "^0.21.1",
     "babel-plugin-styled-components": "^1.13.2",
     "baqend": "^3.0.0",
+<<<<<<< HEAD
+    "baudio": "^2.1.4",
+    "bcrypt": "^5.0.1",
+    "beeper": "^3.0.0",
+    "bluebird": "^3.5.3",
+    "bootstrap": "^5.0.1",
+    "botkit": "^4.10.0",
+    "browserify": "^17.0.0",
+    "campaign": "^4.1.7",
+    "chalk": "^4.1.1",
+    "cheerio": "^0.22.0",
+    "cli-format": "^3.0.9",
+    "clocker": "^1.20.5",
+    "coc-tabnine": "^1.3.4",
+    "color-blind": "^0.1.1",
+    "colorname": "^1.2.0",
+    "commander": "^8.1.0",
+    "cpy": "^8.1.2",
+=======
     "bcrypt": "^5.0.1",
     "bluebird": "^3.5.3",
     "bootstrap": "^5.0.1",
@@ -45,18 +75,36 @@
     "cli-format": "^3.0.9",
     "coc-tabnine": "^1.3.4",
     "commander": "^8.1.0",
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
     "cropperjs": "^1.5.11",
     "cross-env": "^7.0.3",
     "css-declaration-sorter": "^6.0.3",
     "date-fns": "^2.23.0",
     "debug": "^4.1.1",
+<<<<<<< HEAD
+    "deejay": "^1.1.1",
+    "del": "^6.0.0",
     "denque": "^1.5.0",
     "documentation": "^13.2.5",
     "dotenv": "^10.0.0",
+    "electron": "^13.1.9",
+    "electron-prebuilt": "^1.4.13",
+=======
+    "denque": "^1.5.0",
+    "documentation": "^13.2.5",
+    "dotenv": "^10.0.0",
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
     "email-templates": "^8.0.7",
     "eslint": "^7.32.0",
     "express": "^4.17.1",
     "fastify": "^3.20.2",
+<<<<<<< HEAD
+    "file-type": "^16.5.3",
+    "folder-walker": "^3.2.0",
+    "fullname": "^4.0.1",
+    "fuse-bindings": "^2.11.2",
+=======
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
     "gatsby": "^3.11.1",
     "gatsby-plugin-google-analytics": "^3.11.0",
     "gatsby-plugin-image": "^1.11.0",
@@ -76,22 +124,45 @@
     "gatsby-source-shopify": "^5.3.0",
     "gatsby-transformer-remark": "^4.8.0",
     "gatsby-transformer-sharp": "^3.11.0",
+<<<<<<< HEAD
+    "get-stdin": "^9.0.0",
+=======
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
     "github": "nullivex/node-github",
     "glob": "^7.1.7",
     "graceful-fs": "^4.2.6",
     "handlebars": "^4.7.7",
+<<<<<<< HEAD
+    "http-server": "^13.0.0",
+=======
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
     "jest": "^27.0.6",
     "js-yaml": "^4.1.0",
     "jsdoc": "^3.6.7",
     "jsdoc-to-markdown": "^7.0.1",
+<<<<<<< HEAD
+    "jsinspect": "^0.12.7",
+=======
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
     "json-format-cli": "^1.1.1",
     "jsonpath": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
     "jstransformer-handlebars": "^1.1.0",
     "junk": "^3.1.0",
+<<<<<<< HEAD
+    "kgcat": "^1.1.1",
+    "list-dir": "^1.2.0",
+    "listr": "^0.14.3",
     "live-server": "^1.2.1",
     "local-web-server": "^4.2.1",
     "lodash.defaultsdeep": "^4.6.1",
+    "log-update": "^4.0.0",
+    "lowdb": "^2.1.0",
+=======
+    "live-server": "^1.2.1",
+    "local-web-server": "^4.2.1",
+    "lodash.defaultsdeep": "^4.6.1",
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
     "lsp": "^1.1.1",
     "markdown-styles": "^3.2.0",
     "marked": "^2.0.6",
@@ -113,17 +184,33 @@
     "mongoose": "^5.13.7",
     "ncp": "^2.0.0",
     "netlify-cms-backend-gitlab": "^2.11.2",
+<<<<<<< HEAD
+    "node-gyp-build": "^4.2.3",
+    "node-version-data": "^1.1.0",
+    "nodemailer": "^6.6.3",
+    "nodemon": "^2.0.12",
+    "normit": "^2.4.0",
+    "npm": "7.14.0",
+    "npm-run-all": "^4.1.5",
+    "opn-cli": "^5.0.0",
+    "ora": "^5.4.1",
+=======
     "node-version-data": "^1.1.0",
     "nodemailer": "^6.6.3",
     "nodemon": "^2.0.12",
     "npm": "7.14.0",
     "npm-run-all": "^4.1.5",
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
     "passport": "^0.4.1",
     "pluralize": "^8.0.0",
     "postcss": "^8.3.0",
     "postgres": "^1.0.2",
     "prettier": "^2.3.2",
     "progress": "2.x",
+<<<<<<< HEAD
+    "progress-bar": "^0.1.1",
+=======
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
     "promisepipe": "^3.0.0",
     "ramda": "^0.27.1",
     "react": "^17.0.2",
@@ -143,6 +230,25 @@
     "semver": "^7.3.5",
     "sequelize": "^6.6.2",
     "shelljs": "^0.8.4",
+<<<<<<< HEAD
+    "single-line-log": "^1.1.2",
+    "smtp-protocol": "^2.4.7",
+    "strftime": "^0.10.0",
+    "styled-components": "^5.3.0",
+    "tar": "4.x",
+    "tempfile": "^4.0.0",
+    "tetris": "^0.1.6",
+    "tslib": "^2.2.0",
+    "tune": "^0.2.1",
+    "underscore": "^1.13.1",
+    "username": "^6.0.0",
+    "uuid": "^8.3.2",
+    "validator": "^13.6.0",
+    "vorpal": "^1.12.0",
+    "warehouse": "^4.0.0",
+    "webmidi": "^2.5.2",
+    "webpack": "^5.50.0",
+=======
     "strftime": "^0.10.0",
     "styled-components": "^5.3.0",
     "tar": "4.x",
@@ -151,13 +257,18 @@
     "uuid": "^8.3.2",
     "validator": "^13.6.0",
     "webmidi": "^2.5.2",
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
     "yargs": "^17.1.1",
     "yup": "^0.32.9"
   },
   "devDependencies": {
     "@github/prettier-config": "0.0.4",
     "chai": "4.3.4",
+<<<<<<< HEAD
+    "chokidar": "^3.5.2",
+=======
     "chokidar": "^3.5.1",
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
     "cross-env": "^7.0.3",
     "delay-cli": "^1.1.0",
     "eslint-plugin-github": "4.1.3",
@@ -189,6 +300,10 @@
     "vows": "*"
   }
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 2e86736ae4a6a9ebda748d31c4e84392051a677a
 ```
 
 ---
@@ -7364,4 +7479,8 @@ NPM Packages:
 - [yurnalist](./node_modules/yurnalist/README.md)
 - [yurnalist/node_modules/ci-info](./node_modules/yurnalist/node_modules/ci-info/README.md)
 - [yurnalist/node_modules/is-ci](./node_modules/yurnalist/node_modules/is-ci/README.md)
--
+
+
+---
+
+# The END!
