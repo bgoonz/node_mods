@@ -1,1 +1,0 @@
-export { BloomFilter } from './BloomFilter';
