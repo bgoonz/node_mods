@@ -31,7 +31,7 @@
   "deprecated": false,
   "description": "Allow parsing of export namespace from",
   "devDependencies": {
-    "@babel/core": "^7.8.3"
+    "@babel/core": "7.15.0"
   },
   "gitHead": "a7620bd266ae1345975767bbc7abf09034437017",
   "keywords": [

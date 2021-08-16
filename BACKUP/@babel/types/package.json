@@ -59,7 +59,7 @@
   "description": "Babel Types is a Lodash-esque utility library for AST nodes",
   "devDependencies": {
     "@babel/generator": "7.15.0",
-    "@babel/parser": "7.15.0",
+    "@babel/parser": "7.15.3",
     "chalk": "^4.1.0",
     "glob": "^7.1.7"
   },

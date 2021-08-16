@@ -37,11 +37,11 @@
   "deprecated": false,
   "description": "This transformer wraps all typeof expressions with a method that replicates native behaviour. (ie. returning “symbol” for symbols)",
   "devDependencies": {
-    "@babel/core": "7.14.5",
+    "@babel/core": "7.15.0",
     "@babel/helper-plugin-test-runner": "7.14.5",
-    "@babel/runtime": "7.14.5",
-    "@babel/runtime-corejs2": "7.14.5",
-    "@babel/runtime-corejs3": "7.14.5"
+    "@babel/runtime": "7.15.3",
+    "@babel/runtime-corejs2": "7.15.3",
+    "@babel/runtime-corejs3": "7.15.3"
   },
   "engines": {
     "node": ">=6.9.0"
