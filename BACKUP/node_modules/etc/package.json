@@ -1,0 +1,65 @@
+{
+  "_from": "etc@^1.1.0",
+  "_id": "etc@1.1.1",
+  "_inBundle": false,
+  "_integrity": "sha512-rG5hH19pyYV7eHx9TlEolumwsyNxbLov7j3goAaEEUOTG2ad5ac6dpwNZpERfXfUatJN0h+IlRlJ1BZtAiTkGA==",
+  "_location": "/etc",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "etc@^1.1.0",
+    "name": "etc",
+    "escapedName": "etc",
+    "rawSpec": "^1.1.0",
+    "saveSpec": null,
+    "fetchSpec": "^1.1.0"
+  },
+  "_requiredBy": [
+    "/automatic-updates"
+  ],
+  "_resolved": "https://registry.npmjs.org/etc/-/etc-1.1.1.tgz",
+  "_shasum": "450dfaa69684b02b285eacf86ed1ae38b6be0afa",
+  "_spec": "etc@^1.1.0",
+  "_where": "/workspace/node_mods/node_modules/automatic-updates",
+  "author": {
+    "name": "Brian Link"
+  },
+  "bugs": {
+    "url": "https://github.com/cpsubrian/node-etc/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "clone": "~0.1.6",
+    "glob": "^7.1.6",
+    "optimist": "~0.3.4",
+    "stact-hooks": "~0.0.1",
+    "tea-merge": "~0.1.0",
+    "witwip": "~0.0.2"
+  },
+  "deprecated": false,
+  "description": "Configuration loader for node.js applications",
+  "devDependencies": {
+    "bench": "*",
+    "mocha": "*"
+  },
+  "homepage": "https://github.com/cpsubrian/node-etc#readme",
+  "keywords": [
+    "config",
+    "configuration",
+    "yaml",
+    "json",
+    "redis"
+  ],
+  "license": "MIT",
+  "main": "etc.js",
+  "name": "etc",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cpsubrian/node-etc.git"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "version": "1.1.1"
+}
