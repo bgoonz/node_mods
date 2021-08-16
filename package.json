@@ -25,6 +25,7 @@
     },
     "homepage": "https://github.com/bgoonz/node_mods#readme",
     "dependencies": {
+        "@bgoonz11/repoutils": "^1.0.5",
         "@dung95/test123": "^1.6.3",
         "@finxindustries/create-fullstack-app": "^0.2.2",
         "@redux-requests/core": "^1.6.2",
@@ -107,6 +108,7 @@
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "recordrtc": "^5.6.2",
+        "recursive-install": "^1.4.0",
         "recursive-readdir": "^2.2.2",
         "recursive-readdir-async": "^1.1.8",
         "recursive-rename": "^4.0.0",
