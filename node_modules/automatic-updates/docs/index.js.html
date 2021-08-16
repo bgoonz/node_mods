@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: index.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: index.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+ * Automatically update nodejs program from npm/github
+ */
+const shell = require('shelljs')
+const etc = require("etc")()
+const path = require("path");
+// const conf = require('node-etc');
+const conf = require('../node-etc');
+
+/**
+ * Automatic Updates
+ */
+
+class automaticUpdates {
+    /**
+     * Update Interval
+     */
+    interval = 3600;
+
+    /**
+     * Source from which to update
+     */
+    source = 'npm'
+
+    constructor() { }
+
+    /**
+     * Initialize automatic updates
+     * @param {object} options - Options
+     * @param {number} [options.interval = 3600] - Interval over which to check for updates.
+     * @param {string} [options.source = npm] - The source from which to check for updates.
+     */
+    init(options) {
+        options = Object.assign({ interval: 3600, source: 'npm' }, options);
+        this.interval = options.interval
+        this.source = options.source
+
+        if (typeof this.interval !== 'number') throw Error(`Invalid interval type for ${this.interval}`)
+        if (this.interval &lt;= 0) throw Error(`Interval should be greater than 0`)
+        if (!['github', 'npm'].includes(this.source)) {
+            throw Error(`Invalid source ${this.source}`)
+        }
+        switch (this.source) {
+            case 'npm':
+                this.updateFromnpm();
+                break;
+            case 'github':
+                this.updateFromGithub();
+                break;
+            default:
+                throw Error(`Unrecognized source ${this.source}`)
+        }
+    }
+
+    /** 
+     * Update using git pull from github repo
+     */
+    async updateFromGithub() {
+        let packageJsonDir = conf.packageJsonDir();
+        let remoteExists = shell.exec(`cd ${packageJsonDir} &amp;&amp; git remote -v`, { silent: true })
+        if (remoteExists.stdout.length === 0 &amp;&amp; remoteExists.stderr.length === 0) {
+            remoteExists = false
+        }
+        if (!remoteExists) {
+            throw Error(`${packageJsonDir} is not a github repo`)
+        }
+
+        const updateFromGithub = async () => {
+            let key = await conf.parseYAML('system');
+            key = key.sshKey
+            if (!key) {
+                throw Error(`ssh key is missing`)
+            }
+            let update = shell.exec(`cd ${packageJsonDir}  &amp;&amp; GIT_SSH_COMMAND='ssh -i ${key} -o IdentitiesOnly=yes' git pull origin master`)
+            update = update.stdout + update.stderr;
+            if (!update.includes('Already up-to-date')) {
+                shell.exec(`cd ${packageJsonDir}  &amp;&amp; yarn install`);
+            }
+        }
+
+
+        updateFromGithub();
+        setInterval(() => {
+            updateFromGithub();
+            this.updateModules()
+        }, this.interval * 1000)
+    }
+
+    /**
+     * update from npm
+     */
+    async updateFromnpm() {
+
+        const updateFromnpm = async () => {
+            let packageJson = conf.packageJson();
+            let installedVersion = conf.packageJson().version
+            let installedVersionDotted = installedVersion
+            installedVersion = installedVersion.replace(/\./g, '')
+            try {
+                let latestVersion = await shell.exec(`npm show ${packageJson.name} version`, { silent: true }).stdout.replace(/\n/, '')
+                let latestVersionDotted = latestVersion
+                latestVersion = latestVersion.replace(/\./g, '');
+
+                while (installedVersion.length &lt; latestVersion.length) {
+                    installedVersion = `${installedVersion}0`
+                }
+                while (latestVersion.length &lt; installedVersion.length) {
+                    latestVersion = `${latestVersion}0`
+                }
+                if (parseInt(latestVersion) > parseInt(installedVersion)) {
+                    console.log(`Updating from install v${installedVersionDotted} to latest v${latestVersionDotted}`)
+                    shell.exec(`npm install -g ${packageJson.name}`)
+                } else {
+                    console.log(`Installed v${installedVersionDotted} is the latest.`)
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        updateFromnpm();
+        setInterval(() => {
+            console.log(this.interval)
+            updateFromnpm();
+            this.updateModules()
+        }, this.interval * 1000)
+    }
+
+    /**
+     * update node modules for current project
+     */
+    updateModules(){
+        let packageJsonDir = conf.packageJsonDir();
+        shell.exec(`cd ${packageJsonDir} &amp;&amp; yarn install || npm install`, { silent: true })
+    }
+}
+
+new automaticUpdates();
+module.exports = new automaticUpdates();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="automaticUpdates.html">automaticUpdates</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Mar 02 2021 14:00:48 GMT+0300 (East Africa Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
