@@ -2,20 +2,18 @@
 
 > Create an error from multiple errors
 
-
 ## Install
 
 ```
 $ npm install aggregate-error
 ```
 
-
 ## Usage
 
 ```js
-const AggregateError = require('aggregate-error');
+const AggregateError = require("aggregate-error");
 
-const error = new AggregateError([new Error('foo'), 'bar', {message: 'baz'}]);
+const error = new AggregateError([new Error("foo"), "bar", { message: "baz" }]);
 
 throw error;
 /*
@@ -39,13 +37,12 @@ AggregateError:
 */
 
 for (const individualError of error) {
-	console.log(individualError);
+  console.log(individualError);
 }
 //=> [Error: foo]
 //=> [Error: bar]
 //=> [Error: baz]
 ```
-
 
 ## API
 

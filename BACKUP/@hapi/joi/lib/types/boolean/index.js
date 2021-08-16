@@ -1,97 +1,97 @@
-'use strict';
+"use strict";
 
-const Hoek = require('@hapi/hoek');
+const Hoek = require("@hapi/hoek");
 
-const Any = require('../any');
-
+const Any = require("../any");
 
 const internals = {
-    Set: require('../../set')
+  Set: require("../../set"),
 };
-
 
 internals.Boolean = class extends Any {
-    constructor() {
+  constructor() {
+    super();
+    this._type = "boolean";
+    this._flags.insensitive = true;
+    this._inner.truthySet = new internals.Set();
+    this._inner.falsySet = new internals.Set();
+  }
 
-        super();
-        this._type = 'boolean';
-        this._flags.insensitive = true;
-        this._inner.truthySet = new internals.Set();
-        this._inner.falsySet = new internals.Set();
+  _base(value, state, options) {
+    const result = {
+      value,
+    };
+
+    if (typeof value === "string" && options.convert) {
+      const normalized = this._flags.insensitive ? value.toLowerCase() : value;
+      result.value =
+        normalized === "true" ? true : normalized === "false" ? false : value;
     }
 
-    _base(value, state, options) {
-
-        const result = {
-            value
-        };
-
-        if (typeof value === 'string' &&
-            options.convert) {
-
-            const normalized = this._flags.insensitive ? value.toLowerCase() : value;
-            result.value = (normalized === 'true' ? true
-                : (normalized === 'false' ? false : value));
-        }
-
-        if (typeof result.value !== 'boolean') {
-            result.value = (this._inner.truthySet.has(value, null, null, this._flags.insensitive) ? true
-                : (this._inner.falsySet.has(value, null, null, this._flags.insensitive) ? false : value));
-        }
-
-        result.errors = (typeof result.value === 'boolean') ? null : this.createError('boolean.base', { value }, state, options);
-        return result;
+    if (typeof result.value !== "boolean") {
+      result.value = this._inner.truthySet.has(
+        value,
+        null,
+        null,
+        this._flags.insensitive
+      )
+        ? true
+        : this._inner.falsySet.has(value, null, null, this._flags.insensitive)
+        ? false
+        : value;
     }
 
-    truthy(...values) {
+    result.errors =
+      typeof result.value === "boolean"
+        ? null
+        : this.createError("boolean.base", { value }, state, options);
+    return result;
+  }
 
-        const obj = this.clone();
-        values = Hoek.flatten(values);
-        for (let i = 0; i < values.length; ++i) {
-            const value = values[i];
+  truthy(...values) {
+    const obj = this.clone();
+    values = Hoek.flatten(values);
+    for (let i = 0; i < values.length; ++i) {
+      const value = values[i];
 
-            Hoek.assert(value !== undefined, 'Cannot call truthy with undefined');
-            obj._inner.truthySet.add(value);
-        }
-
-        return obj;
+      Hoek.assert(value !== undefined, "Cannot call truthy with undefined");
+      obj._inner.truthySet.add(value);
     }
 
-    falsy(...values) {
+    return obj;
+  }
 
-        const obj = this.clone();
-        values = Hoek.flatten(values);
-        for (let i = 0; i < values.length; ++i) {
-            const value = values[i];
+  falsy(...values) {
+    const obj = this.clone();
+    values = Hoek.flatten(values);
+    for (let i = 0; i < values.length; ++i) {
+      const value = values[i];
 
-            Hoek.assert(value !== undefined, 'Cannot call falsy with undefined');
-            obj._inner.falsySet.add(value);
-        }
-
-        return obj;
+      Hoek.assert(value !== undefined, "Cannot call falsy with undefined");
+      obj._inner.falsySet.add(value);
     }
 
-    insensitive(enabled) {
+    return obj;
+  }
 
-        const insensitive = enabled === undefined ? true : !!enabled;
+  insensitive(enabled) {
+    const insensitive = enabled === undefined ? true : !!enabled;
 
-        if (this._flags.insensitive === insensitive) {
-            return this;
-        }
-
-        const obj = this.clone();
-        obj._flags.insensitive = insensitive;
-        return obj;
+    if (this._flags.insensitive === insensitive) {
+      return this;
     }
 
-    describe() {
+    const obj = this.clone();
+    obj._flags.insensitive = insensitive;
+    return obj;
+  }
 
-        const description = super.describe();
-        description.truthy = [true, ...this._inner.truthySet.values()];
-        description.falsy = [false, ...this._inner.falsySet.values()];
-        return description;
-    }
+  describe() {
+    const description = super.describe();
+    description.truthy = [true, ...this._inner.truthySet.values()];
+    description.falsy = [false, ...this._inner.falsySet.values()];
+    return description;
+  }
 };
-
 
 module.exports = new internals.Boolean();
