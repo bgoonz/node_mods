@@ -1,214 +1,202 @@
 # Node Modules Collection:
 
-
-
-
-
 ---
 
 ## Package.json:
 
 ```json
-
 {
-    "name": "node_mods",
-    "version": "1.0.0",
-    "description": "a collection of useful node modules",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/bgoonz/node_mods.git"
-    },
-    "keywords": [
-        "node_modules",
-        "package",
-        "utilities",
-        "npm",
-        "npx",
-        "git"
-    ],
-    "author": "Bryan Guner",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/bgoonz/node_mods/issues"
-    },
-    "homepage": "https://github.com/bgoonz/node_mods#readme",
-    "dependencies": {
-        "@bgoonz11/repoutils": "^1.0.5",
-        "@dung95/test123": "^1.6.3",
-        "@finxindustries/create-fullstack-app": "^0.2.2",
-        "@gatsby-contrib/gatsby-plugin-elasticlunr-search": "^3.0.2",
-        "@redux-requests/core": "^1.6.2",
-        "async": "^3.2.1",
-        "audio": "^1.2.0",
-        "automatic-updates": "^1.0.4",
-        "autoprefixer": "^10.2.6",
-        "axios": "^0.21.1",
-        "babel-plugin-styled-components": "^1.13.2",
-        "baqend": "^3.0.0",
-        "bcrypt": "^5.0.1",
-        "bluebird": "^3.5.3",
-        "bootstrap": "^5.0.1",
-        "chalk": "^4.1.1",
-        "cheerio": "^0.22.0",
-        "cli-format": "^3.0.9",
-        "coc-tabnine": "^1.3.4",
-        "commander": "^8.1.0",
-        "cropperjs": "^1.5.11",
-        "cross-env": "^7.0.3",
-        "css-declaration-sorter": "^6.0.3",
-        "date-fns": "^2.23.0",
-        "debug": "^4.1.1",
-        "denque": "^1.5.0",
-        "documentation": "^13.2.5",
-        "dotenv": "^10.0.0",
-        "email-templates": "^8.0.7",
-        "eslint": "^7.32.0",
-        "express": "^4.17.1",
-        "fastify": "^3.20.2",
-        "gatsby": "^3.11.1",
-        "gatsby-plugin-google-analytics": "^3.11.0",
-        "gatsby-plugin-image": "^1.11.0",
-        "gatsby-plugin-local-search": "^2.0.1",
-        "gatsby-plugin-material-ui": "^3.0.1",
-        "gatsby-plugin-netlify-cms": "^4.10.1",
-        "gatsby-plugin-react-helmet": "^4.11.0",
-        "gatsby-plugin-s3": "^0.3.8",
-        "gatsby-plugin-sharp": "^3.11.0",
-        "gatsby-plugin-sitemap": "^4.7.0",
-        "gatsby-plugin-styled-components": "^4.11.0",
-        "gatsby-source-airtable": "^2.2.1",
-        "gatsby-source-contentful": "^5.11.1",
-        "gatsby-source-filesystem": "^3.11.0",
-        "gatsby-source-graphcms": "^2.6.0",
-        "gatsby-source-sanity": "^7.0.7",
-        "gatsby-source-shopify": "^5.3.0",
-        "gatsby-transformer-remark": "^4.8.0",
-        "gatsby-transformer-sharp": "^3.11.0",
-        "github": "nullivex/node-github",
-        "glob": "^7.1.7",
-        "graceful-fs": "^4.2.6",
-        "handlebars": "^4.7.7",
-        "jest": "^27.0.6",
-        "js-yaml": "^4.1.0",
-        "jsdoc": "^3.6.7",
-        "jsdoc-to-markdown": "^7.0.1",
-        "json-format-cli": "^1.1.1",
-        "jsonpath": "^1.1.1",
-        "jsonwebtoken": "^8.5.1",
-        "jstransformer-handlebars": "^1.1.0",
-        "junk": "^3.1.0",
-        "live-server": "^1.2.1",
-        "local-web-server": "^4.2.1",
-        "lodash.defaultsdeep": "^4.6.1",
-        "lsp": "^1.1.1",
-        "markdown-styles": "^3.2.0",
-        "marked": "^2.0.6",
-        "metalsmith": "^2.3.0",
-        "metalsmith-collections": "^0.9.0",
-        "metalsmith-discover-helpers": "^0.1.1",
-        "metalsmith-discover-partials": "^0.1.2",
-        "metalsmith-feed": "^1.0.0",
-        "metalsmith-layouts": "^2.3.1",
-        "metalsmith-markdown": "^1.3.0",
-        "metalsmith-permalinks": "^2.2.0",
-        "metalsmith-prism": "^3.1.1",
-        "metalsmith-yearly-pagination": "^4.0.2",
-        "minimist": "^1.2.5",
-        "mkdirp": "~0.5",
-        "mock-rest-server": "^1.2.0",
-        "moleculer": "^0.14.13",
-        "moment": "^2.29.1",
-        "mongoose": "^5.13.7",
-        "ncp": "^2.0.0",
-        "netlify-cms-backend-gitlab": "^2.11.2",
-        "node-version-data": "^1.1.0",
-        "nodemailer": "^6.6.3",
-        "nodemon": "^2.0.12",
-        "npm": "7.14.0",
-        "npm-run-all": "^4.1.5",
-        "passport": "^0.4.1",
-        "pluralize": "^8.0.0",
-        "postcss": "^8.3.0",
-        "postgres": "^1.0.2",
-        "prettier": "^2.3.2",
-        "progress": "2.x",
-        "promisepipe": "^3.0.0",
-        "ramda": "^0.27.1",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
-        "react-helmet": "^6.1.0",
-        "recordrtc": "^5.6.2",
-        "recursive-install": "^1.4.0",
-        "recursive-readdir": "^2.2.2",
-        "recursive-readdir-async": "^1.1.8",
-        "recursive-rename": "^4.0.0",
-        "recursive-search": "^1.0.1",
-        "redux": "^4.1.0",
-        "request": "~2.88.0",
-        "rimraf": "~2",
-        "rxjs": "^7.3.0",
-        "sass": "^1.34.0",
-        "semver": "^7.3.5",
-        "sequelize": "^6.6.2",
-        "shelljs": "^0.8.4",
-        "strftime": "^0.10.0",
-        "styled-components": "^5.3.0",
-        "tar": "4.x",
-        "tslib": "^2.2.0",
-        "underscore": "^1.13.1",
-        "uuid": "^8.3.2",
-        "validator": "^13.6.0",
-        "webmidi": "^2.5.2",
-        "yargs": "^17.1.1",
-        "yup": "^0.32.9"
-    },
-    "devDependencies": {
-        "@github/prettier-config": "0.0.4",
-        "chai": "4.3.4",
-        "chokidar": "^3.5.1",
-        "cross-env": "^7.0.3",
-        "delay-cli": "^1.1.0",
-        "eslint-plugin-github": "4.1.3",
-        "faucet": "0.0.1",
-        "karma": "6.3.2",
-        "karma-chai": "0.1.0",
-        "karma-chrome-launcher": "3.1.0",
-        "karma-mocha": "2.0.1",
-        "karma-mocha-reporter": "2.2.5",
-        "linkinator": "^2.13.6",
-        "lockfile-lint": "^4.6.2",
-        "mocha": "8.3.2",
-        "nock": "^13.0.11",
-        "node-fetch": "^2.6.1",
-        "proxyquire": "^2.1.3",
-        "remark-cli": "^9.0.0",
-        "remark-frontmatter": "^3.0.0",
-        "remark-gfm": "^1.0.0",
-        "remark-preset-lint-node": "^2.2.0",
-        "rollup": "2.46.0",
-        "rollup-plugin-typescript2": "0.30.0",
-        "st": "^3.0.0",
-        "standard": "^16.0.3",
-        "stylelint": "^13.13.1",
-        "stylelint-config-twbs-bootstrap": "^2.2.0",
-        "tape": "^5.2.2",
-        "typescript": "^4.3.5",
-        "vnu-jar": "21.4.9",
-        "vows": "*"
-    }
+  "name": "node_mods",
+  "version": "1.0.0",
+  "description": "a collection of useful node modules",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bgoonz/node_mods.git"
+  },
+  "keywords": ["node_modules", "package", "utilities", "npm", "npx", "git"],
+  "author": "Bryan Guner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bgoonz/node_mods/issues"
+  },
+  "homepage": "https://github.com/bgoonz/node_mods#readme",
+  "dependencies": {
+    "@bgoonz11/repoutils": "^1.0.5",
+    "@dung95/test123": "^1.6.3",
+    "@finxindustries/create-fullstack-app": "^0.2.2",
+    "@gatsby-contrib/gatsby-plugin-elasticlunr-search": "^3.0.2",
+    "@redux-requests/core": "^1.6.2",
+    "async": "^3.2.1",
+    "audio": "^1.2.0",
+    "automatic-updates": "^1.0.4",
+    "autoprefixer": "^10.2.6",
+    "axios": "^0.21.1",
+    "babel-plugin-styled-components": "^1.13.2",
+    "baqend": "^3.0.0",
+    "bcrypt": "^5.0.1",
+    "bluebird": "^3.5.3",
+    "bootstrap": "^5.0.1",
+    "chalk": "^4.1.1",
+    "cheerio": "^0.22.0",
+    "cli-format": "^3.0.9",
+    "coc-tabnine": "^1.3.4",
+    "commander": "^8.1.0",
+    "cropperjs": "^1.5.11",
+    "cross-env": "^7.0.3",
+    "css-declaration-sorter": "^6.0.3",
+    "date-fns": "^2.23.0",
+    "debug": "^4.1.1",
+    "denque": "^1.5.0",
+    "documentation": "^13.2.5",
+    "dotenv": "^10.0.0",
+    "email-templates": "^8.0.7",
+    "eslint": "^7.32.0",
+    "express": "^4.17.1",
+    "fastify": "^3.20.2",
+    "gatsby": "^3.11.1",
+    "gatsby-plugin-google-analytics": "^3.11.0",
+    "gatsby-plugin-image": "^1.11.0",
+    "gatsby-plugin-local-search": "^2.0.1",
+    "gatsby-plugin-material-ui": "^3.0.1",
+    "gatsby-plugin-netlify-cms": "^4.10.1",
+    "gatsby-plugin-react-helmet": "^4.11.0",
+    "gatsby-plugin-s3": "^0.3.8",
+    "gatsby-plugin-sharp": "^3.11.0",
+    "gatsby-plugin-sitemap": "^4.7.0",
+    "gatsby-plugin-styled-components": "^4.11.0",
+    "gatsby-source-airtable": "^2.2.1",
+    "gatsby-source-contentful": "^5.11.1",
+    "gatsby-source-filesystem": "^3.11.0",
+    "gatsby-source-graphcms": "^2.6.0",
+    "gatsby-source-sanity": "^7.0.7",
+    "gatsby-source-shopify": "^5.3.0",
+    "gatsby-transformer-remark": "^4.8.0",
+    "gatsby-transformer-sharp": "^3.11.0",
+    "github": "nullivex/node-github",
+    "glob": "^7.1.7",
+    "graceful-fs": "^4.2.6",
+    "handlebars": "^4.7.7",
+    "jest": "^27.0.6",
+    "js-yaml": "^4.1.0",
+    "jsdoc": "^3.6.7",
+    "jsdoc-to-markdown": "^7.0.1",
+    "json-format-cli": "^1.1.1",
+    "jsonpath": "^1.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "jstransformer-handlebars": "^1.1.0",
+    "junk": "^3.1.0",
+    "live-server": "^1.2.1",
+    "local-web-server": "^4.2.1",
+    "lodash.defaultsdeep": "^4.6.1",
+    "lsp": "^1.1.1",
+    "markdown-styles": "^3.2.0",
+    "marked": "^2.0.6",
+    "metalsmith": "^2.3.0",
+    "metalsmith-collections": "^0.9.0",
+    "metalsmith-discover-helpers": "^0.1.1",
+    "metalsmith-discover-partials": "^0.1.2",
+    "metalsmith-feed": "^1.0.0",
+    "metalsmith-layouts": "^2.3.1",
+    "metalsmith-markdown": "^1.3.0",
+    "metalsmith-permalinks": "^2.2.0",
+    "metalsmith-prism": "^3.1.1",
+    "metalsmith-yearly-pagination": "^4.0.2",
+    "minimist": "^1.2.5",
+    "mkdirp": "~0.5",
+    "mock-rest-server": "^1.2.0",
+    "moleculer": "^0.14.13",
+    "moment": "^2.29.1",
+    "mongoose": "^5.13.7",
+    "ncp": "^2.0.0",
+    "netlify-cms-backend-gitlab": "^2.11.2",
+    "node-version-data": "^1.1.0",
+    "nodemailer": "^6.6.3",
+    "nodemon": "^2.0.12",
+    "npm": "7.14.0",
+    "npm-run-all": "^4.1.5",
+    "passport": "^0.4.1",
+    "pluralize": "^8.0.0",
+    "postcss": "^8.3.0",
+    "postgres": "^1.0.2",
+    "prettier": "^2.3.2",
+    "progress": "2.x",
+    "promisepipe": "^3.0.0",
+    "ramda": "^0.27.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "recordrtc": "^5.6.2",
+    "recursive-install": "^1.4.0",
+    "recursive-readdir": "^2.2.2",
+    "recursive-readdir-async": "^1.1.8",
+    "recursive-rename": "^4.0.0",
+    "recursive-search": "^1.0.1",
+    "redux": "^4.1.0",
+    "request": "~2.88.0",
+    "rimraf": "~2",
+    "rxjs": "^7.3.0",
+    "sass": "^1.34.0",
+    "semver": "^7.3.5",
+    "sequelize": "^6.6.2",
+    "shelljs": "^0.8.4",
+    "strftime": "^0.10.0",
+    "styled-components": "^5.3.0",
+    "tar": "4.x",
+    "tslib": "^2.2.0",
+    "underscore": "^1.13.1",
+    "uuid": "^8.3.2",
+    "validator": "^13.6.0",
+    "webmidi": "^2.5.2",
+    "yargs": "^17.1.1",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "@github/prettier-config": "0.0.4",
+    "chai": "4.3.4",
+    "chokidar": "^3.5.1",
+    "cross-env": "^7.0.3",
+    "delay-cli": "^1.1.0",
+    "eslint-plugin-github": "4.1.3",
+    "faucet": "0.0.1",
+    "karma": "6.3.2",
+    "karma-chai": "0.1.0",
+    "karma-chrome-launcher": "3.1.0",
+    "karma-mocha": "2.0.1",
+    "karma-mocha-reporter": "2.2.5",
+    "linkinator": "^2.13.6",
+    "lockfile-lint": "^4.6.2",
+    "mocha": "8.3.2",
+    "nock": "^13.0.11",
+    "node-fetch": "^2.6.1",
+    "proxyquire": "^2.1.3",
+    "remark-cli": "^9.0.0",
+    "remark-frontmatter": "^3.0.0",
+    "remark-gfm": "^1.0.0",
+    "remark-preset-lint-node": "^2.2.0",
+    "rollup": "2.46.0",
+    "rollup-plugin-typescript2": "0.30.0",
+    "st": "^3.0.0",
+    "standard": "^16.0.3",
+    "stylelint": "^13.13.1",
+    "stylelint-config-twbs-bootstrap": "^2.2.0",
+    "tape": "^5.2.2",
+    "typescript": "^4.3.5",
+    "vnu-jar": "21.4.9",
+    "vows": "*"
+  }
 }
-
 ```
 
-
 ---
- NPM Packages:
+
+NPM Packages:
 
 # cool-node-modules
+
 > A list of cool node modules. Inspired by [awesome](https://github.com/sindresorhus/awesome).
 
 ## Applications
@@ -456,15 +444,9 @@
 - [webrtc-adapter](https://github.com/webrtc/adapter): Shim to insulate apps from spec changes and prefix differences.
 - [wrtc](https://github.com/js-platform/node-webrtc): WebRTC stack for Node.
 
-
-
 ---
 
 # Readmes:
-
-
-
-
 
 - [abab](./node_modules/abab/README.md)
 - [abbrev](./node_modules/abbrev/README.md)
@@ -720,8 +702,8 @@
 - [baqend](./node_modules/baqend/README.md)
 - [baqend/node_modules/rimraf](./node_modules/baqend/node_modules/rimraf/README.md)
 - [baqend/node_modules/rxjs](./node_modules/baqend/node_modules/rxjs/README.md)
-- [baqend/node_modules/rxjs/_esm2015](./node_modules/baqend/node_modules/rxjs/_esm2015/README.md)
-- [baqend/node_modules/rxjs/_esm5](./node_modules/baqend/node_modules/rxjs/_esm5/README.md)
+- [baqend/node_modules/rxjs/\_esm2015](./node_modules/baqend/node_modules/rxjs/_esm2015/README.md)
+- [baqend/node_modules/rxjs/\_esm5](./node_modules/baqend/node_modules/rxjs/_esm5/README.md)
 - [baqend/node_modules/rxjs/node_modules/tslib](./node_modules/baqend/node_modules/rxjs/node_modules/tslib/README.md)
 - [baqend/node_modules/rxjs/src](./node_modules/baqend/node_modules/rxjs/src/README.md)
 - [base](./node_modules/base/README.md)
@@ -747,7 +729,7 @@
 - [@bgoonz11/repoutils](./node_modules/@bgoonz11/repoutils/README.md)
 - [@bgoonz11/repoutils/copy-2-clip](./node_modules/@bgoonz11/repoutils/copy-2-clip/README.md)
 - [@bgoonz11/repoutils/markdown-templates/alt-](./node_modules/@bgoonz11/repoutils/markdown-templates/alt-README.md)
-- [@bgoonz11/repoutils/markdown-templates/BLANK_](./node_modules/@bgoonz11/repoutils/markdown-templates/BLANK_README.md)
+- [@bgoonz11/repoutils/markdown-templates/BLANK\_](./node_modules/@bgoonz11/repoutils/markdown-templates/BLANK_README.md)
 - [@bgoonz11/repoutils/markdown-templates/MAIN-](./node_modules/@bgoonz11/repoutils/markdown-templates/MAIN-README.md)
 - [@bgoonz11/repoutils/markdown-templates](./node_modules/@bgoonz11/repoutils/markdown-templates/README.md)
 - [@bgoonz11/repoutils/markdown-templates/Standard-Project-](./node_modules/@bgoonz11/repoutils/markdown-templates/Standard-Project-README.md)
@@ -1334,10 +1316,10 @@
 - [find-replace/node_modules/array-back](./node_modules/find-replace/node_modules/array-back/README.md)
 - [@finxindustries/create-fullstack-app](./node_modules/@finxindustries/create-fullstack-app/README.md)
 - [@finxindustries/create-fullstack-app/templates](./node_modules/@finxindustries/create-fullstack-app/templates/README.md)
-- [@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_admin](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_admin/README.md)
-- [@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/README.md./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/README.md)
-- @finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage](.[imageset](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md)
-- [@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_react](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_react/README.md)
+- [@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_admin](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_admin/README.md)
+- [@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_flutter/README.md./node_modules/@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_flutter/README.md)
+- @finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage](.[imageset](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md)
+- [@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_react](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_react/README.md)
 - [flat](./node_modules/flat/README.md)
 - [flat-cache](./node_modules/flat-cache/README.md)
 - [flat-cache/node_modules/rimraf](./node_modules/flat-cache/node_modules/rimraf/README.md)
@@ -1494,8 +1476,8 @@
 - [gatsby-plugin-s3/node_modules/mime](./node_modules/gatsby-plugin-s3/node_modules/mime/README.md)
 - [gatsby-plugin-s3/node_modules/mute-stream](./node_modules/gatsby-plugin-s3/node_modules/mute-stream/README.md)
 - [gatsby-plugin-s3/node_modules/rxjs](./node_modules/gatsby-plugin-s3/node_modules/rxjs/README.md)
-- [gatsby-plugin-s3/node_modules/rxjs/_esm2015](./node_modules/gatsby-plugin-s3/node_modules/rxjs/_esm2015/README.md)
-- [gatsby-plugin-s3/node_modules/rxjs/_esm5](./node_modules/gatsby-plugin-s3/node_modules/rxjs/_esm5/README.md)
+- [gatsby-plugin-s3/node_modules/rxjs/\_esm2015](./node_modules/gatsby-plugin-s3/node_modules/rxjs/_esm2015/README.md)
+- [gatsby-plugin-s3/node_modules/rxjs/\_esm5](./node_modules/gatsby-plugin-s3/node_modules/rxjs/_esm5/README.md)
 - [gatsby-plugin-s3/node_modules/rxjs/src](./node_modules/gatsby-plugin-s3/node_modules/rxjs/src/README.md)
 - [gatsby-plugin-s3/node_modules/tslib](./node_modules/gatsby-plugin-s3/node_modules/tslib/README.md)
 - [gatsby-plugin-s3/node_modules/@types/node](./node_modules/gatsby-plugin-s3/node_modules/@types/node/README.md)
@@ -1564,8 +1546,8 @@
 - [gatsby-source-sanity/node_modules/pumpify](./node_modules/gatsby-source-sanity/node_modules/pumpify/README.md)
 - [gatsby-source-sanity/node_modules/readable-stream](./node_modules/gatsby-source-sanity/node_modules/readable-stream/README.md)
 - [gatsby-source-sanity/node_modules/rxjs](./node_modules/gatsby-source-sanity/node_modules/rxjs/README.md)
-- [gatsby-source-sanity/node_modules/rxjs/_esm2015](./node_modules/gatsby-source-sanity/node_modules/rxjs/_esm2015/README.md)
-- [gatsby-source-sanity/node_modules/rxjs/_esm5](./node_modules/gatsby-source-sanity/node_modules/rxjs/_esm5/README.md)
+- [gatsby-source-sanity/node_modules/rxjs/\_esm2015](./node_modules/gatsby-source-sanity/node_modules/rxjs/_esm2015/README.md)
+- [gatsby-source-sanity/node_modules/rxjs/\_esm5](./node_modules/gatsby-source-sanity/node_modules/rxjs/_esm5/README.md)
 - [gatsby-source-sanity/node_modules/rxjs/src](./node_modules/gatsby-source-sanity/node_modules/rxjs/src/README.md)
 - [gatsby-source-sanity/node_modules/through2](./node_modules/gatsby-source-sanity/node_modules/through2/README.md)
 - [gatsby-source-sanity/node_modules/tslib](./node_modules/gatsby-source-sanity/node_modules/tslib/README.md)
@@ -1798,8 +1780,8 @@
 - [inputformat-to-jstransformer](./node_modules/inputformat-to-jstransformer/README.md)
 - [inquirer](./node_modules/inquirer/README.md)
 - [inquirer/node_modules/rxjs](./node_modules/inquirer/node_modules/rxjs/README.md)
-- [inquirer/node_modules/rxjs/_esm2015](./node_modules/inquirer/node_modules/rxjs/_esm2015/README.md)
-- [inquirer/node_modules/rxjs/_esm5](./node_modules/inquirer/node_modules/rxjs/_esm5/README.md)
+- [inquirer/node_modules/rxjs/\_esm2015](./node_modules/inquirer/node_modules/rxjs/_esm2015/README.md)
+- [inquirer/node_modules/rxjs/\_esm5](./node_modules/inquirer/node_modules/rxjs/_esm5/README.md)
 - [inquirer/node_modules/rxjs/src](./node_modules/inquirer/node_modules/rxjs/src/README.md)
 - [inquirer/node_modules/tslib](./node_modules/inquirer/node_modules/tslib/README.md)
 - [internal-slot](./node_modules/internal-slot/README.md)
@@ -2962,8 +2944,8 @@
 - [@sanity/mutator/node_modules/debug](./node_modules/@sanity/mutator/node_modules/debug/README.md)
 - [@sanity/observable](./node_modules/@sanity/observable/README.md)
 - [@sanity/observable/node_modules/rxjs](./node_modules/@sanity/observable/node_modules/rxjs/README.md)
-- [@sanity/observable/node_modules/rxjs/_esm2015](./node_modules/@sanity/observable/node_modules/rxjs/_esm2015/README.md)
-- [@sanity/observable/node_modules/rxjs/_esm5](./node_modules/@sanity/observable/node_modules/rxjs/_esm5/README.md)
+- [@sanity/observable/node_modules/rxjs/\_esm2015](./node_modules/@sanity/observable/node_modules/rxjs/_esm2015/README.md)
+- [@sanity/observable/node_modules/rxjs/\_esm5](./node_modules/@sanity/observable/node_modules/rxjs/_esm5/README.md)
 - [@sanity/observable/node_modules/rxjs/src](./node_modules/@sanity/observable/node_modules/rxjs/src/README.md)
 - [@sanity/observable/node_modules/tslib](./node_modules/@sanity/observable/node_modules/tslib/README.md)
 - [sass](./node_modules/sass/README.md)
@@ -3571,10 +3553,10 @@
 - [type-detect](./node_modules/type-detect/README.md)
 - [type-is](./node_modules/type-is/README.md)
 - [@types/async](./node_modules/@types/async/README.md)
-- [@types/babel__core](./node_modules/@types/babel__core/README.md)
-- [@types/babel__generator](./node_modules/@types/babel__generator/README.md)
-- [@types/babel__template](./node_modules/@types/babel__template/README.md)
-- [@types/babel__traverse](./node_modules/@types/babel__traverse/README.md)
+- [@types/babel\_\_core](./node_modules/@types/babel__core/README.md)
+- [@types/babel\_\_generator](./node_modules/@types/babel__generator/README.md)
+- [@types/babel\_\_template](./node_modules/@types/babel__template/README.md)
+- [@types/babel\_\_traverse](./node_modules/@types/babel__traverse/README.md)
 - [@types/bson](./node_modules/@types/bson/README.md)
 - [@types/cacheable-request](./node_modules/@types/cacheable-request/README.md)
 - [@types/common-tags](./node_modules/@types/common-tags/README.md)
@@ -3614,7 +3596,7 @@
 - [@types/prettier](./node_modules/@types/prettier/README.md)
 - [@types/prop-types](./node_modules/@types/prop-types/README.md)
 - [@types/q](./node_modules/@types/q/README.md)
-- [@types/reach__router](./node_modules/@types/reach__router/README.md)
+- [@types/reach\_\_router](./node_modules/@types/reach__router/README.md)
 - [@types/react](./node_modules/@types/react/README.md)
 - [@types/responselike](./node_modules/@types/responselike/README.md)
 - [@types/rimraf](./node_modules/@types/rimraf/README.md)
@@ -3762,7 +3744,7 @@
 - [@webassemblyjs/wast-printer](./node_modules/@webassemblyjs/wast-printer/README.md)
 - [web-dev-utils](./node_modules/web-dev-utils/README.md)
 - [web-dev-utils/Markdown-Templates/Markdown-Templates-master/alt-](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/alt-README.md)
-- [web-dev-utils/Markdown-Templates/Markdown-Templates-master/BLANK_](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/BLANK_README.md)
+- [web-dev-utils/Markdown-Templates/Markdown-Templates-master/BLANK\_](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/BLANK_README.md)
 - [web-dev-utils/Markdown-Templates/Markdown-Templates-master/MAIN-](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/MAIN-README.md)
 - [web-dev-utils/Markdown-Templates/Markdown-Templates-master](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/README.md)
 - [web-dev-utils/Markdown-Templates/Markdown-Templates-master/Standard-Project-](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/Standard-Project-README.md)
@@ -3901,7 +3883,7 @@
 - [./BACKUP/@bgoonz11/repoutils](./BACKUP/@bgoonz11/repoutils/README.md)
 - [./BACKUP/@bgoonz11/repoutils/copy-2-clip](./BACKUP/@bgoonz11/repoutils/copy-2-clip/README.md)
 - [./BACKUP/@bgoonz11/repoutils/markdown-templates/alt-](./BACKUP/@bgoonz11/repoutils/markdown-templates/alt-README.md)
-- [./BACKUP/@bgoonz11/repoutils/markdown-templates/BLANK_](./BACKUP/@bgoonz11/repoutils/markdown-templates/BLANK_README.md)
+- [./BACKUP/@bgoonz11/repoutils/markdown-templates/BLANK\_](./BACKUP/@bgoonz11/repoutils/markdown-templates/BLANK_README.md)
 - [./BACKUP/@bgoonz11/repoutils/markdown-templates/MAIN-](./BACKUP/@bgoonz11/repoutils/markdown-templates/MAIN-README.md)
 - [./BACKUP/@bgoonz11/repoutils/markdown-templates](./BACKUP/@bgoonz11/repoutils/markdown-templates/README.md)
 - [./BACKUP/@bgoonz11/repoutils/markdown-templates/Standard-Project-](./BACKUP/@bgoonz11/repoutils/markdown-templates/Standard-Project-README.md)
@@ -3912,10 +3894,10 @@
 - [./BACKUP/@fastify/ajv-compiler](./BACKUP/@fastify/ajv-compiler/README.md)
 - [./BACKUP/@finxindustries/create-fullstack-app](./BACKUP/@finxindustries/create-fullstack-app/README.md)
 - [./BACKUP/@finxindustries/create-fullstack-app/templates](./BACKUP/@finxindustries/create-fullstack-app/templates/README.md)
-- [./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_admin](./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_admin/README.md)
-- [./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/README.md./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/README.md)
-- ./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage](.[imageset](./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md)
-- [./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_react](./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_react/README.md)
+- [./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_admin](./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_admin/README.md)
+- [./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_flutter/README.md./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_flutter/README.md)
+- ./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage](.[imageset](./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md)
+- [./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_react](./BACKUP/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_react/README.md)
 - [./BACKUP/@gatsby-contrib/gatsby-plugin-elasticlunr-search](./BACKUP/@gatsby-contrib/gatsby-plugin-elasticlunr-search/README.md)
 - [./BACKUP/@gatsbyjs/reach-router](./BACKUP/@gatsbyjs/reach-router/README.md)
 - [./BACKUP/@gatsbyjs/webpack-hot-middleware](./BACKUP/@gatsbyjs/webpack-hot-middleware/README.md)
@@ -4217,8 +4199,8 @@
 - [baqend](./node_modules/baqend/README.md)
 - [baqend/node_modules/rimraf](./node_modules/baqend/node_modules/rimraf/README.md)
 - [baqend/node_modules/rxjs](./node_modules/baqend/node_modules/rxjs/README.md)
-- [baqend/node_modules/rxjs/_esm2015](./node_modules/baqend/node_modules/rxjs/_esm2015/README.md)
-- [baqend/node_modules/rxjs/_esm5](./node_modules/baqend/node_modules/rxjs/_esm5/README.md)
+- [baqend/node_modules/rxjs/\_esm2015](./node_modules/baqend/node_modules/rxjs/_esm2015/README.md)
+- [baqend/node_modules/rxjs/\_esm5](./node_modules/baqend/node_modules/rxjs/_esm5/README.md)
 - [baqend/node_modules/rxjs/node_modules/tslib](./node_modules/baqend/node_modules/rxjs/node_modules/tslib/README.md)
 - [baqend/node_modules/rxjs/src](./node_modules/baqend/node_modules/rxjs/src/README.md)
 - [base](./node_modules/base/README.md)
@@ -4244,7 +4226,7 @@
 - [@bgoonz11/repoutils](./node_modules/@bgoonz11/repoutils/README.md)
 - [@bgoonz11/repoutils/copy-2-clip](./node_modules/@bgoonz11/repoutils/copy-2-clip/README.md)
 - [@bgoonz11/repoutils/markdown-templates/alt-](./node_modules/@bgoonz11/repoutils/markdown-templates/alt-README.md)
-- [@bgoonz11/repoutils/markdown-templates/BLANK_](./node_modules/@bgoonz11/repoutils/markdown-templates/BLANK_README.md)
+- [@bgoonz11/repoutils/markdown-templates/BLANK\_](./node_modules/@bgoonz11/repoutils/markdown-templates/BLANK_README.md)
 - [@bgoonz11/repoutils/markdown-templates/MAIN-](./node_modules/@bgoonz11/repoutils/markdown-templates/MAIN-README.md)
 - [@bgoonz11/repoutils/markdown-templates](./node_modules/@bgoonz11/repoutils/markdown-templates/README.md)
 - [@bgoonz11/repoutils/markdown-templates/Standard-Project-](./node_modules/@bgoonz11/repoutils/markdown-templates/Standard-Project-README.md)
@@ -4831,10 +4813,10 @@
 - [find-replace/node_modules/array-back](./node_modules/find-replace/node_modules/array-back/README.md)
 - [@finxindustries/create-fullstack-app](./node_modules/@finxindustries/create-fullstack-app/README.md)
 - [@finxindustries/create-fullstack-app/templates](./node_modules/@finxindustries/create-fullstack-app/templates/README.md)
-- [@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_admin](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_admin/README.md)
-- [@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/README.md./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/README.md)
-- @finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage](.[imageset](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md)
-- [@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_react](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_react/README.md)
+- [@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_admin](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_admin/README.md)
+- [@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_flutter/README.md./node_modules/@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_flutter/README.md)
+- @finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage](.[imageset](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_flutter/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md)
+- [@finxindustries/create-fullstack-app/templates/frontend/\_**\_template_placeholder\_\_\_**client_user/\_**\_template_placeholder\_\_\_**client_user_react](./node_modules/@finxindustries/create-fullstack-app/templates/frontend/____template_placeholder_____client_user/____template_placeholder_____client_user_react/README.md)
 - [flat](./node_modules/flat/README.md)
 - [flat-cache](./node_modules/flat-cache/README.md)
 - [flat-cache/node_modules/rimraf](./node_modules/flat-cache/node_modules/rimraf/README.md)
@@ -4991,8 +4973,8 @@
 - [gatsby-plugin-s3/node_modules/mime](./node_modules/gatsby-plugin-s3/node_modules/mime/README.md)
 - [gatsby-plugin-s3/node_modules/mute-stream](./node_modules/gatsby-plugin-s3/node_modules/mute-stream/README.md)
 - [gatsby-plugin-s3/node_modules/rxjs](./node_modules/gatsby-plugin-s3/node_modules/rxjs/README.md)
-- [gatsby-plugin-s3/node_modules/rxjs/_esm2015](./node_modules/gatsby-plugin-s3/node_modules/rxjs/_esm2015/README.md)
-- [gatsby-plugin-s3/node_modules/rxjs/_esm5](./node_modules/gatsby-plugin-s3/node_modules/rxjs/_esm5/README.md)
+- [gatsby-plugin-s3/node_modules/rxjs/\_esm2015](./node_modules/gatsby-plugin-s3/node_modules/rxjs/_esm2015/README.md)
+- [gatsby-plugin-s3/node_modules/rxjs/\_esm5](./node_modules/gatsby-plugin-s3/node_modules/rxjs/_esm5/README.md)
 - [gatsby-plugin-s3/node_modules/rxjs/src](./node_modules/gatsby-plugin-s3/node_modules/rxjs/src/README.md)
 - [gatsby-plugin-s3/node_modules/tslib](./node_modules/gatsby-plugin-s3/node_modules/tslib/README.md)
 - [gatsby-plugin-s3/node_modules/@types/node](./node_modules/gatsby-plugin-s3/node_modules/@types/node/README.md)
@@ -5061,8 +5043,8 @@
 - [gatsby-source-sanity/node_modules/pumpify](./node_modules/gatsby-source-sanity/node_modules/pumpify/README.md)
 - [gatsby-source-sanity/node_modules/readable-stream](./node_modules/gatsby-source-sanity/node_modules/readable-stream/README.md)
 - [gatsby-source-sanity/node_modules/rxjs](./node_modules/gatsby-source-sanity/node_modules/rxjs/README.md)
-- [gatsby-source-sanity/node_modules/rxjs/_esm2015](./node_modules/gatsby-source-sanity/node_modules/rxjs/_esm2015/README.md)
-- [gatsby-source-sanity/node_modules/rxjs/_esm5](./node_modules/gatsby-source-sanity/node_modules/rxjs/_esm5/README.md)
+- [gatsby-source-sanity/node_modules/rxjs/\_esm2015](./node_modules/gatsby-source-sanity/node_modules/rxjs/_esm2015/README.md)
+- [gatsby-source-sanity/node_modules/rxjs/\_esm5](./node_modules/gatsby-source-sanity/node_modules/rxjs/_esm5/README.md)
 - [gatsby-source-sanity/node_modules/rxjs/src](./node_modules/gatsby-source-sanity/node_modules/rxjs/src/README.md)
 - [gatsby-source-sanity/node_modules/through2](./node_modules/gatsby-source-sanity/node_modules/through2/README.md)
 - [gatsby-source-sanity/node_modules/tslib](./node_modules/gatsby-source-sanity/node_modules/tslib/README.md)
@@ -5295,8 +5277,8 @@
 - [inputformat-to-jstransformer](./node_modules/inputformat-to-jstransformer/README.md)
 - [inquirer](./node_modules/inquirer/README.md)
 - [inquirer/node_modules/rxjs](./node_modules/inquirer/node_modules/rxjs/README.md)
-- [inquirer/node_modules/rxjs/_esm2015](./node_modules/inquirer/node_modules/rxjs/_esm2015/README.md)
-- [inquirer/node_modules/rxjs/_esm5](./node_modules/inquirer/node_modules/rxjs/_esm5/README.md)
+- [inquirer/node_modules/rxjs/\_esm2015](./node_modules/inquirer/node_modules/rxjs/_esm2015/README.md)
+- [inquirer/node_modules/rxjs/\_esm5](./node_modules/inquirer/node_modules/rxjs/_esm5/README.md)
 - [inquirer/node_modules/rxjs/src](./node_modules/inquirer/node_modules/rxjs/src/README.md)
 - [inquirer/node_modules/tslib](./node_modules/inquirer/node_modules/tslib/README.md)
 - [internal-slot](./node_modules/internal-slot/README.md)
@@ -6459,8 +6441,8 @@
 - [@sanity/mutator/node_modules/debug](./node_modules/@sanity/mutator/node_modules/debug/README.md)
 - [@sanity/observable](./node_modules/@sanity/observable/README.md)
 - [@sanity/observable/node_modules/rxjs](./node_modules/@sanity/observable/node_modules/rxjs/README.md)
-- [@sanity/observable/node_modules/rxjs/_esm2015](./node_modules/@sanity/observable/node_modules/rxjs/_esm2015/README.md)
-- [@sanity/observable/node_modules/rxjs/_esm5](./node_modules/@sanity/observable/node_modules/rxjs/_esm5/README.md)
+- [@sanity/observable/node_modules/rxjs/\_esm2015](./node_modules/@sanity/observable/node_modules/rxjs/_esm2015/README.md)
+- [@sanity/observable/node_modules/rxjs/\_esm5](./node_modules/@sanity/observable/node_modules/rxjs/_esm5/README.md)
 - [@sanity/observable/node_modules/rxjs/src](./node_modules/@sanity/observable/node_modules/rxjs/src/README.md)
 - [@sanity/observable/node_modules/tslib](./node_modules/@sanity/observable/node_modules/tslib/README.md)
 - [sass](./node_modules/sass/README.md)
@@ -7068,10 +7050,10 @@
 - [type-detect](./node_modules/type-detect/README.md)
 - [type-is](./node_modules/type-is/README.md)
 - [@types/async](./node_modules/@types/async/README.md)
-- [@types/babel__core](./node_modules/@types/babel__core/README.md)
-- [@types/babel__generator](./node_modules/@types/babel__generator/README.md)
-- [@types/babel__template](./node_modules/@types/babel__template/README.md)
-- [@types/babel__traverse](./node_modules/@types/babel__traverse/README.md)
+- [@types/babel\_\_core](./node_modules/@types/babel__core/README.md)
+- [@types/babel\_\_generator](./node_modules/@types/babel__generator/README.md)
+- [@types/babel\_\_template](./node_modules/@types/babel__template/README.md)
+- [@types/babel\_\_traverse](./node_modules/@types/babel__traverse/README.md)
 - [@types/bson](./node_modules/@types/bson/README.md)
 - [@types/cacheable-request](./node_modules/@types/cacheable-request/README.md)
 - [@types/common-tags](./node_modules/@types/common-tags/README.md)
@@ -7111,7 +7093,7 @@
 - [@types/prettier](./node_modules/@types/prettier/README.md)
 - [@types/prop-types](./node_modules/@types/prop-types/README.md)
 - [@types/q](./node_modules/@types/q/README.md)
-- [@types/reach__router](./node_modules/@types/reach__router/README.md)
+- [@types/reach\_\_router](./node_modules/@types/reach__router/README.md)
 - [@types/react](./node_modules/@types/react/README.md)
 - [@types/responselike](./node_modules/@types/responselike/README.md)
 - [@types/rimraf](./node_modules/@types/rimraf/README.md)
@@ -7259,7 +7241,7 @@
 - [@webassemblyjs/wast-printer](./node_modules/@webassemblyjs/wast-printer/README.md)
 - [web-dev-utils](./node_modules/web-dev-utils/README.md)
 - [web-dev-utils/Markdown-Templates/Markdown-Templates-master/alt-](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/alt-README.md)
-- [web-dev-utils/Markdown-Templates/Markdown-Templates-master/BLANK_](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/BLANK_README.md)
+- [web-dev-utils/Markdown-Templates/Markdown-Templates-master/BLANK\_](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/BLANK_README.md)
 - [web-dev-utils/Markdown-Templates/Markdown-Templates-master/MAIN-](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/MAIN-README.md)
 - [web-dev-utils/Markdown-Templates/Markdown-Templates-master](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/README.md)
 - [web-dev-utils/Markdown-Templates/Markdown-Templates-master/Standard-Project-](./node_modules/web-dev-utils/Markdown-Templates/Markdown-Templates-master/Standard-Project-README.md)
@@ -7382,8 +7364,4 @@
 - [yurnalist](./node_modules/yurnalist/README.md)
 - [yurnalist/node_modules/ci-info](./node_modules/yurnalist/node_modules/ci-info/README.md)
 - [yurnalist/node_modules/is-ci](./node_modules/yurnalist/node_modules/is-ci/README.md)
-- 
-
-
-
-
+-
