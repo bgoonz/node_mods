@@ -1,9 +1,27 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
-exports.ForAwaitStatement = exports.NumericLiteralTypeAnnotation = exports.ExistentialTypeParam = exports.SpreadProperty = exports.RestProperty = exports.Flow = exports.Pure = exports.Generated = exports.User = exports.Var = exports.BlockScoped = exports.Referenced = exports.Scope = exports.Expression = exports.Statement = exports.BindingIdentifier = exports.ReferencedMemberExpression = exports.ReferencedIdentifier = void 0;
+exports.ForAwaitStatement =
+  exports.NumericLiteralTypeAnnotation =
+  exports.ExistentialTypeParam =
+  exports.SpreadProperty =
+  exports.RestProperty =
+  exports.Flow =
+  exports.Pure =
+  exports.Generated =
+  exports.User =
+  exports.Var =
+  exports.BlockScoped =
+  exports.Referenced =
+  exports.Scope =
+  exports.Expression =
+  exports.Statement =
+  exports.BindingIdentifier =
+  exports.ReferencedMemberExpression =
+  exports.ReferencedIdentifier =
+    void 0;
 
 var t = require("@babel/types");
 
@@ -11,10 +29,7 @@ const ReferencedIdentifier = {
   types: ["Identifier", "JSXIdentifier"],
 
   checkPath(path, opts) {
-    const {
-      node,
-      parent
-    } = path;
+    const { node, parent } = path;
 
     if (!t.isIdentifier(node, opts) && !t.isJSXMemberExpression(parent, opts)) {
       if (t.isJSXIdentifier(node, opts)) {
@@ -25,59 +40,52 @@ const ReferencedIdentifier = {
     }
 
     return t.isReferenced(node, parent, path.parentPath.parent);
-  }
-
+  },
 };
 exports.ReferencedIdentifier = ReferencedIdentifier;
 const ReferencedMemberExpression = {
   types: ["MemberExpression"],
 
-  checkPath({
-    node,
-    parent
-  }) {
+  checkPath({ node, parent }) {
     return t.isMemberExpression(node) && t.isReferenced(node, parent);
-  }
-
+  },
 };
 exports.ReferencedMemberExpression = ReferencedMemberExpression;
 const BindingIdentifier = {
   types: ["Identifier"],
 
   checkPath(path) {
-    const {
-      node,
-      parent
-    } = path;
+    const { node, parent } = path;
     const grandparent = path.parentPath.parent;
     return t.isIdentifier(node) && t.isBinding(node, parent, grandparent);
-  }
-
+  },
 };
 exports.BindingIdentifier = BindingIdentifier;
 const Statement = {
   types: ["Statement"],
 
-  checkPath({
-    node,
-    parent
-  }) {
+  checkPath({ node, parent }) {
     if (t.isStatement(node)) {
       if (t.isVariableDeclaration(node)) {
-        if (t.isForXStatement(parent, {
-          left: node
-        })) return false;
-        if (t.isForStatement(parent, {
-          init: node
-        })) return false;
+        if (
+          t.isForXStatement(parent, {
+            left: node,
+          })
+        )
+          return false;
+        if (
+          t.isForStatement(parent, {
+            init: node,
+          })
+        )
+          return false;
       }
 
       return true;
     } else {
       return false;
     }
-  }
-
+  },
 };
 exports.Statement = Statement;
 const Expression = {
@@ -89,8 +97,7 @@ const Expression = {
     } else {
       return t.isExpression(path.node);
     }
-  }
-
+  },
 };
 exports.Expression = Expression;
 const Scope = {
@@ -98,22 +105,19 @@ const Scope = {
 
   checkPath(path) {
     return t.isScope(path.node, path.parent);
-  }
-
+  },
 };
 exports.Scope = Scope;
 const Referenced = {
   checkPath(path) {
     return t.isReferenced(path.node, path.parent);
-  }
-
+  },
 };
 exports.Referenced = Referenced;
 const BlockScoped = {
   checkPath(path) {
     return t.isBlockScoped(path.node);
-  }
-
+  },
 };
 exports.BlockScoped = BlockScoped;
 const Var = {
@@ -121,37 +125,31 @@ const Var = {
 
   checkPath(path) {
     return t.isVar(path.node);
-  }
-
+  },
 };
 exports.Var = Var;
 const User = {
   checkPath(path) {
     return path.node && !!path.node.loc;
-  }
-
+  },
 };
 exports.User = User;
 const Generated = {
   checkPath(path) {
     return !path.isUser();
-  }
-
+  },
 };
 exports.Generated = Generated;
 const Pure = {
   checkPath(path, opts) {
     return path.scope.isPure(path.node, opts);
-  }
-
+  },
 };
 exports.Pure = Pure;
 const Flow = {
   types: ["Flow", "ImportDeclaration", "ExportDeclaration", "ImportSpecifier"],
 
-  checkPath({
-    node
-  }) {
+  checkPath({ node }) {
     if (t.isFlow(node)) {
       return true;
     } else if (t.isImportDeclaration(node)) {
@@ -163,8 +161,7 @@ const Flow = {
     } else {
       return false;
     }
-  }
-
+  },
 };
 exports.Flow = Flow;
 const RestProperty = {
@@ -172,8 +169,7 @@ const RestProperty = {
 
   checkPath(path) {
     return path.parentPath && path.parentPath.isObjectPattern();
-  }
-
+  },
 };
 exports.RestProperty = RestProperty;
 const SpreadProperty = {
@@ -181,26 +177,22 @@ const SpreadProperty = {
 
   checkPath(path) {
     return path.parentPath && path.parentPath.isObjectExpression();
-  }
-
+  },
 };
 exports.SpreadProperty = SpreadProperty;
 const ExistentialTypeParam = {
-  types: ["ExistsTypeAnnotation"]
+  types: ["ExistsTypeAnnotation"],
 };
 exports.ExistentialTypeParam = ExistentialTypeParam;
 const NumericLiteralTypeAnnotation = {
-  types: ["NumberLiteralTypeAnnotation"]
+  types: ["NumberLiteralTypeAnnotation"],
 };
 exports.NumericLiteralTypeAnnotation = NumericLiteralTypeAnnotation;
 const ForAwaitStatement = {
   types: ["ForOfStatement"],
 
-  checkPath({
-    node
-  }) {
+  checkPath({ node }) {
     return node.await === true;
-  }
-
+  },
 };
 exports.ForAwaitStatement = ForAwaitStatement;

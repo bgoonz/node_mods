@@ -1,9 +1,13 @@
-import { Source, SchemaPointerSingle, DocumentLoader, SingleFileOptions } from '@graphql-tools/utils';
+import {
+  Source,
+  SchemaPointerSingle,
+  DocumentLoader,
+  SingleFileOptions,
+} from "@graphql-tools/utils";
 /**
  * Additional options for loading from a JSON file
  */
-export interface JsonFileLoaderOptions extends SingleFileOptions {
-}
+export interface JsonFileLoaderOptions extends SingleFileOptions {}
 /**
  * This loader loads documents and type definitions from JSON files.
  *
@@ -28,9 +32,21 @@ export interface JsonFileLoaderOptions extends SingleFileOptions {
  * ```
  */
 export declare class JsonFileLoader implements DocumentLoader {
-    loaderId(): string;
-    canLoad(pointer: SchemaPointerSingle, options: JsonFileLoaderOptions): Promise<boolean>;
-    canLoadSync(pointer: SchemaPointerSingle, options: JsonFileLoaderOptions): boolean;
-    load(pointer: SchemaPointerSingle, options: JsonFileLoaderOptions): Promise<Source>;
-    loadSync(pointer: SchemaPointerSingle, options: JsonFileLoaderOptions): Source;
+  loaderId(): string;
+  canLoad(
+    pointer: SchemaPointerSingle,
+    options: JsonFileLoaderOptions
+  ): Promise<boolean>;
+  canLoadSync(
+    pointer: SchemaPointerSingle,
+    options: JsonFileLoaderOptions
+  ): boolean;
+  load(
+    pointer: SchemaPointerSingle,
+    options: JsonFileLoaderOptions
+  ): Promise<Source>;
+  loadSync(
+    pointer: SchemaPointerSingle,
+    options: JsonFileLoaderOptions
+  ): Source;
 }

@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,7 +16,7 @@ function _chalk() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -25,18 +25,18 @@ function _jestUtil() {
   return data;
 }
 
-var _BaseReporter = _interopRequireDefault(require('./BaseReporter'));
+var _BaseReporter = _interopRequireDefault(require("./BaseReporter"));
 
-var _getResultHeader = _interopRequireDefault(require('./getResultHeader'));
+var _getResultHeader = _interopRequireDefault(require("./getResultHeader"));
 
 var _getSnapshotSummary = _interopRequireDefault(
-  require('./getSnapshotSummary')
+  require("./getSnapshotSummary")
 );
 
-var _utils = require('./utils');
+var _utils = require("./utils");
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -45,7 +45,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -55,41 +55,41 @@ function _defineProperty(obj, key, value) {
 
 const TEST_SUMMARY_THRESHOLD = 20;
 const NPM_EVENTS = new Set([
-  'prepublish',
-  'publish',
-  'postpublish',
-  'preinstall',
-  'install',
-  'postinstall',
-  'preuninstall',
-  'uninstall',
-  'postuninstall',
-  'preversion',
-  'version',
-  'postversion',
-  'pretest',
-  'test',
-  'posttest',
-  'prestop',
-  'stop',
-  'poststop',
-  'prestart',
-  'start',
-  'poststart',
-  'prerestart',
-  'restart',
-  'postrestart'
+  "prepublish",
+  "publish",
+  "postpublish",
+  "preinstall",
+  "install",
+  "postinstall",
+  "preuninstall",
+  "uninstall",
+  "postuninstall",
+  "preversion",
+  "version",
+  "postversion",
+  "pretest",
+  "test",
+  "posttest",
+  "prestop",
+  "stop",
+  "poststop",
+  "prestart",
+  "start",
+  "poststart",
+  "prerestart",
+  "restart",
+  "postrestart",
 ]);
-const {npm_config_user_agent, npm_lifecycle_event, npm_lifecycle_script} =
+const { npm_config_user_agent, npm_lifecycle_event, npm_lifecycle_script } =
   process.env;
 
 class SummaryReporter extends _BaseReporter.default {
   constructor(globalConfig) {
     super();
 
-    _defineProperty(this, '_estimatedTime', void 0);
+    _defineProperty(this, "_estimatedTime", void 0);
 
-    _defineProperty(this, '_globalConfig', void 0);
+    _defineProperty(this, "_globalConfig", void 0);
 
     this._globalConfig = globalConfig;
     this._estimatedTime = 0;
@@ -111,7 +111,8 @@ class SummaryReporter extends _BaseReporter.default {
   }
 
   onRunComplete(contexts, aggregatedResults) {
-    const {numTotalTestSuites, testResults, wasInterrupted} = aggregatedResults;
+    const { numTotalTestSuites, testResults, wasInterrupted } =
+      aggregatedResults;
 
     if (numTotalTestSuites) {
       const lastResult = testResults[testResults.length - 1]; // Print a newline if the last test did not fail to line up newlines
@@ -123,7 +124,7 @@ class SummaryReporter extends _BaseReporter.default {
         !lastResult.numFailingTests &&
         !lastResult.testExecError
       ) {
-        this.log('');
+        this.log("");
       }
 
       this._printSummary(aggregatedResults, this._globalConfig);
@@ -135,14 +136,14 @@ class SummaryReporter extends _BaseReporter.default {
 
       if (numTotalTestSuites) {
         let message = (0, _utils.getSummary)(aggregatedResults, {
-          estimatedTime: this._estimatedTime
+          estimatedTime: this._estimatedTime,
         });
 
         if (!this._globalConfig.silent) {
           message +=
-            '\n' +
+            "\n" +
             (wasInterrupted
-              ? _chalk().default.bold.red('Test run was interrupted.')
+              ? _chalk().default.bold.red("Test run was interrupted.")
               : this._getTestSummary(contexts, this._globalConfig));
         }
 
@@ -160,24 +161,24 @@ class SummaryReporter extends _BaseReporter.default {
       snapshots.updated
     ) {
       let updateCommand;
-      const event = npm_lifecycle_event || '';
-      const prefix = NPM_EVENTS.has(event) ? '' : 'run ';
+      const event = npm_lifecycle_event || "";
+      const prefix = NPM_EVENTS.has(event) ? "" : "run ";
       const isYarn =
-        typeof npm_config_user_agent === 'string' &&
-        npm_config_user_agent.includes('yarn');
-      const client = isYarn ? 'yarn' : 'npm';
+        typeof npm_config_user_agent === "string" &&
+        npm_config_user_agent.includes("yarn");
+      const client = isYarn ? "yarn" : "npm";
       const scriptUsesJest =
-        typeof npm_lifecycle_script === 'string' &&
-        npm_lifecycle_script.includes('jest');
+        typeof npm_lifecycle_script === "string" &&
+        npm_lifecycle_script.includes("jest");
 
       if (globalConfig.watch || globalConfig.watchAll) {
-        updateCommand = 'press `u`';
+        updateCommand = "press `u`";
       } else if (event && scriptUsesJest) {
         updateCommand = `run \`${
-          client + ' ' + prefix + event + (isYarn ? '' : ' --')
+          client + " " + prefix + event + (isYarn ? "" : " --")
         } -u\``;
       } else {
-        updateCommand = 're-run jest with `-u`';
+        updateCommand = "re-run jest with `-u`";
       }
 
       const snapshotSummary = (0, _getSnapshotSummary.default)(
@@ -186,7 +187,7 @@ class SummaryReporter extends _BaseReporter.default {
         updateCommand
       );
       snapshotSummary.forEach(this.log);
-      this.log(''); // print empty line
+      this.log(""); // print empty line
     }
   }
 
@@ -200,28 +201,28 @@ class SummaryReporter extends _BaseReporter.default {
       failedTests + runtimeErrors > 0 &&
       aggregatedResults.numTotalTestSuites > TEST_SUMMARY_THRESHOLD
     ) {
-      this.log(_chalk().default.bold('Summary of all failing tests'));
-      aggregatedResults.testResults.forEach(testResult => {
-        const {failureMessage} = testResult;
+      this.log(_chalk().default.bold("Summary of all failing tests"));
+      aggregatedResults.testResults.forEach((testResult) => {
+        const { failureMessage } = testResult;
 
         if (failureMessage) {
           this._write(
             (0, _getResultHeader.default)(testResult, globalConfig) +
-              '\n' +
+              "\n" +
               failureMessage +
-              '\n'
+              "\n"
           );
         }
       });
-      this.log(''); // print empty line
+      this.log(""); // print empty line
     }
   }
 
   _getTestSummary(contexts, globalConfig) {
     const getMatchingTestsInfo = () => {
       const prefix = globalConfig.findRelatedTests
-        ? ' related to files matching '
-        : ' matching ';
+        ? " related to files matching "
+        : " matching ";
       return (
         _chalk().default.dim(prefix) +
         (0, _jestUtil().testPathPatternToRegExp)(
@@ -230,42 +231,42 @@ class SummaryReporter extends _BaseReporter.default {
       );
     };
 
-    let testInfo = '';
+    let testInfo = "";
 
     if (globalConfig.runTestsByPath) {
-      testInfo = _chalk().default.dim(' within paths');
+      testInfo = _chalk().default.dim(" within paths");
     } else if (globalConfig.onlyChanged) {
-      testInfo = _chalk().default.dim(' related to changed files');
+      testInfo = _chalk().default.dim(" related to changed files");
     } else if (globalConfig.testPathPattern) {
       testInfo = getMatchingTestsInfo();
     }
 
-    let nameInfo = '';
+    let nameInfo = "";
 
     if (globalConfig.runTestsByPath) {
-      nameInfo = ' ' + globalConfig.nonFlagArgs.map(p => `"${p}"`).join(', ');
+      nameInfo = " " + globalConfig.nonFlagArgs.map((p) => `"${p}"`).join(", ");
     } else if (globalConfig.testNamePattern) {
       nameInfo =
-        _chalk().default.dim(' with tests matching ') +
+        _chalk().default.dim(" with tests matching ") +
         `"${globalConfig.testNamePattern}"`;
     }
 
     const contextInfo =
       contexts.size > 1
-        ? _chalk().default.dim(' in ') +
+        ? _chalk().default.dim(" in ") +
           contexts.size +
-          _chalk().default.dim(' projects')
-        : '';
+          _chalk().default.dim(" projects")
+        : "";
     return (
-      _chalk().default.dim('Ran all test suites') +
+      _chalk().default.dim("Ran all test suites") +
       testInfo +
       nameInfo +
       contextInfo +
-      _chalk().default.dim('.')
+      _chalk().default.dim(".")
     );
   }
 }
 
 exports.default = SummaryReporter;
 
-_defineProperty(SummaryReporter, 'filename', __filename);
+_defineProperty(SummaryReporter, "filename", __filename);

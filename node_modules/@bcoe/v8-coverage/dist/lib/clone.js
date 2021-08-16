@@ -7,13 +7,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @return Cloned process coverage.
  */
 function cloneProcessCov(processCov) {
-    const result = [];
-    for (const scriptCov of processCov.result) {
-        result.push(cloneScriptCov(scriptCov));
-    }
-    return {
-        result,
-    };
+  const result = [];
+  for (const scriptCov of processCov.result) {
+    result.push(cloneScriptCov(scriptCov));
+  }
+  return {
+    result,
+  };
 }
 exports.cloneProcessCov = cloneProcessCov;
 /**
@@ -23,15 +23,15 @@ exports.cloneProcessCov = cloneProcessCov;
  * @return Cloned script coverage.
  */
 function cloneScriptCov(scriptCov) {
-    const functions = [];
-    for (const functionCov of scriptCov.functions) {
-        functions.push(cloneFunctionCov(functionCov));
-    }
-    return {
-        scriptId: scriptCov.scriptId,
-        url: scriptCov.url,
-        functions,
-    };
+  const functions = [];
+  for (const functionCov of scriptCov.functions) {
+    functions.push(cloneFunctionCov(functionCov));
+  }
+  return {
+    scriptId: scriptCov.scriptId,
+    url: scriptCov.url,
+    functions,
+  };
 }
 exports.cloneScriptCov = cloneScriptCov;
 /**
@@ -41,15 +41,15 @@ exports.cloneScriptCov = cloneScriptCov;
  * @return Cloned function coverage.
  */
 function cloneFunctionCov(functionCov) {
-    const ranges = [];
-    for (const rangeCov of functionCov.ranges) {
-        ranges.push(cloneRangeCov(rangeCov));
-    }
-    return {
-        functionName: functionCov.functionName,
-        ranges,
-        isBlockCoverage: functionCov.isBlockCoverage,
-    };
+  const ranges = [];
+  for (const rangeCov of functionCov.ranges) {
+    ranges.push(cloneRangeCov(rangeCov));
+  }
+  return {
+    functionName: functionCov.functionName,
+    ranges,
+    isBlockCoverage: functionCov.isBlockCoverage,
+  };
 }
 exports.cloneFunctionCov = cloneFunctionCov;
 /**
@@ -59,11 +59,11 @@ exports.cloneFunctionCov = cloneFunctionCov;
  * @return Cloned range coverage.
  */
 function cloneRangeCov(rangeCov) {
-    return {
-        startOffset: rangeCov.startOffset,
-        endOffset: rangeCov.endOffset,
-        count: rangeCov.count,
-    };
+  return {
+    startOffset: rangeCov.startOffset,
+    endOffset: rangeCov.endOffset,
+    count: rangeCov.count,
+  };
 }
 exports.cloneRangeCov = cloneRangeCov;
 

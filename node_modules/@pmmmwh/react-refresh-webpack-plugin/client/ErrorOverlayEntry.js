@@ -1,7 +1,7 @@
 /* global __react_refresh_error_overlay__, __react_refresh_init_socket__, __resourceQuery */
 
-const errorEventHandlers = require('./utils/errorEventHandlers');
-const formatWebpackErrors = require('./utils/formatWebpackErrors');
+const errorEventHandlers = require("./utils/errorEventHandlers");
+const formatWebpackErrors = require("./utils/formatWebpackErrors");
 
 // Setup error states
 let isHotReload = false;
@@ -53,14 +53,14 @@ function handleCompileErrors(errors) {
  */
 function compileMessageHandler(message) {
   switch (message.type) {
-    case 'ok':
-    case 'still-ok':
-    case 'warnings': {
+    case "ok":
+    case "still-ok":
+    case "warnings": {
       // TODO: Implement handling for warnings
       handleCompileSuccess();
       break;
     }
-    case 'errors': {
+    case "errors": {
       handleCompileErrors(message.data);
       break;
     }
@@ -71,7 +71,7 @@ function compileMessageHandler(message) {
 }
 
 // Only register if we're in non-production mode and if window is defined
-if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
+if (process.env.NODE_ENV !== "production" && typeof window !== "undefined") {
   // Registers handlers for compile errors
   __react_refresh_init_socket__(compileMessageHandler, __resourceQuery);
   // Registers handlers for runtime errors
@@ -79,8 +79,10 @@ if (process.env.NODE_ENV !== 'production' && typeof window !== 'undefined') {
     hasRuntimeErrors = true;
     __react_refresh_error_overlay__.handleRuntimeError(error);
   });
-  errorEventHandlers.unhandledRejection(function handleUnhandledPromiseRejection(error) {
-    hasRuntimeErrors = true;
-    __react_refresh_error_overlay__.handleRuntimeError(error);
-  });
+  errorEventHandlers.unhandledRejection(
+    function handleUnhandledPromiseRejection(error) {
+      hasRuntimeErrors = true;
+      __react_refresh_error_overlay__.handleRuntimeError(error);
+    }
+  );
 }

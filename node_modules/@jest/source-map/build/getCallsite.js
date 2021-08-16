@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _callsites() {
-  const data = _interopRequireDefault(require('callsites'));
+  const data = _interopRequireDefault(require("callsites"));
 
   _callsites = function () {
     return data;
@@ -16,7 +16,7 @@ function _callsites() {
 }
 
 function _gracefulFs() {
-  const data = require('graceful-fs');
+  const data = require("graceful-fs");
 
   _gracefulFs = function () {
     return data;
@@ -26,7 +26,7 @@ function _gracefulFs() {
 }
 
 function _sourceMap() {
-  const data = require('source-map');
+  const data = require("source-map");
 
   _sourceMap = function () {
     return data;
@@ -36,7 +36,7 @@ function _sourceMap() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -55,7 +55,7 @@ const addSourceMapConsumer = (callsite, consumer) => {
     if (!position) {
       position = consumer.originalPositionFor({
         column: getColumnNumber.call(callsite) || -1,
-        line: getLineNumber.call(callsite) || -1
+        line: getLineNumber.call(callsite) || -1,
       });
     }
 
@@ -68,15 +68,15 @@ const addSourceMapConsumer = (callsite, consumer) => {
         return getPosition().column || getColumnNumber.call(callsite);
       },
 
-      writable: false
+      writable: false,
     },
     getLineNumber: {
       value() {
         return getPosition().line || getLineNumber.call(callsite);
       },
 
-      writable: false
-    }
+      writable: false,
+    },
   });
 };
 
@@ -86,13 +86,13 @@ var _default = (level, sourceMaps) => {
   const sourceMapFileName =
     sourceMaps === null || sourceMaps === void 0
       ? void 0
-      : sourceMaps.get(stack.getFileName() || '');
+      : sourceMaps.get(stack.getFileName() || "");
 
   if (sourceMapFileName) {
     try {
       const sourceMap = (0, _gracefulFs().readFileSync)(
         sourceMapFileName,
-        'utf8'
+        "utf8"
       ); // @ts-expect-error: Not allowed to pass string
 
       addSourceMapConsumer(

@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.createTranspilingRequire = createTranspilingRequire;
 exports.createScriptTransformer = createScriptTransformer;
 
 function _crypto() {
-  const data = require('crypto');
+  const data = require("crypto");
 
   _crypto = function () {
     return data;
@@ -17,7 +17,7 @@ function _crypto() {
 }
 
 function path() {
-  const data = _interopRequireWildcard(require('path'));
+  const data = _interopRequireWildcard(require("path"));
 
   path = function () {
     return data;
@@ -27,7 +27,7 @@ function path() {
 }
 
 function _core() {
-  const data = require('@babel/core');
+  const data = require("@babel/core");
 
   _core = function () {
     return data;
@@ -37,7 +37,7 @@ function _core() {
 }
 
 function _babelPluginIstanbul() {
-  const data = _interopRequireDefault(require('babel-plugin-istanbul'));
+  const data = _interopRequireDefault(require("babel-plugin-istanbul"));
 
   _babelPluginIstanbul = function () {
     return data;
@@ -47,7 +47,7 @@ function _babelPluginIstanbul() {
 }
 
 function _convertSourceMap() {
-  const data = require('convert-source-map');
+  const data = require("convert-source-map");
 
   _convertSourceMap = function () {
     return data;
@@ -57,7 +57,7 @@ function _convertSourceMap() {
 }
 
 function _fastJsonStableStringify() {
-  const data = _interopRequireDefault(require('fast-json-stable-stringify'));
+  const data = _interopRequireDefault(require("fast-json-stable-stringify"));
 
   _fastJsonStableStringify = function () {
     return data;
@@ -67,7 +67,7 @@ function _fastJsonStableStringify() {
 }
 
 function fs() {
-  const data = _interopRequireWildcard(require('graceful-fs'));
+  const data = _interopRequireWildcard(require("graceful-fs"));
 
   fs = function () {
     return data;
@@ -77,7 +77,7 @@ function fs() {
 }
 
 function _pirates() {
-  const data = require('pirates');
+  const data = require("pirates");
 
   _pirates = function () {
     return data;
@@ -87,7 +87,7 @@ function _pirates() {
 }
 
 function _slash() {
-  const data = _interopRequireDefault(require('slash'));
+  const data = _interopRequireDefault(require("slash"));
 
   _slash = function () {
     return data;
@@ -97,7 +97,7 @@ function _slash() {
 }
 
 function _writeFileAtomic() {
-  const data = require('write-file-atomic');
+  const data = require("write-file-atomic");
 
   _writeFileAtomic = function () {
     return data;
@@ -107,7 +107,7 @@ function _writeFileAtomic() {
 }
 
 function _jestHasteMap() {
-  const data = _interopRequireDefault(require('jest-haste-map'));
+  const data = _interopRequireDefault(require("jest-haste-map"));
 
   _jestHasteMap = function () {
     return data;
@@ -117,7 +117,7 @@ function _jestHasteMap() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -127,17 +127,17 @@ function _jestUtil() {
 }
 
 var _enhanceUnexpectedTokenMessage = _interopRequireDefault(
-  require('./enhanceUnexpectedTokenMessage')
+  require("./enhanceUnexpectedTokenMessage")
 );
 
-var _shouldInstrument = _interopRequireDefault(require('./shouldInstrument'));
+var _shouldInstrument = _interopRequireDefault(require("./shouldInstrument"));
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -149,8 +149,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -160,7 +160,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -184,7 +184,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -193,14 +193,14 @@ function _defineProperty(obj, key, value) {
 }
 
 // Use `require` to avoid TS rootDir
-const {version: VERSION} = require('../package.json');
+const { version: VERSION } = require("../package.json");
 
 // This data structure is used to avoid recalculating some data every time that
 // we need to transform a file. Since ScriptTransformer is instantiated for each
 // file we need to keep this object in the local scope of this module.
 const projectCaches = new Map(); // To reset the cache for specific changesets (rather than package version).
 
-const CACHE_VERSION = '1';
+const CACHE_VERSION = "1";
 
 async function waitForPromiseWithCleanup(promise, cleanup) {
   try {
@@ -215,11 +215,11 @@ class ScriptTransformer {
     this._config = _config;
     this._cacheFS = _cacheFS;
 
-    _defineProperty(this, '_cache', void 0);
+    _defineProperty(this, "_cache", void 0);
 
-    _defineProperty(this, '_transformCache', new Map());
+    _defineProperty(this, "_transformCache", new Map());
 
-    _defineProperty(this, '_transformsAreLoaded', false);
+    _defineProperty(this, "_transformsAreLoaded", false);
 
     const configString = (0, _fastJsonStableStringify().default)(this._config);
     let projectCache = projectCaches.get(configString);
@@ -229,7 +229,7 @@ class ScriptTransformer {
         configString,
         ignorePatternsRegExp: calcIgnorePatternRegExp(this._config),
         transformRegExp: calcTransformRegExp(this._config),
-        transformedFiles: new Map()
+        transformedFiles: new Map(),
       };
       projectCaches.set(configString, projectCache);
     }
@@ -244,24 +244,24 @@ class ScriptTransformer {
     transformerCacheKey
   ) {
     if (transformerCacheKey) {
-      return (0, _crypto().createHash)('md5')
+      return (0, _crypto().createHash)("md5")
         .update(transformerCacheKey)
         .update(CACHE_VERSION)
-        .digest('hex');
+        .digest("hex");
     }
 
-    return (0, _crypto().createHash)('md5')
+    return (0, _crypto().createHash)("md5")
       .update(fileData)
       .update(transformOptions.configString)
-      .update(transformOptions.instrument ? 'instrument' : '')
+      .update(transformOptions.instrument ? "instrument" : "")
       .update(filename)
       .update(CACHE_VERSION)
-      .digest('hex');
+      .digest("hex");
   }
 
   _getCacheKey(fileData, filename, options) {
     const configString = this._cache.configString;
-    const {transformer, transformerConfig = {}} =
+    const { transformer, transformerConfig = {} } =
       this._getTransformer(filename) || {};
     let transformerCacheKey = undefined;
     const transformOptions = {
@@ -269,13 +269,13 @@ class ScriptTransformer {
       cacheFS: this._cacheFS,
       config: this._config,
       configString,
-      transformerConfig
+      transformerConfig,
     };
 
     if (
       typeof (transformer === null || transformer === void 0
         ? void 0
-        : transformer.getCacheKey) === 'function'
+        : transformer.getCacheKey) === "function"
     ) {
       transformerCacheKey = transformer.getCacheKey(
         fileData,
@@ -294,7 +294,7 @@ class ScriptTransformer {
 
   async _getCacheKeyAsync(fileData, filename, options) {
     const configString = this._cache.configString;
-    const {transformer, transformerConfig = {}} =
+    const { transformer, transformerConfig = {} } =
       this._getTransformer(filename) || {};
     let transformerCacheKey = undefined;
     const transformOptions = {
@@ -302,14 +302,14 @@ class ScriptTransformer {
       cacheFS: this._cacheFS,
       config: this._config,
       configString,
-      transformerConfig
+      transformerConfig,
     };
 
     if (transformer) {
       const getCacheKey =
         transformer.getCacheKeyAsync || transformer.getCacheKey;
 
-      if (typeof getCacheKey === 'function') {
+      if (typeof getCacheKey === "function") {
         transformerCacheKey = await getCacheKey(
           fileData,
           filename,
@@ -331,7 +331,7 @@ class ScriptTransformer {
 
     const baseCacheDir = HasteMapClass.getCacheFilePath(
       this._config.cacheDirectory,
-      'jest-transform-cache-' + this._config.name,
+      "jest-transform-cache-" + this._config.name,
       VERSION
     ); // Create sub folders based on the cacheKey to avoid creating one
     // directory with many files.
@@ -339,9 +339,9 @@ class ScriptTransformer {
     const cacheDir = path().join(baseCacheDir, cacheKey[0] + cacheKey[1]);
     const cacheFilenamePrefix = path()
       .basename(filename, path().extname(filename))
-      .replace(/\W/g, '');
+      .replace(/\W/g, "");
     const cachePath = (0, _slash().default)(
-      path().join(cacheDir, cacheFilenamePrefix + '_' + cacheKey)
+      path().join(cacheDir, cacheFilenamePrefix + "_" + cacheKey)
     );
     (0, _jestUtil().createDirectory)(cacheDir);
     return cachePath;
@@ -383,25 +383,25 @@ class ScriptTransformer {
           );
 
           if (!transformer) {
-            throw new TypeError('Jest: a transform must export something.');
+            throw new TypeError("Jest: a transform must export something.");
           }
 
-          if (typeof transformer.createTransformer === 'function') {
+          if (typeof transformer.createTransformer === "function") {
             transformer = transformer.createTransformer(transformerConfig);
           }
 
           if (
-            typeof transformer.process !== 'function' &&
-            typeof transformer.processAsync !== 'function'
+            typeof transformer.process !== "function" &&
+            typeof transformer.processAsync !== "function"
           ) {
             throw new TypeError(
-              'Jest: a transform must export a `process` or `processAsync` function.'
+              "Jest: a transform must export a `process` or `processAsync` function."
             );
           }
 
           const res = {
             transformer,
-            transformerConfig
+            transformerConfig,
           };
 
           this._transformCache.set(transformPath, res);
@@ -414,7 +414,7 @@ class ScriptTransformer {
   _getTransformer(filename) {
     if (!this._transformsAreLoaded) {
       throw new Error(
-        'Jest: Transformers have not been loaded yet - make sure to run `loadTransformers` and wait for it to complete before starting to transform files'
+        "Jest: Transformers have not been loaded yet - make sure to run `loadTransformers` and wait for it to complete before starting to transform files"
       );
     }
 
@@ -440,17 +440,17 @@ class ScriptTransformer {
   }
 
   _instrumentFile(filename, input, canMapToInput, options) {
-    const inputCode = typeof input === 'string' ? input : input.code;
-    const inputMap = typeof input === 'string' ? null : input.map;
+    const inputCode = typeof input === "string" ? input : input.code;
+    const inputMap = typeof input === "string" ? null : input.map;
     const result = (0, _core().transformSync)(inputCode, {
-      auxiliaryCommentBefore: ' istanbul ignore next ',
+      auxiliaryCommentBefore: " istanbul ignore next ",
       babelrc: false,
       caller: {
-        name: '@jest/transform',
+        name: "@jest/transform",
         supportsDynamicImport: options.supportsDynamicImport,
         supportsExportNamespaceFrom: options.supportsExportNamespaceFrom,
         supportsStaticESM: options.supportsStaticESM,
-        supportsTopLevelAwait: options.supportsTopLevelAwait
+        supportsTopLevelAwait: options.supportsTopLevelAwait,
       },
       configFile: false,
       filename,
@@ -464,11 +464,11 @@ class ScriptTransformer {
             exclude: [],
             extension: false,
             inputSourceMap: inputMap,
-            useInlineSourceMaps: false
-          }
-        ]
+            useInlineSourceMaps: false,
+          },
+        ],
       ],
-      sourceMaps: canMapToInput ? 'both' : false
+      sourceMaps: canMapToInput ? "both" : false,
     });
 
     if (result && result.code) {
@@ -490,18 +490,18 @@ class ScriptTransformer {
   ) {
     let transformed = {
       code: content,
-      map: null
+      map: null,
     };
 
     if (transformer && shouldCallTransform) {
-      if (typeof processed === 'string') {
+      if (typeof processed === "string") {
         transformed.code = processed;
-      } else if (processed != null && typeof processed.code === 'string') {
+      } else if (processed != null && typeof processed.code === "string") {
         transformed = processed;
       } else {
         throw new TypeError(
           "Jest: a transform's `process` function must return a string, " +
-            'or an object with `code` key containing this string. ' +
+            "or an object with `code` key containing this string. " +
             "It's `processAsync` function must return a Promise resolving to it."
         );
       }
@@ -524,7 +524,7 @@ class ScriptTransformer {
         console.warn(
           `jest-transform: The source map produced for the file ${filename} ` +
             `by ${transformPath} was invalid. Proceeding without source ` +
-            'mapping for that file.'
+            "mapping for that file."
         );
       }
     } // That means that the transform has a custom instrumentation
@@ -557,16 +557,16 @@ class ScriptTransformer {
       );
 
       code =
-        typeof instrumented === 'string' ? instrumented : instrumented.code;
-      map = typeof instrumented === 'string' ? null : instrumented.map;
+        typeof instrumented === "string" ? instrumented : instrumented.code;
+      map = typeof instrumented === "string" ? null : instrumented.map;
     } else {
       code = transformed.code;
     }
 
     if (map) {
       const sourceMapContent =
-        typeof map === 'string' ? map : JSON.stringify(map);
-      invariant(sourceMapPath, 'We should always have default sourceMapPath');
+        typeof map === "string" ? map : JSON.stringify(map);
+      invariant(sourceMapPath, "We should always have default sourceMapPath");
       writeCacheFile(sourceMapPath, sourceMapContent);
     } else {
       sourceMapPath = null;
@@ -576,18 +576,18 @@ class ScriptTransformer {
     return {
       code,
       originalCode: content,
-      sourceMapPath
+      sourceMapPath,
     };
   }
 
   transformSource(filepath, content, options) {
     const filename = (0, _jestUtil().tryRealpath)(filepath);
-    const {transformer, transformerConfig = {}} =
+    const { transformer, transformerConfig = {} } =
       this._getTransformer(filename) || {};
 
     const cacheFilePath = this._getFileCachePath(filename, content, options);
 
-    const sourceMapPath = cacheFilePath + '.map'; // Ignore cache if `config.cache` is set (--no-cache)
+    const sourceMapPath = cacheFilePath + ".map"; // Ignore cache if `config.cache` is set (--no-cache)
 
     const code = this._config.cache ? readCodeCacheFile(cacheFilePath) : null;
 
@@ -599,7 +599,7 @@ class ScriptTransformer {
       return {
         code,
         originalCode: content,
-        sourceMapPath
+        sourceMapPath,
       };
     }
 
@@ -614,7 +614,7 @@ class ScriptTransformer {
         cacheFS: this._cacheFS,
         config: this._config,
         configString: this._cache.configString,
-        transformerConfig
+        transformerConfig,
       });
     }
 
@@ -632,14 +632,14 @@ class ScriptTransformer {
 
   async transformSourceAsync(filepath, content, options) {
     const filename = (0, _jestUtil().tryRealpath)(filepath);
-    const {transformer, transformerConfig = {}} =
+    const { transformer, transformerConfig = {} } =
       this._getTransformer(filename) || {};
     const cacheFilePath = await this._getFileCachePathAsync(
       filename,
       content,
       options
     );
-    const sourceMapPath = cacheFilePath + '.map'; // Ignore cache if `config.cache` is set (--no-cache)
+    const sourceMapPath = cacheFilePath + ".map"; // Ignore cache if `config.cache` is set (--no-cache)
 
     const code = this._config.cache ? readCodeCacheFile(cacheFilePath) : null;
 
@@ -651,7 +651,7 @@ class ScriptTransformer {
       return {
         code,
         originalCode: content,
-        sourceMapPath
+        sourceMapPath,
       };
     }
 
@@ -663,15 +663,15 @@ class ScriptTransformer {
       const process = transformer.processAsync || transformer.process; // This is probably dead code since `_getTransformerAsync` already asserts this
 
       invariant(
-        typeof process === 'function',
-        'A transformer must always export either a `process` or `processAsync`'
+        typeof process === "function",
+        "A transformer must always export either a `process` or `processAsync`"
       );
       processed = await process(content, filename, {
         ...options,
         cacheFS: this._cacheFS,
         config: this._config,
         configString: this._cache.configString,
-        transformerConfig
+        transformerConfig,
       });
     }
 
@@ -693,14 +693,14 @@ class ScriptTransformer {
     transformOptions,
     fileSource
   ) {
-    const {isInternalModule} = options;
+    const { isInternalModule } = options;
     let fileContent =
       fileSource !== null && fileSource !== void 0
         ? fileSource
         : this._cacheFS.get(filename);
 
     if (!fileContent) {
-      fileContent = fs().readFileSync(filename, 'utf8');
+      fileContent = fs().readFileSync(filename, "utf8");
 
       this._cacheFS.set(filename, fileContent);
     }
@@ -726,7 +726,7 @@ class ScriptTransformer {
       return {
         code,
         originalCode: content,
-        sourceMapPath
+        sourceMapPath,
       };
     } catch (e) {
       throw (0, _enhanceUnexpectedTokenMessage.default)(e);
@@ -734,14 +734,14 @@ class ScriptTransformer {
   }
 
   _transformAndBuildScript(filename, options, transformOptions, fileSource) {
-    const {isInternalModule} = options;
+    const { isInternalModule } = options;
     let fileContent =
       fileSource !== null && fileSource !== void 0
         ? fileSource
         : this._cacheFS.get(filename);
 
     if (!fileContent) {
-      fileContent = fs().readFileSync(filename, 'utf8');
+      fileContent = fs().readFileSync(filename, "utf8");
 
       this._cacheFS.set(filename, fileContent);
     }
@@ -767,7 +767,7 @@ class ScriptTransformer {
       return {
         code,
         originalCode: content,
-        sourceMapPath
+        sourceMapPath,
       };
     } catch (e) {
       throw (0, _enhanceUnexpectedTokenMessage.default)(e);
@@ -776,7 +776,7 @@ class ScriptTransformer {
 
   async transformAsync(filename, options, fileSource) {
     const instrument =
-      options.coverageProvider === 'babel' &&
+      options.coverageProvider === "babel" &&
       (0, _shouldInstrument.default)(filename, options, this._config);
     const scriptCacheKey = getScriptCacheKey(filename, instrument);
 
@@ -789,7 +789,7 @@ class ScriptTransformer {
     result = await this._transformAndBuildScriptAsync(
       filename,
       options,
-      {...options, instrument},
+      { ...options, instrument },
       fileSource
     );
 
@@ -802,7 +802,7 @@ class ScriptTransformer {
 
   transform(filename, options, fileSource) {
     const instrument =
-      options.coverageProvider === 'babel' &&
+      options.coverageProvider === "babel" &&
       (0, _shouldInstrument.default)(filename, options, this._config);
     const scriptCacheKey = getScriptCacheKey(filename, instrument);
 
@@ -815,7 +815,7 @@ class ScriptTransformer {
     result = this._transformAndBuildScript(
       filename,
       options,
-      {...options, instrument},
+      { ...options, instrument },
       fileSource
     );
 
@@ -827,14 +827,14 @@ class ScriptTransformer {
   }
 
   transformJson(filename, options, fileSource) {
-    const {isInternalModule} = options;
+    const { isInternalModule } = options;
     const willTransform = !isInternalModule && this.shouldTransform(filename);
 
     if (willTransform) {
-      const {code: transformedJsonSource} = this.transformSource(
+      const { code: transformedJsonSource } = this.transformSource(
         filename,
         fileSource,
-        {...options, instrument: false}
+        { ...options, instrument: false }
       );
       return transformedJsonSource;
     }
@@ -851,11 +851,11 @@ class ScriptTransformer {
       supportsDynamicImport: false,
       supportsExportNamespaceFrom: false,
       supportsStaticESM: false,
-      supportsTopLevelAwait: false
+      supportsTopLevelAwait: false,
     }
   ) {
     let transforming = false;
-    const {applyInteropRequireDefault, ...transformOptions} = options;
+    const { applyInteropRequireDefault, ...transformOptions } = options;
     const revertHook = (0, _pirates().addHook)(
       (code, filename) => {
         try {
@@ -868,16 +868,16 @@ class ScriptTransformer {
         }
       },
       {
-        exts: this._config.moduleFileExtensions.map(ext => `.${ext}`),
+        exts: this._config.moduleFileExtensions.map((ext) => `.${ext}`),
         ignoreNodeModules: false,
-        matcher: filename => {
+        matcher: (filename) => {
           if (transforming) {
             // Don't transform any dependency required by the transformer itself
             return false;
           }
 
           return this.shouldTransform(filename);
-        }
+        },
       }
     );
 
@@ -929,24 +929,24 @@ async function createTranspilingRequire(config) {
         // this might be true, depending on node version.
         supportsExportNamespaceFrom: false,
         supportsStaticESM: false,
-        supportsTopLevelAwait: false
+        supportsTopLevelAwait: false,
       }
     );
     return transpiledModule;
   };
 }
 
-const removeFile = path => {
+const removeFile = (path) => {
   try {
     fs().unlinkSync(path);
   } catch {}
 };
 
-const stripShebang = content => {
+const stripShebang = (content) => {
   // If the file data starts with a shebang remove it. Leaves the empty line
   // to keep stack trace line numbers correct.
-  if (content.startsWith('#!')) {
-    return content.replace(/^#!.*/, '');
+  if (content.startsWith("#!")) {
+    return content.replace(/^#!.*/, "");
   } else {
     return content;
   }
@@ -960,8 +960,8 @@ const stripShebang = content => {
  */
 
 function writeCodeCacheFile(cachePath, code) {
-  const checksum = (0, _crypto().createHash)('md5').update(code).digest('hex');
-  writeCacheFile(cachePath, checksum + '\n' + code);
+  const checksum = (0, _crypto().createHash)("md5").update(code).digest("hex");
+  writeCacheFile(cachePath, checksum + "\n" + code);
 }
 /**
  * Read counterpart of `writeCodeCacheFile`. We verify that the content of the
@@ -978,7 +978,7 @@ function readCodeCacheFile(cachePath) {
   }
 
   const code = content.substr(33);
-  const checksum = (0, _crypto().createHash)('md5').update(code).digest('hex');
+  const checksum = (0, _crypto().createHash)("md5").update(code).digest("hex");
 
   if (checksum === content.substr(0, 32)) {
     return code;
@@ -996,8 +996,8 @@ function readCodeCacheFile(cachePath) {
 const writeCacheFile = (cachePath, fileData) => {
   try {
     (0, _writeFileAtomic().sync)(cachePath, fileData, {
-      encoding: 'utf8',
-      fsync: false
+      encoding: "utf8",
+      fsync: false,
     });
   } catch (e) {
     if (cacheWriteErrorSafeToIgnore(e, cachePath)) {
@@ -1005,9 +1005,9 @@ const writeCacheFile = (cachePath, fileData) => {
     }
 
     e.message =
-      'jest: failed to cache transform results in: ' +
+      "jest: failed to cache transform results in: " +
       cachePath +
-      '\nFailure message: ' +
+      "\nFailure message: " +
       e.message;
     removeFile(cachePath);
     throw e;
@@ -1021,11 +1021,11 @@ const writeCacheFile = (cachePath, fileData) => {
  */
 
 const cacheWriteErrorSafeToIgnore = (e, cachePath) =>
-  process.platform === 'win32' &&
-  e.code === 'EPERM' &&
+  process.platform === "win32" &&
+  e.code === "EPERM" &&
   fs().existsSync(cachePath);
 
-const readCacheFile = cachePath => {
+const readCacheFile = (cachePath) => {
   if (!fs().existsSync(cachePath)) {
     return null;
   }
@@ -1033,12 +1033,12 @@ const readCacheFile = cachePath => {
   let fileData;
 
   try {
-    fileData = fs().readFileSync(cachePath, 'utf8');
+    fileData = fs().readFileSync(cachePath, "utf8");
   } catch (e) {
     e.message =
-      'jest: failed to read cache file: ' +
+      "jest: failed to read cache file: " +
       cachePath +
-      '\nFailure message: ' +
+      "\nFailure message: " +
       e.message;
     removeFile(cachePath);
     throw e;
@@ -1055,10 +1055,10 @@ const readCacheFile = cachePath => {
 
 const getScriptCacheKey = (filename, instrument) => {
   const mtime = fs().statSync(filename).mtime;
-  return filename + '_' + mtime.getTime() + (instrument ? '_instrumented' : '');
+  return filename + "_" + mtime.getTime() + (instrument ? "_instrumented" : "");
 };
 
-const calcIgnorePatternRegExp = config => {
+const calcIgnorePatternRegExp = (config) => {
   if (
     !config.transformIgnorePatterns ||
     config.transformIgnorePatterns.length === 0
@@ -1066,10 +1066,10 @@ const calcIgnorePatternRegExp = config => {
     return undefined;
   }
 
-  return new RegExp(config.transformIgnorePatterns.join('|'));
+  return new RegExp(config.transformIgnorePatterns.join("|"));
 };
 
-const calcTransformRegExp = config => {
+const calcTransformRegExp = (config) => {
   if (!config.transform.length) {
     return undefined;
   }
@@ -1080,7 +1080,7 @@ const calcTransformRegExp = config => {
     transformRegexp.push([
       new RegExp(config.transform[i][0]),
       config.transform[i][1],
-      config.transform[i][2]
+      config.transform[i][2],
     ]);
   }
 
@@ -1096,7 +1096,7 @@ function invariant(condition, message) {
 function assertSyncTransformer(transformer, name) {
   invariant(name);
   invariant(
-    typeof transformer.process === 'function',
+    typeof transformer.process === "function",
     `Jest: synchronous transformer ${name} must export a "process" function.`
   );
 }

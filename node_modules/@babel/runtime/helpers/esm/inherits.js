@@ -8,8 +8,8 @@ export default function _inherits(subClass, superClass) {
     constructor: {
       value: subClass,
       writable: true,
-      configurable: true
-    }
+      configurable: true,
+    },
   });
   if (superClass) setPrototypeOf(subClass, superClass);
 }

@@ -1,5 +1,5 @@
-const Template = require('webpack/lib/Template');
-const { refreshGlobal } = require('../globals');
+const Template = require("webpack/lib/Template");
+const { refreshGlobal } = require("../globals");
 
 /**
  * @typedef {Object} RuntimeTemplate
@@ -16,7 +16,7 @@ const FALLBACK_RUNTIME_TEMPLATE = {
   supportsConst() {
     return false;
   },
-  returningFunction(returnValue, args = '') {
+  returningFunction(returnValue, args = "") {
     return `function(${args}) { return ${returnValue}; }`;
   },
 };
@@ -27,42 +27,52 @@ const FALLBACK_RUNTIME_TEMPLATE = {
  * @returns {string} The refresh global runtime template.
  */
 function getRefreshGlobal(runtimeTemplate = FALLBACK_RUNTIME_TEMPLATE) {
-  const declaration = runtimeTemplate.supportsConst() ? 'const' : 'var';
+  const declaration = runtimeTemplate.supportsConst() ? "const" : "var";
   return Template.asString([
     `${refreshGlobal} = {`,
     Template.indent([
-      `init: ${runtimeTemplate.basicFunction('', [
-        `${refreshGlobal}.cleanup = ${runtimeTemplate.returningFunction('undefined')};`,
-        `${refreshGlobal}.register = ${runtimeTemplate.returningFunction('undefined')};`,
+      `init: ${runtimeTemplate.basicFunction("", [
+        `${refreshGlobal}.cleanup = ${runtimeTemplate.returningFunction(
+          "undefined"
+        )};`,
+        `${refreshGlobal}.register = ${runtimeTemplate.returningFunction(
+          "undefined"
+        )};`,
         `${refreshGlobal}.runtime = {};`,
         `${refreshGlobal}.signature = ${runtimeTemplate.returningFunction(
-          runtimeTemplate.returningFunction('type', 'type')
+          runtimeTemplate.returningFunction("type", "type")
         )};`,
       ])},`,
-      `setup: ${runtimeTemplate.basicFunction('currentModuleId', [
+      `setup: ${runtimeTemplate.basicFunction("currentModuleId", [
         `${declaration} prevCleanup = ${refreshGlobal}.cleanup;`,
         `${declaration} prevReg = ${refreshGlobal}.register;`,
         `${declaration} prevSig = ${refreshGlobal}.signature;`,
-        '',
-        `${refreshGlobal}.register = ${runtimeTemplate.basicFunction('type, id', [
-          `${declaration} typeId = currentModuleId + " " + id;`,
-          `${refreshGlobal}.runtime.register(type, typeId);`,
-        ])}`,
-        '',
+        "",
+        `${refreshGlobal}.register = ${runtimeTemplate.basicFunction(
+          "type, id",
+          [
+            `${declaration} typeId = currentModuleId + " " + id;`,
+            `${refreshGlobal}.runtime.register(type, typeId);`,
+          ]
+        )}`,
+        "",
         `${refreshGlobal}.signature = ${refreshGlobal}.runtime.createSignatureFunctionForTransform;`,
-        '',
-        `${refreshGlobal}.cleanup = ${runtimeTemplate.basicFunction('cleanupModuleId', [
-          'if (currentModuleId === cleanupModuleId) {',
-          Template.indent([
-            `${refreshGlobal}.register = prevReg;`,
-            `${refreshGlobal}.signature = prevSig;`,
-            `${refreshGlobal}.cleanup = prevCleanup;`,
-          ]),
-          '}',
-        ])}`,
+        "",
+        `${refreshGlobal}.cleanup = ${runtimeTemplate.basicFunction(
+          "cleanupModuleId",
+          [
+            "if (currentModuleId === cleanupModuleId) {",
+            Template.indent([
+              `${refreshGlobal}.register = prevReg;`,
+              `${refreshGlobal}.signature = prevSig;`,
+              `${refreshGlobal}.cleanup = prevCleanup;`,
+            ]),
+            "}",
+          ]
+        )}`,
       ])},`,
     ]),
-    '};',
+    "};",
   ]);
 }
 

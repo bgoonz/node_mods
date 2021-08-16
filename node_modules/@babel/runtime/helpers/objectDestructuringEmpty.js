@@ -3,4 +3,5 @@ function _objectDestructuringEmpty(obj) {
 }
 
 module.exports = _objectDestructuringEmpty;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

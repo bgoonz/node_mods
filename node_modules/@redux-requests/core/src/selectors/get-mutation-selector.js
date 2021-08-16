@@ -1,3 +1,3 @@
-import getMutation from './get-mutation';
+import getMutation from "./get-mutation";
 
-export default props => state => getMutation(state, props);
+export default (props) => (state) => getMutation(state, props);

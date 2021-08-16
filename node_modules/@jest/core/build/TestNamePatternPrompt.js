@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _jestWatcher() {
-  const data = require('jest-watcher');
+  const data = require("jest-watcher");
 
   _jestWatcher = function () {
     return data;
@@ -21,7 +21,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -34,9 +34,9 @@ class TestNamePatternPrompt extends _jestWatcher().PatternPrompt {
   constructor(pipe, prompt) {
     super(pipe, prompt);
 
-    _defineProperty(this, '_cachedTestResults', void 0);
+    _defineProperty(this, "_cachedTestResults", void 0);
 
-    this._entityName = 'tests';
+    this._entityName = "tests";
     this._cachedTestResults = [];
   }
 
@@ -60,15 +60,15 @@ class TestNamePatternPrompt extends _jestWatcher().PatternPrompt {
     let regex;
 
     try {
-      regex = new RegExp(pattern, 'i');
+      regex = new RegExp(pattern, "i");
     } catch {
       return [];
     }
 
     const matchedTests = [];
 
-    this._cachedTestResults.forEach(({testResults}) =>
-      testResults.forEach(({title}) => {
+    this._cachedTestResults.forEach(({ testResults }) =>
+      testResults.forEach(({ title }) => {
         if (regex.test(title)) {
           matchedTests.push(title);
         }

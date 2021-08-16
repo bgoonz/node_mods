@@ -1,11 +1,23 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = tokenize;
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 
 // Tokenizes a jsonpath2 expression
 // TODO: Support '*'
@@ -13,11 +25,11 @@ var digitChar = /[0-9]/;
 var attributeCharMatcher = /^[a-zA-Z0-9_]$/;
 var attributeFirstCharMatcher = /^[a-zA-Z_]$/;
 var symbols = {
-  operator: ['..', '.', ',', ':', '?'],
-  comparator: ['>', '>=', '<', '<=', '==', '!='],
-  keyword: ['$', '@'],
-  boolean: ['true', 'false'],
-  paren: ['[', ']']
+  operator: ["..", ".", ",", ":", "?"],
+  comparator: [">", ">=", "<", "<=", "==", "!="],
+  keyword: ["$", "@"],
+  boolean: ["true", "false"],
+  paren: ["[", "]"],
 };
 
 class Tokenizer {
@@ -35,7 +47,12 @@ class Tokenizer {
     this.source = path;
     this.length = path.length;
     this.i = 0;
-    this.tokenizers = [this.tokenizeSymbol, this.tokenizeIdentifier, this.tokenizeNumber, this.tokenizeQuoted].map(fn => fn.bind(this));
+    this.tokenizers = [
+      this.tokenizeSymbol,
+      this.tokenizeIdentifier,
+      this.tokenizeNumber,
+      this.tokenizeQuoted,
+    ].map((fn) => fn.bind(this));
   }
 
   tokenize() {
@@ -48,13 +65,17 @@ class Tokenizer {
 
       _this.chompWhitespace();
 
-      var found = _this.tokenizers.find(tokenizer => {
+      var found = _this.tokenizers.find((tokenizer) => {
         token = tokenizer();
         return !!token;
       });
 
       if (!found) {
-        throw new Error("Invalid tokens in jsonpath '".concat(_this.source, "' @ ").concat(_this.i));
+        throw new Error(
+          "Invalid tokens in jsonpath '"
+            .concat(_this.source, "' @ ")
+            .concat(_this.i)
+        );
       }
 
       result.push(token);
@@ -69,7 +90,7 @@ class Tokenizer {
 
   takeWhile(fn) {
     var start = this.i;
-    var result = '';
+    var result = "";
 
     while (!this.EOF()) {
       var nextChar = fn(this.source[this.i]);
@@ -109,12 +130,15 @@ class Tokenizer {
     if (str == this.source.slice(this.i, this.i + str.length)) {
       this.i += str.length;
     } else {
-      throw new Error("Expected \"".concat(str, "\", but source contained \"").concat(this.source.slice(this.start)));
+      throw new Error(
+        'Expected "'
+          .concat(str, '", but source contained "')
+          .concat(this.source.slice(this.start))
+      );
     }
   } // Tries to match the upcoming bit of string with the provided string. If it matches, returns
   // the string, then advances the read pointer to the next bit. If not, returns null and nothing
   // happens.
-
 
   tryConsume(str) {
     if (this.i + str.length > this.length) {
@@ -130,8 +154,8 @@ class Tokenizer {
   }
 
   chompWhitespace() {
-    this.takeWhile(char => {
-      return char == ' ' ? '' : null;
+    this.takeWhile((char) => {
+      return char == " " ? "" : null;
     });
   }
 
@@ -141,15 +165,15 @@ class Tokenizer {
     if (quote == "'" || quote == '"') {
       this.consume(quote);
       var _escape = false;
-      var inner = this.takeWhile(char => {
+      var inner = this.takeWhile((char) => {
         if (_escape) {
           _escape = false;
           return char;
         }
 
-        if (char == '\\') {
+        if (char == "\\") {
           _escape = true;
-          return '';
+          return "";
         }
 
         if (char != quote) {
@@ -160,9 +184,9 @@ class Tokenizer {
       });
       this.consume(quote);
       return {
-        type: 'quoted',
+        type: "quoted",
         value: inner,
-        quote: quote == '"' ? 'double' : 'single'
+        quote: quote == '"' ? "double" : "single",
       };
     }
 
@@ -171,7 +195,7 @@ class Tokenizer {
 
   tokenizeIdentifier() {
     var first = true;
-    var identifier = this.takeWhile(char => {
+    var identifier = this.takeWhile((char) => {
       if (first) {
         first = false;
         return char.match(attributeFirstCharMatcher) ? char : null;
@@ -182,8 +206,8 @@ class Tokenizer {
 
     if (identifier !== null) {
       return {
-        type: 'identifier',
-        name: identifier
+        type: "identifier",
+        name: identifier,
       };
     }
 
@@ -196,13 +220,13 @@ class Tokenizer {
     var digitSeen = false;
     var negative = false;
 
-    if (this.peek() == '-') {
+    if (this.peek() == "-") {
       negative = true;
-      this.consume('-');
+      this.consume("-");
     }
 
-    var number = this.takeWhile(char => {
-      if (char == '.' && !dotSeen && digitSeen) {
+    var number = this.takeWhile((char) => {
+      if (char == "." && !dotSeen && digitSeen) {
         dotSeen = true;
         return char;
       }
@@ -213,12 +237,11 @@ class Tokenizer {
 
     if (number !== null) {
       return {
-        type: 'number',
+        type: "number",
         value: negative ? -number : +number,
-        raw: negative ? "-".concat(number) : number
+        raw: negative ? "-".concat(number) : number,
       };
     } // No number, rewind
-
 
     this.i = start;
     return null;
@@ -226,14 +249,14 @@ class Tokenizer {
 
   tokenizeSymbol() {
     var result = null;
-    Object.keys(symbols).find(symbolClass => {
+    Object.keys(symbols).find((symbolClass) => {
       var patterns = symbols[symbolClass];
-      var found = patterns.find(pattern => this.tryConsume(pattern));
+      var found = patterns.find((pattern) => this.tryConsume(pattern));
 
       if (found) {
         result = {
           type: symbolClass,
-          symbol: found
+          symbol: found,
         };
         return true;
       }
@@ -242,7 +265,6 @@ class Tokenizer {
     });
     return result;
   }
-
 }
 
 function tokenize(jsonpath) {

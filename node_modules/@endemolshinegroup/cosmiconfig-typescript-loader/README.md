@@ -25,13 +25,13 @@ yarn add @endemolshinegroup/cosmiconfig-typescript-loader
 ## Usage
 
 ```typescript
-import cosmiconfig from 'cosmiconfig';
-import TypeScriptLoader from '@endemolshinegroup/cosmiconfig-typescript-loader';
+import cosmiconfig from "cosmiconfig";
+import TypeScriptLoader from "@endemolshinegroup/cosmiconfig-typescript-loader";
 
-const moduleName = 'myModuleName';
+const moduleName = "myModuleName";
 const explorer = cosmiconfig(moduleName, {
   searchPlaces: [
-    'package.json',
+    "package.json",
     `.${moduleName}rc`,
     `.${moduleName}rc.json`,
     `.${moduleName}rc.yaml`,
@@ -42,13 +42,12 @@ const explorer = cosmiconfig(moduleName, {
     `${moduleName}.config.js`,
   ],
   loaders: {
-    '.ts': TypeScriptLoader,
+    ".ts": TypeScriptLoader,
   },
 });
 ```
 
 [icon-banner]: docs/assets/banner.png
-
 [icon-license]: https://img.shields.io/github/license/EndemolShineGroup/cosmiconfig-typescript-loader.svg?longCache=true&style=flat-square
 [link-license]: LICENSE
 [icon-npm]: https://img.shields.io/npm/v/@endemolshinegroup/cosmiconfig-typescript-loader.svg?longCache=true&style=flat-square
@@ -57,17 +56,14 @@ const explorer = cosmiconfig(moduleName, {
 [link-ci]: https://travis-ci.com/EndemolShineGroup/cosmiconfig-typescript-loader
 [icon-dependabot]: https://flat.badgen.net/dependabot/EndemolShineGroup/cosmiconfig-typescript-loader?icon=dependabot
 [link-dependabot]: https://dependabot.com/
-
 [icon-issues]: https://img.shields.io/codeclimate/issues/EndemolShineGroup/cosmiconfig-typescript-loader.svg?longCache=true&style=flat-square
 [link-issues]: https://codeclimate.com/github/EndemolShineGroup/cosmiconfig-typescript-loader/issues
 [icon-maintainability]: https://img.shields.io/codeclimate/maintainability/EndemolShineGroup/cosmiconfig-typescript-loader.svg?longCache=true&style=flat-square
 [link-maintainability]: https://codeclimate.com/github/EndemolShineGroup/cosmiconfig-typescript-loader
 [icon-coverage]: https://img.shields.io/codecov/c/github/EndemolShineGroup/cosmiconfig-typescript-loader/develop.svg?longCache=true&style=flat-square
 [link-coverage]: https://codecov.io/gh/EndemolShineGroup/cosmiconfig-typescript-loader
-
 [icon-jest]: https://img.shields.io/badge/tested_with-jest-99424f.svg?longCache=true&style=flat-square
 [link-jest]: https://jestjs.io/
-
 [icon-commitizen]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?longCache=true&style=flat-square
 [link-commitizen]: http://commitizen.github.io/cz-cli/
 [icon-semantic-release]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?longCache=true&style=flat-square

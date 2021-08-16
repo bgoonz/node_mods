@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _util() {
-  const data = _interopRequireDefault(require('util'));
+  const data = _interopRequireDefault(require("util"));
 
   _util = function () {
     return data;
@@ -16,7 +16,7 @@ function _util() {
 }
 
 function _jestMessageUtil() {
-  const data = require('jest-message-util');
+  const data = require("jest-message-util");
 
   _jestMessageUtil = function () {
     return data;
@@ -26,7 +26,7 @@ function _jestMessageUtil() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -36,7 +36,7 @@ function _jestUtil() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -45,7 +45,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -56,34 +56,34 @@ function _defineProperty(obj, key, value) {
 const MS_IN_A_YEAR = 31536000000;
 
 class FakeTimers {
-  constructor({global, moduleMocker, timerConfig, config, maxLoops}) {
-    _defineProperty(this, '_cancelledTicks', void 0);
+  constructor({ global, moduleMocker, timerConfig, config, maxLoops }) {
+    _defineProperty(this, "_cancelledTicks", void 0);
 
-    _defineProperty(this, '_config', void 0);
+    _defineProperty(this, "_config", void 0);
 
-    _defineProperty(this, '_disposed', void 0);
+    _defineProperty(this, "_disposed", void 0);
 
-    _defineProperty(this, '_fakeTimerAPIs', void 0);
+    _defineProperty(this, "_fakeTimerAPIs", void 0);
 
-    _defineProperty(this, '_global', void 0);
+    _defineProperty(this, "_global", void 0);
 
-    _defineProperty(this, '_immediates', void 0);
+    _defineProperty(this, "_immediates", void 0);
 
-    _defineProperty(this, '_maxLoops', void 0);
+    _defineProperty(this, "_maxLoops", void 0);
 
-    _defineProperty(this, '_moduleMocker', void 0);
+    _defineProperty(this, "_moduleMocker", void 0);
 
-    _defineProperty(this, '_now', void 0);
+    _defineProperty(this, "_now", void 0);
 
-    _defineProperty(this, '_ticks', void 0);
+    _defineProperty(this, "_ticks", void 0);
 
-    _defineProperty(this, '_timerAPIs', void 0);
+    _defineProperty(this, "_timerAPIs", void 0);
 
-    _defineProperty(this, '_timers', void 0);
+    _defineProperty(this, "_timers", void 0);
 
-    _defineProperty(this, '_uuidCounter', void 0);
+    _defineProperty(this, "_uuidCounter", void 0);
 
-    _defineProperty(this, '_timerConfig', void 0);
+    _defineProperty(this, "_timerConfig", void 0);
 
     this._global = global;
     this._timerConfig = timerConfig;
@@ -101,7 +101,7 @@ class FakeTimers {
       requestAnimationFrame: global.requestAnimationFrame,
       setImmediate: global.setImmediate,
       setInterval: global.setInterval,
-      setTimeout: global.setTimeout
+      setTimeout: global.setTimeout,
     };
     this.reset();
   }
@@ -147,9 +147,9 @@ class FakeTimers {
 
     if (i === this._maxLoops) {
       throw new Error(
-        'Ran ' +
+        "Ran " +
           this._maxLoops +
-          ' ticks, and there are still more! ' +
+          " ticks, and there are still more! " +
           "Assuming we've hit an infinite recursion and bailing out..."
       );
     }
@@ -172,9 +172,9 @@ class FakeTimers {
 
     if (i === this._maxLoops) {
       throw new Error(
-        'Ran ' +
+        "Ran " +
           this._maxLoops +
-          ' immediates, and there are still more! Assuming ' +
+          " immediates, and there are still more! Assuming " +
           "we've hit an infinite recursion and bailing out..."
       );
     }
@@ -219,9 +219,9 @@ class FakeTimers {
 
     if (i === this._maxLoops) {
       throw new Error(
-        'Ran ' +
+        "Ran " +
           this._maxLoops +
-          ' timers, and there are still more! ' +
+          " timers, and there are still more! " +
           "Assuming we've hit an infinite recursion and bailing out..."
       );
     }
@@ -297,9 +297,9 @@ class FakeTimers {
 
     if (i === this._maxLoops) {
       throw new Error(
-        'Ran ' +
+        "Ran " +
           this._maxLoops +
-          ' timers, and there are still more! ' +
+          " timers, and there are still more! " +
           "Assuming we've hit an infinite recursion and bailing out..."
       );
     }
@@ -340,57 +340,57 @@ class FakeTimers {
   useRealTimers() {
     const global = this._global;
 
-    if (typeof global.cancelAnimationFrame === 'function') {
+    if (typeof global.cancelAnimationFrame === "function") {
       (0, _jestUtil().setGlobal)(
         global,
-        'cancelAnimationFrame',
+        "cancelAnimationFrame",
         this._timerAPIs.cancelAnimationFrame
       );
     }
 
-    if (typeof global.clearImmediate === 'function') {
+    if (typeof global.clearImmediate === "function") {
       (0, _jestUtil().setGlobal)(
         global,
-        'clearImmediate',
+        "clearImmediate",
         this._timerAPIs.clearImmediate
       );
     }
 
     (0, _jestUtil().setGlobal)(
       global,
-      'clearInterval',
+      "clearInterval",
       this._timerAPIs.clearInterval
     );
     (0, _jestUtil().setGlobal)(
       global,
-      'clearTimeout',
+      "clearTimeout",
       this._timerAPIs.clearTimeout
     );
 
-    if (typeof global.requestAnimationFrame === 'function') {
+    if (typeof global.requestAnimationFrame === "function") {
       (0, _jestUtil().setGlobal)(
         global,
-        'requestAnimationFrame',
+        "requestAnimationFrame",
         this._timerAPIs.requestAnimationFrame
       );
     }
 
-    if (typeof global.setImmediate === 'function') {
+    if (typeof global.setImmediate === "function") {
       (0, _jestUtil().setGlobal)(
         global,
-        'setImmediate',
+        "setImmediate",
         this._timerAPIs.setImmediate
       );
     }
 
     (0, _jestUtil().setGlobal)(
       global,
-      'setInterval',
+      "setInterval",
       this._timerAPIs.setInterval
     );
     (0, _jestUtil().setGlobal)(
       global,
-      'setTimeout',
+      "setTimeout",
       this._timerAPIs.setTimeout
     );
     global.process.nextTick = this._timerAPIs.nextTick;
@@ -401,57 +401,57 @@ class FakeTimers {
 
     const global = this._global;
 
-    if (typeof global.cancelAnimationFrame === 'function') {
+    if (typeof global.cancelAnimationFrame === "function") {
       (0, _jestUtil().setGlobal)(
         global,
-        'cancelAnimationFrame',
+        "cancelAnimationFrame",
         this._fakeTimerAPIs.cancelAnimationFrame
       );
     }
 
-    if (typeof global.clearImmediate === 'function') {
+    if (typeof global.clearImmediate === "function") {
       (0, _jestUtil().setGlobal)(
         global,
-        'clearImmediate',
+        "clearImmediate",
         this._fakeTimerAPIs.clearImmediate
       );
     }
 
     (0, _jestUtil().setGlobal)(
       global,
-      'clearInterval',
+      "clearInterval",
       this._fakeTimerAPIs.clearInterval
     );
     (0, _jestUtil().setGlobal)(
       global,
-      'clearTimeout',
+      "clearTimeout",
       this._fakeTimerAPIs.clearTimeout
     );
 
-    if (typeof global.requestAnimationFrame === 'function') {
+    if (typeof global.requestAnimationFrame === "function") {
       (0, _jestUtil().setGlobal)(
         global,
-        'requestAnimationFrame',
+        "requestAnimationFrame",
         this._fakeTimerAPIs.requestAnimationFrame
       );
     }
 
-    if (typeof global.setImmediate === 'function') {
+    if (typeof global.setImmediate === "function") {
       (0, _jestUtil().setGlobal)(
         global,
-        'setImmediate',
+        "setImmediate",
         this._fakeTimerAPIs.setImmediate
       );
     }
 
     (0, _jestUtil().setGlobal)(
       global,
-      'setInterval',
+      "setInterval",
       this._fakeTimerAPIs.setInterval
     );
     (0, _jestUtil().setGlobal)(
       global,
-      'setTimeout',
+      "setTimeout",
       this._fakeTimerAPIs.setTimeout
     );
     global.process.nextTick = this._fakeTimerAPIs.nextTick;
@@ -486,7 +486,7 @@ class FakeTimers {
             new Error().stack,
             this._config,
             {
-              noStackTrace: false
+              noStackTrace: false,
             }
           )
       );
@@ -504,7 +504,9 @@ class FakeTimers {
       delay,
       arg
     ) =>
-      new Promise(resolve => promisifiableFakeSetTimeout(resolve, delay, arg)); // TODO: add better typings; these are mocks, but typed as regular timers
+      new Promise((resolve) =>
+        promisifiableFakeSetTimeout(resolve, delay, arg)
+      ); // TODO: add better typings; these are mocks, but typed as regular timers
 
     this._fakeTimerAPIs = {
       cancelAnimationFrame: fn(this._fakeClearTimer.bind(this)),
@@ -519,7 +521,7 @@ class FakeTimers {
       // @ts-expect-error TODO: figure out better typings here
       setInterval: fn(this._fakeSetInterval.bind(this)),
       // @ts-expect-error TODO: figure out better typings here
-      setTimeout: promisifiableFakeSetTimeout
+      setTimeout: promisifiableFakeSetTimeout,
     };
   }
 
@@ -533,7 +535,7 @@ class FakeTimers {
 
   _fakeClearImmediate(uuid) {
     this._immediates = this._immediates.filter(
-      immediate => immediate.uuid !== uuid
+      (immediate) => immediate.uuid !== uuid
     );
   }
 
@@ -546,7 +548,7 @@ class FakeTimers {
 
     this._ticks.push({
       callback: () => callback.apply(null, args),
-      uuid
+      uuid,
     });
 
     const cancelledTicks = this._cancelledTicks;
@@ -576,11 +578,11 @@ class FakeTimers {
 
     this._immediates.push({
       callback: () => callback.apply(null, args),
-      uuid
+      uuid,
     });
 
     this._timerAPIs.setImmediate(() => {
-      if (this._immediates.find(x => x.uuid === uuid)) {
+      if (this._immediates.find((x) => x.uuid === uuid)) {
         try {
           callback.apply(null, args);
         } finally {
@@ -607,7 +609,7 @@ class FakeTimers {
       callback: () => callback.apply(null, args),
       expiry: this._now + intervalDelay,
       interval: intervalDelay,
-      type: 'interval'
+      type: "interval",
     });
 
     return this._timerConfig.idToRef(uuid);
@@ -625,7 +627,7 @@ class FakeTimers {
       callback: () => callback.apply(null, args),
       expiry: this._now + delay,
       interval: undefined,
-      type: 'timeout'
+      type: "timeout",
     });
 
     return this._timerConfig.idToRef(uuid);
@@ -653,19 +655,19 @@ class FakeTimers {
     }
 
     switch (timer.type) {
-      case 'timeout':
+      case "timeout":
         this._timers.delete(timerHandle);
 
         timer.callback();
         break;
 
-      case 'interval':
+      case "interval":
         timer.expiry = this._now + (timer.interval || 0);
         timer.callback();
         break;
 
       default:
-        throw new Error('Unexpected timer type: ' + timer.type);
+        throw new Error("Unexpected timer type: " + timer.type);
     }
   }
 }

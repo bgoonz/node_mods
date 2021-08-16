@@ -9,11 +9,13 @@
 //------------------------------------------------------------------------------
 
 const {
-    ConfigArrayFactory,
-    createContext: createConfigArrayFactoryContext
+  ConfigArrayFactory,
+  createContext: createConfigArrayFactoryContext,
 } = require("./config-array-factory");
 
-const { CascadingConfigArrayFactory } = require("./cascading-config-array-factory");
+const {
+  CascadingConfigArrayFactory,
+} = require("./cascading-config-array-factory");
 const ModuleResolver = require("./shared/relative-module-resolver");
 const { ConfigArray, getUsedExtractedConfigs } = require("./config-array");
 const { ConfigDependency } = require("./config-array/config-dependency");
@@ -30,25 +32,23 @@ const { FlatCompat } = require("./flat-compat");
 //-----------------------------------------------------------------------------
 
 module.exports = {
+  Legacy: {
+    ConfigArray,
+    createConfigArrayFactoryContext,
+    CascadingConfigArrayFactory,
+    ConfigArrayFactory,
+    ConfigDependency,
+    ExtractedConfig,
+    IgnorePattern,
+    OverrideTester,
+    getUsedExtractedConfigs,
 
-    Legacy: {
-        ConfigArray,
-        createConfigArrayFactoryContext,
-        CascadingConfigArrayFactory,
-        ConfigArrayFactory,
-        ConfigDependency,
-        ExtractedConfig,
-        IgnorePattern,
-        OverrideTester,
-        getUsedExtractedConfigs,
+    // shared
+    ConfigOps,
+    ConfigValidator,
+    ModuleResolver,
+    naming,
+  },
 
-        // shared
-        ConfigOps,
-        ConfigValidator,
-        ModuleResolver,
-        naming
-    },
-
-    FlatCompat
-
+  FlatCompat,
 };

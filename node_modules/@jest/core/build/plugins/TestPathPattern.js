@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _jestWatcher() {
-  const data = require('jest-watcher');
+  const data = require("jest-watcher");
 
   _jestWatcher = function () {
     return data;
@@ -16,7 +16,7 @@ function _jestWatcher() {
 }
 
 function _TestPathPatternPrompt() {
-  const data = _interopRequireDefault(require('../TestPathPatternPrompt'));
+  const data = _interopRequireDefault(require("../TestPathPatternPrompt"));
 
   _TestPathPatternPrompt = function () {
     return data;
@@ -26,7 +26,7 @@ function _TestPathPatternPrompt() {
 }
 
 function _activeFiltersMessage() {
-  const data = _interopRequireDefault(require('../lib/activeFiltersMessage'));
+  const data = _interopRequireDefault(require("../lib/activeFiltersMessage"));
 
   _activeFiltersMessage = function () {
     return data;
@@ -36,7 +36,7 @@ function _activeFiltersMessage() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -45,7 +45,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -57,9 +57,9 @@ class TestPathPatternPlugin extends _jestWatcher().BaseWatchPlugin {
   constructor(options) {
     super(options);
 
-    _defineProperty(this, '_prompt', void 0);
+    _defineProperty(this, "_prompt", void 0);
 
-    _defineProperty(this, 'isInternal', void 0);
+    _defineProperty(this, "isInternal", void 0);
 
     this._prompt = new (_jestWatcher().Prompt)();
     this.isInternal = true;
@@ -67,8 +67,8 @@ class TestPathPatternPlugin extends _jestWatcher().BaseWatchPlugin {
 
   getUsageInfo() {
     return {
-      key: 'p',
-      prompt: 'filter by a filename regex pattern'
+      key: "p",
+      prompt: "filter by a filename regex pattern",
     };
   }
 
@@ -83,16 +83,16 @@ class TestPathPatternPlugin extends _jestWatcher().BaseWatchPlugin {
         this._prompt
       );
       testPathPatternPrompt.run(
-        value => {
+        (value) => {
           updateConfigAndRun({
-            mode: 'watch',
-            testPathPattern: value
+            mode: "watch",
+            testPathPattern: value,
           });
           res();
         },
         rej,
         {
-          header: (0, _activeFiltersMessage().default)(globalConfig)
+          header: (0, _activeFiltersMessage().default)(globalConfig),
         }
       );
     });

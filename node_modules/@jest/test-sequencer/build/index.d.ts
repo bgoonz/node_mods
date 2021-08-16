@@ -4,10 +4,10 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import type { AggregatedResult, Test } from '@jest/test-result';
-import type { Context } from 'jest-runtime';
+import type { AggregatedResult, Test } from "@jest/test-result";
+import type { Context } from "jest-runtime";
 declare type Cache = {
-    [key: string]: [0 | 1, number];
+  [key: string]: [0 | 1, number];
 };
 /**
  * The TestSequencer will ultimately decide which tests should run first.
@@ -23,29 +23,29 @@ declare type Cache = {
  * is called to store/update this information on the cache map.
  */
 export default class TestSequencer {
-    private _cache;
-    _getCachePath(context: Context): string;
-    _getCache(test: Test): Cache;
-    /**
-     * Sorting tests is very important because it has a great impact on the
-     * user-perceived responsiveness and speed of the test run.
-     *
-     * If such information is on cache, tests are sorted based on:
-     * -> Has it failed during the last run ?
-     * Since it's important to provide the most expected feedback as quickly
-     * as possible.
-     * -> How long it took to run ?
-     * Because running long tests first is an effort to minimize worker idle
-     * time at the end of a long test run.
-     * And if that information is not available they are sorted based on file size
-     * since big test files usually take longer to complete.
-     *
-     * Note that a possible improvement would be to analyse other information
-     * from the file other than its size.
-     *
-     */
-    sort(tests: Array<Test>): Array<Test>;
-    allFailedTests(tests: Array<Test>): Array<Test>;
-    cacheResults(tests: Array<Test>, results: AggregatedResult): void;
+  private _cache;
+  _getCachePath(context: Context): string;
+  _getCache(test: Test): Cache;
+  /**
+   * Sorting tests is very important because it has a great impact on the
+   * user-perceived responsiveness and speed of the test run.
+   *
+   * If such information is on cache, tests are sorted based on:
+   * -> Has it failed during the last run ?
+   * Since it's important to provide the most expected feedback as quickly
+   * as possible.
+   * -> How long it took to run ?
+   * Because running long tests first is an effort to minimize worker idle
+   * time at the end of a long test run.
+   * And if that information is not available they are sorted based on file size
+   * since big test files usually take longer to complete.
+   *
+   * Note that a possible improvement would be to analyse other information
+   * from the file other than its size.
+   *
+   */
+  sort(tests: Array<Test>): Array<Test>;
+  allFailedTests(tests: Array<Test>): Array<Test>;
+  cacheResults(tests: Array<Test>, results: AggregatedResult): void;
 }
 export {};

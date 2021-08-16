@@ -1,6 +1,6 @@
-import { createSelectorCreator, defaultMemoize } from 'reselect';
+import { createSelectorCreator, defaultMemoize } from "reselect";
 
-import { denormalize, getDependentKeys } from '../normalizers';
+import { denormalize, getDependentKeys } from "../normalizers";
 
 const isQueryEqual = (currentVal, previousVal) => {
   if (
@@ -29,12 +29,12 @@ const isQueryEqual = (currentVal, previousVal) => {
     const currentDependencies = getDependentKeys(
       currentVal.data,
       currentVal.normalizedData,
-      currentVal.usedKeys,
+      currentVal.usedKeys
     );
     const previousDependencies = getDependentKeys(
       previousVal.data,
       previousVal.normalizedData,
-      previousVal.usedKeys,
+      previousVal.usedKeys
     );
 
     if (currentDependencies.size !== previousDependencies.size) {
@@ -56,7 +56,7 @@ const isQueryEqual = (currentVal, previousVal) => {
 
 const createCustomSelector = createSelectorCreator(
   defaultMemoize,
-  isQueryEqual,
+  isQueryEqual
 );
 
 const getData = (data, multiple, defaultData) => {
@@ -75,21 +75,15 @@ const getData = (data, multiple, defaultData) => {
   return data;
 };
 
-const getQueryState = (state, type, requestKey = '') =>
+const getQueryState = (state, type, requestKey = "") =>
   state.requests.queries[type + requestKey];
 
 const createQuerySelector = (type, requestKey) =>
   createCustomSelector(
     (state, defaultData, multiple) => {
       // in order not to keep queryState.ref reference in selector memoize
-      const {
-        data,
-        pending,
-        error,
-        pristine,
-        normalized,
-        usedKeys,
-      } = getQueryState(state, type, requestKey);
+      const { data, pending, error, pristine, normalized, usedKeys } =
+        getQueryState(state, type, requestKey);
 
       return {
         data,
@@ -102,9 +96,9 @@ const createQuerySelector = (type, requestKey) =>
         defaultData,
         normalizedData: state.requests.normalizedData,
         downloadProgress:
-          state.requests.downloadProgress[type + (requestKey || '')] ?? null,
+          state.requests.downloadProgress[type + (requestKey || "")] ?? null,
         uploadProgress:
-          state.requests.uploadProgress[type + (requestKey || '')] ?? null,
+          state.requests.uploadProgress[type + (requestKey || "")] ?? null,
       };
     },
     ({
@@ -124,7 +118,7 @@ const createQuerySelector = (type, requestKey) =>
         ? denormalize(
             getData(data, multiple, defaultData),
             normalizedData,
-            usedKeys,
+            usedKeys
           )
         : getData(data, multiple, defaultData),
       pending,
@@ -133,7 +127,7 @@ const createQuerySelector = (type, requestKey) =>
       pristine,
       downloadProgress,
       uploadProgress,
-    }),
+    })
   );
 
 const defaultQuery = {

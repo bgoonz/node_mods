@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = runJest;
 
 function path() {
-  const data = _interopRequireWildcard(require('path'));
+  const data = _interopRequireWildcard(require("path"));
 
   path = function () {
     return data;
@@ -16,7 +16,7 @@ function path() {
 }
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -26,7 +26,7 @@ function _chalk() {
 }
 
 function _exit() {
-  const data = _interopRequireDefault(require('exit'));
+  const data = _interopRequireDefault(require("exit"));
 
   _exit = function () {
     return data;
@@ -36,7 +36,7 @@ function _exit() {
 }
 
 function fs() {
-  const data = _interopRequireWildcard(require('graceful-fs'));
+  const data = _interopRequireWildcard(require("graceful-fs"));
 
   fs = function () {
     return data;
@@ -46,7 +46,7 @@ function fs() {
 }
 
 function _console() {
-  const data = require('@jest/console');
+  const data = require("@jest/console");
 
   _console = function () {
     return data;
@@ -56,7 +56,7 @@ function _console() {
 }
 
 function _testResult() {
-  const data = require('@jest/test-result');
+  const data = require("@jest/test-result");
 
   _testResult = function () {
     return data;
@@ -66,7 +66,7 @@ function _testResult() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -76,7 +76,7 @@ function _jestUtil() {
 }
 
 function _jestWatcher() {
-  const data = require('jest-watcher');
+  const data = require("jest-watcher");
 
   _jestWatcher = function () {
     return data;
@@ -85,24 +85,24 @@ function _jestWatcher() {
   return data;
 }
 
-var _SearchSource = _interopRequireDefault(require('./SearchSource'));
+var _SearchSource = _interopRequireDefault(require("./SearchSource"));
 
-var _TestScheduler = require('./TestScheduler');
+var _TestScheduler = require("./TestScheduler");
 
-var _collectHandles = _interopRequireDefault(require('./collectHandles'));
+var _collectHandles = _interopRequireDefault(require("./collectHandles"));
 
 var _getNoTestsFoundMessage = _interopRequireDefault(
-  require('./getNoTestsFoundMessage')
+  require("./getNoTestsFoundMessage")
 );
 
-var _runGlobalHook = _interopRequireDefault(require('./runGlobalHook'));
+var _runGlobalHook = _interopRequireDefault(require("./runGlobalHook"));
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -114,8 +114,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -125,7 +125,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -161,25 +161,25 @@ const getTestPaths = async (
 
   if (!data.tests.length && globalConfig.onlyChanged && data.noSCM) {
     new (_console().CustomConsole)(outputStream, outputStream).log(
-      'Jest can only find uncommitted changed files in a git or hg ' +
-        'repository. If you make your project a git or hg ' +
-        'repository (`git init` or `hg init`), Jest will be able ' +
-        'to only run tests related to files changed since the last ' +
-        'commit.'
+      "Jest can only find uncommitted changed files in a git or hg " +
+        "repository. If you make your project a git or hg " +
+        "repository (`git init` or `hg init`), Jest will be able " +
+        "to only run tests related to files changed since the last " +
+        "commit."
     );
   }
 
   const shouldTestArray = await Promise.all(
-    data.tests.map(test =>
+    data.tests.map((test) =>
       jestHooks.shouldRunTestSuite({
         config: test.context.config,
         duration: test.duration,
-        testPath: test.path
+        testPath: test.path,
       })
     )
   );
   const filteredTests = data.tests.filter((_test, i) => shouldTestArray[i]);
-  return {...data, allTests: filteredTests.length, tests: filteredTests};
+  return { ...data, allTests: filteredTests.length, tests: filteredTests };
 };
 
 const processResults = async (runResults, options) => {
@@ -189,7 +189,7 @@ const processResults = async (runResults, options) => {
     onComplete,
     outputStream,
     testResultsProcessor,
-    collectHandles
+    collectHandles,
   } = options;
 
   if (collectHandles) {
@@ -227,7 +227,7 @@ const processResults = async (runResults, options) => {
 
 const testSchedulerContext = {
   firstRun: true,
-  previousSuccess: true
+  previousSuccess: true,
 };
 
 async function runJest({
@@ -240,7 +240,7 @@ async function runJest({
   changedFilesPromise,
   onComplete,
   failedTestsCache,
-  filter
+  filter,
 }) {
   const Sequencer = await (0, _jestUtil().requireOrImportModule)(
     globalConfig.testSequencer
@@ -249,22 +249,22 @@ async function runJest({
   let allTests = [];
 
   if (changedFilesPromise && globalConfig.watch) {
-    const {repos} = await changedFilesPromise;
-    const noSCM = Object.keys(repos).every(scm => repos[scm].size === 0);
+    const { repos } = await changedFilesPromise;
+    const noSCM = Object.keys(repos).every((scm) => repos[scm].size === 0);
 
     if (noSCM) {
       process.stderr.write(
-        '\n' +
-          _chalk().default.bold('--watch') +
-          ' is not supported without git/hg, please use --watchAll ' +
-          '\n'
+        "\n" +
+          _chalk().default.bold("--watch") +
+          " is not supported without git/hg, please use --watchAll " +
+          "\n"
       );
       (0, _exit().default)(1);
     }
   }
 
   const searchSources = contexts.map(
-    context => new _SearchSource.default(context)
+    (context) => new _SearchSource.default(context)
   );
   const testRunData = await Promise.all(
     contexts.map(async (context, index) => {
@@ -280,20 +280,20 @@ async function runJest({
       allTests = allTests.concat(matches.tests);
       return {
         context,
-        matches
+        matches,
       };
     })
   );
   allTests = await sequencer.sort(allTests);
 
   if (globalConfig.listTests) {
-    const testsPaths = Array.from(new Set(allTests.map(test => test.path)));
+    const testsPaths = Array.from(new Set(allTests.map((test) => test.path)));
     /* eslint-disable no-console */
 
     if (globalConfig.json) {
       console.log(JSON.stringify(testsPaths));
     } else {
-      console.log(testsPaths.join('\n'));
+      console.log(testsPaths.join("\n"));
     }
     /* eslint-enable */
 
@@ -338,7 +338,7 @@ async function runJest({
     globalConfig.silent !== true &&
     globalConfig.verbose !== false
   ) {
-    const newConfig = {...globalConfig, verbose: true};
+    const newConfig = { ...globalConfig, verbose: true };
     globalConfig = Object.freeze(newConfig);
   }
 
@@ -352,7 +352,7 @@ async function runJest({
     await (0, _runGlobalHook.default)({
       allTests,
       globalConfig,
-      moduleName: 'globalSetup'
+      moduleName: "globalSetup",
     });
   }
 
@@ -380,7 +380,7 @@ async function runJest({
   const scheduler = await (0, _TestScheduler.createTestScheduler)(
     globalConfig,
     {
-      startRun
+      startRun,
     },
     testSchedulerContext
   );
@@ -391,7 +391,7 @@ async function runJest({
     await (0, _runGlobalHook.default)({
       allTests,
       globalConfig,
-      moduleName: 'globalTeardown'
+      moduleName: "globalTeardown",
     });
   }
 
@@ -401,6 +401,6 @@ async function runJest({
     onComplete,
     outputFile: globalConfig.outputFile,
     outputStream,
-    testResultsProcessor: globalConfig.testResultsProcessor
+    testResultsProcessor: globalConfig.testResultsProcessor,
   });
 }

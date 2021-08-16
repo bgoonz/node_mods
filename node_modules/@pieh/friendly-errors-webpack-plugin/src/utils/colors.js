@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-const chalk = require('chalk');
+const chalk = require("chalk");
 
 function formatTitle(severity, message) {
-  return chalk[bgColor(severity)].black('', message, '');
+  return chalk[bgColor(severity)].black("", message, "");
 }
 
 function formatText(severity, message) {
@@ -12,17 +12,23 @@ function formatText(severity, message) {
 
 function bgColor(severity) {
   const color = textColor(severity);
-  return 'bg'+ capitalizeFirstLetter(color)
+  return "bg" + capitalizeFirstLetter(color);
 }
 
 function textColor(severity) {
   switch (severity.toLowerCase()) {
-    case 'success': return 'green';
-    case 'info': return 'blue';
-    case 'note': return 'white';
-    case 'warning': return 'yellow';
-    case 'error': return 'red';
-    default: return 'red';
+    case "success":
+      return "green";
+    case "info":
+      return "blue";
+    case "note":
+      return "white";
+    case "warning":
+      return "yellow";
+    case "error":
+      return "red";
+    default:
+      return "red";
   }
 }
 
@@ -34,5 +40,5 @@ module.exports = {
   bgColor: bgColor,
   textColor: textColor,
   formatTitle: formatTitle,
-  formatText: formatText
+  formatText: formatText,
 };

@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = formatTestResults;
 
@@ -25,8 +25,8 @@ const formatTestResult = (testResult, codeCoverageFormatter, reporter) => {
         : testResult.testExecError.message,
       name: testResult.testFilePath,
       startTime: now,
-      status: 'failed',
-      summary: ''
+      status: "failed",
+      summary: "",
     };
   } else {
     const allTestsPassed = testResult.numFailingTests === 0;
@@ -36,11 +36,11 @@ const formatTestResult = (testResult, codeCoverageFormatter, reporter) => {
         ? codeCoverageFormatter(testResult.coverage, reporter)
         : testResult.coverage,
       endTime: testResult.perfStats.end,
-      message: testResult.failureMessage || '',
+      message: testResult.failureMessage || "",
       name: testResult.testFilePath,
       startTime: testResult.perfStats.start,
-      status: allTestsPassed ? 'passed' : 'failed',
-      summary: ''
+      status: allTestsPassed ? "passed" : "failed",
+      summary: "",
     };
   }
 };
@@ -52,7 +52,7 @@ function formatTestAssertion(assertion) {
     fullName: assertion.fullName,
     location: assertion.location,
     status: assertion.status,
-    title: assertion.title
+    title: assertion.title,
   };
 
   if (assertion.failureMessages) {
@@ -63,8 +63,8 @@ function formatTestAssertion(assertion) {
 }
 
 function formatTestResults(results, codeCoverageFormatter, reporter) {
-  const testResults = results.testResults.map(testResult =>
+  const testResults = results.testResults.map((testResult) =>
     formatTestResult(testResult, codeCoverageFormatter, reporter)
   );
-  return {...results, testResults};
+  return { ...results, testResults };
 }

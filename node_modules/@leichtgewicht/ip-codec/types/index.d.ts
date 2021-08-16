@@ -1,6 +1,10 @@
 interface Encoder {
   (ip: string): Uint8Array;
-  <TIn extends Uint8Array = Uint8Array> (ip: string, buff: TIn, offset?: number): TIn;
+  <TIn extends Uint8Array = Uint8Array>(
+    ip: string,
+    buff: TIn,
+    offset?: number
+  ): TIn;
 }
 type Decoder = (ip: Uint8Array, offset?: number) => string;
 
@@ -19,8 +23,16 @@ export const v6: Codec<"ipv6", 16>;
 export const name: "ip";
 export const encode: {
   (ip: string): Uint8Array;
-  <TIn extends Uint8Array = Uint8Array> (ip: string, buff: TIn | ((size: number) => TIn), offset?: number): TIn
+  <TIn extends Uint8Array = Uint8Array>(
+    ip: string,
+    buff: TIn | ((size: number) => TIn),
+    offset?: number
+  ): TIn;
 };
-export function decode(ip: Uint8Array, offset?: number, length?: number): string;
+export function decode(
+  ip: Uint8Array,
+  offset?: number,
+  length?: number
+): string;
 
 export {};

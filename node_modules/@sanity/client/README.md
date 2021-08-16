@@ -19,14 +19,14 @@ npm install --save @sanity/client
 ## API
 
 ```js
-const sanityClient = require('@sanity/client')
+const sanityClient = require("@sanity/client");
 const client = sanityClient({
-  projectId: 'your-project-id',
-  dataset: 'bikeshop',
-  apiVersion: '2019-01-29', // use current UTC date - see "specifying API version"!
-  token: 'sanity-auth-token', // or leave blank for unauthenticated usage
+  projectId: "your-project-id",
+  dataset: "bikeshop",
+  apiVersion: "2019-01-29", // use current UTC date - see "specifying API version"!
+  token: "sanity-auth-token", // or leave blank for unauthenticated usage
   useCdn: true, // `false` if you want to ensure fresh data
-})
+});
 ```
 
 `const client = sanityClient(options)`
@@ -46,15 +46,15 @@ In future versions, specifying an API version will be required. For now (to main
 ### Performing queries
 
 ```js
-const query = '*[_type == "bike" && seats >= $minSeats] {name, seats}'
-const params = {minSeats: 2}
+const query = '*[_type == "bike" && seats >= $minSeats] {name, seats}';
+const params = { minSeats: 2 };
 
 client.fetch(query, params).then((bikes) => {
-  console.log('Bikes with more than one seat:')
+  console.log("Bikes with more than one seat:");
   bikes.forEach((bike) => {
-    console.log(`${bike.name} (${bike.seats} seats)`)
-  })
-})
+    console.log(`${bike.name} (${bike.seats} seats)`);
+  });
+});
 ```
 
 `client.fetch(query, params = {})`
@@ -64,16 +64,16 @@ Perform a query using the given parameters (if any).
 ### Listening to queries
 
 ```js
-const query = '*[_type == "comment" && authorId != $ownerId]'
-const params = {ownerId: 'bikeOwnerUserId'}
+const query = '*[_type == "comment" && authorId != $ownerId]';
+const params = { ownerId: "bikeOwnerUserId" };
 
 const subscription = client.listen(query, params).subscribe((update) => {
-  const comment = update.result
-  console.log(`${comment.author} commented: ${comment.text}`)
-})
+  const comment = update.result;
+  console.log(`${comment.author} commented: ${comment.text}`);
+});
 
 // to unsubscribe later on
-subscription.unsubscribe()
+subscription.unsubscribe();
 ```
 
 `client.listen(query, params = {}, options = {includeResult: true})`
@@ -91,9 +91,9 @@ Likewise, you can also have the client return the document _before_ the mutation
 This will fetch a document from the [Doc endpoint](https://www.sanity.io/docs/http-doc). This endpoint cuts through any caching/indexing middleware that may involve delayed processing. Should be used sparingly and performing a query is usually a better option.
 
 ```js
-client.getDocument('bike-123').then((bike) => {
-  console.log(`${bike.name} (${bike.seats} seats)`)
-})
+client.getDocument("bike-123").then((bike) => {
+  console.log(`${bike.name} (${bike.seats} seats)`);
+});
 ```
 
 ### Fetch multiple documents in one go
@@ -101,34 +101,34 @@ client.getDocument('bike-123').then((bike) => {
 This will fetch multiple documents in one request from the [Doc endpoint](https://www.sanity.io/docs/http-doc). his endpoint cuts through any caching/indexing middleware that may involve delayed processing. Should be used sparingly and performing a query is usually a better option.
 
 ```js
-client.getDocuments(['bike123', 'bike345']).then(([bike123, bike345]) => {
-  console.log(`Bike 123: ${bike123.name} (${bike123.seats} seats)`)
-  console.log(`Bike 345: ${bike345.name} (${bike345.seats} seats)`)
-})
+client.getDocuments(["bike123", "bike345"]).then(([bike123, bike345]) => {
+  console.log(`Bike 123: ${bike123.name} (${bike123.seats} seats)`);
+  console.log(`Bike 345: ${bike345.name} (${bike345.seats} seats)`);
+});
 ```
 
 Note: Unlike in the HTTP API, the order/position of documents is _preserved_ based on the original array of IDs. If a any of the documents are missing, they will be replaced by a `null` entry in the returned array:
 
 ```js
-const ids = ['bike123', 'nonexistent-document', 'bike345']
+const ids = ["bike123", "nonexistent-document", "bike345"];
 client.getDocuments(ids).then((docs) => {
   // the docs array will be:
   // [{_id: 'bike123', ...}, null, {_id: 'bike345', ...}]
-})
+});
 ```
 
 ### Creating documents
 
 ```js
 const doc = {
-  _type: 'bike',
-  name: 'Sanity Tandem Extraordinaire',
+  _type: "bike",
+  name: "Sanity Tandem Extraordinaire",
   seats: 2,
-}
+};
 
 client.create(doc).then((res) => {
-  console.log(`Bike was created, document ID is ${res._id}`)
-})
+  console.log(`Bike was created, document ID is ${res._id}`);
+});
 ```
 
 `client.create(doc)`
@@ -139,15 +139,15 @@ Create a document. Argument is a plain JS object representing the document. It m
 
 ```js
 const doc = {
-  _id: 'my-bike',
-  _type: 'bike',
-  name: 'Sanity Tandem Extraordinaire',
+  _id: "my-bike",
+  _type: "bike",
+  name: "Sanity Tandem Extraordinaire",
   seats: 2,
-}
+};
 
 client.createOrReplace(doc).then((res) => {
-  console.log(`Bike was created, document ID is ${res._id}`)
-})
+  console.log(`Bike was created, document ID is ${res._id}`);
+});
 ```
 
 `client.createOrReplace(doc)`
@@ -158,15 +158,15 @@ If you are not sure whether or not a document exists but want to overwrite it if
 
 ```js
 const doc = {
-  _id: 'my-bike',
-  _type: 'bike',
-  name: 'Sanity Tandem Extraordinaire',
+  _id: "my-bike",
+  _type: "bike",
+  name: "Sanity Tandem Extraordinaire",
   seats: 2,
-}
+};
 
 client.createIfNotExists(doc).then((res) => {
-  console.log('Bike was created (or was already present)')
-})
+  console.log("Bike was created (or was already present)");
+});
 ```
 
 `client.createIfNotExists(doc)`
@@ -177,17 +177,17 @@ If you want to create a document if it does not already exist, but fall back wit
 
 ```js
 client
-  .patch('bike-123') // Document ID to patch
-  .set({inStock: false}) // Shallow merge
-  .inc({numSold: 1}) // Increment field by count
+  .patch("bike-123") // Document ID to patch
+  .set({ inStock: false }) // Shallow merge
+  .inc({ numSold: 1 }) // Increment field by count
   .commit() // Perform the patch and return a promise
   .then((updatedBike) => {
-    console.log('Hurray, the bike is updated! New document:')
-    console.log(updatedBike)
+    console.log("Hurray, the bike is updated! New document:");
+    console.log(updatedBike);
   })
   .catch((err) => {
-    console.error('Oh no, the update failed: ', err.message)
-  })
+    console.error("Oh no, the update failed: ", err.message);
+  });
 ```
 
 Modify a document. `patch` takes a document ID. `set` merges the partialDoc with the stored document. `inc` increments the given field with the given numeric value. `commit` executes the given `patch`. Returns the updated object.
@@ -195,23 +195,23 @@ Modify a document. `patch` takes a document ID. `set` merges the partialDoc with
 ### Setting a field only if not already present
 
 ```js
-client.patch('bike-123').setIfMissing({title: 'Untitled bike'}).commit()
+client.patch("bike-123").setIfMissing({ title: "Untitled bike" }).commit();
 ```
 
 ### Removing/unsetting fields
 
 ```js
-client.patch('bike-123').unset(['title', 'price']).commit()
+client.patch("bike-123").unset(["title", "price"]).commit();
 ```
 
 ### Incrementing/decrementing numbers
 
 ```js
 client
-  .patch('bike-123')
-  .inc({price: 88, numSales: 1}) // Increment `price` by 88, `numSales` by 1
-  .dec({inStock: 1}) // Decrement `inStock` by 1
-  .commit()
+  .patch("bike-123")
+  .inc({ price: 88, numSales: 1 }) // Increment `price` by 88, `numSales` by 1
+  .dec({ inStock: 1 }) // Decrement `inStock` by 1
+  .commit();
 ```
 
 ### Patch a document only if revision matches
@@ -220,10 +220,10 @@ You can use the `ifRevisionId(rev)` method to specify that you only want the pat
 
 ```js
 client
-  .patch('bike-123')
-  .ifRevisionId('previously-known-revision')
-  .set({title: 'Little Red Tricycle'})
-  .commit()
+  .patch("bike-123")
+  .ifRevisionId("previously-known-revision")
+  .set({ title: "Little Red Tricycle" })
+  .commit();
 ```
 
 ### Adding elements to an array
@@ -231,19 +231,19 @@ client
 The patch operation `insert` takes a location (`before`, `after` or `replace`), a path selector and an array of elements to insert.
 
 ```js
-const {nanoid} = require('nanoid')
+const { nanoid } = require("nanoid");
 
 client
-  .patch('bike-123')
+  .patch("bike-123")
   // Ensure that the `reviews` arrays exists before attempting to add items to it
-  .setIfMissing({reviews: []})
+  .setIfMissing({ reviews: [] })
   // Add the items after the last item in the array (append)
-  .insert('after', 'reviews[-1]', [
+  .insert("after", "reviews[-1]", [
     // Add a `_key` unique within the array to ensure it can be addressed uniquely
     // in a real-time collaboration context
-    {_key: nanoid(), title: 'Great bike!', stars: 5},
+    { _key: nanoid(), title: "Great bike!", stars: 5 },
   ])
-  .commit()
+  .commit();
 ```
 
 ### Appending/prepending elements to an array
@@ -251,13 +251,13 @@ client
 The operations of appending and prepending to an array are so common that they have been given their own methods for better readability:
 
 ```js
-const {nanoid} = require('nanoid')
+const { nanoid } = require("nanoid");
 
 client
-  .patch('bike-123')
-  .setIfMissing({reviews: []})
-  .append('reviews', [{_key: nanoid(), title: 'Great bike!', stars: 5}])
-  .commit()
+  .patch("bike-123")
+  .setIfMissing({ reviews: [] })
+  .append("reviews", [{ _key: nanoid(), title: "Great bike!", stars: 5 }])
+  .commit();
 ```
 
 ### Deleting an element from an array
@@ -267,21 +267,21 @@ Each entry in the `unset` array can be either an attribute or a JSON path.
 In this example, we remove the first review and the review with `_key: 'abc123'` from the `bike.reviews` array:
 
 ```js
-const reviewsToRemove = ['reviews[0]', 'reviews[_key=="abc123"]']
-client.patch('bike-123').unset(reviewsToRemove).commit()
+const reviewsToRemove = ["reviews[0]", 'reviews[_key=="abc123"]'];
+client.patch("bike-123").unset(reviewsToRemove).commit();
 ```
 
 ### Delete a document
 
 ```js
 client
-  .delete('bike-123')
+  .delete("bike-123")
   .then((res) => {
-    console.log('Bike deleted')
+    console.log("Bike deleted");
   })
   .catch((err) => {
-    console.error('Delete failed: ', err.message)
-  })
+    console.error("Delete failed: ", err.message);
+  });
 ```
 
 `client.delete(docId)`
@@ -291,20 +291,20 @@ Delete a document. Parameter is a document ID.
 ### Multiple mutations in a transaction
 
 ```js
-const namePatch = client.patch('bike-310').set({name: 'A Bike To Go'})
+const namePatch = client.patch("bike-310").set({ name: "A Bike To Go" });
 
 client
   .transaction()
-  .create({name: 'Sanity Tandem Extraordinaire', seats: 2})
-  .delete('bike-123')
+  .create({ name: "Sanity Tandem Extraordinaire", seats: 2 })
+  .delete("bike-123")
   .patch(namePatch)
   .commit()
   .then((res) => {
-    console.log('Whole lot of stuff just happened')
+    console.log("Whole lot of stuff just happened");
   })
   .catch((err) => {
-    console.error('Transaction failed: ', err.message)
-  })
+    console.error("Transaction failed: ", err.message);
+  });
 ```
 
 `client.transaction().create(doc).delete(docId).patch(patch).commit()`
@@ -314,15 +314,15 @@ Create a transaction to perform chained mutations.
 ```js
 client
   .transaction()
-  .create({name: 'Sanity Tandem Extraordinaire', seats: 2})
-  .patch('bike-123', (p) => p.set({inStock: false}))
+  .create({ name: "Sanity Tandem Extraordinaire", seats: 2 })
+  .patch("bike-123", (p) => p.set({ inStock: false }))
   .commit()
   .then((res) => {
-    console.log('Bike created and a different bike is updated')
+    console.log("Bike created and a different bike is updated");
   })
   .catch((err) => {
-    console.error('Transaction failed: ', err.message)
-  })
+    console.error("Transaction failed: ", err.message);
+  });
 ```
 
 `client.transaction().create(doc).patch(docId, p => p.set(partialDoc)).commit()`
@@ -334,22 +334,22 @@ A `patch` can be performed inline on a `transaction`.
 Transactions and patches can also be built outside the scope of a client:
 
 ```js
-const sanityClient = require('@sanity/client')
+const sanityClient = require("@sanity/client");
 const client = sanityClient({
-  projectId: 'your-project-id',
-  dataset: 'bikeshop',
-})
+  projectId: "your-project-id",
+  dataset: "bikeshop",
+});
 
 // Patches:
-const patch = new sanityClient.Patch('<documentId>')
-client.mutate(patch.inc({count: 1}).unset(['visits']))
+const patch = new sanityClient.Patch("<documentId>");
+client.mutate(patch.inc({ count: 1 }).unset(["visits"]));
 
 // Transactions:
 const transaction = new sanityClient.Transaction()
-  .create({_id: '123', name: 'FooBike'})
-  .delete('someDocId')
+  .create({ _id: "123", name: "FooBike" })
+  .delete("someDocId");
 
-client.mutate(transaction)
+client.mutate(transaction);
 ```
 
 `const patch = new sanityClient.Patch(docId)`
@@ -373,63 +373,68 @@ client.assets.upload(type: 'file' | image', body: File | Blob | Buffer | NodeStr
 ```js
 // Upload a file from the file system
 client.assets
-  .upload('file', fs.createReadStream('myFile.txt'), {filename: 'myFile.txt'})
+  .upload("file", fs.createReadStream("myFile.txt"), { filename: "myFile.txt" })
   .then((document) => {
-    console.log('The file was uploaded!', document)
+    console.log("The file was uploaded!", document);
   })
   .catch((error) => {
-    console.error('Upload failed:', error.message)
-  })
+    console.error("Upload failed:", error.message);
+  });
 ```
 
 ```js
 // Upload an image file from the file system
 client.assets
-  .upload('image', fs.createReadStream('myImage.jpg'), {filename: 'myImage.jpg'})
+  .upload("image", fs.createReadStream("myImage.jpg"), {
+    filename: "myImage.jpg",
+  })
   .then((document) => {
-    console.log('The image was uploaded!', document)
+    console.log("The image was uploaded!", document);
   })
   .catch((error) => {
-    console.error('Upload failed:', error.message)
-  })
+    console.error("Upload failed:", error.message);
+  });
 ```
 
 #### Examples: Uploading assets from the Browser
 
 ```js
 // Create a file with "foo" as its content
-const file = new File(['foo'], 'foo.txt', {type: 'text/plain'})
+const file = new File(["foo"], "foo.txt", { type: "text/plain" });
 // Upload it
 client.assets
-  .upload('file', file)
+  .upload("file", file)
   .then((document) => {
-    console.log('The file was uploaded!', document)
+    console.log("The file was uploaded!", document);
   })
   .catch((error) => {
-    console.error('Upload failed:', error.message)
-  })
+    console.error("Upload failed:", error.message);
+  });
 ```
 
 ```js
 // Draw something on a canvas and upload as image
-const canvas = document.getElementById('someCanvas')
-const ctx = canvas.getContext('2d')
-ctx.fillStyle = '#f85040'
-ctx.fillRect(0, 0, 50, 50)
-ctx.fillStyle = '#fff'
-ctx.font = '10px monospace'
-ctx.fillText('Sanity', 8, 30)
-canvas.toBlob(uploadImageBlob, 'image/png')
+const canvas = document.getElementById("someCanvas");
+const ctx = canvas.getContext("2d");
+ctx.fillStyle = "#f85040";
+ctx.fillRect(0, 0, 50, 50);
+ctx.fillStyle = "#fff";
+ctx.font = "10px monospace";
+ctx.fillText("Sanity", 8, 30);
+canvas.toBlob(uploadImageBlob, "image/png");
 
 function uploadImageBlob(blob) {
   client.assets
-    .upload('image', blob, {contentType: 'image/png', filename: 'someText.png'})
+    .upload("image", blob, {
+      contentType: "image/png",
+      filename: "someText.png",
+    })
     .then((document) => {
-      console.log('The image was uploaded!', document)
+      console.log("The image was uploaded!", document);
     })
     .catch((error) => {
-      console.error('Upload failed:', error.message)
-    })
+      console.error("Upload failed:", error.message);
+    });
 }
 ```
 
@@ -438,13 +443,13 @@ function uploadImageBlob(blob) {
 ```js
 // Extract palette of colors as well as GPS location from exif
 client.assets
-  .upload('image', someFile, {extract: ['palette', 'location']})
+  .upload("image", someFile, { extract: ["palette", "location"] })
   .then((document) => {
-    console.log('The file was uploaded!', document)
+    console.log("The file was uploaded!", document);
   })
   .catch((error) => {
-    console.error('Upload failed:', error.message)
-  })
+    console.error("Upload failed:", error.message);
+  });
 ```
 
 ### Deleting an asset
@@ -456,16 +461,16 @@ client.delete(id: string): Promise
 ```
 
 ```js
-client.delete('image-abc123_someAssetId-500x500-png').then((result) => {
-  console.log('deleted imageAsset', result)
-})
+client.delete("image-abc123_someAssetId-500x500-png").then((result) => {
+  console.log("deleted imageAsset", result);
+});
 ```
 
 ### Get client configuration
 
 ```js
-const config = client.config()
-console.log(config.dataset)
+const config = client.config();
+console.log(config.dataset);
 ```
 
 `client.config()`
@@ -475,7 +480,7 @@ Get client configuration.
 ### Set client configuration
 
 ```js
-client.config({dataset: 'newDataset'})
+client.config({ dataset: "newDataset" });
 ```
 
 `client.config(options)`

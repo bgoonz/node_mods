@@ -3,9 +3,41 @@
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 exports.__esModule = true;
-exports.stopSubscriptions = exports.closeWebsocket = exports.openWebsocket = exports.getWebsocket = exports.websocketClosed = exports.websocketOpened = exports.joinRequest = exports.removeWatcher = exports.addWatcher = exports.setUploadProgress = exports.setDownloadProgress = exports.stopPolling = exports.abortRequests = exports.resetRequests = exports.clearRequestsCache = exports.isRequestActionQuery = exports.isAbortAction = exports.isErrorAction = exports.isSuccessAction = exports.getRequestActionFromResponse = exports.isResponseAction = exports.isRequestAction = exports.getResponseFromSuccessAction = exports.getActionPayload = exports.createAbortAction = exports.createErrorAction = exports.createSuccessAction = exports.abort = exports.error = exports.success = void 0;
+exports.stopSubscriptions =
+  exports.closeWebsocket =
+  exports.openWebsocket =
+  exports.getWebsocket =
+  exports.websocketClosed =
+  exports.websocketOpened =
+  exports.joinRequest =
+  exports.removeWatcher =
+  exports.addWatcher =
+  exports.setUploadProgress =
+  exports.setDownloadProgress =
+  exports.stopPolling =
+  exports.abortRequests =
+  exports.resetRequests =
+  exports.clearRequestsCache =
+  exports.isRequestActionQuery =
+  exports.isAbortAction =
+  exports.isErrorAction =
+  exports.isSuccessAction =
+  exports.getRequestActionFromResponse =
+  exports.isResponseAction =
+  exports.isRequestAction =
+  exports.getResponseFromSuccessAction =
+  exports.getActionPayload =
+  exports.createAbortAction =
+  exports.createErrorAction =
+  exports.createSuccessAction =
+  exports.abort =
+  exports.error =
+  exports.success =
+    void 0;
 
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _extends2 = _interopRequireDefault(
+  require("@babel/runtime/helpers/extends")
+);
 
 var _constants = require("./constants");
 
@@ -27,34 +59,46 @@ var isFSA = function isFSA(action) {
 };
 
 var createSuccessAction = function createSuccessAction(action, response) {
-  return (0, _extends2["default"])({
-    type: success(action.type)
-  }, isFSA(action) ? {
-    payload: response
-  } : {
-    response: response
-  }, {
-    meta: (0, _extends2["default"])({}, action.meta, {
-      requestAction: action
-    })
-  });
+  return (0, _extends2["default"])(
+    {
+      type: success(action.type),
+    },
+    isFSA(action)
+      ? {
+          payload: response,
+        }
+      : {
+          response: response,
+        },
+    {
+      meta: (0, _extends2["default"])({}, action.meta, {
+        requestAction: action,
+      }),
+    }
+  );
 };
 
 exports.createSuccessAction = createSuccessAction;
 
 var createErrorAction = function createErrorAction(action, errorData) {
-  return (0, _extends2["default"])({
-    type: error(action.type)
-  }, isFSA(action) ? {
-    payload: errorData,
-    error: true
-  } : {
-    error: errorData
-  }, {
-    meta: (0, _extends2["default"])({}, action.meta, {
-      requestAction: action
-    })
-  });
+  return (0, _extends2["default"])(
+    {
+      type: error(action.type),
+    },
+    isFSA(action)
+      ? {
+          payload: errorData,
+          error: true,
+        }
+      : {
+          error: errorData,
+        },
+    {
+      meta: (0, _extends2["default"])({}, action.meta, {
+        requestAction: action,
+      }),
+    }
+  );
 };
 
 exports.createErrorAction = createErrorAction;
@@ -63,8 +107,8 @@ var createAbortAction = function createAbortAction(action) {
   return {
     type: abort(action.type),
     meta: (0, _extends2["default"])({}, action.meta, {
-      requestAction: action
-    })
+      requestAction: action,
+    }),
   };
 };
 
@@ -74,10 +118,11 @@ var getActionPayload = function getActionPayload(action) {
   return action.payload === undefined ? action : action.payload;
 }; // eslint-disable-next-line import/no-unused-modules
 
-
 exports.getActionPayload = getActionPayload;
 
-var getResponseFromSuccessAction = function getResponseFromSuccessAction(action) {
+var getResponseFromSuccessAction = function getResponseFromSuccessAction(
+  action
+) {
   return action.payload ? action.payload : action.response;
 };
 
@@ -85,7 +130,19 @@ exports.getResponseFromSuccessAction = getResponseFromSuccessAction;
 
 var isRequestAction = function isRequestAction(action) {
   var actionPayload = getActionPayload(action);
-  return !!(actionPayload != null && actionPayload.request) && !!(Array.isArray(actionPayload.request) || actionPayload.request.url || actionPayload.request.query || actionPayload.request.promise || actionPayload.request.response || actionPayload.request.error) && !actionPayload.response && !(actionPayload instanceof Error);
+  return (
+    !!(actionPayload != null && actionPayload.request) &&
+    !!(
+      Array.isArray(actionPayload.request) ||
+      actionPayload.request.url ||
+      actionPayload.request.query ||
+      actionPayload.request.promise ||
+      actionPayload.request.response ||
+      actionPayload.request.error
+    ) &&
+    !actionPayload.response &&
+    !(actionPayload instanceof Error)
+  );
 };
 
 exports.isRequestAction = isRequestAction;
@@ -98,45 +155,63 @@ var isResponseAction = function isResponseAction(action) {
 
 exports.isResponseAction = isResponseAction;
 
-var getRequestActionFromResponse = function getRequestActionFromResponse(action) {
+var getRequestActionFromResponse = function getRequestActionFromResponse(
+  action
+) {
   return action.meta.requestAction;
 };
 
 exports.getRequestActionFromResponse = getRequestActionFromResponse;
 
 var isSuccessAction = function isSuccessAction(action) {
-  return isResponseAction(action) && action.type.endsWith(_constants.SUCCESS_SUFFIX);
+  return (
+    isResponseAction(action) && action.type.endsWith(_constants.SUCCESS_SUFFIX)
+  );
 };
 
 exports.isSuccessAction = isSuccessAction;
 
 var isErrorAction = function isErrorAction(action) {
-  return isResponseAction(action) && action.type.endsWith(_constants.ERROR_SUFFIX);
+  return (
+    isResponseAction(action) && action.type.endsWith(_constants.ERROR_SUFFIX)
+  );
 };
 
 exports.isErrorAction = isErrorAction;
 
 var isAbortAction = function isAbortAction(action) {
-  return isResponseAction(action) && action.type.endsWith(_constants.ABORT_SUFFIX);
+  return (
+    isResponseAction(action) && action.type.endsWith(_constants.ABORT_SUFFIX)
+  );
 };
 
 exports.isAbortAction = isAbortAction;
 
 var isRequestQuery = function isRequestQuery(request) {
-  return !request.query && (!request.method || request.method.toLowerCase() === 'get') || request.query && !request.query.trim().startsWith('mutation');
+  return (
+    (!request.query &&
+      (!request.method || request.method.toLowerCase() === "get")) ||
+    (request.query && !request.query.trim().startsWith("mutation"))
+  );
 };
 
 var isRequestActionQuery = function isRequestActionQuery(action) {
   var _action$meta2;
 
   var _getActionPayload = getActionPayload(action),
-      request = _getActionPayload.request;
+    request = _getActionPayload.request;
 
-  if (((_action$meta2 = action.meta) == null ? void 0 : _action$meta2.asMutation) !== undefined) {
+  if (
+    ((_action$meta2 = action.meta) == null
+      ? void 0
+      : _action$meta2.asMutation) !== undefined
+  ) {
     return !action.meta.asMutation;
   }
 
-  return !!(Array.isArray(request) ? request.every(isRequestQuery) : isRequestQuery(request));
+  return !!(Array.isArray(request)
+    ? request.every(isRequestQuery)
+    : isRequestQuery(request));
 };
 
 exports.isRequestActionQuery = isRequestActionQuery;
@@ -148,13 +223,17 @@ var clearRequestsCache = function clearRequestsCache(requests) {
 
   return {
     type: _constants.CLEAR_REQUESTS_CACHE,
-    requests: requests
+    requests: requests,
   };
 };
 
 exports.clearRequestsCache = clearRequestsCache;
 
-var resetRequests = function resetRequests(requests, abortPending, resetCached) {
+var resetRequests = function resetRequests(
+  requests,
+  abortPending,
+  resetCached
+) {
   if (requests === void 0) {
     requests = null;
   }
@@ -171,7 +250,7 @@ var resetRequests = function resetRequests(requests, abortPending, resetCached) 
     type: _constants.RESET_REQUESTS,
     requests: requests,
     abortPending: abortPending,
-    resetCached: resetCached
+    resetCached: resetCached,
   };
 };
 
@@ -184,7 +263,7 @@ var abortRequests = function abortRequests(requests) {
 
   return {
     type: _constants.ABORT_REQUESTS,
-    requests: requests
+    requests: requests,
   };
 };
 
@@ -197,7 +276,7 @@ var stopPolling = function stopPolling(requests) {
 
   return {
     type: _constants.STOP_POLLING,
-    requests: requests
+    requests: requests,
   };
 };
 
@@ -207,7 +286,7 @@ var setDownloadProgress = function setDownloadProgress(requestType, progress) {
   return {
     type: _constants.SET_DOWNLOAD_PROGRESS,
     requestType: requestType,
-    progress: progress
+    progress: progress,
   };
 };
 
@@ -217,7 +296,7 @@ var setUploadProgress = function setUploadProgress(requestType, progress) {
   return {
     type: _constants.SET_UPLOAD_PROGRESS,
     requestType: requestType,
-    progress: progress
+    progress: progress,
   };
 };
 
@@ -226,7 +305,7 @@ exports.setUploadProgress = setUploadProgress;
 var addWatcher = function addWatcher(requestType) {
   return {
     type: _constants.ADD_WATCHER,
-    requestType: requestType
+    requestType: requestType,
   };
 };
 
@@ -235,7 +314,7 @@ exports.addWatcher = addWatcher;
 var removeWatcher = function removeWatcher(requestType) {
   return {
     type: _constants.REMOVE_WATCHER,
-    requestType: requestType
+    requestType: requestType,
   };
 };
 
@@ -249,7 +328,7 @@ var joinRequest = function joinRequest(requestType, rehydrate) {
   return {
     type: _constants.JOIN_REQUEST,
     requestType: requestType,
-    rehydrate: rehydrate
+    rehydrate: rehydrate,
   };
 };
 
@@ -257,7 +336,7 @@ exports.joinRequest = joinRequest;
 
 var websocketOpened = function websocketOpened() {
   return {
-    type: _constants.WEBSOCKET_OPENED
+    type: _constants.WEBSOCKET_OPENED,
   };
 };
 
@@ -266,7 +345,7 @@ exports.websocketOpened = websocketOpened;
 var websocketClosed = function websocketClosed(code) {
   return {
     type: _constants.WEBSOCKET_CLOSED,
-    code: code
+    code: code,
   };
 };
 
@@ -274,7 +353,7 @@ exports.websocketClosed = websocketClosed;
 
 var getWebsocket = function getWebsocket() {
   return {
-    type: _constants.GET_WEBSOCKET
+    type: _constants.GET_WEBSOCKET,
   };
 };
 
@@ -287,7 +366,7 @@ var openWebsocket = function openWebsocket(props) {
 
   return {
     type: _constants.OPEN_WEBSOCKET,
-    props: props
+    props: props,
   };
 };
 
@@ -300,7 +379,7 @@ var closeWebsocket = function closeWebsocket(code) {
 
   return {
     type: _constants.CLOSE_WEBSOCKET,
-    code: code
+    code: code,
   };
 };
 
@@ -313,7 +392,7 @@ var stopSubscriptions = function stopSubscriptions(subscriptions) {
 
   return {
     type: _constants.STOP_SUBSCRIPTIONS,
-    subscriptions: subscriptions
+    subscriptions: subscriptions,
   };
 };
 

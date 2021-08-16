@@ -11,7 +11,7 @@ var mergeOptions = {
   arrayMerge: function arrayMerge(destinationArray, sourceArray) {
     return sourceArray;
   },
-  clone: false
+  clone: false,
 };
 
 var mergeData = function mergeData(oldData, newData) {

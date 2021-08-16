@@ -5,7 +5,10 @@ import { FunctionCov, RangeCov, ScriptCov } from "./types";
  *
  * The result corresponds to the comparison of their `url` value (alphabetical sort).
  */
-export function compareScriptCovs(a: Readonly<ScriptCov>, b: Readonly<ScriptCov>): number {
+export function compareScriptCovs(
+  a: Readonly<ScriptCov>,
+  b: Readonly<ScriptCov>
+): number {
   if (a.url === b.url) {
     return 0;
   } else if (a.url < b.url) {
@@ -20,7 +23,10 @@ export function compareScriptCovs(a: Readonly<ScriptCov>, b: Readonly<ScriptCov>
  *
  * The result corresponds to the comparison of the root ranges.
  */
-export function compareFunctionCovs(a: Readonly<FunctionCov>, b: Readonly<FunctionCov>): number {
+export function compareFunctionCovs(
+  a: Readonly<FunctionCov>,
+  b: Readonly<FunctionCov>
+): number {
   return compareRangeCovs(a.ranges[0], b.ranges[0]);
 }
 
@@ -31,7 +37,10 @@ export function compareFunctionCovs(a: Readonly<FunctionCov>, b: Readonly<Functi
  * descending `endOffset`.
  * This corresponds to a pre-order tree traversal.
  */
-export function compareRangeCovs(a: Readonly<RangeCov>, b: Readonly<RangeCov>): number {
+export function compareRangeCovs(
+  a: Readonly<RangeCov>,
+  b: Readonly<RangeCov>
+): number {
   if (a.startOffset !== b.startOffset) {
     return a.startOffset - b.startOffset;
   } else {

@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function util() {
-  const data = _interopRequireWildcard(require('util'));
+  const data = _interopRequireWildcard(require("util"));
 
   util = function () {
     return data;
@@ -16,7 +16,7 @@ function util() {
 }
 
 function _pEachSeries() {
-  const data = _interopRequireDefault(require('p-each-series'));
+  const data = _interopRequireDefault(require("p-each-series"));
 
   _pEachSeries = function () {
     return data;
@@ -26,7 +26,7 @@ function _pEachSeries() {
 }
 
 function _transform() {
-  const data = require('@jest/transform');
+  const data = require("@jest/transform");
 
   _transform = function () {
     return data;
@@ -36,7 +36,7 @@ function _transform() {
 }
 
 function _prettyFormat() {
-  const data = _interopRequireDefault(require('pretty-format'));
+  const data = _interopRequireDefault(require("pretty-format"));
 
   _prettyFormat = function () {
     return data;
@@ -46,11 +46,11 @@ function _prettyFormat() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -62,8 +62,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -73,7 +73,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -97,9 +97,9 @@ function _interopRequireWildcard(obj, nodeInterop) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var _default = async ({allTests, globalConfig, moduleName}) => {
+var _default = async ({ allTests, globalConfig, moduleName }) => {
   const globalModulePaths = new Set(
-    allTests.map(test => test.context.config[moduleName])
+    allTests.map((test) => test.context.config[moduleName])
   );
 
   if (globalConfig[moduleName]) {
@@ -107,13 +107,13 @@ var _default = async ({allTests, globalConfig, moduleName}) => {
   }
 
   if (globalModulePaths.size > 0) {
-    await (0, _pEachSeries().default)(globalModulePaths, async modulePath => {
+    await (0, _pEachSeries().default)(globalModulePaths, async (modulePath) => {
       if (!modulePath) {
         return;
       }
 
       const correctConfig = allTests.find(
-        t => t.context.config[moduleName] === modulePath
+        (t) => t.context.config[moduleName] === modulePath
       );
       const projectConfig = correctConfig
         ? correctConfig.context.config // Fallback to first config
@@ -125,8 +125,8 @@ var _default = async ({allTests, globalConfig, moduleName}) => {
       try {
         await transformer.requireAndTranspileModule(
           modulePath,
-          async globalModule => {
-            if (typeof globalModule !== 'function') {
+          async (globalModule) => {
+            if (typeof globalModule !== "function") {
               throw new TypeError(
                 `${moduleName} file must export a function at ${modulePath}`
               );
@@ -144,7 +144,7 @@ var _default = async ({allTests, globalConfig, moduleName}) => {
         throw new Error(
           `Jest: Got error running ${moduleName} - ${modulePath}, reason: ${(0,
           _prettyFormat().default)(error, {
-            maxDepth: 3
+            maxDepth: 3,
           })}`
         );
       }

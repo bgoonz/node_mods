@@ -1,23 +1,23 @@
 "use strict";
 
 /* eslint-disable no-empty-function, no-process-env */
-var getIt = require('get-it');
+var getIt = require("get-it");
 
-var assign = require('object-assign');
+var assign = require("object-assign");
 
-var observable = require('get-it/lib/middleware/observable');
+var observable = require("get-it/lib/middleware/observable");
 
-var jsonRequest = require('get-it/lib/middleware/jsonRequest');
+var jsonRequest = require("get-it/lib/middleware/jsonRequest");
 
-var jsonResponse = require('get-it/lib/middleware/jsonResponse');
+var jsonResponse = require("get-it/lib/middleware/jsonResponse");
 
-var progress = require('get-it/lib/middleware/progress');
+var progress = require("get-it/lib/middleware/progress");
 
-var Observable = require('@sanity/observable/minimal');
+var Observable = require("@sanity/observable/minimal");
 
-var _require = require('./errors'),
-    ClientError = _require.ClientError,
-    ServerError = _require.ServerError;
+var _require = require("./errors"),
+  ClientError = _require.ClientError,
+  ServerError = _require.ServerError;
 
 var httpError = {
   onResponse: function onResponse(res) {
@@ -28,32 +28,45 @@ var httpError = {
     }
 
     return res;
-  }
+  },
 };
 var printWarnings = {
   onResponse: function onResponse(res) {
-    var warn = res.headers['x-sanity-warning'];
+    var warn = res.headers["x-sanity-warning"];
     var warnings = Array.isArray(warn) ? warn : [warn];
     warnings.filter(Boolean).forEach(function (msg) {
       return console.warn(msg);
     }); // eslint-disable-line no-console
 
     return res;
-  }
+  },
 }; // Environment-specific middleware.
 
-var envSpecific = require('./nodeMiddleware');
+var envSpecific = require("./nodeMiddleware");
 
-var middleware = envSpecific.concat([printWarnings, jsonRequest(), jsonResponse(), progress(), httpError, observable({
-  implementation: Observable
-})]);
+var middleware = envSpecific.concat([
+  printWarnings,
+  jsonRequest(),
+  jsonResponse(),
+  progress(),
+  httpError,
+  observable({
+    implementation: Observable,
+  }),
+]);
 var request = getIt(middleware);
 
 function httpRequest(options) {
-  var requester = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : request;
-  return requester(assign({
-    maxRedirects: 0
-  }, options));
+  var requester =
+    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : request;
+  return requester(
+    assign(
+      {
+        maxRedirects: 0,
+      },
+      options
+    )
+  );
 }
 
 httpRequest.defaultRequester = request;

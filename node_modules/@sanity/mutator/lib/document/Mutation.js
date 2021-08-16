@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
@@ -11,9 +11,23 @@ var _luid = _interopRequireDefault(require("./luid"));
 
 var _debug = _interopRequireDefault(require("./debug"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 
 // change its behavior after that.
 class Mutation {
@@ -52,7 +66,7 @@ class Mutation {
   }
 
   get timestamp() {
-    if (typeof this.params.timestamp == 'string') {
+    if (typeof this.params.timestamp == "string") {
       return new Date(this.params.timestamp);
     }
 
@@ -68,15 +82,17 @@ class Mutation {
   }
 
   appliesToMissingDocument() {
-    if (typeof this._appliesToMissingDocument !== 'undefined') {
+    if (typeof this._appliesToMissingDocument !== "undefined") {
       return this._appliesToMissingDocument;
     } // Only mutations starting with a create operation apply to documents that do not exist ...
-
 
     var firstMut = this.mutations[0];
 
     if (firstMut) {
-      this._appliesToMissingDocument = firstMut.create || firstMut.createIfNotExists || firstMut.createOrReplace;
+      this._appliesToMissingDocument =
+        firstMut.create ||
+        firstMut.createIfNotExists ||
+        firstMut.createOrReplace;
     } else {
       this._appliesToMissingDocument = true;
     }
@@ -84,38 +100,52 @@ class Mutation {
     return this._appliesToMissingDocument;
   } // Compiles all mutations into a handy function
 
-
   compile() {
     var operations = [];
-    this.mutations.forEach(mutation => {
+    this.mutations.forEach((mutation) => {
       if (mutation.create) {
         // TODO: Fail entire patch if document did exist
-        operations.push(doc => doc === null ? Object.assign(mutation.create, {
-          _createdAt: mutation.create._createdAt || this.params.timestamp
-        }) : doc);
+        operations.push((doc) =>
+          doc === null
+            ? Object.assign(mutation.create, {
+                _createdAt: mutation.create._createdAt || this.params.timestamp,
+              })
+            : doc
+        );
       } else if (mutation.createIfNotExists) {
-        operations.push(doc => doc === null ? Object.assign(mutation.createIfNotExists, {
-          _createdAt: mutation.createIfNotExists._createdAt || this.params.timestamp
-        }) : doc);
+        operations.push((doc) =>
+          doc === null
+            ? Object.assign(mutation.createIfNotExists, {
+                _createdAt:
+                  mutation.createIfNotExists._createdAt ||
+                  this.params.timestamp,
+              })
+            : doc
+        );
       } else if (mutation.createOrReplace) {
-        operations.push(() => Object.assign(mutation.createOrReplace, {
-          _createdAt: mutation.createOrReplace._createdAt || this.params.timestamp
-        }));
+        operations.push(() =>
+          Object.assign(mutation.createOrReplace, {
+            _createdAt:
+              mutation.createOrReplace._createdAt || this.params.timestamp,
+          })
+        );
       } else if (mutation.delete) {
         operations.push(() => null);
       } else if (mutation.patch) {
         var patch = new _patch.Patcher(mutation.patch);
-        operations.push(doc => patch.apply(doc));
+        operations.push((doc) => patch.apply(doc));
       } else {
-        throw new Error("Unsupported mutation ".concat(JSON.stringify(mutation, null, 2)));
+        throw new Error(
+          "Unsupported mutation ".concat(JSON.stringify(mutation, null, 2))
+        );
       }
     });
 
-    if (typeof this.params.timestamp === 'string') {
-      operations.push(doc => {
+    if (typeof this.params.timestamp === "string") {
+      operations.push((doc) => {
         if (doc) {
           return Object.assign(doc, {
-            _updatedAt: this.params.timestamp
+            _updatedAt: this.params.timestamp,
           });
         }
 
@@ -126,12 +156,19 @@ class Mutation {
     var prevRev = this.previousRev;
     var rev = this.resultRev || this.transactionId;
 
-    this.compiled = doc => {
+    this.compiled = (doc) => {
       if (prevRev && prevRev != doc._rev) {
-        throw new Error("Previous revision for this mutation was ".concat(prevRev, ", but the document revision is ").concat(doc._rev));
+        throw new Error(
+          "Previous revision for this mutation was "
+            .concat(prevRev, ", but the document revision is ")
+            .concat(doc._rev)
+        );
       }
 
-      var result = operations.reduce((revision, operation) => operation(revision), doc); // Should update _rev?
+      var result = operations.reduce(
+        (revision, operation) => operation(revision),
+        doc
+      ); // Should update _rev?
 
       if (result && rev) {
         // Ensure that result is a unique object, even if the operation was a no-op
@@ -147,14 +184,18 @@ class Mutation {
   }
 
   apply(document) {
-    (0, _debug.default)('Applying mutation %O to document %O', this.mutations, document);
+    (0, _debug.default)(
+      "Applying mutation %O to document %O",
+      this.mutations,
+      document
+    );
 
     if (!this.compiled) {
       this.compile();
     }
 
     var result = this.compiled(document);
-    (0, _debug.default)('  => %O', result);
+    (0, _debug.default)("  => %O", result);
     return result;
   }
 
@@ -165,14 +206,15 @@ class Mutation {
   // that all mutations are on the same document.
   // TOOO: Optimize mutations, eliminating mutations that overwrite themselves!
 
-
   static squash(document, mutations) {
-    var squashed = mutations.reduce((result, mutation) => result.concat(...mutation.mutations), []);
+    var squashed = mutations.reduce(
+      (result, mutation) => result.concat(...mutation.mutations),
+      []
+    );
     return new Mutation({
-      mutations: squashed
+      mutations: squashed,
     });
   }
-
 }
 
 exports.default = Mutation;

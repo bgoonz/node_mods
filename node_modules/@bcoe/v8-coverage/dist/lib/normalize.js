@@ -13,10 +13,10 @@ const range_tree_1 = require("./range-tree");
  * @param processCov Process coverage to normalize.
  */
 function normalizeProcessCov(processCov) {
-    processCov.result.sort(compare_1.compareScriptCovs);
-    for (const [scriptId, scriptCov] of processCov.result.entries()) {
-        scriptCov.scriptId = scriptId.toString(10);
-    }
+  processCov.result.sort(compare_1.compareScriptCovs);
+  for (const [scriptId, scriptCov] of processCov.result.entries()) {
+    scriptCov.scriptId = scriptId.toString(10);
+  }
 }
 exports.normalizeProcessCov = normalizeProcessCov;
 /**
@@ -28,10 +28,10 @@ exports.normalizeProcessCov = normalizeProcessCov;
  * @param processCov Process coverage to normalize.
  */
 function deepNormalizeProcessCov(processCov) {
-    for (const scriptCov of processCov.result) {
-        deepNormalizeScriptCov(scriptCov);
-    }
-    normalizeProcessCov(processCov);
+  for (const scriptCov of processCov.result) {
+    deepNormalizeScriptCov(scriptCov);
+  }
+  normalizeProcessCov(processCov);
 }
 exports.deepNormalizeProcessCov = deepNormalizeProcessCov;
 /**
@@ -43,7 +43,7 @@ exports.deepNormalizeProcessCov = deepNormalizeProcessCov;
  * @param scriptCov Script coverage to normalize.
  */
 function normalizeScriptCov(scriptCov) {
-    scriptCov.functions.sort(compare_1.compareFunctionCovs);
+  scriptCov.functions.sort(compare_1.compareFunctionCovs);
 }
 exports.normalizeScriptCov = normalizeScriptCov;
 /**
@@ -55,10 +55,10 @@ exports.normalizeScriptCov = normalizeScriptCov;
  * @param scriptCov Script coverage to normalize.
  */
 function deepNormalizeScriptCov(scriptCov) {
-    for (const funcCov of scriptCov.functions) {
-        normalizeFunctionCov(funcCov);
-    }
-    normalizeScriptCov(scriptCov);
+  for (const funcCov of scriptCov.functions) {
+    normalizeFunctionCov(funcCov);
+  }
+  normalizeScriptCov(scriptCov);
 }
 exports.deepNormalizeScriptCov = deepNormalizeScriptCov;
 /**
@@ -70,17 +70,17 @@ exports.deepNormalizeScriptCov = deepNormalizeScriptCov;
  * @param funcCov Function coverage to normalize.
  */
 function normalizeFunctionCov(funcCov) {
-    funcCov.ranges.sort(compare_1.compareRangeCovs);
-    const tree = range_tree_1.RangeTree.fromSortedRanges(funcCov.ranges);
-    normalizeRangeTree(tree);
-    funcCov.ranges = tree.toRanges();
+  funcCov.ranges.sort(compare_1.compareRangeCovs);
+  const tree = range_tree_1.RangeTree.fromSortedRanges(funcCov.ranges);
+  normalizeRangeTree(tree);
+  funcCov.ranges = tree.toRanges();
 }
 exports.normalizeFunctionCov = normalizeFunctionCov;
 /**
  * @internal
  */
 function normalizeRangeTree(tree) {
-    tree.normalize();
+  tree.normalize();
 }
 exports.normalizeRangeTree = normalizeRangeTree;
 

@@ -33,8 +33,8 @@ module.exports = {
     for (var i = 0; i < hDst; i++) {
       for (var j = 0; j < wDst; j++) {
         var posDst = (i * wDst + j) * 4;
-        var iSrc = Math.floor(i * hSrc / hDst);
-        var jSrc = Math.floor(j * wSrc / wDst);
+        var iSrc = Math.floor((i * hSrc) / hDst);
+        var jSrc = Math.floor((j * wSrc) / wDst);
         var posSrc = (iSrc * wSrc + jSrc) * 4;
         bufDst[posDst++] = bufSrc[posSrc++];
         bufDst[posDst++] = bufSrc[posSrc++];
@@ -79,10 +79,10 @@ module.exports = {
       for (var j = 0; j < wDst; j++) {
         var posDst = (i * wDst + j) * 4; // x & y in src coordinates
 
-        var x = j * wSrc / wDst;
+        var x = (j * wSrc) / wDst;
         var xMin = Math.floor(x);
         var xMax = Math.min(Math.ceil(x), wSrc - 1);
-        var y = i * hSrc / hDst;
+        var y = (i * hSrc) / hDst;
         var yMin = Math.floor(y);
         var yMax = Math.min(Math.ceil(y), hSrc - 1);
         assign(posDst, 0, x, xMin, xMax, y, yMin, yMax);
@@ -116,7 +116,7 @@ module.exports = {
         // this interpolation requires 4 sample points and the two inner ones must be real
         // the outer points can be fudged for the edges.
         // therefore (wSrc-1)/wDst2
-        var x = j * (wSrc - 1) / wDst2;
+        var x = (j * (wSrc - 1)) / wDst2;
         var xPos = Math.floor(x);
         var t = x - xPos;
         var srcPos = (i * wSrc + xPos) * 4;
@@ -124,10 +124,14 @@ module.exports = {
 
         for (var k = 0; k < 4; k++) {
           var kPos = srcPos + k;
-          var x0 = xPos > 0 ? bufSrc[kPos - 4] : 2 * bufSrc[kPos] - bufSrc[kPos + 4];
+          var x0 =
+            xPos > 0 ? bufSrc[kPos - 4] : 2 * bufSrc[kPos] - bufSrc[kPos + 4];
           var x1 = bufSrc[kPos];
           var x2 = bufSrc[kPos + 4];
-          var x3 = xPos < wSrc - 2 ? bufSrc[kPos + 8] : 2 * bufSrc[kPos + 4] - bufSrc[kPos];
+          var x3 =
+            xPos < wSrc - 2
+              ? bufSrc[kPos + 8]
+              : 2 * bufSrc[kPos + 4] - bufSrc[kPos];
           buf1[buf1Pos + k] = interpolate(x0, x1, x2, x3, t);
         }
       }
@@ -135,7 +139,6 @@ module.exports = {
     // ===========================================================
     // Pass 2 - interpolate columns
     // buf2 has width and height of dst2
-
 
     var buf2 = Buffer.alloc(wDst2 * hDst2 * 4);
 
@@ -146,7 +149,7 @@ module.exports = {
         // this interpolation requires 4 sample points and the two inner ones must be real
         // the outer points can be fudged for the edges.
         // therefore (hSrc-1)/hDst2
-        var y = _i * (hSrc - 1) / hDst2;
+        var y = (_i * (hSrc - 1)) / hDst2;
         var yPos = Math.floor(y);
 
         var _t = y - yPos;
@@ -158,17 +161,22 @@ module.exports = {
         for (var _k = 0; _k < 4; _k++) {
           var _kPos = _buf1Pos + _k;
 
-          var y0 = yPos > 0 ? buf1[_kPos - wDst2 * 4] : 2 * buf1[_kPos] - buf1[_kPos + wDst2 * 4];
+          var y0 =
+            yPos > 0
+              ? buf1[_kPos - wDst2 * 4]
+              : 2 * buf1[_kPos] - buf1[_kPos + wDst2 * 4];
           var y1 = buf1[_kPos];
           var y2 = buf1[_kPos + wDst2 * 4];
-          var y3 = yPos < hSrc - 2 ? buf1[_kPos + wDst2 * 8] : 2 * buf1[_kPos + wDst2 * 4] - buf1[_kPos];
+          var y3 =
+            yPos < hSrc - 2
+              ? buf1[_kPos + wDst2 * 8]
+              : 2 * buf1[_kPos + wDst2 * 4] - buf1[_kPos];
           buf2[buf2Pos + _k] = interpolate(y0, y1, y2, y3, _t);
         }
       }
     } // this._writeFile(wDst2, hDst2, buf2, "out/buf2.jpg");
     // ===========================================================
     // Pass 3 - scale to dst
-
 
     var m = wM * hM;
 
@@ -220,7 +228,10 @@ module.exports = {
       var a1 = x0 - x1 - a0;
       var a2 = x2 - x0;
       var a3 = x1;
-      return Math.max(0, Math.min(255, a0 * (t * t * t) + a1 * (t * t) + a2 * t + a3));
+      return Math.max(
+        0,
+        Math.min(255, a0 * (t * t * t) + a1 * (t * t) + a2 * t + a3)
+      );
     };
 
     return this._interpolate2D(src, dst, options, interpolateCubic);
@@ -231,7 +242,10 @@ module.exports = {
       var c1 = 0.5 * (x2 - x0);
       var c2 = x0 - 2.5 * x1 + 2 * x2 - 0.5 * x3;
       var c3 = 0.5 * (x3 - x0) + 1.5 * (x1 - x2);
-      return Math.max(0, Math.min(255, Math.round(((c3 * t + c2) * t + c1) * t + c0)));
+      return Math.max(
+        0,
+        Math.min(255, Math.round(((c3 * t + c2) * t + c1) * t + c0))
+      );
     };
 
     return this._interpolate2D(src, dst, options, interpolateHermite);
@@ -261,6 +275,6 @@ module.exports = {
     };
 
     return this._interpolate2D(src, dst, options, interpolateBezier);
-  }
+  },
 };
 //# sourceMappingURL=resize2.js.map

@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
@@ -45,8 +45,10 @@ var _default = function _default() {
      * @returns {Jimp} this for chaining of methods
      */
     blur: function blur(r, cb) {
-      if (typeof r !== 'number') return _utils.throwError.call(this, 'r must be a number', cb);
-      if (r < 1) return _utils.throwError.call(this, 'r must be greater than 0', cb);
+      if (typeof r !== "number")
+        return _utils.throwError.call(this, "r must be a number", cb);
+      if (r < 1)
+        return _utils.throwError.call(this, "r must be greater than 0", cb);
       var rsum;
       var gsum;
       var bsum;
@@ -134,7 +136,7 @@ var _default = function _default() {
           yi = x << 2;
 
           for (y = 0; y < this.bitmap.height; y++) {
-            pa = asum * mulSum >>> shgSum;
+            pa = (asum * mulSum) >>> shgSum;
             this.bitmap.data[yi + 3] = pa; // normalize alpha
 
             if (pa > 255) {
@@ -143,9 +145,9 @@ var _default = function _default() {
 
             if (pa > 0) {
               pa = 255 / pa;
-              this.bitmap.data[yi] = (rsum * mulSum >>> shgSum) * pa;
-              this.bitmap.data[yi + 1] = (gsum * mulSum >>> shgSum) * pa;
-              this.bitmap.data[yi + 2] = (bsum * mulSum >>> shgSum) * pa;
+              this.bitmap.data[yi] = ((rsum * mulSum) >>> shgSum) * pa;
+              this.bitmap.data[yi + 1] = ((gsum * mulSum) >>> shgSum) * pa;
+              this.bitmap.data[yi + 2] = ((bsum * mulSum) >>> shgSum) * pa;
             } else {
               this.bitmap.data[yi + 2] = 0;
               this.bitmap.data[yi + 1] = 0;
@@ -173,7 +175,7 @@ var _default = function _default() {
       }
 
       return this;
-    }
+    },
   };
 };
 

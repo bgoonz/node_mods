@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
@@ -14,20 +14,28 @@ var _utils = require("@jimp/utils");
  */
 function advancedRotate(deg, mode) {
   deg %= 360;
-  var rad = deg * Math.PI / 180;
+  var rad = (deg * Math.PI) / 180;
   var cosine = Math.cos(rad);
   var sine = Math.sin(rad); // the final width and height will change if resize == true
 
   var w = this.bitmap.width;
   var h = this.bitmap.height;
 
-  if (mode === true || typeof mode === 'string') {
+  if (mode === true || typeof mode === "string") {
     // resize the image to it maximum dimension and blit the existing image
     // onto the center so that when it is rotated the image is kept in bounds
     // http://stackoverflow.com/questions/3231176/how-to-get-size-of-a-rotated-rectangle
     // Plus 1 border pixel to ensure to show all rotated result for some cases.
-    w = Math.ceil(Math.abs(this.bitmap.width * cosine) + Math.abs(this.bitmap.height * sine)) + 1;
-    h = Math.ceil(Math.abs(this.bitmap.width * sine) + Math.abs(this.bitmap.height * cosine)) + 1; // Ensure destination to have even size to a better result.
+    w =
+      Math.ceil(
+        Math.abs(this.bitmap.width * cosine) +
+          Math.abs(this.bitmap.height * sine)
+      ) + 1;
+    h =
+      Math.ceil(
+        Math.abs(this.bitmap.width * sine) +
+          Math.abs(this.bitmap.height * cosine)
+      ) + 1; // Ensure destination to have even size to a better result.
 
     if (w % 2 !== 0) {
       w++;
@@ -38,12 +46,22 @@ function advancedRotate(deg, mode) {
     }
 
     var c = this.cloneQuiet();
-    this.scanQuiet(0, 0, this.bitmap.width, this.bitmap.height, function (x, y, idx) {
-      this.bitmap.data.writeUInt32BE(this._background, idx);
-    });
+    this.scanQuiet(
+      0,
+      0,
+      this.bitmap.width,
+      this.bitmap.height,
+      function (x, y, idx) {
+        this.bitmap.data.writeUInt32BE(this._background, idx);
+      }
+    );
     var max = Math.max(w, h, this.bitmap.width, this.bitmap.height);
     this.resize(max, max, mode);
-    this.blit(c, this.bitmap.width / 2 - c.bitmap.width / 2, this.bitmap.height / 2 - c.bitmap.height / 2);
+    this.blit(
+      c,
+      this.bitmap.width / 2 - c.bitmap.width / 2,
+      this.bitmap.height / 2 - c.bitmap.height / 2
+    );
   }
 
   var bW = this.bitmap.width;
@@ -54,7 +72,7 @@ function advancedRotate(deg, mode) {
     return function (x, y) {
       return {
         x: x + deltaX,
-        y: y + deltaY
+        y: y + deltaY,
       };
     };
   }
@@ -65,11 +83,14 @@ function advancedRotate(deg, mode) {
   for (var y = 1; y <= bH; y++) {
     for (var x = 1; x <= bW; x++) {
       var cartesian = translate2Cartesian(x, y);
-      var source = translate2Screen(cosine * cartesian.x - sine * cartesian.y, cosine * cartesian.y + sine * cartesian.x);
-      var dstIdx = bW * (y - 1) + x - 1 << 2;
+      var source = translate2Screen(
+        cosine * cartesian.x - sine * cartesian.y,
+        cosine * cartesian.y + sine * cartesian.x
+      );
+      var dstIdx = (bW * (y - 1) + x - 1) << 2;
 
       if (source.x >= 0 && source.x < bW && source.y >= 0 && source.y < bH) {
-        var srcIdx = (bW * (source.y | 0) + source.x | 0) << 2;
+        var srcIdx = ((bW * (source.y | 0) + source.x) | 0) << 2;
         var pixelRGBA = this.bitmap.data.readUInt32BE(srcIdx);
         dstBuffer.writeUInt32BE(pixelRGBA, dstIdx);
       } else {
@@ -81,7 +102,7 @@ function advancedRotate(deg, mode) {
 
   this.bitmap.data = dstBuffer;
 
-  if (mode === true || typeof mode === 'string') {
+  if (mode === true || typeof mode === "string") {
     // now crop the image to the final size
     var _x = bW / 2 - w / 2;
 
@@ -102,25 +123,29 @@ var _default = function _default() {
      */
     rotate: function rotate(deg, mode, cb) {
       // enable overloading
-      if (typeof mode === 'undefined' || mode === null) {
+      if (typeof mode === "undefined" || mode === null) {
         // e.g. image.resize(120);
         // e.g. image.resize(120, null, cb);
         // e.g. image.resize(120, undefined, cb);
         mode = true;
       }
 
-      if (typeof mode === 'function' && typeof cb === 'undefined') {
+      if (typeof mode === "function" && typeof cb === "undefined") {
         // e.g. image.resize(120, cb);
         cb = mode;
         mode = true;
       }
 
-      if (typeof deg !== 'number') {
-        return _utils.throwError.call(this, 'deg must be a number', cb);
+      if (typeof deg !== "number") {
+        return _utils.throwError.call(this, "deg must be a number", cb);
       }
 
-      if (typeof mode !== 'boolean' && typeof mode !== 'string') {
-        return _utils.throwError.call(this, 'mode must be a boolean or a string', cb);
+      if (typeof mode !== "boolean" && typeof mode !== "string") {
+        return _utils.throwError.call(
+          this,
+          "mode must be a boolean or a string",
+          cb
+        );
       }
 
       advancedRotate.call(this, deg, mode, cb);
@@ -130,7 +155,7 @@ var _default = function _default() {
       }
 
       return this;
-    }
+    },
   };
 };
 

@@ -1,6 +1,6 @@
 "use strict";
 
-var assign = require('object-assign');
+var assign = require("object-assign");
 
 function ProjectsClient(client) {
   this.client = client;
@@ -9,13 +9,13 @@ function ProjectsClient(client) {
 assign(ProjectsClient.prototype, {
   list: function list() {
     return this.client.request({
-      uri: '/projects'
+      uri: "/projects",
     });
   },
   getById: function getById(id) {
     return this.client.request({
-      uri: "/projects/".concat(id)
+      uri: "/projects/".concat(id),
     });
-  }
+  },
 });
 module.exports = ProjectsClient;

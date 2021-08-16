@@ -7,7 +7,7 @@ export default function generateConstants() {
  */
 import { FLIPPED_ALIAS_KEYS } from "../../definitions";\n\n`;
 
-  Object.keys(definitions.FLIPPED_ALIAS_KEYS).forEach(type => {
+  Object.keys(definitions.FLIPPED_ALIAS_KEYS).forEach((type) => {
     output += `export const ${type.toUpperCase()}_TYPES = FLIPPED_ALIAS_KEYS["${type}"];\n`;
   });
 

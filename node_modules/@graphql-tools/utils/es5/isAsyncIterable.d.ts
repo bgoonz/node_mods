@@ -1,1 +1,3 @@
-export declare function isAsyncIterable<T>(value: any): value is AsyncIterableIterator<T>;
+export declare function isAsyncIterable<T>(
+  value: any
+): value is AsyncIterableIterator<T>;

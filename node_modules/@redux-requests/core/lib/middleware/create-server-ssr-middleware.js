@@ -23,13 +23,21 @@ var _default = function _default(requestsPromise, config) {
         if (config.isRequestAction(action)) {
           var _action$meta;
 
-          index += ((_action$meta = action.meta) == null ? void 0 : _action$meta.dependentRequestsNumber) !== undefined ? action.meta.dependentRequestsNumber + 1 : 1;
+          index +=
+            ((_action$meta = action.meta) == null
+              ? void 0
+              : _action$meta.dependentRequestsNumber) !== undefined
+              ? action.meta.dependentRequestsNumber + 1
+              : 1;
         } else if ((0, _actions.isResponseAction)(action)) {
           action = next(action);
 
           if (!(0, _actions.isSuccessAction)(action)) {
             errorActions.push(action);
-            index -= action.meta.dependentRequestsNumber !== undefined ? action.meta.dependentRequestsNumber + 1 : 1;
+            index -=
+              action.meta.dependentRequestsNumber !== undefined
+                ? action.meta.dependentRequestsNumber + 1
+                : 1;
             index -= action.meta.isDependentRequest ? 1 : 0;
           } else {
             successActions.push(action);
@@ -40,7 +48,7 @@ var _default = function _default(requestsPromise, config) {
             if (errorActions.length > 0) {
               requestsPromise.reject({
                 successActions: successActions,
-                errorActions: errorActions
+                errorActions: errorActions,
               });
             } else {
               requestsPromise.resolve(successActions);

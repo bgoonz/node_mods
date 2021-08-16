@@ -1,97 +1,105 @@
 export type Clock = {
-    now: number;
-    timeouts: any;
-    Date: typeof globalThis.Date;
-    loopLimit: number;
-    requestIdleCallback: (func: Function, timeout: number) => number;
-    cancelIdleCallback: (timerId: number) => void;
-    setTimeout: typeof setTimeout;
-    clearTimeout: typeof clearTimeout;
-    nextTick: (func: Function, ...args: any[]) => void;
-    queueMicrotask: typeof queueMicrotask;
-    setInterval: typeof setInterval;
-    clearInterval: typeof clearInterval;
-    setImmediate: (func: (...args: any[]) => void, ...args: any[]) => NodeTimer;
-    clearImmediate: (timerId: NodeTimer) => void;
-    countTimers: () => number;
-    requestAnimationFrame: (func: (timer: number) => void) => number;
-    cancelAnimationFrame: (timerId: number) => void;
-    runMicrotasks: () => void;
-    tick: (tickValue: string | number) => number;
-    tickAsync: (tickValue: string | number) => Promise<number>;
-    next: () => number;
-    nextAsync: () => Promise<number>;
-    runAll: () => number;
-    runToFrame: () => number;
-    runAllAsync: () => Promise<number>;
-    runToLast: () => number;
-    runToLastAsync: () => Promise<number>;
-    reset: () => void;
-    setSystemTime: (systemTime: number | Date) => void;
-    performance: ({
-        now(): number;
-    });
-    hrTime: (prev: any) => number[];
-    /**
-     * Uninstall the clock.
-     */
-    uninstall: () => void;
-    methods: any;
+  now: number;
+  timeouts: any;
+  Date: typeof globalThis.Date;
+  loopLimit: number;
+  requestIdleCallback: (func: Function, timeout: number) => number;
+  cancelIdleCallback: (timerId: number) => void;
+  setTimeout: typeof setTimeout;
+  clearTimeout: typeof clearTimeout;
+  nextTick: (func: Function, ...args: any[]) => void;
+  queueMicrotask: typeof queueMicrotask;
+  setInterval: typeof setInterval;
+  clearInterval: typeof clearInterval;
+  setImmediate: (func: (...args: any[]) => void, ...args: any[]) => NodeTimer;
+  clearImmediate: (timerId: NodeTimer) => void;
+  countTimers: () => number;
+  requestAnimationFrame: (func: (timer: number) => void) => number;
+  cancelAnimationFrame: (timerId: number) => void;
+  runMicrotasks: () => void;
+  tick: (tickValue: string | number) => number;
+  tickAsync: (tickValue: string | number) => Promise<number>;
+  next: () => number;
+  nextAsync: () => Promise<number>;
+  runAll: () => number;
+  runToFrame: () => number;
+  runAllAsync: () => Promise<number>;
+  runToLast: () => number;
+  runToLastAsync: () => Promise<number>;
+  reset: () => void;
+  setSystemTime: (systemTime: number | Date) => void;
+  performance: {
+    now(): number;
+  };
+  hrTime: (prev: any) => number[];
+  /**
+   * Uninstall the clock.
+   */
+  uninstall: () => void;
+  methods: any;
 };
 /**
  * Configuration object for the `install` method.
  */
 export type Config = {
-    /**
-     * a number (in milliseconds) or a Date object (default epoch)
-     */
-    now?: number | Date;
-    /**
-     * names of the methods that should be faked.
-     */
-    toFake?: string[];
-    /**
-     * the maximum number of timers that will be run when calling runAll()
-     */
-    loopLimit?: number;
-    /**
-     * tells FakeTimers to increment mocked time automatically (default false)
-     */
-    shouldAdvanceTime?: boolean;
-    /**
-     * increment mocked time every <<advanceTimeDelta>> ms (default: 20ms)
-     */
-    advanceTimeDelta?: number;
+  /**
+   * a number (in milliseconds) or a Date object (default epoch)
+   */
+  now?: number | Date;
+  /**
+   * names of the methods that should be faked.
+   */
+  toFake?: string[];
+  /**
+   * the maximum number of timers that will be run when calling runAll()
+   */
+  loopLimit?: number;
+  /**
+   * tells FakeTimers to increment mocked time automatically (default false)
+   */
+  shouldAdvanceTime?: boolean;
+  /**
+   * increment mocked time every <<advanceTimeDelta>> ms (default: 20ms)
+   */
+  advanceTimeDelta?: number;
 };
 export type NodeTimer = {
-    hasRef: () => boolean;
-    ref: () => any;
-    unref: () => any;
+  hasRef: () => boolean;
+  ref: () => any;
+  unref: () => any;
 };
 export namespace timers {
-    const setTimeout_1: typeof globalThis.setTimeout;
-    export { setTimeout_1 as setTimeout };
-    const clearTimeout_1: typeof globalThis.clearTimeout;
-    export { clearTimeout_1 as clearTimeout };
-    const setInterval_1: typeof globalThis.setInterval;
-    export { setInterval_1 as setInterval };
-    const clearInterval_1: typeof globalThis.clearInterval;
-    export { clearInterval_1 as clearInterval };
-    const Date_1: typeof globalThis.Date;
-    export { Date_1 as Date };
-    export const setImmediate: (fn: (...args: any[]) => void, ...args: any[]) => NodeTimer;
-    export const clearImmediate: (id: NodeTimer) => void;
-    export const hrtime: (time?: [number, number]) => [number, number];
-    export const nextTick: (fn: Function, ...args: any[]) => void;
-    export const performance: ({
+  const setTimeout_1: typeof globalThis.setTimeout;
+  export { setTimeout_1 as setTimeout };
+  const clearTimeout_1: typeof globalThis.clearTimeout;
+  export { clearTimeout_1 as clearTimeout };
+  const setInterval_1: typeof globalThis.setInterval;
+  export { setInterval_1 as setInterval };
+  const clearInterval_1: typeof globalThis.clearInterval;
+  export { clearInterval_1 as clearInterval };
+  const Date_1: typeof globalThis.Date;
+  export { Date_1 as Date };
+  export const setImmediate: (
+    fn: (...args: any[]) => void,
+    ...args: any[]
+  ) => NodeTimer;
+  export const clearImmediate: (id: NodeTimer) => void;
+  export const hrtime: (time?: [number, number]) => [number, number];
+  export const nextTick: (fn: Function, ...args: any[]) => void;
+  export const performance:
+    | {
         now(): number;
-    }) | undefined;
-    export const requestAnimationFrame: (fn: (timer: number) => void) => number;
-    const queueMicrotask_1: boolean | undefined;
-    export { queueMicrotask_1 as queueMicrotask };
-    export const cancelAnimationFrame: (id: number) => void;
-    export const requestIdleCallback: (fn: (deadline: any) => void, options?: any) => number;
-    export const cancelIdleCallback: (id: number) => void;
+      }
+    | undefined;
+  export const requestAnimationFrame: (fn: (timer: number) => void) => number;
+  const queueMicrotask_1: boolean | undefined;
+  export { queueMicrotask_1 as queueMicrotask };
+  export const cancelAnimationFrame: (id: number) => void;
+  export const requestIdleCallback: (
+    fn: (deadline: any) => void,
+    options?: any
+  ) => number;
+  export const cancelIdleCallback: (id: number) => void;
 }
 /**
  * @param {Date|number} [start] the system time - non-integer values are floored
@@ -162,26 +170,31 @@ export function install(config?: Config | undefined, ...args: any[]): Clock;
  * @param {*} _global Namespace to mock (e.g. `window`)
  */
 export function withGlobal(_global: any): {
-    timers: {
-        setTimeout: typeof setTimeout;
-        clearTimeout: typeof clearTimeout;
-        setInterval: typeof setInterval;
-        clearInterval: typeof clearInterval;
-        Date: typeof globalThis.Date;
-        setImmediate?: (fn: (...args: any[]) => void, ...args: any[]) => NodeTimer;
-        clearImmediate?: (id: NodeTimer) => void;
-        hrtime?: (time?: [number, number]) => [number, number];
-        nextTick?: (fn: Function, ...args: any[]) => void;
-        performance?: ({
-            now(): number;
-        }) | undefined;
-        requestAnimationFrame?: (fn: (timer: number) => void) => number;
-        queueMicrotask?: boolean | undefined;
-        cancelAnimationFrame?: (id: number) => void;
-        requestIdleCallback?: (fn: (deadline: any) => void, options?: any) => number;
-        cancelIdleCallback?: (id: number) => void;
-    };
-    createClock: (start?: Date | number, loopLimit?: number) => Clock;
-    install: (config?: Config | undefined, ...args: any[]) => Clock;
-    withGlobal: typeof withGlobal;
+  timers: {
+    setTimeout: typeof setTimeout;
+    clearTimeout: typeof clearTimeout;
+    setInterval: typeof setInterval;
+    clearInterval: typeof clearInterval;
+    Date: typeof globalThis.Date;
+    setImmediate?: (fn: (...args: any[]) => void, ...args: any[]) => NodeTimer;
+    clearImmediate?: (id: NodeTimer) => void;
+    hrtime?: (time?: [number, number]) => [number, number];
+    nextTick?: (fn: Function, ...args: any[]) => void;
+    performance?:
+      | {
+          now(): number;
+        }
+      | undefined;
+    requestAnimationFrame?: (fn: (timer: number) => void) => number;
+    queueMicrotask?: boolean | undefined;
+    cancelAnimationFrame?: (id: number) => void;
+    requestIdleCallback?: (
+      fn: (deadline: any) => void,
+      options?: any
+    ) => number;
+    cancelIdleCallback?: (id: number) => void;
+  };
+  createClock: (start?: Date | number, loopLimit?: number) => Clock;
+  install: (config?: Config | undefined, ...args: any[]) => Clock;
+  withGlobal: typeof withGlobal;
 };

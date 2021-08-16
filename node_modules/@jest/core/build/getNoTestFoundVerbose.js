@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = getNoTestFoundVerbose;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -15,10 +15,10 @@ function _chalk() {
   return data;
 }
 
-var _pluralize = _interopRequireDefault(require('./pluralize'));
+var _pluralize = _interopRequireDefault(require("./pluralize"));
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -28,12 +28,12 @@ function _interopRequireDefault(obj) {
  * LICENSE file in the root directory of this source tree.
  */
 function getNoTestFoundVerbose(testRunData, globalConfig) {
-  const individualResults = testRunData.map(testRun => {
+  const individualResults = testRunData.map((testRun) => {
     const stats = testRun.matches.stats || {};
     const config = testRun.context.config;
     const statsMessage = Object.keys(stats)
-      .map(key => {
-        if (key === 'roots' && config.roots.length === 1) {
+      .map((key) => {
+        if (key === "roots" && config.roots.length === 1) {
           return null;
         }
 
@@ -41,12 +41,12 @@ function getNoTestFoundVerbose(testRunData, globalConfig) {
 
         if (value) {
           const valueAsString = Array.isArray(value)
-            ? value.join(', ')
+            ? value.join(", ")
             : String(value);
           const matches = (0, _pluralize.default)(
-            'match',
+            "match",
             stats[key] || 0,
-            'es'
+            "es"
           );
           return `  ${key}: ${_chalk().default.yellow(
             valueAsString
@@ -55,14 +55,14 @@ function getNoTestFoundVerbose(testRunData, globalConfig) {
 
         return null;
       })
-      .filter(line => line)
-      .join('\n');
+      .filter((line) => line)
+      .join("\n");
     return testRun.matches.total
       ? `In ${_chalk().default.bold(config.rootDir)}\n` +
           `  ${(0, _pluralize.default)(
-            'file',
+            "file",
             testRun.matches.total || 0,
-            's'
+            "s"
           )} checked.\n` +
           statsMessage
       : `No files found in ${config.rootDir}.\n` +
@@ -75,8 +75,8 @@ function getNoTestFoundVerbose(testRunData, globalConfig) {
 
   if (globalConfig.runTestsByPath) {
     dataMessage = `Files: ${globalConfig.nonFlagArgs
-      .map(p => `"${p}"`)
-      .join(', ')}`;
+      .map((p) => `"${p}"`)
+      .join(", ")}`;
   } else {
     dataMessage = `Pattern: ${_chalk().default.yellow(
       globalConfig.testPathPattern
@@ -84,12 +84,12 @@ function getNoTestFoundVerbose(testRunData, globalConfig) {
   }
 
   return (
-    _chalk().default.bold('No tests found, exiting with code 1') +
-    '\n' +
-    'Run with `--passWithNoTests` to exit with code 0' +
-    '\n' +
-    individualResults.join('\n') +
-    '\n' +
+    _chalk().default.bold("No tests found, exiting with code 1") +
+    "\n" +
+    "Run with `--passWithNoTests` to exit with code 0" +
+    "\n" +
+    individualResults.join("\n") +
+    "\n" +
     dataMessage
   );
 }

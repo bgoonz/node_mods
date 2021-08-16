@@ -1,9 +1,13 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
-exports.default = exports.SHOULD_SKIP = exports.SHOULD_STOP = exports.REMOVED = void 0;
+exports.default =
+  exports.SHOULD_SKIP =
+  exports.SHOULD_STOP =
+  exports.REMOVED =
+    void 0;
 
 var virtualTypes = require("./lib/virtual-types");
 
@@ -70,14 +74,7 @@ class NodePath {
     this.scope = null;
   }
 
-  static get({
-    hub,
-    parentPath,
-    parent,
-    container,
-    listKey,
-    key
-  }) {
+  static get({ hub, parentPath, parent, container, listKey, key }) {
     if (!hub && parentPath) {
       hub = parentPath.hub;
     }
@@ -116,7 +113,7 @@ class NodePath {
       this.data = Object.create(null);
     }
 
-    return this.data[key] = val;
+    return (this.data[key] = val);
   }
 
   getData(key, def) {
@@ -150,7 +147,7 @@ class NodePath {
       let key = path.key;
       if (path.inList) key = `${path.listKey}[${key}]`;
       parts.unshift(key);
-    } while (path = path.parentPath);
+    } while ((path = path.parentPath));
 
     return parts.join(".");
   }
@@ -213,10 +210,22 @@ class NodePath {
       this._traverseFlags &= ~REMOVED;
     }
   }
-
 }
 
-Object.assign(NodePath.prototype, NodePath_ancestry, NodePath_inference, NodePath_replacement, NodePath_evaluation, NodePath_conversion, NodePath_introspection, NodePath_context, NodePath_removal, NodePath_modification, NodePath_family, NodePath_comments);
+Object.assign(
+  NodePath.prototype,
+  NodePath_ancestry,
+  NodePath_inference,
+  NodePath_replacement,
+  NodePath_evaluation,
+  NodePath_conversion,
+  NodePath_introspection,
+  NodePath_context,
+  NodePath_removal,
+  NodePath_modification,
+  NodePath_family,
+  NodePath_comments
+);
 
 for (const type of t.TYPES) {
   const typeKey = `is${type}`;

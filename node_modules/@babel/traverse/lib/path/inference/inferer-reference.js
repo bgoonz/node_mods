@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = _default;
 
@@ -15,7 +15,11 @@ function _default(node) {
     if (binding.identifier.typeAnnotation) {
       return binding.identifier.typeAnnotation;
     } else {
-      return getTypeAnnotationBindingConstantViolations(binding, this, node.name);
+      return getTypeAnnotationBindingConstantViolations(
+        binding,
+        this,
+        node.name
+      );
     }
   }
 
@@ -23,18 +27,28 @@ function _default(node) {
     return t.voidTypeAnnotation();
   } else if (node.name === "NaN" || node.name === "Infinity") {
     return t.numberTypeAnnotation();
-  } else if (node.name === "arguments") {}
+  } else if (node.name === "arguments") {
+  }
 }
 
 function getTypeAnnotationBindingConstantViolations(binding, path, name) {
   const types = [];
   const functionConstantViolations = [];
-  let constantViolations = getConstantViolationsBefore(binding, path, functionConstantViolations);
+  let constantViolations = getConstantViolationsBefore(
+    binding,
+    path,
+    functionConstantViolations
+  );
   const testType = getConditionalAnnotation(binding, path, name);
 
   if (testType) {
-    const testConstantViolations = getConstantViolationsBefore(binding, testType.ifStatement);
-    constantViolations = constantViolations.filter(path => testConstantViolations.indexOf(path) < 0);
+    const testConstantViolations = getConstantViolationsBefore(
+      binding,
+      testType.ifStatement
+    );
+    constantViolations = constantViolations.filter(
+      (path) => testConstantViolations.indexOf(path) < 0
+    );
     types.push(testType.typeAnnotation);
   }
 
@@ -64,7 +78,7 @@ function getTypeAnnotationBindingConstantViolations(binding, path, name) {
 function getConstantViolationsBefore(binding, path, functions) {
   const violations = binding.constantViolations.slice();
   violations.unshift(binding.path);
-  return violations.filter(violation => {
+  return violations.filter((violation) => {
     violation = violation.resolve();
 
     const status = violation._guessExecutionStatusRelativeTo(path);
@@ -80,13 +94,17 @@ function inferAnnotationFromBinaryExpression(name, path) {
   const left = path.get("left").resolve();
   let target;
 
-  if (left.isIdentifier({
-    name
-  })) {
+  if (
+    left.isIdentifier({
+      name,
+    })
+  ) {
     target = right;
-  } else if (right.isIdentifier({
-    name
-  })) {
+  } else if (
+    right.isIdentifier({
+      name,
+    })
+  ) {
     target = left;
   }
 
@@ -106,22 +124,29 @@ function inferAnnotationFromBinaryExpression(name, path) {
   let typeofPath;
   let typePath;
 
-  if (left.isUnaryExpression({
-    operator: "typeof"
-  })) {
+  if (
+    left.isUnaryExpression({
+      operator: "typeof",
+    })
+  ) {
     typeofPath = left;
     typePath = right;
-  } else if (right.isUnaryExpression({
-    operator: "typeof"
-  })) {
+  } else if (
+    right.isUnaryExpression({
+      operator: "typeof",
+    })
+  ) {
     typeofPath = right;
     typePath = left;
   }
 
   if (!typeofPath) return;
-  if (!typeofPath.get("argument").isIdentifier({
-    name
-  })) return;
+  if (
+    !typeofPath.get("argument").isIdentifier({
+      name,
+    })
+  )
+    return;
   typePath = typePath.resolve();
   if (!typePath.isLiteral()) return;
   const typeValue = typePath.node.value;
@@ -132,7 +157,7 @@ function inferAnnotationFromBinaryExpression(name, path) {
 function getParentConditionalPath(binding, path, name) {
   let parentPath;
 
-  while (parentPath = path.parentPath) {
+  while ((parentPath = path.parentPath)) {
     if (parentPath.isIfStatement() || parentPath.isConditionalExpression()) {
       if (path.key === "test") {
         return;
@@ -174,20 +199,20 @@ function getConditionalAnnotation(binding, path, name) {
     if (t.isTSTypeAnnotation(types[0]) && t.createTSUnionType) {
       return {
         typeAnnotation: t.createTSUnionType(types),
-        ifStatement
+        ifStatement,
       };
     }
 
     if (t.createFlowUnionType) {
       return {
         typeAnnotation: t.createFlowUnionType(types),
-        ifStatement
+        ifStatement,
       };
     }
 
     return {
       typeAnnotation: t.createUnionTypeAnnotation(types),
-      ifStatement
+      ifStatement,
     };
   }
 

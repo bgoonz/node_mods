@@ -1,6 +1,6 @@
 declare namespace slugify {
-	interface Options {
-		/**
+  interface Options {
+    /**
 		@default '-'
 
 		@example
@@ -17,9 +17,9 @@ declare namespace slugify {
 		//=> 'barandbaz'
 		```
 		*/
-		readonly separator?: string;
+    readonly separator?: string;
 
-		/**
+    /**
 		Make the slug lowercase.
 
 		@default true
@@ -35,9 +35,9 @@ declare namespace slugify {
 		//=> 'Deja-Vu'
 		```
 		*/
-		readonly lowercase?: boolean;
+    readonly lowercase?: boolean;
 
-		/**
+    /**
 		Convert camelcase to separate words. Internally it does `fooBar` → `foo bar`.
 
 		@default true
@@ -53,9 +53,9 @@ declare namespace slugify {
 		//=> 'foobar'
 		```
 		*/
-		readonly decamelize?: boolean;
+    readonly decamelize?: boolean;
 
-		/**
+    /**
 		Add your own custom replacements.
 
 		The replacements are run on the original string before any other transformations.
@@ -92,9 +92,9 @@ declare namespace slugify {
 		//=> 'i-love-dogs'
 		```
 		*/
-		readonly customReplacements?: ReadonlyArray<[string, string]>;
+    readonly customReplacements?: ReadonlyArray<[string, string]>;
 
-		/**
+    /**
 		If your string starts with an underscore, it will be preserved in the slugified string.
 
 		Sometimes leading underscores are intentional, for example, filenames representing hidden paths on a website.
@@ -112,12 +112,12 @@ declare namespace slugify {
 		//=> '_foo-bar'
 		```
 		*/
-		readonly preserveLeadingUnderscore?: boolean;
-	}
+    readonly preserveLeadingUnderscore?: boolean;
+  }
 }
 
 declare const slugify: {
-	/**
+  /**
 	Returns a new instance of `slugify(string, options?)` with a counter to handle multiple occurences of the same string.
 
 	@param string - String to slugify.
@@ -155,8 +155,8 @@ declare const slugify: {
 
 	You can then use `slugify.counter()` to generate unique HTML `id`'s to ensure anchors will link to the right headline.
 	*/
-	counter: () => {
-		/**
+  counter: () => {
+    /**
 		Reset the counter.
 
 		@example
@@ -176,15 +176,12 @@ declare const slugify: {
 		//=> 'foo-bar'
 		```
 		*/
-		reset: () => void;
+    reset: () => void;
 
-		(
-			string: string,
-			options?: slugify.Options
-		): string;
-	};
+    (string: string, options?: slugify.Options): string;
+  };
 
-	/**
+  /**
 	Slugify a string.
 
 	@param string - String to slugify.
@@ -206,10 +203,7 @@ declare const slugify: {
 	//=> 'ya-lyublyu-edinorogov'
 	```
 	*/
-	(
-		string: string,
-		options?: slugify.Options
-	): string;
+  (string: string, options?: slugify.Options): string;
 };
 
 export = slugify;

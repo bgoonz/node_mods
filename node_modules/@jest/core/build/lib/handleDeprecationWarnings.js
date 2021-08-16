@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,7 +16,7 @@ function _chalk() {
 }
 
 function _jestWatcher() {
-  const data = require('jest-watcher');
+  const data = require("jest-watcher");
 
   _jestWatcher = function () {
     return data;
@@ -26,7 +26,7 @@ function _jestWatcher() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -37,29 +37,29 @@ function _interopRequireDefault(obj) {
  */
 var _default = (pipe, stdin = process.stdin) =>
   new Promise((resolve, reject) => {
-    if (typeof stdin.setRawMode === 'function') {
+    if (typeof stdin.setRawMode === "function") {
       const messages = [
-        _chalk().default.red('There are deprecation warnings.\n'),
-        _chalk().default.dim(' \u203A Press ') +
-          'Enter' +
-          _chalk().default.dim(' to continue.'),
-        _chalk().default.dim(' \u203A Press ') +
-          'Esc' +
-          _chalk().default.dim(' to exit.')
+        _chalk().default.red("There are deprecation warnings.\n"),
+        _chalk().default.dim(" \u203A Press ") +
+          "Enter" +
+          _chalk().default.dim(" to continue."),
+        _chalk().default.dim(" \u203A Press ") +
+          "Esc" +
+          _chalk().default.dim(" to exit."),
       ];
-      pipe.write(messages.join('\n'));
+      pipe.write(messages.join("\n"));
       stdin.setRawMode(true);
       stdin.resume();
-      stdin.setEncoding('utf8'); // this is a string since we set encoding above
+      stdin.setEncoding("utf8"); // this is a string since we set encoding above
 
-      stdin.on('data', key => {
+      stdin.on("data", (key) => {
         if (key === _jestWatcher().KEYS.ENTER) {
           resolve();
         } else if (
           [
             _jestWatcher().KEYS.ESCAPE,
             _jestWatcher().KEYS.CONTROL_C,
-            _jestWatcher().KEYS.CONTROL_D
+            _jestWatcher().KEYS.CONTROL_D,
           ].indexOf(key) !== -1
         ) {
           reject();

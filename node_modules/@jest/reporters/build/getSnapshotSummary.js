@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,7 +16,7 @@ function _chalk() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -25,10 +25,10 @@ function _jestUtil() {
   return data;
 }
 
-var _utils = require('./utils');
+var _utils = require("./utils");
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -37,9 +37,9 @@ function _interopRequireDefault(obj) {
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-const ARROW = ' \u203A ';
-const DOWN_ARROW = ' \u21B3 ';
-const DOT = ' \u2022 ';
+const ARROW = " \u203A ";
+const DOWN_ARROW = " \u21B3 ";
+const DOT = " \u2022 ";
 
 const FAIL_COLOR = _chalk().default.bold.red;
 
@@ -57,17 +57,17 @@ const SNAPSHOT_UPDATED = _chalk().default.bold.green;
 
 var _default = (snapshots, globalConfig, updateCommand) => {
   const summary = [];
-  summary.push(SNAPSHOT_SUMMARY('Snapshot Summary'));
+  summary.push(SNAPSHOT_SUMMARY("Snapshot Summary"));
 
   if (snapshots.added) {
     summary.push(
       SNAPSHOT_ADDED(
         ARROW +
-          (0, _jestUtil().pluralize)('snapshot', snapshots.added) +
-          ' written '
+          (0, _jestUtil().pluralize)("snapshot", snapshots.added) +
+          " written "
       ) +
         `from ${(0, _jestUtil().pluralize)(
-          'test suite',
+          "test suite",
           snapshots.filesAdded
         )}.`
     );
@@ -77,16 +77,16 @@ var _default = (snapshots, globalConfig, updateCommand) => {
     summary.push(
       FAIL_COLOR(
         `${ARROW}${(0, _jestUtil().pluralize)(
-          'snapshot',
+          "snapshot",
           snapshots.unmatched
         )} failed`
       ) +
         ` from ${(0, _jestUtil().pluralize)(
-          'test suite',
+          "test suite",
           snapshots.filesUnmatched
         )}. ` +
         SNAPSHOT_NOTE(
-          'Inspect your code changes or ' + updateCommand + ' to update them.'
+          "Inspect your code changes or " + updateCommand + " to update them."
         )
     );
   }
@@ -95,11 +95,11 @@ var _default = (snapshots, globalConfig, updateCommand) => {
     summary.push(
       SNAPSHOT_UPDATED(
         ARROW +
-          (0, _jestUtil().pluralize)('snapshot', snapshots.updated) +
-          ' updated '
+          (0, _jestUtil().pluralize)("snapshot", snapshots.updated) +
+          " updated "
       ) +
         `from ${(0, _jestUtil().pluralize)(
-          'test suite',
+          "test suite",
           snapshots.filesUpdated
         )}.`
     );
@@ -110,12 +110,12 @@ var _default = (snapshots, globalConfig, updateCommand) => {
       summary.push(
         SNAPSHOT_REMOVED(
           `${ARROW}${(0, _jestUtil().pluralize)(
-            'snapshot file',
+            "snapshot file",
             snapshots.filesRemoved
           )} removed `
         ) +
           `from ${(0, _jestUtil().pluralize)(
-            'test suite',
+            "test suite",
             snapshots.filesRemoved
           )}.`
       );
@@ -123,17 +123,17 @@ var _default = (snapshots, globalConfig, updateCommand) => {
       summary.push(
         OBSOLETE_COLOR(
           `${ARROW}${(0, _jestUtil().pluralize)(
-            'snapshot file',
+            "snapshot file",
             snapshots.filesRemoved
           )} obsolete `
         ) +
           `from ${(0, _jestUtil().pluralize)(
-            'test suite',
+            "test suite",
             snapshots.filesRemoved
           )}. ` +
           SNAPSHOT_NOTE(
             `To remove ${
-              snapshots.filesRemoved === 1 ? 'it' : 'them all'
+              snapshots.filesRemoved === 1 ? "it" : "them all"
             }, ${updateCommand}.`
           )
       );
@@ -145,7 +145,7 @@ var _default = (snapshots, globalConfig, updateCommand) => {
     summary.push(
       `  ${DOWN_ARROW} ${DOT}${(0, _utils.formatTestPath)(globalConfig, head)}`
     );
-    tail.forEach(key => {
+    tail.forEach((key) => {
       summary.push(
         `      ${DOT}${(0, _utils.formatTestPath)(globalConfig, key)}`
       );
@@ -157,12 +157,12 @@ var _default = (snapshots, globalConfig, updateCommand) => {
       summary.push(
         SNAPSHOT_REMOVED(
           `${ARROW}${(0, _jestUtil().pluralize)(
-            'snapshot',
+            "snapshot",
             snapshots.unchecked
           )} removed `
         ) +
           `from ${(0, _jestUtil().pluralize)(
-            'test suite',
+            "test suite",
             snapshots.uncheckedKeysByFile.length
           )}.`
       );
@@ -170,30 +170,30 @@ var _default = (snapshots, globalConfig, updateCommand) => {
       summary.push(
         OBSOLETE_COLOR(
           `${ARROW}${(0, _jestUtil().pluralize)(
-            'snapshot',
+            "snapshot",
             snapshots.unchecked
           )} obsolete `
         ) +
           `from ${(0, _jestUtil().pluralize)(
-            'test suite',
+            "test suite",
             snapshots.uncheckedKeysByFile.length
           )}. ` +
           SNAPSHOT_NOTE(
             `To remove ${
-              snapshots.unchecked === 1 ? 'it' : 'them all'
+              snapshots.unchecked === 1 ? "it" : "them all"
             }, ${updateCommand}.`
           )
       );
     }
 
-    snapshots.uncheckedKeysByFile.forEach(uncheckedFile => {
+    snapshots.uncheckedKeysByFile.forEach((uncheckedFile) => {
       summary.push(
         `  ${DOWN_ARROW}${(0, _utils.formatTestPath)(
           globalConfig,
           uncheckedFile.filePath
         )}`
       );
-      uncheckedFile.keys.forEach(key => {
+      uncheckedFile.keys.forEach((key) => {
         summary.push(`      ${DOT}${key}`);
       });
     });

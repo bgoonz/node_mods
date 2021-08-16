@@ -1,5 +1,5 @@
-import defaultConfig from '../default-config';
-import { mergeData } from './merge-data';
+import defaultConfig from "../default-config";
+import { mergeData } from "./merge-data";
 
 var stipFromDeps = function stipFromDeps(data, config, root) {
   if (root === void 0) {
@@ -12,14 +12,14 @@ var stipFromDeps = function stipFromDeps(data, config, root) {
     });
   }
 
-  if (data !== null && typeof data === 'object') {
+  if (data !== null && typeof data === "object") {
     if (config.shouldObjectBeNormalized(data) && root) {
       return "@@" + config.getNormalisationObjectKey(data);
     }
 
     return Object.entries(data).reduce(function (prev, _ref) {
       var k = _ref[0],
-          v = _ref[1];
+        v = _ref[1];
       prev[k] = stipFromDeps(v, config);
       return prev;
     }, {});
@@ -28,33 +28,53 @@ var stipFromDeps = function stipFromDeps(data, config, root) {
   return data;
 };
 
-export var getDependencies = function getDependencies(data, config, usedKeys, path) {
+export var getDependencies = function getDependencies(
+  data,
+  config,
+  usedKeys,
+  path
+) {
   if (config === void 0) {
     config = defaultConfig;
   }
 
   if (path === void 0) {
-    path = '';
+    path = "";
   }
 
   usedKeys = usedKeys || {};
 
   if (Array.isArray(data)) {
-    return [data.reduce(function (prev, current) {
-      return [].concat(prev, getDependencies(current, config, usedKeys, path)[0]);
-    }, []), usedKeys];
+    return [
+      data.reduce(function (prev, current) {
+        return [].concat(
+          prev,
+          getDependencies(current, config, usedKeys, path)[0]
+        );
+      }, []),
+      usedKeys,
+    ];
   }
 
-  if (data !== null && typeof data === 'object') {
+  if (data !== null && typeof data === "object") {
     if (config.shouldObjectBeNormalized(data)) {
       usedKeys[path] = Object.keys(data);
     }
 
-    return [Object.entries(data).reduce(function (prev, _ref2) {
-      var k = _ref2[0],
-          v = _ref2[1];
-      return [].concat(prev, getDependencies(v, config, usedKeys, path + "." + k)[0]);
-    }, config.shouldObjectBeNormalized(data) ? [data] : []), usedKeys];
+    return [
+      Object.entries(data).reduce(
+        function (prev, _ref2) {
+          var k = _ref2[0],
+            v = _ref2[1];
+          return [].concat(
+            prev,
+            getDependencies(v, config, usedKeys, path + "." + k)[0]
+          );
+        },
+        config.shouldObjectBeNormalized(data) ? [data] : []
+      ),
+      usedKeys,
+    ];
   }
 
   return [[], usedKeys];
@@ -65,12 +85,18 @@ export var normalize = function normalize(data, config) {
   }
 
   var _getDependencies = getDependencies(data, config),
-      dependencies = _getDependencies[0],
-      usedKeys = _getDependencies[1];
+    dependencies = _getDependencies[0],
+    usedKeys = _getDependencies[1];
 
-  return [stipFromDeps(data, config, true), dependencies.reduce(function (prev, v) {
-    var key = config.getNormalisationObjectKey(v);
-    prev["@@" + key] = prev["@@" + key] ? mergeData(prev["@@" + key], stipFromDeps(v, config, false)) : stipFromDeps(v, config, false);
-    return prev;
-  }, {}), usedKeys];
+  return [
+    stipFromDeps(data, config, true),
+    dependencies.reduce(function (prev, v) {
+      var key = config.getNormalisationObjectKey(v);
+      prev["@@" + key] = prev["@@" + key]
+        ? mergeData(prev["@@" + key], stipFromDeps(v, config, false))
+        : stipFromDeps(v, config, false);
+      return prev;
+    }, {}),
+    usedKeys,
+  ];
 };

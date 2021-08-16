@@ -3,7 +3,7 @@
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
@@ -16,13 +16,13 @@ var _resize2 = _interopRequireDefault(require("./modules/resize2"));
 var _default = function _default() {
   return {
     constants: {
-      RESIZE_NEAREST_NEIGHBOR: 'nearestNeighbor',
-      RESIZE_BILINEAR: 'bilinearInterpolation',
-      RESIZE_BICUBIC: 'bicubicInterpolation',
-      RESIZE_HERMITE: 'hermiteInterpolation',
-      RESIZE_BEZIER: 'bezierInterpolation'
+      RESIZE_NEAREST_NEIGHBOR: "nearestNeighbor",
+      RESIZE_BILINEAR: "bilinearInterpolation",
+      RESIZE_BICUBIC: "bicubicInterpolation",
+      RESIZE_HERMITE: "hermiteInterpolation",
+      RESIZE_BEZIER: "bezierInterpolation",
     },
-    "class": {
+    class: {
       /**
        * Resizes the image to a set width and height using a 2-pass bilinear algorithm
        * @param {number} w the width to resize the image to (or Jimp.AUTO)
@@ -32,17 +32,21 @@ var _default = function _default() {
        * @returns {Jimp} this for chaining of methods
        */
       resize: function resize(w, h, mode, cb) {
-        if (typeof w !== 'number' || typeof h !== 'number') {
-          return _utils.throwError.call(this, 'w and h must be numbers', cb);
+        if (typeof w !== "number" || typeof h !== "number") {
+          return _utils.throwError.call(this, "w and h must be numbers", cb);
         }
 
-        if (typeof mode === 'function' && typeof cb === 'undefined') {
+        if (typeof mode === "function" && typeof cb === "undefined") {
           cb = mode;
           mode = null;
         }
 
         if (w === this.constructor.AUTO && h === this.constructor.AUTO) {
-          return _utils.throwError.call(this, 'w and h cannot both be set to auto', cb);
+          return _utils.throwError.call(
+            this,
+            "w and h cannot both be set to auto",
+            cb
+          );
         }
 
         if (w === this.constructor.AUTO) {
@@ -54,18 +58,21 @@ var _default = function _default() {
         }
 
         if (w < 0 || h < 0) {
-          return _utils.throwError.call(this, 'w and h must be positive numbers', cb);
+          return _utils.throwError.call(
+            this,
+            "w and h must be positive numbers",
+            cb
+          );
         } // round inputs
-
 
         w = Math.round(w);
         h = Math.round(h);
 
-        if (typeof _resize2["default"][mode] === 'function') {
+        if (typeof _resize2["default"][mode] === "function") {
           var dst = {
             data: Buffer.alloc(w * h * 4),
             width: w,
-            height: h
+            height: h,
           };
 
           _resize2["default"][mode](this.bitmap, dst);
@@ -73,11 +80,19 @@ var _default = function _default() {
           this.bitmap = dst;
         } else {
           var image = this;
-          var resize = new _resize["default"](this.bitmap.width, this.bitmap.height, w, h, true, true, function (buffer) {
-            image.bitmap.data = Buffer.from(buffer);
-            image.bitmap.width = w;
-            image.bitmap.height = h;
-          });
+          var resize = new _resize["default"](
+            this.bitmap.width,
+            this.bitmap.height,
+            w,
+            h,
+            true,
+            true,
+            function (buffer) {
+              image.bitmap.data = Buffer.from(buffer);
+              image.bitmap.width = w;
+              image.bitmap.height = h;
+            }
+          );
           resize.resize(this.bitmap.data);
         }
 
@@ -86,8 +101,8 @@ var _default = function _default() {
         }
 
         return this;
-      }
-    }
+      },
+    },
   };
 };
 

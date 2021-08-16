@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
 function _expect() {
-  const data = _interopRequireDefault(require('expect'));
+  const data = _interopRequireDefault(require("expect"));
 
   _expect = function () {
     return data;
@@ -11,7 +11,7 @@ function _expect() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -21,5 +21,5 @@ function _interopRequireDefault(obj) {
  * LICENSE file in the root directory of this source tree.
  */
 throw new Error(
-  'Do not import `@jest/globals` outside of the Jest test environment'
+  "Do not import `@jest/globals` outside of the Jest test environment"
 );

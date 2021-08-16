@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.srcOver = srcOver;
 exports.dstOver = dstOver;
@@ -16,7 +16,8 @@ exports.difference = difference;
 exports.exclusion = exclusion;
 
 function srcOver(src, dst) {
-  var ops = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ops =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   src.a *= ops;
   var a = dst.a + src.a - dst.a * src.a;
   var r = (src.r * src.a + dst.r * dst.a * (1 - src.a)) / a;
@@ -26,12 +27,13 @@ function srcOver(src, dst) {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 
 function dstOver(src, dst) {
-  var ops = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ops =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   src.a *= ops;
   var a = dst.a + src.a - dst.a * src.a;
   var r = (dst.r * dst.a + src.r * src.a * (1 - dst.a)) / a;
@@ -41,12 +43,13 @@ function dstOver(src, dst) {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 
 function multiply(src, dst) {
-  var ops = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ops =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   src.a *= ops;
   var a = dst.a + src.a - dst.a * src.a;
   var sra = src.r * src.a;
@@ -62,12 +65,13 @@ function multiply(src, dst) {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 
 function add(src, dst) {
-  var ops = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ops =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   src.a *= ops;
   var a = dst.a + src.a - dst.a * src.a;
   var sra = src.r * src.a;
@@ -83,12 +87,13 @@ function add(src, dst) {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 
 function screen(src, dst) {
-  var ops = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ops =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   src.a *= ops;
   var a = dst.a + src.a - dst.a * src.a;
   var sra = src.r * src.a;
@@ -97,19 +102,38 @@ function screen(src, dst) {
   var dra = dst.r * dst.a;
   var dga = dst.g * dst.a;
   var dba = dst.b * dst.a;
-  var r = (sra * dst.a + dra * src.a - sra * dra + sra * (1 - dst.a) + dra * (1 - src.a)) / a;
-  var g = (sga * dst.a + dga * src.a - sga * dga + sga * (1 - dst.a) + dga * (1 - src.a)) / a;
-  var b = (sba * dst.a + dba * src.a - sba * dba + sba * (1 - dst.a) + dba * (1 - src.a)) / a;
+  var r =
+    (sra * dst.a +
+      dra * src.a -
+      sra * dra +
+      sra * (1 - dst.a) +
+      dra * (1 - src.a)) /
+    a;
+  var g =
+    (sga * dst.a +
+      dga * src.a -
+      sga * dga +
+      sga * (1 - dst.a) +
+      dga * (1 - src.a)) /
+    a;
+  var b =
+    (sba * dst.a +
+      dba * src.a -
+      sba * dba +
+      sba * (1 - dst.a) +
+      dba * (1 - src.a)) /
+    a;
   return {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 
 function overlay(src, dst) {
-  var ops = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ops =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   src.a *= ops;
   var a = dst.a + src.a - dst.a * src.a;
   var sra = src.r * src.a;
@@ -118,19 +142,32 @@ function overlay(src, dst) {
   var dra = dst.r * dst.a;
   var dga = dst.g * dst.a;
   var dba = dst.b * dst.a;
-  var r = (2 * dra <= dst.a ? 2 * sra * dra + sra * (1 - dst.a) + dra * (1 - src.a) : sra * (1 + dst.a) + dra * (1 + src.a) - 2 * dra * sra - dst.a * src.a) / a;
-  var g = (2 * dga <= dst.a ? 2 * sga * dga + sga * (1 - dst.a) + dga * (1 - src.a) : sga * (1 + dst.a) + dga * (1 + src.a) - 2 * dga * sga - dst.a * src.a) / a;
-  var b = (2 * dba <= dst.a ? 2 * sba * dba + sba * (1 - dst.a) + dba * (1 - src.a) : sba * (1 + dst.a) + dba * (1 + src.a) - 2 * dba * sba - dst.a * src.a) / a;
+  var r =
+    (2 * dra <= dst.a
+      ? 2 * sra * dra + sra * (1 - dst.a) + dra * (1 - src.a)
+      : sra * (1 + dst.a) + dra * (1 + src.a) - 2 * dra * sra - dst.a * src.a) /
+    a;
+  var g =
+    (2 * dga <= dst.a
+      ? 2 * sga * dga + sga * (1 - dst.a) + dga * (1 - src.a)
+      : sga * (1 + dst.a) + dga * (1 + src.a) - 2 * dga * sga - dst.a * src.a) /
+    a;
+  var b =
+    (2 * dba <= dst.a
+      ? 2 * sba * dba + sba * (1 - dst.a) + dba * (1 - src.a)
+      : sba * (1 + dst.a) + dba * (1 + src.a) - 2 * dba * sba - dst.a * src.a) /
+    a;
   return {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 
 function darken(src, dst) {
-  var ops = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ops =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   src.a *= ops;
   var a = dst.a + src.a - dst.a * src.a;
   var sra = src.r * src.a;
@@ -139,19 +176,32 @@ function darken(src, dst) {
   var dra = dst.r * dst.a;
   var dga = dst.g * dst.a;
   var dba = dst.b * dst.a;
-  var r = (Math.min(sra * dst.a, dra * src.a) + sra * (1 - dst.a) + dra * (1 - src.a)) / a;
-  var g = (Math.min(sga * dst.a, dga * src.a) + sga * (1 - dst.a) + dga * (1 - src.a)) / a;
-  var b = (Math.min(sba * dst.a, dba * src.a) + sba * (1 - dst.a) + dba * (1 - src.a)) / a;
+  var r =
+    (Math.min(sra * dst.a, dra * src.a) +
+      sra * (1 - dst.a) +
+      dra * (1 - src.a)) /
+    a;
+  var g =
+    (Math.min(sga * dst.a, dga * src.a) +
+      sga * (1 - dst.a) +
+      dga * (1 - src.a)) /
+    a;
+  var b =
+    (Math.min(sba * dst.a, dba * src.a) +
+      sba * (1 - dst.a) +
+      dba * (1 - src.a)) /
+    a;
   return {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 
 function lighten(src, dst) {
-  var ops = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ops =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   src.a *= ops;
   var a = dst.a + src.a - dst.a * src.a;
   var sra = src.r * src.a;
@@ -160,19 +210,32 @@ function lighten(src, dst) {
   var dra = dst.r * dst.a;
   var dga = dst.g * dst.a;
   var dba = dst.b * dst.a;
-  var r = (Math.max(sra * dst.a, dra * src.a) + sra * (1 - dst.a) + dra * (1 - src.a)) / a;
-  var g = (Math.max(sga * dst.a, dga * src.a) + sga * (1 - dst.a) + dga * (1 - src.a)) / a;
-  var b = (Math.max(sba * dst.a, dba * src.a) + sba * (1 - dst.a) + dba * (1 - src.a)) / a;
+  var r =
+    (Math.max(sra * dst.a, dra * src.a) +
+      sra * (1 - dst.a) +
+      dra * (1 - src.a)) /
+    a;
+  var g =
+    (Math.max(sga * dst.a, dga * src.a) +
+      sga * (1 - dst.a) +
+      dga * (1 - src.a)) /
+    a;
+  var b =
+    (Math.max(sba * dst.a, dba * src.a) +
+      sba * (1 - dst.a) +
+      dba * (1 - src.a)) /
+    a;
   return {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 
 function hardLight(src, dst) {
-  var ops = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ops =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   src.a *= ops;
   var a = dst.a + src.a - dst.a * src.a;
   var sra = src.r * src.a;
@@ -181,19 +244,32 @@ function hardLight(src, dst) {
   var dra = dst.r * dst.a;
   var dga = dst.g * dst.a;
   var dba = dst.b * dst.a;
-  var r = (2 * sra <= src.a ? 2 * sra * dra + sra * (1 - dst.a) + dra * (1 - src.a) : sra * (1 + dst.a) + dra * (1 + src.a) - 2 * dra * sra - dst.a * src.a) / a;
-  var g = (2 * sga <= src.a ? 2 * sga * dga + sga * (1 - dst.a) + dga * (1 - src.a) : sga * (1 + dst.a) + dga * (1 + src.a) - 2 * dga * sga - dst.a * src.a) / a;
-  var b = (2 * sba <= src.a ? 2 * sba * dba + sba * (1 - dst.a) + dba * (1 - src.a) : sba * (1 + dst.a) + dba * (1 + src.a) - 2 * dba * sba - dst.a * src.a) / a;
+  var r =
+    (2 * sra <= src.a
+      ? 2 * sra * dra + sra * (1 - dst.a) + dra * (1 - src.a)
+      : sra * (1 + dst.a) + dra * (1 + src.a) - 2 * dra * sra - dst.a * src.a) /
+    a;
+  var g =
+    (2 * sga <= src.a
+      ? 2 * sga * dga + sga * (1 - dst.a) + dga * (1 - src.a)
+      : sga * (1 + dst.a) + dga * (1 + src.a) - 2 * dga * sga - dst.a * src.a) /
+    a;
+  var b =
+    (2 * sba <= src.a
+      ? 2 * sba * dba + sba * (1 - dst.a) + dba * (1 - src.a)
+      : sba * (1 + dst.a) + dba * (1 + src.a) - 2 * dba * sba - dst.a * src.a) /
+    a;
   return {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 
 function difference(src, dst) {
-  var ops = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ops =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   src.a *= ops;
   var a = dst.a + src.a - dst.a * src.a;
   var sra = src.r * src.a;
@@ -209,12 +285,13 @@ function difference(src, dst) {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 
 function exclusion(src, dst) {
-  var ops = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var ops =
+    arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   src.a *= ops;
   var a = dst.a + src.a - dst.a * src.a;
   var sra = src.r * src.a;
@@ -223,14 +300,32 @@ function exclusion(src, dst) {
   var dra = dst.r * dst.a;
   var dga = dst.g * dst.a;
   var dba = dst.b * dst.a;
-  var r = (sra * dst.a + dra * src.a - 2 * sra * dra + sra * (1 - dst.a) + dra * (1 - src.a)) / a;
-  var g = (sga * dst.a + dga * src.a - 2 * sga * dga + sga * (1 - dst.a) + dga * (1 - src.a)) / a;
-  var b = (sba * dst.a + dba * src.a - 2 * sba * dba + sba * (1 - dst.a) + dba * (1 - src.a)) / a;
+  var r =
+    (sra * dst.a +
+      dra * src.a -
+      2 * sra * dra +
+      sra * (1 - dst.a) +
+      dra * (1 - src.a)) /
+    a;
+  var g =
+    (sga * dst.a +
+      dga * src.a -
+      2 * sga * dga +
+      sga * (1 - dst.a) +
+      dga * (1 - src.a)) /
+    a;
+  var b =
+    (sba * dst.a +
+      dba * src.a -
+      2 * sba * dba +
+      sba * (1 - dst.a) +
+      dba * (1 - src.a)) /
+    a;
   return {
     r: r,
     g: g,
     b: b,
-    a: a
+    a: a,
   };
 }
 //# sourceMappingURL=composite-modes.js.map

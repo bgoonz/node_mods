@@ -1,11 +1,23 @@
 import chai from "chai";
 import fs from "fs";
 import path from "path";
-import { FunctionCov, mergeFunctionCovs, mergeProcessCovs, mergeScriptCovs, ProcessCov, ScriptCov } from "../lib";
+import {
+  FunctionCov,
+  mergeFunctionCovs,
+  mergeProcessCovs,
+  mergeScriptCovs,
+  ProcessCov,
+  ScriptCov,
+} from "../lib";
 
 const REPO_ROOT: string = path.join(__dirname, "..", "..", "..", "..");
 const BENCHES_INPUT_DIR: string = path.join(REPO_ROOT, "benches");
-const BENCHES_DIR: string = path.join(REPO_ROOT, "test-data", "merge", "benches");
+const BENCHES_DIR: string = path.join(
+  REPO_ROOT,
+  "test-data",
+  "merge",
+  "benches"
+);
 const RANGES_DIR: string = path.join(REPO_ROOT, "test-data", "merge", "ranges");
 const BENCHES_TIMEOUT: number = 20000; // 20sec
 
@@ -20,7 +32,7 @@ const FIXTURES_DIR: string = path.join(REPO_ROOT, "test-data", "bugs");
 function loadFixture(name: string) {
   const content: string = fs.readFileSync(
     path.resolve(FIXTURES_DIR, `${name}.json`),
-    {encoding: "UTF-8"},
+    { encoding: "UTF-8" }
   );
   return JSON.parse(content);
 }
@@ -29,7 +41,7 @@ describe("merge", () => {
   describe("Various", () => {
     it("accepts empty arrays for `mergeProcessCovs`", () => {
       const inputs: ProcessCov[] = [];
-      const expected: ProcessCov = {result: []};
+      const expected: ProcessCov = { result: [] };
       const actual: ProcessCov = mergeProcessCovs(inputs);
       chai.assert.deepEqual(actual, expected);
     });
@@ -60,9 +72,9 @@ describe("merge", () => {
                   functionName: "test",
                   isBlockCoverage: true,
                   ranges: [
-                    {startOffset: 0, endOffset: 4, count: 2},
-                    {startOffset: 1, endOffset: 2, count: 1},
-                    {startOffset: 2, endOffset: 3, count: 1},
+                    { startOffset: 0, endOffset: 4, count: 2 },
+                    { startOffset: 1, endOffset: 2, count: 1 },
+                    { startOffset: 2, endOffset: 3, count: 1 },
                   ],
                 },
               ],
@@ -80,8 +92,8 @@ describe("merge", () => {
                 functionName: "test",
                 isBlockCoverage: true,
                 ranges: [
-                  {startOffset: 0, endOffset: 4, count: 2},
-                  {startOffset: 1, endOffset: 3, count: 1},
+                  { startOffset: 0, endOffset: 4, count: 2 },
+                  { startOffset: 1, endOffset: 3, count: 1 },
                 ],
               },
             ],
@@ -96,11 +108,10 @@ describe("merge", () => {
       // see: https://github.com/demurgos/v8-coverage/issues/2
       it("handles function coverage merged into block coverage", () => {
         const blockCoverage: ProcessCov = loadFixture("issue-2-block-coverage");
-        const functionCoverage: ProcessCov = loadFixture("issue-2-func-coverage");
-        const inputs: ProcessCov[] = [
-          functionCoverage,
-          blockCoverage,
-        ];
+        const functionCoverage: ProcessCov = loadFixture(
+          "issue-2-func-coverage"
+        );
+        const inputs: ProcessCov[] = [functionCoverage, blockCoverage];
         const expected: ProcessCov = loadFixture("issue-2-expected");
         const actual: ProcessCov = mergeProcessCovs(inputs);
         chai.assert.deepEqual(actual, expected);
@@ -109,11 +120,10 @@ describe("merge", () => {
       // see: https://github.com/demurgos/v8-coverage/issues/2
       it("handles block coverage merged into function coverage", () => {
         const blockCoverage: ProcessCov = loadFixture("issue-2-block-coverage");
-        const functionCoverage: ProcessCov = loadFixture("issue-2-func-coverage");
-        const inputs: ProcessCov[] = [
-          blockCoverage,
-          functionCoverage,
-        ];
+        const functionCoverage: ProcessCov = loadFixture(
+          "issue-2-func-coverage"
+        );
+        const inputs: ProcessCov[] = [blockCoverage, functionCoverage];
         const expected: ProcessCov = loadFixture("issue-2-expected");
         const actual: ProcessCov = mergeProcessCovs(inputs);
         chai.assert.deepEqual(actual, expected);
@@ -130,9 +140,9 @@ describe("merge", () => {
               functionName: "test",
               isBlockCoverage: true,
               ranges: [
-                {startOffset: 0, endOffset: 4, count: 2},
-                {startOffset: 1, endOffset: 2, count: 1},
-                {startOffset: 2, endOffset: 3, count: 1},
+                { startOffset: 0, endOffset: 4, count: 2 },
+                { startOffset: 1, endOffset: 2, count: 1 },
+                { startOffset: 2, endOffset: 3, count: 1 },
               ],
             },
           ],
@@ -146,8 +156,8 @@ describe("merge", () => {
             functionName: "test",
             isBlockCoverage: true,
             ranges: [
-              {startOffset: 0, endOffset: 4, count: 2},
-              {startOffset: 1, endOffset: 3, count: 1},
+              { startOffset: 0, endOffset: 4, count: 2 },
+              { startOffset: 1, endOffset: 3, count: 1 },
             ],
           },
         ],
@@ -162,9 +172,9 @@ describe("merge", () => {
           functionName: "test",
           isBlockCoverage: true,
           ranges: [
-            {startOffset: 0, endOffset: 4, count: 2},
-            {startOffset: 1, endOffset: 2, count: 1},
-            {startOffset: 2, endOffset: 3, count: 1},
+            { startOffset: 0, endOffset: 4, count: 2 },
+            { startOffset: 1, endOffset: 2, count: 1 },
+            { startOffset: 2, endOffset: 3, count: 1 },
           ],
         },
       ];
@@ -172,8 +182,8 @@ describe("merge", () => {
         functionName: "test",
         isBlockCoverage: true,
         ranges: [
-          {startOffset: 0, endOffset: 4, count: 2},
-          {startOffset: 1, endOffset: 3, count: 1},
+          { startOffset: 0, endOffset: 4, count: 2 },
+          { startOffset: 1, endOffset: 3, count: 1 },
         ],
       };
       const actual: FunctionCov | undefined = mergeFunctionCovs(inputs);
@@ -185,11 +195,15 @@ describe("merge", () => {
     for (const sourceFile of getSourceFiles()) {
       const relPath: string = path.relative(RANGES_DIR, sourceFile);
       describe(relPath, () => {
-        const content: string = fs.readFileSync(sourceFile, {encoding: "UTF-8"});
+        const content: string = fs.readFileSync(sourceFile, {
+          encoding: "UTF-8",
+        });
         const items: MergeRangeItem[] = JSON.parse(content);
         for (const item of items) {
           const test: () => void = () => {
-            const actual: ProcessCov | undefined = mergeProcessCovs(item.inputs);
+            const actual: ProcessCov | undefined = mergeProcessCovs(
+              item.inputs
+            );
             chai.assert.deepEqual(actual, item.expected);
           };
           switch (item.status) {
@@ -234,11 +248,18 @@ describe("merge", () => {
         const inputPromises: Promise<ProcessCov>[] = [];
         for (const inputFileName of inputFileNames) {
           const resolved: string = path.join(bench, inputFileName);
-          inputPromises.push(fs.promises.readFile(resolved).then(buffer => JSON.parse(buffer.toString("UTF-8"))));
+          inputPromises.push(
+            fs.promises
+              .readFile(resolved)
+              .then((buffer) => JSON.parse(buffer.toString("UTF-8")))
+          );
         }
         const inputs: ProcessCov[] = await Promise.all(inputPromises);
         const expectedPath: string = path.join(BENCHES_DIR, `${name}.json`);
-        const expectedContent: string = await fs.promises.readFile(expectedPath, {encoding: "UTF-8"}) as string;
+        const expectedContent: string = (await fs.promises.readFile(
+          expectedPath,
+          { encoding: "UTF-8" }
+        )) as string;
         const expected: ProcessCov = JSON.parse(expectedContent);
         const startTime: number = Date.now();
         const actual: ProcessCov | undefined = mergeProcessCovs(inputs);

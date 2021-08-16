@@ -12,16 +12,16 @@ type Options = {
   semicolon: true,
   cascade: true,
   compress: false,
-  prefix: boolean | ((key: string, value: string, context: number) => boolean)
-}
+  prefix: boolean | ((key: string, value: string, context: number) => boolean),
+};
 ```
 
 ```jsx
-import Stylis from '@emotion/stylis'
+import Stylis from "@emotion/stylis";
 
-const stylis = new Stylis()
+const stylis = new Stylis();
 
-stylis('.css-hash', 'display:flex;') // .css-hash{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}
+stylis(".css-hash", "display:flex;"); // .css-hash{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}
 ```
 
 ## Building this package

@@ -20,24 +20,29 @@ function initWPSSocket(messageHandler) {
     return;
   }
 
-  const { ClientSocket } = require('webpack-plugin-serve/lib/client/ClientSocket');
+  const {
+    ClientSocket,
+  } = require("webpack-plugin-serve/lib/client/ClientSocket");
   const { address, client = {}, secure } = options;
-  const protocol = secure ? 'wss' : 'ws';
-  const socket = new ClientSocket(client, protocol + '://' + (client.address || address) + '/wps');
+  const protocol = secure ? "wss" : "ws";
+  const socket = new ClientSocket(
+    client,
+    protocol + "://" + (client.address || address) + "/wps"
+  );
 
-  socket.addEventListener('message', function listener(message) {
+  socket.addEventListener("message", function listener(message) {
     const { action, data } = JSON.parse(message.data);
 
     switch (action) {
-      case 'done': {
-        messageHandler({ type: 'ok' });
+      case "done": {
+        messageHandler({ type: "ok" });
         break;
       }
-      case 'problems': {
+      case "problems": {
         if (data.errors.length) {
-          messageHandler({ type: 'errors', data: data.errors });
+          messageHandler({ type: "errors", data: data.errors });
         } else if (data.warnings.length) {
-          messageHandler({ type: 'warnings', data: data.warnings });
+          messageHandler({ type: "warnings", data: data.warnings });
         }
         break;
       }

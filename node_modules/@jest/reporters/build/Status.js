@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,7 +16,7 @@ function _chalk() {
 }
 
 function _stringLength() {
-  const data = _interopRequireDefault(require('string-length'));
+  const data = _interopRequireDefault(require("string-length"));
 
   _stringLength = function () {
     return data;
@@ -25,10 +25,10 @@ function _stringLength() {
   return data;
 }
 
-var _utils = require('./utils');
+var _utils = require("./utils");
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -37,7 +37,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -45,8 +45,8 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-const RUNNING_TEXT = ' RUNS ';
-const RUNNING = _chalk().default.reset.inverse.yellow.bold(RUNNING_TEXT) + ' ';
+const RUNNING_TEXT = " RUNS ";
+const RUNNING = _chalk().default.reset.inverse.yellow.bold(RUNNING_TEXT) + " ";
 /**
  * This class is a perf optimization for sorting the list of currently
  * running tests. It tries to keep tests in the same positions without
@@ -55,7 +55,7 @@ const RUNNING = _chalk().default.reset.inverse.yellow.bold(RUNNING_TEXT) + ' ';
 
 class CurrentTestList {
   constructor() {
-    _defineProperty(this, '_array', void 0);
+    _defineProperty(this, "_array", void 0);
 
     this._array = [];
   }
@@ -65,7 +65,7 @@ class CurrentTestList {
 
     const record = {
       config,
-      testPath
+      testPath,
     };
 
     if (index !== -1) {
@@ -77,7 +77,7 @@ class CurrentTestList {
 
   delete(testPath) {
     const record = this._array.find(
-      record => record !== null && record.testPath === testPath
+      (record) => record !== null && record.testPath === testPath
     );
 
     this._array[this._array.indexOf(record || null)] = null;
@@ -95,25 +95,25 @@ class CurrentTestList {
  */
 class Status {
   constructor() {
-    _defineProperty(this, '_cache', void 0);
+    _defineProperty(this, "_cache", void 0);
 
-    _defineProperty(this, '_callback', void 0);
+    _defineProperty(this, "_callback", void 0);
 
-    _defineProperty(this, '_currentTests', void 0);
+    _defineProperty(this, "_currentTests", void 0);
 
-    _defineProperty(this, '_currentTestCases', void 0);
+    _defineProperty(this, "_currentTestCases", void 0);
 
-    _defineProperty(this, '_done', void 0);
+    _defineProperty(this, "_done", void 0);
 
-    _defineProperty(this, '_emitScheduled', void 0);
+    _defineProperty(this, "_emitScheduled", void 0);
 
-    _defineProperty(this, '_estimatedTime', void 0);
+    _defineProperty(this, "_estimatedTime", void 0);
 
-    _defineProperty(this, '_interval', void 0);
+    _defineProperty(this, "_interval", void 0);
 
-    _defineProperty(this, '_aggregatedResults', void 0);
+    _defineProperty(this, "_aggregatedResults", void 0);
 
-    _defineProperty(this, '_showStatus', void 0);
+    _defineProperty(this, "_showStatus", void 0);
 
     this._cache = null;
     this._currentTests = new CurrentTestList();
@@ -147,7 +147,7 @@ class Status {
   addTestCaseResult(test, testCaseResult) {
     this._currentTestCases.push({
       test,
-      testCaseResult
+      testCaseResult,
     });
 
     if (!this._showStatus) {
@@ -168,12 +168,12 @@ class Status {
   }
 
   testFinished(_config, testResult, aggregatedResults) {
-    const {testFilePath} = testResult;
+    const { testFilePath } = testResult;
     this._aggregatedResults = aggregatedResults;
 
     this._currentTests.delete(testFilePath);
 
-    this._currentTestCases = this._currentTestCases.filter(({test}) => {
+    this._currentTestCases = this._currentTestCases.filter(({ test }) => {
       if (_config !== test.context.config) {
         return true;
       }
@@ -191,20 +191,20 @@ class Status {
 
     if (this._done) {
       return {
-        clear: '',
-        content: ''
+        clear: "",
+        content: "",
       };
     }
 
     const width = process.stdout.columns;
-    let content = '\n';
+    let content = "\n";
 
-    this._currentTests.get().forEach(record => {
+    this._currentTests.get().forEach((record) => {
       if (record) {
-        const {config, testPath} = record;
+        const { config, testPath } = record;
         const projectDisplayName = config.displayName
-          ? (0, _utils.printDisplayName)(config) + ' '
-          : '';
+          ? (0, _utils.printDisplayName)(config) + " "
+          : "";
         const prefix = RUNNING + projectDisplayName;
         content +=
           (0, _utils.wrapAnsiString)(
@@ -216,33 +216,33 @@ class Status {
                 width
               ),
             width
-          ) + '\n';
+          ) + "\n";
       }
     });
 
     if (this._showStatus && this._aggregatedResults) {
       content +=
-        '\n' +
+        "\n" +
         (0, _utils.getSummary)(this._aggregatedResults, {
           currentTestCases: this._currentTestCases,
           estimatedTime: this._estimatedTime,
           roundTime: true,
-          width
+          width,
         });
     }
 
     let height = 0;
 
     for (let i = 0; i < content.length; i++) {
-      if (content[i] === '\n') {
+      if (content[i] === "\n") {
         height++;
       }
     }
 
-    const clear = '\r\x1B[K\r\x1B[1A'.repeat(height);
+    const clear = "\r\x1B[K\r\x1B[1A".repeat(height);
     return (this._cache = {
       clear,
-      content
+      content,
     });
   }
 

@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _jestWatcher() {
-  const data = require('jest-watcher');
+  const data = require("jest-watcher");
 
   _jestWatcher = function () {
     return data;
@@ -21,7 +21,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -33,9 +33,9 @@ class UpdateSnapshotsPlugin extends _jestWatcher().BaseWatchPlugin {
   constructor(options) {
     super(options);
 
-    _defineProperty(this, '_hasSnapshotFailure', void 0);
+    _defineProperty(this, "_hasSnapshotFailure", void 0);
 
-    _defineProperty(this, 'isInternal', void 0);
+    _defineProperty(this, "isInternal", void 0);
 
     this.isInternal = true;
     this._hasSnapshotFailure = false;
@@ -43,13 +43,13 @@ class UpdateSnapshotsPlugin extends _jestWatcher().BaseWatchPlugin {
 
   run(_globalConfig, updateConfigAndRun) {
     updateConfigAndRun({
-      updateSnapshot: 'all'
+      updateSnapshot: "all",
     });
     return Promise.resolve(false);
   }
 
   apply(hooks) {
-    hooks.onTestRunComplete(results => {
+    hooks.onTestRunComplete((results) => {
       this._hasSnapshotFailure = results.snapshot.failure;
     });
   }
@@ -57,8 +57,8 @@ class UpdateSnapshotsPlugin extends _jestWatcher().BaseWatchPlugin {
   getUsageInfo() {
     if (this._hasSnapshotFailure) {
       return {
-        key: 'u',
-        prompt: 'update failing snapshots'
+        key: "u",
+        prompt: "update failing snapshots",
       };
     }
 

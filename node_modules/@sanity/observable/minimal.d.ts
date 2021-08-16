@@ -1,3 +1,3 @@
-import {Observable} from 'rxjs'
+import { Observable } from "rxjs";
 
-export = Observable
+export = Observable;

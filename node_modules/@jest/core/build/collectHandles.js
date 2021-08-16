@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = collectHandles;
 exports.formatHandleErrors = formatHandleErrors;
 
 function asyncHooks() {
-  const data = _interopRequireWildcard(require('async_hooks'));
+  const data = _interopRequireWildcard(require("async_hooks"));
 
   asyncHooks = function () {
     return data;
@@ -17,7 +17,7 @@ function asyncHooks() {
 }
 
 function _util() {
-  const data = require('util');
+  const data = require("util");
 
   _util = function () {
     return data;
@@ -27,7 +27,7 @@ function _util() {
 }
 
 function _stripAnsi() {
-  const data = _interopRequireDefault(require('strip-ansi'));
+  const data = _interopRequireDefault(require("strip-ansi"));
 
   _stripAnsi = function () {
     return data;
@@ -37,7 +37,7 @@ function _stripAnsi() {
 }
 
 function _jestMessageUtil() {
-  const data = require('jest-message-util');
+  const data = require("jest-message-util");
 
   _jestMessageUtil = function () {
     return data;
@@ -47,7 +47,7 @@ function _jestMessageUtil() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -57,11 +57,11 @@ function _jestUtil() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -73,8 +73,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -84,7 +84,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -112,18 +112,18 @@ function _interopRequireWildcard(obj, nodeInterop) {
 /* eslint-disable local/ban-types-eventually */
 function stackIsFromUser(stack) {
   // Either the test file, or something required by it
-  if (stack.includes('Runtime.requireModule')) {
+  if (stack.includes("Runtime.requireModule")) {
     return true;
   } // jest-jasmine it or describe call
 
-  if (stack.includes('asyncJestTest') || stack.includes('asyncJestLifecycle')) {
+  if (stack.includes("asyncJestTest") || stack.includes("asyncJestLifecycle")) {
     return true;
   } // An async function call from within circus
 
-  if (stack.includes('callAsyncCircusFn')) {
+  if (stack.includes("callAsyncCircusFn")) {
     // jest-circus it or describe call
     return (
-      stack.includes('_callCircusTest') || stack.includes('_callCircusHook')
+      stack.includes("_callCircusTest") || stack.includes("_callCircusHook")
     );
   }
 
@@ -132,7 +132,7 @@ function stackIsFromUser(stack) {
 
 const alwaysActive = () => true; // @ts-expect-error: doesn't exist in v10 typings
 
-const hasWeakRef = typeof WeakRef === 'function';
+const hasWeakRef = typeof WeakRef === "function";
 const asyncSleep = (0, _util().promisify)(setTimeout); // Inspired by https://github.com/mafintosh/why-is-node-running/blob/master/index.js
 // Extracted as we want to format the result ourselves
 
@@ -148,18 +148,18 @@ function collectHandles() {
       // exiting, not last a meaningfully long time, or otherwise shouldn't be
       // tracked.
       if (
-        type === 'PROMISE' ||
-        type === 'TIMERWRAP' ||
-        type === 'ELDHISTOGRAM' ||
-        type === 'PerformanceObserver' ||
-        type === 'RANDOMBYTESREQUEST' ||
-        type === 'DNSCHANNEL'
+        type === "PROMISE" ||
+        type === "TIMERWRAP" ||
+        type === "ELDHISTOGRAM" ||
+        type === "PerformanceObserver" ||
+        type === "RANDOMBYTESREQUEST" ||
+        type === "DNSCHANNEL"
       ) {
         return;
       }
 
       const error = new (_jestUtil().ErrorWithStack)(type, initHook, 100);
-      let fromUser = stackIsFromUser(error.stack || ''); // If the async resource was not directly created by user code, but was
+      let fromUser = stackIsFromUser(error.stack || ""); // If the async resource was not directly created by user code, but was
       // triggered by another async resource from user code, track it and use
       // the original triggering resource's stack.
 
@@ -175,9 +175,9 @@ function collectHandles() {
       if (fromUser) {
         let isActive;
 
-        if (type === 'Timeout' || type === 'Immediate') {
+        if (type === "Timeout" || type === "Immediate") {
           // Timer that supports hasRef (Node v11+)
-          if ('hasRef' in resource) {
+          if ("hasRef" in resource) {
             if (hasWeakRef) {
               // @ts-expect-error: doesn't exist in v10 typings
               const ref = new WeakRef(resource);
@@ -208,10 +208,10 @@ function collectHandles() {
 
         activeHandles.set(asyncId, {
           error,
-          isActive
+          isActive,
         });
       }
-    }
+    },
   });
   hook.enable();
   return async () => {
@@ -224,8 +224,8 @@ function collectHandles() {
     hook.disable(); // Get errors for every async resource still referenced at this moment
 
     const result = Array.from(activeHandles.values())
-      .filter(({isActive}) => isActive())
-      .map(({error}) => error);
+      .filter(({ isActive }) => isActive())
+      .map(({ error }) => error);
     activeHandles.clear();
     return result;
   };
@@ -235,19 +235,19 @@ function formatHandleErrors(errors, config) {
   const stacks = new Set();
   return (
     errors
-      .map(err =>
+      .map((err) =>
         (0, _jestMessageUtil().formatExecError)(
           err,
           config,
           {
-            noStackTrace: false
+            noStackTrace: false,
           },
           undefined,
           true
         )
       ) // E.g. timeouts might give multiple traces to the same line of code
       // This hairy filtering tries to remove entries with duplicate stack traces
-      .filter(handle => {
+      .filter((handle) => {
         const ansiFree = (0, _stripAnsi().default)(handle);
         const match = ansiFree.match(/\s+at(.*)/);
 

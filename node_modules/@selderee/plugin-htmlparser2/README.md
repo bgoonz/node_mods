@@ -8,7 +8,7 @@
 
 (Technically, the package depends not on `htmlparser2` but on [domhandler](https://github.com/fb55/domhandler), underlying package of `htmlparser2`.)
 
-----
+---
 
 [Changelog](https://github.com/mxxii/selderee/blob/main/packages/plugin-htmlparser2/CHANGELOG.md).
 

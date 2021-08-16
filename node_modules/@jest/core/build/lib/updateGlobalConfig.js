@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _jestRegexUtil() {
-  const data = require('jest-regex-util');
+  const data = require("jest-regex-util");
 
   _jestRegexUtil = function () {
     return data;
@@ -22,24 +22,24 @@ function _jestRegexUtil() {
  * LICENSE file in the root directory of this source tree.
  */
 var _default = (globalConfig, options = {}) => {
-  const newConfig = {...globalConfig};
+  const newConfig = { ...globalConfig };
 
-  if (options.mode === 'watch') {
+  if (options.mode === "watch") {
     newConfig.watch = true;
     newConfig.watchAll = false;
-  } else if (options.mode === 'watchAll') {
+  } else if (options.mode === "watchAll") {
     newConfig.watch = false;
     newConfig.watchAll = true;
   }
 
   if (options.testNamePattern !== undefined) {
-    newConfig.testNamePattern = options.testNamePattern || '';
+    newConfig.testNamePattern = options.testNamePattern || "";
   }
 
   if (options.testPathPattern !== undefined) {
     newConfig.testPathPattern =
       (0, _jestRegexUtil().replacePathSepForRegex)(options.testPathPattern) ||
-      '';
+      "";
   }
 
   newConfig.onlyChanged =
@@ -47,7 +47,7 @@ var _default = (globalConfig, options = {}) => {
     !newConfig.testNamePattern &&
     !newConfig.testPathPattern;
 
-  if (typeof options.bail === 'boolean') {
+  if (typeof options.bail === "boolean") {
     newConfig.bail = options.bail ? 1 : 0;
   } else if (options.bail !== undefined) {
     newConfig.bail = options.bail;

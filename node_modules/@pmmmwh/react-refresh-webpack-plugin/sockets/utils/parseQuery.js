@@ -4,8 +4,8 @@
  * @returns {Record<string, string>} The parsed query object.
  */
 function parseQuery(querystring) {
-  let query = '';
-  if (typeof querystring === 'string') {
+  let query = "";
+  if (typeof querystring === "string") {
     query = querystring;
   }
 
@@ -17,10 +17,10 @@ function parseQuery(querystring) {
    * The resulting format will be { foo1: 'bar1', foo2: 'bar2' }
    */
   return query
-    .replace(/^\?/, '')
-    .split('&')
+    .replace(/^\?/, "")
+    .split("&")
     .reduce(function (acc, entry) {
-      const pair = entry.split('=');
+      const pair = entry.split("=");
       // Add all non-empty entries to the accumulated object
       if (pair[0]) {
         acc[pair[0]] = pair[1];

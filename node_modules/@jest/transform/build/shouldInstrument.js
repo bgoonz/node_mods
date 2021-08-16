@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = shouldInstrument;
 
 function path() {
-  const data = _interopRequireWildcard(require('path'));
+  const data = _interopRequireWildcard(require("path"));
 
   path = function () {
     return data;
@@ -16,7 +16,7 @@ function path() {
 }
 
 function _micromatch() {
-  const data = _interopRequireDefault(require('micromatch'));
+  const data = _interopRequireDefault(require("micromatch"));
 
   _micromatch = function () {
     return data;
@@ -26,7 +26,7 @@ function _micromatch() {
 }
 
 function _jestRegexUtil() {
-  const data = require('jest-regex-util');
+  const data = require("jest-regex-util");
 
   _jestRegexUtil = function () {
     return data;
@@ -36,7 +36,7 @@ function _jestRegexUtil() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -46,11 +46,11 @@ function _jestUtil() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -62,8 +62,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -73,7 +73,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -99,12 +99,12 @@ function _interopRequireWildcard(obj, nodeInterop) {
  */
 const MOCKS_PATTERN = new RegExp(
   (0, _jestRegexUtil().escapePathForRegex)(
-    path().sep + '__mocks__' + path().sep
+    path().sep + "__mocks__" + path().sep
   )
 );
 const cachedRegexes = new Map();
 
-const getRegex = regexStr => {
+const getRegex = (regexStr) => {
   if (!cachedRegexes.has(regexStr)) {
     cachedRegexes.set(regexStr, new RegExp(regexStr));
   }
@@ -128,11 +128,11 @@ function shouldInstrument(filename, options, config) {
   }
 
   if (
-    !config.testPathIgnorePatterns.some(pattern =>
+    !config.testPathIgnorePatterns.some((pattern) =>
       getRegex(pattern).test(filename)
     )
   ) {
-    if (config.testRegex.some(regex => new RegExp(regex).test(filename))) {
+    if (config.testRegex.some((regex) => new RegExp(regex).test(filename))) {
       return false;
     }
 
@@ -168,7 +168,9 @@ function shouldInstrument(filename, options, config) {
   }
 
   if (
-    config.coveragePathIgnorePatterns.some(pattern => !!filename.match(pattern))
+    config.coveragePathIgnorePatterns.some(
+      (pattern) => !!filename.match(pattern)
+    )
   ) {
     return false;
   }

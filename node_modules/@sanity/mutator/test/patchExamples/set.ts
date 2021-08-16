@@ -2,7 +2,7 @@
 
 export default [
   {
-    name: 'Simple path set',
+    name: "Simple path set",
     before: {
       a: {
         b: 7,
@@ -10,7 +10,7 @@ export default [
     },
     patch: {
       set: {
-        'a.b': 10,
+        "a.b": 10,
       },
     },
     after: {
@@ -20,7 +20,7 @@ export default [
     },
   },
   {
-    name: 'Array union set',
+    name: "Array union set",
     before: {
       a: {
         b: [0, 10, 20],
@@ -28,7 +28,7 @@ export default [
     },
     patch: {
       set: {
-        'a.b[0,2]': 10,
+        "a.b[0,2]": 10,
       },
     },
     after: {
@@ -38,7 +38,7 @@ export default [
     },
   },
   {
-    name: 'Array constraint set',
+    name: "Array constraint set",
     before: {
       a: {
         b: [0, 10, 20],
@@ -46,7 +46,7 @@ export default [
     },
     patch: {
       set: {
-        'a.b[@ < 20]': 10,
+        "a.b[@ < 20]": 10,
       },
     },
     after: {
@@ -56,35 +56,35 @@ export default [
     },
   },
   {
-    name: 'Deep branch',
+    name: "Deep branch",
     before: {
       a: {
-        b: [0, 10, {c: 52}],
+        b: [0, 10, { c: 52 }],
         d: 12,
       },
     },
     patch: {
       set: {
-        'a[b[2].c,d]': 'Hello',
+        "a[b[2].c,d]": "Hello",
       },
     },
     after: {
       a: {
-        b: [0, 10, {c: 'Hello'}],
-        d: 'Hello',
+        b: [0, 10, { c: "Hello" }],
+        d: "Hello",
       },
     },
   },
   {
-    name: 'Attribute filter',
+    name: "Attribute filter",
     before: {
       animals: [
         {
-          name: 'cat',
+          name: "cat",
           cute: true,
         },
         {
-          name: 'jumping spider',
+          name: "jumping spider",
           cute: false,
         },
       ],
@@ -97,36 +97,36 @@ export default [
     after: {
       animals: [
         {
-          name: 'cat',
+          name: "cat",
           cute: true,
         },
         {
-          name: 'jumping spider',
+          name: "jumping spider",
           cute: true,
         },
       ],
     },
   },
   {
-    name: 'Set new key',
+    name: "Set new key",
     before: {},
     patch: {
       set: {
-        a: 'hello',
+        a: "hello",
       },
     },
     after: {
-      a: 'hello',
+      a: "hello",
     },
   },
   {
-    name: 'Set range',
+    name: "Set range",
     before: {
       a: [0, 1, 2, 3, 4, 5, 6, 7],
     },
     patch: {
       set: {
-        'a[4:]': -1,
+        "a[4:]": -1,
       },
     },
     after: {
@@ -134,45 +134,45 @@ export default [
     },
   },
   {
-    name: 'Recursive',
+    name: "Recursive",
     before: {
-      a: [{deep: 'Hello', b: {deep: false}}],
+      a: [{ deep: "Hello", b: { deep: false } }],
       deep: 12.3,
     },
     patch: {
       set: {
-        'a..deep': 'How deep?',
+        "a..deep": "How deep?",
       },
     },
     after: {
-      a: [{deep: 'How deep?', b: {deep: 'How deep?'}}],
+      a: [{ deep: "How deep?", b: { deep: "How deep?" } }],
       deep: 12.3,
     },
   },
   {
-    name: 'Recursive constraint',
+    name: "Recursive constraint",
     before: {
-      a: [{deep: 'Hello', b: {deep: 'banana'}}],
+      a: [{ deep: "Hello", b: { deep: "banana" } }],
       deep: 12.3,
     },
     patch: {
       set: {
-        'a..[deep == "banana"].fnah': 'How deep?',
+        'a..[deep == "banana"].fnah': "How deep?",
       },
     },
     after: {
-      a: [{deep: 'Hello', b: {deep: 'banana', fnah: 'How deep?'}}],
+      a: [{ deep: "Hello", b: { deep: "banana", fnah: "How deep?" } }],
       deep: 12.3,
     },
   },
   {
-    name: 'Array of patches',
+    name: "Array of patches",
     before: {
       a: 0,
     },
-    patch: [{inc: {a: 1}}, {inc: {a: 2}}],
+    patch: [{ inc: { a: 1 } }, { inc: { a: 2 } }],
     after: {
       a: 3,
     },
   },
-]
+];

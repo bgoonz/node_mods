@@ -1,45 +1,45 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
-    content: [
+  content: [
+    {
+      content: [
         {
-            content: [
-                {
-                    marks: [],
-                    nodeType: 'text',
-                    value: 'hello world',
-                    data: {},
-                },
-            ],
-            data: {},
-            nodeType: 'paragraph',
+          marks: [],
+          nodeType: "text",
+          value: "hello world",
+          data: {},
         },
+      ],
+      data: {},
+      nodeType: "paragraph",
+    },
+    {
+      content: [
         {
-            content: [
-                {
-                    marks: [],
-                    nodeType: 'text',
-                    value: '',
-                    data: {},
-                },
-            ],
-            data: {},
-            nodeType: 'hr',
+          marks: [],
+          nodeType: "text",
+          value: "",
+          data: {},
         },
+      ],
+      data: {},
+      nodeType: "hr",
+    },
+    {
+      content: [
         {
-            content: [
-                {
-                    marks: [],
-                    nodeType: 'text',
-                    value: '',
-                    data: {},
-                },
-            ],
-            data: {},
-            nodeType: 'paragraph',
+          marks: [],
+          nodeType: "text",
+          value: "",
+          data: {},
         },
-    ],
-    data: {},
-    nodeType: 'document',
+      ],
+      data: {},
+      nodeType: "paragraph",
+    },
+  ],
+  data: {},
+  nodeType: "document",
 };
 //# sourceMappingURL=hr.js.map

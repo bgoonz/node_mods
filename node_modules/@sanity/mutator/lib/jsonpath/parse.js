@@ -1,15 +1,29 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = parse;
 
 var _tokenize = _interopRequireDefault(require("./tokenize"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 
 // TODO: Support '*'
 class Parser {
@@ -33,7 +47,6 @@ class Parser {
     return this.i >= this.length;
   } // Look at upcoming token
 
-
   peek() {
     if (this.EOF()) {
       return null;
@@ -49,7 +62,6 @@ class Parser {
     return result;
   } // Return next token if it matches the pattern
 
-
   probe(pattern) {
     var token = this.peek(); // console.log("Probing", token, "for", pattern)
 
@@ -58,7 +70,7 @@ class Parser {
       return null;
     }
 
-    var mismatch = Object.keys(pattern).find(key => {
+    var mismatch = Object.keys(pattern).find((key) => {
       var value = pattern[key];
 
       if (!token[key] || token[key] != value) {
@@ -73,10 +85,8 @@ class Parser {
       return null;
     } // console.log(" -> yay", token)
 
-
     return token;
   } // Return and consume next token if it matches the pattern
-
 
   match(pattern) {
     if (this.probe(pattern)) {
@@ -88,25 +98,25 @@ class Parser {
 
   parseAttribute() {
     var token = this.match({
-      type: 'identifier'
+      type: "identifier",
     });
 
     if (token) {
       return {
-        type: 'attribute',
-        name: token.name
+        type: "attribute",
+        name: token.name,
       };
     }
 
     var quoted = this.match({
-      type: 'quoted',
-      quote: 'single'
+      type: "quoted",
+      quote: "single",
     });
 
     if (quoted) {
       return {
-        type: 'attribute',
-        name: quoted.value
+        type: "attribute",
+        name: quoted.value,
       };
     }
 
@@ -114,16 +124,19 @@ class Parser {
   }
 
   parseAlias() {
-    if (this.match({
-      type: 'keyword',
-      symbol: '@'
-    }) || this.match({
-      type: 'keyword',
-      symbol: '$'
-    })) {
+    if (
+      this.match({
+        type: "keyword",
+        symbol: "@",
+      }) ||
+      this.match({
+        type: "keyword",
+        symbol: "$",
+      })
+    ) {
       return {
-        type: 'alias',
-        target: 'self'
+        type: "alias",
+        target: "self",
       };
     }
 
@@ -132,13 +145,13 @@ class Parser {
 
   parseNumber() {
     var token = this.match({
-      type: 'number'
+      type: "number",
     });
 
     if (token) {
       return {
-        type: 'number',
-        value: token.value
+        type: "number",
+        value: token.value,
       };
     }
 
@@ -158,19 +171,19 @@ class Parser {
   parseSliceSelector() {
     var start = this.i;
     var result = {
-      type: 'range'
+      type: "range",
     };
     result.start = this.parseNumberValue();
     var colon1 = this.match({
-      type: 'operator',
-      symbol: ':'
+      type: "operator",
+      symbol: ":",
     });
 
     if (colon1) {
       result.end = this.parseNumberValue();
       var colon2 = this.match({
-        type: 'operator',
-        symbol: ':'
+        type: "operator",
+        symbol: ":",
       });
 
       if (colon2) {
@@ -180,11 +193,10 @@ class Parser {
       if (result.start !== null) {
         // Unwrap, this was just a single index not followed by colon
         return {
-          type: 'index',
-          value: result.start
+          type: "index",
+          value: result.start,
         };
       } // Rewind, this was actually nothing
-
 
       this.i = start;
       return null;
@@ -206,32 +218,31 @@ class Parser {
 
   parseLiteralValue() {
     var literalString = this.match({
-      type: 'quoted',
-      quote: 'double'
+      type: "quoted",
+      quote: "double",
     });
 
     if (literalString) {
       return {
-        type: 'string',
-        value: literalString.value
+        type: "string",
+        value: literalString.value,
       };
     }
 
     var literalBoolean = this.match({
-      type: 'boolean'
+      type: "boolean",
     });
 
     if (literalBoolean) {
       return {
-        type: 'boolean',
-        value: literalBoolean.symbol == 'true'
+        type: "boolean",
+        value: literalBoolean.symbol == "true",
       };
     }
 
     return this.parseNumber();
   } // TODO: Reorder constraints so that literal value is always on rhs, and variable is always
   // on lhs.
-
 
   parseFilterExpression() {
     var start = this.i;
@@ -241,19 +252,21 @@ class Parser {
       return null;
     }
 
-    if (this.match({
-      type: 'operator',
-      symbol: '?'
-    })) {
+    if (
+      this.match({
+        type: "operator",
+        symbol: "?",
+      })
+    ) {
       return {
-        type: 'constraint',
-        operator: '?',
-        lhs: expr
+        type: "constraint",
+        operator: "?",
+        lhs: expr,
       };
     }
 
     var binOp = this.match({
-      type: 'comparator'
+      type: "comparator",
     });
 
     if (!binOp) {
@@ -266,14 +279,19 @@ class Parser {
     var rhs = this.parseLiteralValue();
 
     if (!rhs) {
-      throw new Error("Operator ".concat(binOp.symbol, " needs a literal value at the right hand side"));
+      throw new Error(
+        "Operator ".concat(
+          binOp.symbol,
+          " needs a literal value at the right hand side"
+        )
+      );
     }
 
     return {
-      type: 'constraint',
+      type: "constraint",
       operator: binOp.symbol,
       lhs: lhs,
-      rhs: rhs
+      rhs: rhs,
     };
   }
 
@@ -282,34 +300,46 @@ class Parser {
   }
 
   parseUnion() {
-    if (!this.match({
-      type: 'paren',
-      symbol: '['
-    })) {
+    if (
+      !this.match({
+        type: "paren",
+        symbol: "[",
+      })
+    ) {
       return null;
     }
 
     var terms = [];
-    var expr = this.parseFilterExpression() || this.parsePath() || this.parseValueReference();
+    var expr =
+      this.parseFilterExpression() ||
+      this.parsePath() ||
+      this.parseValueReference();
 
     while (expr) {
       terms.push(expr); // End of union?
 
-      if (this.match({
-        type: 'paren',
-        symbol: ']'
-      })) {
+      if (
+        this.match({
+          type: "paren",
+          symbol: "]",
+        })
+      ) {
         break;
       }
 
-      if (!this.match({
-        type: 'operator',
-        symbol: ','
-      })) {
-        throw new Error('Expected ]');
+      if (
+        !this.match({
+          type: "operator",
+          symbol: ",",
+        })
+      ) {
+        throw new Error("Expected ]");
       }
 
-      expr = this.parseFilterExpression() || this.parsePath() || this.parseValueReference();
+      expr =
+        this.parseFilterExpression() ||
+        this.parsePath() ||
+        this.parseValueReference();
 
       if (!expr) {
         throw new Error("Expected expression following ','");
@@ -317,18 +347,19 @@ class Parser {
     } // console.log("Union terms", terms)
     // return unionFromTerms(terms)
 
-
     return {
-      type: 'union',
-      nodes: terms
+      type: "union",
+      nodes: terms,
     };
   }
 
   parseRecursive() {
-    if (this.match({
-      type: 'operator',
-      symbol: '..'
-    })) {
+    if (
+      this.match({
+        type: "operator",
+        symbol: "..",
+      })
+    ) {
       var subpath = this.parsePath();
 
       if (!subpath) {
@@ -336,8 +367,8 @@ class Parser {
       }
 
       return {
-        type: 'recursive',
-        term: subpath
+        type: "recursive",
+        term: subpath,
       };
     }
 
@@ -346,7 +377,8 @@ class Parser {
 
   parsePath() {
     var nodes = [];
-    var expr = this.parseAttribute() || this.parseUnion() || this.parseRecursive();
+    var expr =
+      this.parseAttribute() || this.parseUnion() || this.parseRecursive();
 
     if (!expr) {
       return null;
@@ -355,10 +387,12 @@ class Parser {
     nodes.push(expr);
 
     while (!this.EOF()) {
-      if (this.match({
-        type: 'operator',
-        symbol: '.'
-      })) {
+      if (
+        this.match({
+          type: "operator",
+          symbol: ".",
+        })
+      ) {
         var attr = this.parseAttribute();
 
         if (!attr) {
@@ -367,10 +401,12 @@ class Parser {
 
         nodes.push(attr);
         continue;
-      } else if (this.probe({
-        type: 'paren',
-        symbol: '['
-      })) {
+      } else if (
+        this.probe({
+          type: "paren",
+          symbol: "[",
+        })
+      ) {
         var union = this.parseUnion();
 
         if (!union) {
@@ -394,11 +430,10 @@ class Parser {
     }
 
     return {
-      type: 'path',
-      nodes: nodes
+      type: "path",
+      nodes: nodes,
     };
   }
-
 }
 
 function parse(path) {

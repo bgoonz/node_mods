@@ -12,10 +12,12 @@ export function emitForest(trees: ReadonlyArray<ReadonlyRangeTree>): string {
   return emitForestLines(trees).join("\n");
 }
 
-export function emitForestLines(trees: ReadonlyArray<ReadonlyRangeTree>): string[] {
+export function emitForestLines(
+  trees: ReadonlyArray<ReadonlyRangeTree>
+): string[] {
   const colMap: Map<number, number> = getColMap(trees);
   const header: string = emitOffsets(colMap);
-  return [header, ...trees.map(tree => emitTree(tree, colMap).join("\n"))];
+  return [header, ...trees.map((tree) => emitTree(tree, colMap).join("\n"))];
 }
 
 function getColMap(trees: Iterable<ReadonlyRangeTree>): Map<number, number> {
@@ -45,7 +47,10 @@ function getColMap(trees: Iterable<ReadonlyRangeTree>): Map<number, number> {
   return colMap;
 }
 
-function emitTree(tree: ReadonlyRangeTree, colMap: Map<number, number>): string[] {
+function emitTree(
+  tree: ReadonlyRangeTree,
+  colMap: Map<number, number>
+): string[] {
   const layers: ReadonlyRangeTree[][] = [];
   let nextLayer: ReadonlyRangeTree[] = [tree];
   while (nextLayer.length > 0) {
@@ -58,10 +63,13 @@ function emitTree(tree: ReadonlyRangeTree, colMap: Map<number, number>): string[
       }
     }
   }
-  return layers.map(layer => emitTreeLayer(layer, colMap));
+  return layers.map((layer) => emitTreeLayer(layer, colMap));
 }
 
-export function parseFunctionRanges(text: string, offsetMap: Map<number, number>): RangeCov[] {
+export function parseFunctionRanges(
+  text: string,
+  offsetMap: Map<number, number>
+): RangeCov[] {
   const result: RangeCov[] = [];
   for (const line of text.split("\n")) {
     for (const range of parseTreeLayer(line, offsetMap)) {
@@ -77,10 +85,13 @@ export function parseFunctionRanges(text: string, offsetMap: Map<number, number>
  * @param layer Sorted list of disjoint trees.
  * @param colMap
  */
-function emitTreeLayer(layer: ReadonlyRangeTree[], colMap: Map<number, number>): string {
+function emitTreeLayer(
+  layer: ReadonlyRangeTree[],
+  colMap: Map<number, number>
+): string {
   const line: string[] = [];
   let curIdx: number = 0;
-  for (const {start, end, count} of layer) {
+  for (const { start, end, count } of layer) {
     const startIdx: number = colMap.get(start)!;
     const endIdx: number = colMap.get(end)!;
     if (startIdx > curIdx) {
@@ -92,7 +103,10 @@ function emitTreeLayer(layer: ReadonlyRangeTree[], colMap: Map<number, number>):
   return line.join("");
 }
 
-function parseTreeLayer(text: string, offsetMap: Map<number, number>): RangeCov[] {
+function parseTreeLayer(
+  text: string,
+  offsetMap: Map<number, number>
+): RangeCov[] {
   const result: RangeCov[] = [];
   const regex: RegExp = /\[(\d+)-*\)/gs;
   while (true) {
@@ -108,7 +122,7 @@ function parseTreeLayer(text: string, offsetMap: Map<number, number>): RangeCov[
     if (startOffset === undefined || endOffset === undefined) {
       throw new Error(`Invalid offsets for: ${JSON.stringify(text)}`);
     }
-    result.push({startOffset, endOffset, count});
+    result.push({ startOffset, endOffset, count });
   }
   return result;
 }

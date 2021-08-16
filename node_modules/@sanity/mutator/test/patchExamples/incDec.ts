@@ -2,7 +2,7 @@
 
 export default [
   {
-    name: 'Inc and dec',
+    name: "Inc and dec",
     before: {
       a: [0, 1, 2, 3, 4],
       b: 4,
@@ -10,7 +10,7 @@ export default [
     },
     patch: {
       inc: {
-        'a[2]': 1,
+        "a[2]": 1,
         b: 2,
       },
       dec: {
@@ -23,4 +23,4 @@ export default [
       c: 4,
     },
   },
-]
+];

@@ -64,7 +64,7 @@ for (const type in t.NODE_FIELDS) {
       if (indexB === -1) return -1;
       return indexA - indexB;
     })
-    .forEach(fieldName => {
+    .forEach((fieldName) => {
       const field = fields[fieldName];
 
       let suffix = "";
@@ -247,7 +247,7 @@ lines.push(
 for (const type in t.FLIPPED_ALIAS_KEYS) {
   const types = t.FLIPPED_ALIAS_KEYS[type];
   code += `type ${NODE_PREFIX}${type} = ${types
-    .map(type => `${NODE_PREFIX}${type}`)
+    .map((type) => `${NODE_PREFIX}${type}`)
     .join(" | ")};\n`;
 }
 

@@ -1,19 +1,19 @@
-import { CLEAR_REQUESTS_CACHE } from '../constants';
-import { isSuccessAction, getRequestActionFromResponse } from '../actions';
+import { CLEAR_REQUESTS_CACHE } from "../constants";
+import { isSuccessAction, getRequestActionFromResponse } from "../actions";
 
-const getNewCacheTimeout = cache =>
+const getNewCacheTimeout = (cache) =>
   cache === true ? null : cache * 1000 + Date.now();
 
-const getRequestKey = action => action.type + (action.meta.requestKey || '');
+const getRequestKey = (action) => action.type + (action.meta.requestKey || "");
 
-const getRequestTypeString = requestType =>
-  typeof requestType === 'function' ? requestType.toString() : requestType;
+const getRequestTypeString = (requestType) =>
+  typeof requestType === "function" ? requestType.toString() : requestType;
 
-const getRequestKeys = requests =>
-  requests.map(v =>
-    typeof v === 'object'
+const getRequestKeys = (requests) =>
+  requests.map((v) =>
+    typeof v === "object"
       ? getRequestTypeString(v.requestType) + v.requestKey
-      : getRequestTypeString(v),
+      : getRequestTypeString(v)
   );
 
 export default (state, action) => {
@@ -23,7 +23,7 @@ export default (state, action) => {
     }
 
     state = { ...state };
-    getRequestKeys(action.requests).forEach(requestKey => {
+    getRequestKeys(action.requests).forEach((requestKey) => {
       delete state[requestKey];
     });
 

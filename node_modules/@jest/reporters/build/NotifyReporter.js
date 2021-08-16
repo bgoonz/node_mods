@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function path() {
-  const data = _interopRequireWildcard(require('path'));
+  const data = _interopRequireWildcard(require("path"));
 
   path = function () {
     return data;
@@ -16,7 +16,7 @@ function path() {
 }
 
 function util() {
-  const data = _interopRequireWildcard(require('util'));
+  const data = _interopRequireWildcard(require("util"));
 
   util = function () {
     return data;
@@ -26,7 +26,7 @@ function util() {
 }
 
 function _exit() {
-  const data = _interopRequireDefault(require('exit'));
+  const data = _interopRequireDefault(require("exit"));
 
   _exit = function () {
     return data;
@@ -36,7 +36,7 @@ function _exit() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -45,14 +45,14 @@ function _jestUtil() {
   return data;
 }
 
-var _BaseReporter = _interopRequireDefault(require('./BaseReporter'));
+var _BaseReporter = _interopRequireDefault(require("./BaseReporter"));
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -64,8 +64,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -75,7 +75,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -99,7 +99,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -107,20 +107,20 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-const isDarwin = process.platform === 'darwin';
-const icon = path().resolve(__dirname, '../assets/jest_logo.png');
+const isDarwin = process.platform === "darwin";
+const icon = path().resolve(__dirname, "../assets/jest_logo.png");
 
 class NotifyReporter extends _BaseReporter.default {
   constructor(globalConfig, startRun, context) {
     super();
 
-    _defineProperty(this, '_notifier', loadNotifier());
+    _defineProperty(this, "_notifier", loadNotifier());
 
-    _defineProperty(this, '_startRun', void 0);
+    _defineProperty(this, "_startRun", void 0);
 
-    _defineProperty(this, '_globalConfig', void 0);
+    _defineProperty(this, "_globalConfig", void 0);
 
-    _defineProperty(this, '_context', void 0);
+    _defineProperty(this, "_context", void 0);
 
     this._globalConfig = globalConfig;
     this._startRun = startRun;
@@ -137,7 +137,7 @@ class NotifyReporter extends _BaseReporter.default {
 
     if (hasteFS != null) {
       // assuming root package.json is the first one
-      const [filePath] = hasteFS.matchFiles('package.json');
+      const [filePath] = hasteFS.matchFiles("package.json");
       packageName =
         filePath != null
           ? hasteFS.getModuleName(filePath)
@@ -146,7 +146,7 @@ class NotifyReporter extends _BaseReporter.default {
       packageName = this._globalConfig.rootDir;
     }
 
-    packageName = packageName != null ? `${packageName} - ` : '';
+    packageName = packageName != null ? `${packageName} - ` : "";
     const notifyMode = this._globalConfig.notifyMode;
     const statusChanged =
       this._context.previousSuccess !== success || this._context.firstRun;
@@ -155,15 +155,15 @@ class NotifyReporter extends _BaseReporter.default {
     if (
       testsHaveRun &&
       success &&
-      (notifyMode === 'always' ||
-        notifyMode === 'success' ||
-        notifyMode === 'success-change' ||
-        (notifyMode === 'change' && statusChanged) ||
-        (notifyMode === 'failure-change' && statusChanged))
+      (notifyMode === "always" ||
+        notifyMode === "success" ||
+        notifyMode === "success-change" ||
+        (notifyMode === "change" && statusChanged) ||
+        (notifyMode === "failure-change" && statusChanged))
     ) {
-      const title = util().format('%s%d%% Passed', packageName, 100);
-      const message = `${isDarwin ? '\u2705 ' : ''}${(0, _jestUtil().pluralize)(
-        'test',
+      const title = util().format("%s%d%% Passed", packageName, 100);
+      const message = `${isDarwin ? "\u2705 " : ""}${(0, _jestUtil().pluralize)(
+        "test",
         result.numPassedTests
       )} passed`;
 
@@ -171,48 +171,48 @@ class NotifyReporter extends _BaseReporter.default {
         icon,
         message,
         timeout: false,
-        title
+        title,
       });
     } else if (
       testsHaveRun &&
       !success &&
-      (notifyMode === 'always' ||
-        notifyMode === 'failure' ||
-        notifyMode === 'failure-change' ||
-        (notifyMode === 'change' && statusChanged) ||
-        (notifyMode === 'success-change' && statusChanged))
+      (notifyMode === "always" ||
+        notifyMode === "failure" ||
+        notifyMode === "failure-change" ||
+        (notifyMode === "change" && statusChanged) ||
+        (notifyMode === "success-change" && statusChanged))
     ) {
       const failed = result.numFailedTests / result.numTotalTests;
       const title = util().format(
-        '%s%d%% Failed',
+        "%s%d%% Failed",
         packageName,
         Math.ceil(Number.isNaN(failed) ? 0 : failed * 100)
       );
       const message = util().format(
-        (isDarwin ? '\u26D4\uFE0F ' : '') + '%d of %d tests failed',
+        (isDarwin ? "\u26D4\uFE0F " : "") + "%d of %d tests failed",
         result.numFailedTests,
         result.numTotalTests
       );
       const watchMode = this._globalConfig.watch || this._globalConfig.watchAll;
-      const restartAnswer = 'Run again';
-      const quitAnswer = 'Exit tests';
+      const restartAnswer = "Run again";
+      const quitAnswer = "Exit tests";
 
       if (!watchMode) {
         this._notifier.notify({
           icon,
           message,
           timeout: false,
-          title
+          title,
         });
       } else {
         this._notifier.notify(
           {
             actions: [restartAnswer, quitAnswer],
-            closeLabel: 'Close',
+            closeLabel: "Close",
             icon,
             message,
             timeout: false,
-            title
+            title,
           },
           (err, _, metadata) => {
             if (err || !metadata) {
@@ -239,13 +239,13 @@ class NotifyReporter extends _BaseReporter.default {
 
 exports.default = NotifyReporter;
 
-_defineProperty(NotifyReporter, 'filename', __filename);
+_defineProperty(NotifyReporter, "filename", __filename);
 
 function loadNotifier() {
   try {
-    return require('node-notifier');
+    return require("node-notifier");
   } catch (err) {
-    if (err.code !== 'MODULE_NOT_FOUND') {
+    if (err.code !== "MODULE_NOT_FOUND") {
       throw err;
     }
 

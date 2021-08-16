@@ -7,13 +7,11 @@ This module manages the [`ajv`](https://www.npmjs.com/package/ajv) instances for
 It isolates the `ajv` dependency so that the AJV version is not tightly coupled to the Fastify version.
 This allows the user to decide which version of AJV to use in their Fastify based application.
 
-
 ## Versions
 
 | `@fastify/ajv-compiler` | `ajv` | Default in `fastify` |
-|------------------------:|------:|---------------------:|
+| ----------------------: | ----: | -------------------: |
 |                    v1.x |  v6.x |                ^3.14 |
-
 
 ### AJV Configuration
 
@@ -33,10 +31,9 @@ The Fastify's default [`ajv` options](https://github.com/ajv-validator/ajv/tree/
 
 To customize them, see how in the [Fastify official docs](https://www.fastify.io/docs/latest/Server/#ajv).
 
-
 ## Usage
 
-This module is already used as default by Fastify. 
+This module is already used as default by Fastify.
 If you need to provide to your server instance a different version, refer to [the official doc](https://www.fastify.io/docs/latest/Server/#schemacontroller).
 
 ### How it works
@@ -51,7 +48,6 @@ The variables involved to choose if a Validator Compiler can be reused are:
 
 - the AJV configuration: it is [one per server](https://www.fastify.io/docs/latest/Server/#ajv)
 - the external JSON schemas: once a new schema is added to a fastify's context, calling `fastify.addSchema()`, it will cause a new AJV inizialization
-
 
 ## License
 

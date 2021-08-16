@@ -19,9 +19,9 @@ export type ErrorOverlayOptions = {
     | (string & {
         _?: undefined;
       })
-    | 'wds'
-    | 'whm'
-    | 'wps'
+    | "wds"
+    | "whm"
+    | "wps"
     | undefined;
   /**
    * The socket path to use (WDS only).
@@ -64,7 +64,10 @@ export type NormalizedErrorOverlayOptions = {
   /**
    * Path to a JS file that sets up the Webpack socket integration.
    */
-  sockIntegration: import('type-fest').LiteralUnion<'wds' | 'whm' | 'wps' | false, string>;
+  sockIntegration: import("type-fest").LiteralUnion<
+    "wds" | "whm" | "wps" | false,
+    string
+  >;
 };
 export type ReactRefreshPluginOptions = {
   /**
@@ -109,6 +112,6 @@ export type NormalizedPluginOptions = Pick<
      */
     exclude: string | RegExp | Array<string | RegExp>;
   },
-  'include' | 'exclude' | 'forceEnable'
+  "include" | "exclude" | "forceEnable"
 > &
   OverlayOverrides;

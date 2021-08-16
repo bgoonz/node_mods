@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.getOpposite = getOpposite;
 exports.getCompletionRecords = getCompletionRecords;
@@ -28,14 +28,14 @@ const BREAK_COMPLETION = 1;
 function NormalCompletion(path) {
   return {
     type: NORMAL_COMPLETION,
-    path
+    path,
   };
 }
 
 function BreakCompletion(path) {
   return {
     type: BREAK_COMPLETION,
-    path
+    path,
   };
 }
 
@@ -87,16 +87,18 @@ function completionRecordForSwitch(cases, records, context) {
 }
 
 function normalCompletionToBreak(completions) {
-  completions.forEach(c => {
+  completions.forEach((c) => {
     c.type = BREAK_COMPLETION;
   });
 }
 
 function replaceBreakStatementInBreakCompletion(completions, reachable) {
-  completions.forEach(c => {
-    if (c.path.isBreakStatement({
-      label: null
-    })) {
+  completions.forEach((c) => {
+    if (
+      c.path.isBreakStatement({
+        label: null,
+      })
+    ) {
       if (reachable) {
         c.path.replaceWith(t.unaryExpression("void", t.numericLiteral(0)));
       } else {
@@ -115,25 +117,36 @@ function getStatementListCompletion(paths, context) {
     for (let i = 0; i < paths.length; i++) {
       const path = paths[i];
       const newContext = Object.assign({}, context, {
-        inCaseClause: false
+        inCaseClause: false,
       });
 
-      if (path.isBlockStatement() && (context.inCaseClause || context.shouldPopulateBreak)) {
-          newContext.shouldPopulateBreak = true;
-        } else {
+      if (
+        path.isBlockStatement() &&
+        (context.inCaseClause || context.shouldPopulateBreak)
+      ) {
+        newContext.shouldPopulateBreak = true;
+      } else {
         newContext.shouldPopulateBreak = false;
       }
 
       const statementCompletions = _getCompletionRecords(path, newContext);
 
-      if (statementCompletions.length > 0 && statementCompletions.every(c => c.type === BREAK_COMPLETION)) {
-        if (lastNormalCompletions.length > 0 && statementCompletions.every(c => c.path.isBreakStatement({
-          label: null
-        }))) {
+      if (
+        statementCompletions.length > 0 &&
+        statementCompletions.every((c) => c.type === BREAK_COMPLETION)
+      ) {
+        if (
+          lastNormalCompletions.length > 0 &&
+          statementCompletions.every((c) =>
+            c.path.isBreakStatement({
+              label: null,
+            })
+          )
+        ) {
           normalCompletionToBreak(lastNormalCompletions);
           completions = completions.concat(lastNormalCompletions);
 
-          if (lastNormalCompletions.some(c => c.path.isDeclaration())) {
+          if (lastNormalCompletions.some((c) => c.path.isDeclaration())) {
             completions = completions.concat(statementCompletions);
             replaceBreakStatementInBreakCompletion(statementCompletions, true);
           }
@@ -153,15 +166,23 @@ function getStatementListCompletion(paths, context) {
       if (i === paths.length - 1) {
         completions = completions.concat(statementCompletions);
       } else {
-        completions = completions.concat(statementCompletions.filter(c => c.type === BREAK_COMPLETION));
-        lastNormalCompletions = statementCompletions.filter(c => c.type === NORMAL_COMPLETION);
+        completions = completions.concat(
+          statementCompletions.filter((c) => c.type === BREAK_COMPLETION)
+        );
+        lastNormalCompletions = statementCompletions.filter(
+          (c) => c.type === NORMAL_COMPLETION
+        );
       }
     }
   } else if (paths.length) {
     for (let i = paths.length - 1; i >= 0; i--) {
       const pathCompletions = _getCompletionRecords(paths[i], context);
 
-      if (pathCompletions.length > 1 || pathCompletions.length === 1 && !pathCompletions[0].path.isVariableDeclaration()) {
+      if (
+        pathCompletions.length > 1 ||
+        (pathCompletions.length === 1 &&
+          !pathCompletions[0].path.isVariableDeclaration())
+      ) {
         completions = completions.concat(pathCompletions);
         break;
       }
@@ -177,10 +198,17 @@ function _getCompletionRecords(path, context) {
   if (path.isIfStatement()) {
     records = addCompletionRecords(path.get("consequent"), records, context);
     records = addCompletionRecords(path.get("alternate"), records, context);
-  } else if (path.isDoExpression() || path.isFor() || path.isWhile() || path.isLabeledStatement()) {
+  } else if (
+    path.isDoExpression() ||
+    path.isFor() ||
+    path.isWhile() ||
+    path.isLabeledStatement()
+  ) {
     records = addCompletionRecords(path.get("body"), records, context);
   } else if (path.isProgram() || path.isBlockStatement()) {
-    records = records.concat(getStatementListCompletion(path.get("body"), context));
+    records = records.concat(
+      getStatementListCompletion(path.get("body"), context)
+    );
   } else if (path.isFunction()) {
     return _getCompletionRecords(path.get("body"), context);
   } else if (path.isTryStatement()) {
@@ -191,11 +219,13 @@ function _getCompletionRecords(path, context) {
   } else if (path.isSwitchStatement()) {
     records = completionRecordForSwitch(path.get("cases"), records, context);
   } else if (path.isSwitchCase()) {
-    records = records.concat(getStatementListCompletion(path.get("consequent"), {
-      canHaveBreak: true,
-      shouldPopulateBreak: false,
-      inCaseClause: true
-    }));
+    records = records.concat(
+      getStatementListCompletion(path.get("consequent"), {
+        canHaveBreak: true,
+        shouldPopulateBreak: false,
+        inCaseClause: true,
+      })
+    );
   } else if (path.isBreakStatement()) {
     records.push(BreakCompletion(path));
   } else {
@@ -209,20 +239,22 @@ function getCompletionRecords() {
   const records = _getCompletionRecords(this, {
     canHaveBreak: false,
     shouldPopulateBreak: false,
-    inCaseClause: false
+    inCaseClause: false,
   });
 
-  return records.map(r => r.path);
+  return records.map((r) => r.path);
 }
 
 function getSibling(key) {
-  return _index.default.get({
-    parentPath: this.parentPath,
-    parent: this.parent,
-    container: this.container,
-    listKey: this.listKey,
-    key: key
-  }).setContext(this.context);
+  return _index.default
+    .get({
+      parentPath: this.parentPath,
+      parent: this.parent,
+      container: this.container,
+      listKey: this.listKey,
+      key: key,
+    })
+    .setContext(this.context);
 }
 
 function getPrevSibling() {
@@ -276,21 +308,25 @@ function _getKey(key, context) {
 
   if (Array.isArray(container)) {
     return container.map((_, i) => {
-      return _index.default.get({
-        listKey: key,
-        parentPath: this,
-        parent: node,
-        container: container,
-        key: i
-      }).setContext(context);
+      return _index.default
+        .get({
+          listKey: key,
+          parentPath: this,
+          parent: node,
+          container: container,
+          key: i,
+        })
+        .setContext(context);
     });
   } else {
-    return _index.default.get({
-      parentPath: this,
-      parent: node,
-      container: node,
-      key: key
-    }).setContext(context);
+    return _index.default
+      .get({
+        parentPath: this,
+        parent: node,
+        container: node,
+        key: key,
+      })
+      .setContext(context);
   }
 }
 
@@ -333,7 +369,7 @@ function getBindingIdentifierPaths(duplicates = false, outerOnly = false) {
 
     if (id.isIdentifier()) {
       if (duplicates) {
-        const _ids = ids[id.node.name] = ids[id.node.name] || [];
+        const _ids = (ids[id.node.name] = ids[id.node.name] || []);
 
         _ids.push(id);
       } else {

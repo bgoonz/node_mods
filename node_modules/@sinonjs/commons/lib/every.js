@@ -9,19 +9,19 @@
  * @returns {boolean}
  */
 module.exports = function every(obj, fn) {
-    var pass = true;
+  var pass = true;
 
-    try {
-        // eslint-disable-next-line @sinonjs/no-prototype-methods/no-prototype-methods
-        obj.forEach(function() {
-            if (!fn.apply(this, arguments)) {
-                // Throwing an error is the only way to break `forEach`
-                throw new Error();
-            }
-        });
-    } catch (e) {
-        pass = false;
-    }
+  try {
+    // eslint-disable-next-line @sinonjs/no-prototype-methods/no-prototype-methods
+    obj.forEach(function () {
+      if (!fn.apply(this, arguments)) {
+        // Throwing an error is the only way to break `forEach`
+        throw new Error();
+      }
+    });
+  } catch (e) {
+    pass = false;
+  }
 
-    return pass;
+  return pass;
 };

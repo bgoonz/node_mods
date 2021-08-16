@@ -1,19 +1,20 @@
-import defaultConfig from '../default-config';
-import { STOP_POLLING, RESET_REQUESTS } from '../constants';
+import defaultConfig from "../default-config";
+import { STOP_POLLING, RESET_REQUESTS } from "../constants";
 
-const getIntervalKey = action => action.type + (action.meta?.requestKey || '');
+const getIntervalKey = (action) =>
+  action.type + (action.meta?.requestKey || "");
 
-const getKeys = requests =>
-  requests.map(v =>
-    typeof v === 'object'
-      ? v.requestType.toString() + (v.requestKey || '')
-      : v.toString(),
+const getKeys = (requests) =>
+  requests.map((v) =>
+    typeof v === "object"
+      ? v.requestType.toString() + (v.requestKey || "")
+      : v.toString()
   );
 
 export default (config = defaultConfig) => {
   let intervals = {};
 
-  return store => next => action => {
+  return (store) => (next) => (action) => {
     if (action.type === STOP_POLLING || action.type === RESET_REQUESTS) {
       if (!action.requests) {
         Object.values(intervals).forEach(clearInterval);
@@ -22,7 +23,7 @@ export default (config = defaultConfig) => {
         const keys = getKeys(action.requests);
         const intervalsCopy = { ...intervals };
 
-        keys.forEach(k => {
+        keys.forEach((k) => {
           clearInterval(intervalsCopy[k]);
           delete intervalsCopy[k];
         });

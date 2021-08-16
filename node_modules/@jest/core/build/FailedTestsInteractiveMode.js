@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _ansiEscapes() {
-  const data = _interopRequireDefault(require('ansi-escapes'));
+  const data = _interopRequireDefault(require("ansi-escapes"));
 
   _ansiEscapes = function () {
     return data;
@@ -16,7 +16,7 @@ function _ansiEscapes() {
 }
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -26,7 +26,7 @@ function _chalk() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -36,7 +36,7 @@ function _jestUtil() {
 }
 
 function _jestWatcher() {
-  const data = require('jest-watcher');
+  const data = require("jest-watcher");
 
   _jestWatcher = function () {
     return data;
@@ -46,7 +46,7 @@ function _jestWatcher() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -55,7 +55,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -63,29 +63,29 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-const {ARROW, CLEAR} = _jestUtil().specialChars;
+const { ARROW, CLEAR } = _jestUtil().specialChars;
 
 function describeKey(key, description) {
   return `${_chalk().default.dim(
-    ARROW + 'Press'
+    ARROW + "Press"
   )} ${key} ${_chalk().default.dim(description)}`;
 }
 
-const TestProgressLabel = _chalk().default.bold('Interactive Test Progress');
+const TestProgressLabel = _chalk().default.bold("Interactive Test Progress");
 
 class FailedTestsInteractiveMode {
   constructor(_pipe) {
     this._pipe = _pipe;
 
-    _defineProperty(this, '_isActive', false);
+    _defineProperty(this, "_isActive", false);
 
-    _defineProperty(this, '_countPaths', 0);
+    _defineProperty(this, "_countPaths", 0);
 
-    _defineProperty(this, '_skippedNum', 0);
+    _defineProperty(this, "_skippedNum", 0);
 
-    _defineProperty(this, '_testAssertions', []);
+    _defineProperty(this, "_testAssertions", []);
 
-    _defineProperty(this, '_updateTestRunnerConfig', void 0);
+    _defineProperty(this, "_updateTestRunnerConfig", void 0);
   }
 
   isActive() {
@@ -94,7 +94,7 @@ class FailedTestsInteractiveMode {
 
   put(key) {
     switch (key) {
-      case 's':
+      case "s":
         if (this._skippedNum === this._testAssertions.length) {
           break;
         }
@@ -111,12 +111,12 @@ class FailedTestsInteractiveMode {
 
         break;
 
-      case 'q':
+      case "q":
       case _jestWatcher().KEYS.ESCAPE:
         this.abort();
         break;
 
-      case 'r':
+      case "r":
         this.restart();
         break;
 
@@ -167,24 +167,24 @@ class FailedTestsInteractiveMode {
     this._pipe.write(CLEAR);
 
     const messages = [
-      _chalk().default.bold('Watch Usage'),
-      describeKey('Enter', 'to return to watch mode.')
+      _chalk().default.bold("Watch Usage"),
+      describeKey("Enter", "to return to watch mode."),
     ];
 
-    this._pipe.write(messages.join('\n') + '\n');
+    this._pipe.write(messages.join("\n") + "\n");
   }
 
   _drawUIDoneWithSkipped() {
     this._pipe.write(CLEAR);
 
     let stats = `${(0, _jestUtil().pluralize)(
-      'test',
+      "test",
       this._countPaths
     )} reviewed`;
 
     if (this._skippedNum > 0) {
       const skippedText = _chalk().default.bold.yellow(
-        (0, _jestUtil().pluralize)('test', this._skippedNum) + ' skipped'
+        (0, _jestUtil().pluralize)("test", this._skippedNum) + " skipped"
       );
 
       stats = `${stats}, ${skippedText}`;
@@ -193,14 +193,14 @@ class FailedTestsInteractiveMode {
     const message = [
       TestProgressLabel,
       `${ARROW}${stats}`,
-      '\n',
-      _chalk().default.bold('Watch Usage'),
-      describeKey('r', 'to restart Interactive Mode.'),
-      describeKey('q', 'to quit Interactive Mode.'),
-      describeKey('Enter', 'to return to watch mode.')
+      "\n",
+      _chalk().default.bold("Watch Usage"),
+      describeKey("r", "to restart Interactive Mode."),
+      describeKey("q", "to quit Interactive Mode."),
+      describeKey("Enter", "to return to watch mode."),
     ];
 
-    this._pipe.write(`\n${message.join('\n')}`);
+    this._pipe.write(`\n${message.join("\n")}`);
   }
 
   _drawUIProgress() {
@@ -208,11 +208,11 @@ class FailedTestsInteractiveMode {
 
     const numPass = this._countPaths - this._testAssertions.length;
     const numRemaining = this._countPaths - numPass - this._skippedNum;
-    let stats = `${(0, _jestUtil().pluralize)('test', numRemaining)} remaining`;
+    let stats = `${(0, _jestUtil().pluralize)("test", numRemaining)} remaining`;
 
     if (this._skippedNum > 0) {
       const skippedText = _chalk().default.bold.yellow(
-        (0, _jestUtil().pluralize)('test', this._skippedNum) + ' skipped'
+        (0, _jestUtil().pluralize)("test", this._skippedNum) + " skipped"
       );
 
       stats = `${stats}, ${skippedText}`;
@@ -221,14 +221,14 @@ class FailedTestsInteractiveMode {
     const message = [
       TestProgressLabel,
       `${ARROW}${stats}`,
-      '\n',
-      _chalk().default.bold('Watch Usage'),
-      describeKey('s', 'to skip the current test.'),
-      describeKey('q', 'to quit Interactive Mode.'),
-      describeKey('Enter', 'to return to watch mode.')
+      "\n",
+      _chalk().default.bold("Watch Usage"),
+      describeKey("s", "to skip the current test."),
+      describeKey("q", "to quit Interactive Mode."),
+      describeKey("Enter", "to return to watch mode."),
     ];
 
-    this._pipe.write(`\n${message.join('\n')}`);
+    this._pipe.write(`\n${message.join("\n")}`);
   }
 
   _drawUIOverlay() {

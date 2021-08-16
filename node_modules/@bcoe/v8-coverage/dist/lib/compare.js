@@ -6,15 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * The result corresponds to the comparison of their `url` value (alphabetical sort).
  */
 function compareScriptCovs(a, b) {
-    if (a.url === b.url) {
-        return 0;
-    }
-    else if (a.url < b.url) {
-        return -1;
-    }
-    else {
-        return 1;
-    }
+  if (a.url === b.url) {
+    return 0;
+  } else if (a.url < b.url) {
+    return -1;
+  } else {
+    return 1;
+  }
 }
 exports.compareScriptCovs = compareScriptCovs;
 /**
@@ -23,7 +21,7 @@ exports.compareScriptCovs = compareScriptCovs;
  * The result corresponds to the comparison of the root ranges.
  */
 function compareFunctionCovs(a, b) {
-    return compareRangeCovs(a.ranges[0], b.ranges[0]);
+  return compareRangeCovs(a.ranges[0], b.ranges[0]);
 }
 exports.compareFunctionCovs = compareFunctionCovs;
 /**
@@ -34,12 +32,11 @@ exports.compareFunctionCovs = compareFunctionCovs;
  * This corresponds to a pre-order tree traversal.
  */
 function compareRangeCovs(a, b) {
-    if (a.startOffset !== b.startOffset) {
-        return a.startOffset - b.startOffset;
-    }
-    else {
-        return b.endOffset - a.endOffset;
-    }
+  if (a.startOffset !== b.startOffset) {
+    return a.startOffset - b.startOffset;
+  } else {
+    return b.endOffset - a.endOffset;
+  }
 }
 exports.compareRangeCovs = compareRangeCovs;
 

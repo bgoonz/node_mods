@@ -5,9 +5,13 @@ module.exports = function (params) {
 
   for (var key in params) {
     if (params.hasOwnProperty(key)) {
-      qs.push("".concat(encodeURIComponent(key), "=").concat(encodeURIComponent(params[key])));
+      qs.push(
+        ""
+          .concat(encodeURIComponent(key), "=")
+          .concat(encodeURIComponent(params[key]))
+      );
     }
   }
 
-  return qs.length > 0 ? "?".concat(qs.join('&')) : '';
+  return qs.length > 0 ? "?".concat(qs.join("&")) : "";
 };

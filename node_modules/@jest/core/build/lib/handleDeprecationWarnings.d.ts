@@ -5,5 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 /// <reference types="node" />
-declare const _default: (pipe: NodeJS.WriteStream, stdin?: NodeJS.ReadStream) => Promise<void>;
+declare const _default: (
+  pipe: NodeJS.WriteStream,
+  stdin?: NodeJS.ReadStream
+) => Promise<void>;
 export default _default;

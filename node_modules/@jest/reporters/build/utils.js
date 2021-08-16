@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.wrapAnsiString =
   exports.getSummary =
@@ -12,7 +12,7 @@ exports.wrapAnsiString =
     void 0;
 
 function path() {
-  const data = _interopRequireWildcard(require('path'));
+  const data = _interopRequireWildcard(require("path"));
 
   path = function () {
     return data;
@@ -22,7 +22,7 @@ function path() {
 }
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -32,7 +32,7 @@ function _chalk() {
 }
 
 function _slash() {
-  const data = _interopRequireDefault(require('slash'));
+  const data = _interopRequireDefault(require("slash"));
 
   _slash = function () {
     return data;
@@ -42,7 +42,7 @@ function _slash() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -52,11 +52,11 @@ function _jestUtil() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _getRequireWildcardCache(nodeInterop) {
-  if (typeof WeakMap !== 'function') return null;
+  if (typeof WeakMap !== "function") return null;
   var cacheBabelInterop = new WeakMap();
   var cacheNodeInterop = new WeakMap();
   return (_getRequireWildcardCache = function (nodeInterop) {
@@ -68,8 +68,8 @@ function _interopRequireWildcard(obj, nodeInterop) {
   if (!nodeInterop && obj && obj.__esModule) {
     return obj;
   }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return {default: obj};
+  if (obj === null || (typeof obj !== "object" && typeof obj !== "function")) {
+    return { default: obj };
   }
   var cache = _getRequireWildcardCache(nodeInterop);
   if (cache && cache.has(obj)) {
@@ -79,7 +79,7 @@ function _interopRequireWildcard(obj, nodeInterop) {
   var hasPropertyDescriptor =
     Object.defineProperty && Object.getOwnPropertyDescriptor;
   for (var key in obj) {
-    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) {
       var desc = hasPropertyDescriptor
         ? Object.getOwnPropertyDescriptor(obj, key)
         : null;
@@ -105,16 +105,16 @@ function _interopRequireWildcard(obj, nodeInterop) {
  */
 const PROGRESS_BAR_WIDTH = 40;
 
-const printDisplayName = config => {
-  const {displayName} = config;
+const printDisplayName = (config) => {
+  const { displayName } = config;
 
   const white = _chalk().default.reset.inverse.white;
 
   if (!displayName) {
-    return '';
+    return "";
   }
 
-  const {name, color} = displayName;
+  const { name, color } = displayName;
   const chosenColor = _chalk().default.reset.inverse[color]
     ? _chalk().default.reset.inverse[color]
     : white;
@@ -126,8 +126,8 @@ exports.printDisplayName = printDisplayName;
 const trimAndFormatPath = (pad, config, testPath, columns) => {
   const maxLength = columns - pad;
   const relative = relativePath(config, testPath);
-  const {basename} = relative;
-  let {dirname} = relative; // length is ok
+  const { basename } = relative;
+  let { dirname } = relative; // length is ok
 
   if ((dirname + path().sep + basename).length <= maxLength) {
     return (0, _slash().default)(
@@ -141,7 +141,7 @@ const trimAndFormatPath = (pad, config, testPath, columns) => {
   if (basenameLength + 4 < maxLength) {
     const dirnameLength = maxLength - 4 - basenameLength;
     dirname =
-      '...' + dirname.slice(dirname.length - dirnameLength, dirname.length);
+      "..." + dirname.slice(dirname.length - dirnameLength, dirname.length);
     return (0, _slash().default)(
       _chalk().default.dim(dirname + path().sep) +
         _chalk().default.bold(basename)
@@ -150,13 +150,13 @@ const trimAndFormatPath = (pad, config, testPath, columns) => {
 
   if (basenameLength + 4 === maxLength) {
     return (0, _slash().default)(
-      _chalk().default.dim('...' + path().sep) + _chalk().default.bold(basename)
+      _chalk().default.dim("..." + path().sep) + _chalk().default.bold(basename)
     );
   } // can't fit dirname, but can fit trimmed basename
 
   return (0, _slash().default)(
     _chalk().default.bold(
-      '...' + basename.slice(basename.length - maxLength - 4, basename.length)
+      "..." + basename.slice(basename.length - maxLength - 4, basename.length)
     )
   );
 };
@@ -164,7 +164,7 @@ const trimAndFormatPath = (pad, config, testPath, columns) => {
 exports.trimAndFormatPath = trimAndFormatPath;
 
 const formatTestPath = (config, testPath) => {
-  const {dirname, basename} = relativePath(config, testPath);
+  const { dirname, basename } = relativePath(config, testPath);
   return (0, _slash().default)(
     _chalk().default.dim(dirname + path().sep) + _chalk().default.bold(basename)
   );
@@ -181,7 +181,7 @@ const relativePath = (config, testPath) => {
   const basename = path().basename(testPath);
   return {
     basename,
-    dirname
+    dirname,
   };
 };
 
@@ -193,24 +193,24 @@ const getValuesCurrentTestCases = (currentTestCases = []) => {
   let numPendingTests = 0;
   let numTodoTests = 0;
   let numTotalTests = 0;
-  currentTestCases.forEach(testCase => {
+  currentTestCases.forEach((testCase) => {
     switch (testCase.testCaseResult.status) {
-      case 'failed': {
+      case "failed": {
         numFailingTests++;
         break;
       }
 
-      case 'passed': {
+      case "passed": {
         numPassingTests++;
         break;
       }
 
-      case 'skipped': {
+      case "skipped": {
         numPendingTests++;
         break;
       }
 
-      case 'todo': {
+      case "todo": {
         numTodoTests++;
         break;
       }
@@ -223,7 +223,7 @@ const getValuesCurrentTestCases = (currentTestCases = []) => {
     numPassingTests,
     numPendingTests,
     numTodoTests,
-    numTotalTests
+    numTotalTests,
   };
 };
 
@@ -259,18 +259,18 @@ const getSummary = (aggregatedResults, options) => {
   const testsTotal = aggregatedResults.numTotalTests;
   const width = (options && options.width) || 0;
   const suites =
-    _chalk().default.bold('Test Suites: ') +
+    _chalk().default.bold("Test Suites: ") +
     (suitesFailed
-      ? _chalk().default.bold.red(`${suitesFailed} failed`) + ', '
-      : '') +
+      ? _chalk().default.bold.red(`${suitesFailed} failed`) + ", "
+      : "") +
     (suitesPending
-      ? _chalk().default.bold.yellow(`${suitesPending} skipped`) + ', '
-      : '') +
+      ? _chalk().default.bold.yellow(`${suitesPending} skipped`) + ", "
+      : "") +
     (suitesPassed
-      ? _chalk().default.bold.green(`${suitesPassed} passed`) + ', '
-      : '') +
+      ? _chalk().default.bold.green(`${suitesPassed} passed`) + ", "
+      : "") +
     (suitesRun !== suitesTotal
-      ? suitesRun + ' of ' + suitesTotal
+      ? suitesRun + " of " + suitesTotal
       : suitesTotal) +
     ` total`;
   const updatedTestsFailed =
@@ -283,54 +283,54 @@ const getSummary = (aggregatedResults, options) => {
   const updatedTestsTotal =
     testsTotal + valuesForCurrentTestCases.numTotalTests;
   const tests =
-    _chalk().default.bold('Tests:       ') +
+    _chalk().default.bold("Tests:       ") +
     (updatedTestsFailed > 0
-      ? _chalk().default.bold.red(`${updatedTestsFailed} failed`) + ', '
-      : '') +
+      ? _chalk().default.bold.red(`${updatedTestsFailed} failed`) + ", "
+      : "") +
     (updatedTestsPending > 0
-      ? _chalk().default.bold.yellow(`${updatedTestsPending} skipped`) + ', '
-      : '') +
+      ? _chalk().default.bold.yellow(`${updatedTestsPending} skipped`) + ", "
+      : "") +
     (updatedTestsTodo > 0
-      ? _chalk().default.bold.magenta(`${updatedTestsTodo} todo`) + ', '
-      : '') +
+      ? _chalk().default.bold.magenta(`${updatedTestsTodo} todo`) + ", "
+      : "") +
     (updatedTestsPassed > 0
-      ? _chalk().default.bold.green(`${updatedTestsPassed} passed`) + ', '
-      : '') +
+      ? _chalk().default.bold.green(`${updatedTestsPassed} passed`) + ", "
+      : "") +
     `${updatedTestsTotal} total`;
   const snapshots =
-    _chalk().default.bold('Snapshots:   ') +
+    _chalk().default.bold("Snapshots:   ") +
     (snapshotsFailed
-      ? _chalk().default.bold.red(`${snapshotsFailed} failed`) + ', '
-      : '') +
+      ? _chalk().default.bold.red(`${snapshotsFailed} failed`) + ", "
+      : "") +
     (snapshotsOutdated && !snapshotsDidUpdate
-      ? _chalk().default.bold.yellow(`${snapshotsOutdated} obsolete`) + ', '
-      : '') +
+      ? _chalk().default.bold.yellow(`${snapshotsOutdated} obsolete`) + ", "
+      : "") +
     (snapshotsOutdated && snapshotsDidUpdate
-      ? _chalk().default.bold.green(`${snapshotsOutdated} removed`) + ', '
-      : '') +
+      ? _chalk().default.bold.green(`${snapshotsOutdated} removed`) + ", "
+      : "") +
     (snapshotsFilesRemoved && !snapshotsDidUpdate
       ? _chalk().default.bold.yellow(
-          (0, _jestUtil().pluralize)('file', snapshotsFilesRemoved) +
-            ' obsolete'
-        ) + ', '
-      : '') +
+          (0, _jestUtil().pluralize)("file", snapshotsFilesRemoved) +
+            " obsolete"
+        ) + ", "
+      : "") +
     (snapshotsFilesRemoved && snapshotsDidUpdate
       ? _chalk().default.bold.green(
-          (0, _jestUtil().pluralize)('file', snapshotsFilesRemoved) + ' removed'
-        ) + ', '
-      : '') +
+          (0, _jestUtil().pluralize)("file", snapshotsFilesRemoved) + " removed"
+        ) + ", "
+      : "") +
     (snapshotsUpdated
-      ? _chalk().default.bold.green(`${snapshotsUpdated} updated`) + ', '
-      : '') +
+      ? _chalk().default.bold.green(`${snapshotsUpdated} updated`) + ", "
+      : "") +
     (snapshotsAdded
-      ? _chalk().default.bold.green(`${snapshotsAdded} written`) + ', '
-      : '') +
+      ? _chalk().default.bold.green(`${snapshotsAdded} written`) + ", "
+      : "") +
     (snapshotsPassed
-      ? _chalk().default.bold.green(`${snapshotsPassed} passed`) + ', '
-      : '') +
+      ? _chalk().default.bold.green(`${snapshotsPassed} passed`) + ", "
+      : "") +
     `${snapshotsTotal} total`;
   const time = renderTime(runTime, estimatedTime, width);
-  return [suites, tests, snapshots, time].join('\n');
+  return [suites, tests, snapshots, time].join("\n");
 };
 
 exports.getSummary = getSummary;
@@ -357,10 +357,10 @@ const renderTime = (runTime, estimatedTime, width) => {
 
     if (availableWidth >= 2) {
       time +=
-        '\n' +
-        _chalk().default.green('█').repeat(length) +
+        "\n" +
+        _chalk().default.green("█").repeat(length) +
         _chalk()
-          .default.white('█')
+          .default.white("█")
           .repeat(availableWidth - length);
     }
   }
@@ -382,25 +382,25 @@ const wrapAnsiString = (string, terminalWidth) => {
 
   while ((match = ANSI_REGEXP.exec(string))) {
     const ansi = match[0];
-    const index = match['index'];
+    const index = match["index"];
 
     if (index != lastIndex) {
-      tokens.push(['string', string.slice(lastIndex, index)]);
+      tokens.push(["string", string.slice(lastIndex, index)]);
     }
 
-    tokens.push(['ansi', ansi]);
+    tokens.push(["ansi", ansi]);
     lastIndex = index + ansi.length;
   }
 
   if (lastIndex != string.length - 1) {
-    tokens.push(['string', string.slice(lastIndex, string.length)]);
+    tokens.push(["string", string.slice(lastIndex, string.length)]);
   }
 
   let lastLineLength = 0;
   return tokens
     .reduce(
       (lines, [kind, token]) => {
-        if (kind === 'string') {
+        if (kind === "string") {
           if (lastLineLength + token.length > terminalWidth) {
             while (token.length) {
               const chunk = token.slice(0, terminalWidth - lastLineLength);
@@ -413,7 +413,7 @@ const wrapAnsiString = (string, terminalWidth) => {
               token = remaining;
 
               if (token.length) {
-                lines.push('');
+                lines.push("");
                 lastLineLength = 0;
               }
             }
@@ -427,9 +427,9 @@ const wrapAnsiString = (string, terminalWidth) => {
 
         return lines;
       },
-      ['']
+      [""]
     )
-    .join('\n');
+    .join("\n");
 };
 
 exports.wrapAnsiString = wrapAnsiString;

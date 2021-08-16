@@ -1,25 +1,25 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 Object.defineProperty(exports, "NodePath", {
   enumerable: true,
   get: function () {
     return _path.default;
-  }
+  },
 });
 Object.defineProperty(exports, "Scope", {
   enumerable: true,
   get: function () {
     return _scope.default;
-  }
+  },
 });
 Object.defineProperty(exports, "Hub", {
   enumerable: true,
   get: function () {
     return _hub.default;
-  }
+  },
 });
 exports.visitors = exports.default = void 0;
 
@@ -44,7 +44,11 @@ function traverse(parent, opts = {}, scope, state, parentPath) {
 
   if (!opts.noScope && !scope) {
     if (parent.type !== "Program" && parent.type !== "File") {
-      throw new Error("You must pass a scope and parentPath unless traversing a Program/File. " + `Instead of that you tried to traverse a ${parent.type} node without ` + "passing scope and parentPath.");
+      throw new Error(
+        "You must pass a scope and parentPath unless traversing a Program/File. " +
+          `Instead of that you tried to traverse a ${parent.type} node without ` +
+          "passing scope and parentPath."
+      );
     }
   }
 
@@ -99,13 +103,18 @@ traverse.hasType = function (tree, type, denylistTypes) {
   if (tree.type === type) return true;
   const state = {
     has: false,
-    type: type
+    type: type,
   };
-  traverse(tree, {
-    noScope: true,
-    denylist: denylistTypes,
-    enter: hasDenylistedType
-  }, null, state);
+  traverse(
+    tree,
+    {
+      noScope: true,
+      denylist: denylistTypes,
+      enter: hasDenylistedType,
+    },
+    null,
+    state
+  );
   return state.has;
 };
 

@@ -14,8 +14,8 @@ sinon.replace(array, "filter", sinon.fake.returns(2));
 
 // in a sinon module, the library author needs to use the filter method
 var someArray = ["a", "b", 42, "c"];
-var answer = filter(someArray, function(v) {
-    return v === 42;
+var answer = filter(someArray, function (v) {
+  return v === 42;
 });
 
 console.log(answer);
@@ -34,8 +34,8 @@ sinon.replace(array, "filter", sinon.fake.returns(2));
 // get a reference to the original Array.prototype.filter
 var filter = require("@sinonjs/commons").prototypes.array.filter;
 var someArray = ["a", "b", 42, "c"];
-var answer = filter(someArray, function(v) {
-    return v === 42;
+var answer = filter(someArray, function (v) {
+  return v === 42;
 });
 
 console.log(answer);

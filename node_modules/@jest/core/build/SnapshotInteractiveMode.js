@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _ansiEscapes() {
-  const data = _interopRequireDefault(require('ansi-escapes'));
+  const data = _interopRequireDefault(require("ansi-escapes"));
 
   _ansiEscapes = function () {
     return data;
@@ -16,7 +16,7 @@ function _ansiEscapes() {
 }
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -26,7 +26,7 @@ function _chalk() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -36,7 +36,7 @@ function _jestUtil() {
 }
 
 function _jestWatcher() {
-  const data = require('jest-watcher');
+  const data = require("jest-watcher");
 
   _jestWatcher = function () {
     return data;
@@ -46,7 +46,7 @@ function _jestWatcher() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 function _defineProperty(obj, key, value) {
@@ -55,7 +55,7 @@ function _defineProperty(obj, key, value) {
       value: value,
       enumerable: true,
       configurable: true,
-      writable: true
+      writable: true,
     });
   } else {
     obj[key] = value;
@@ -63,21 +63,21 @@ function _defineProperty(obj, key, value) {
   return obj;
 }
 
-const {ARROW, CLEAR} = _jestUtil().specialChars;
+const { ARROW, CLEAR } = _jestUtil().specialChars;
 
 class SnapshotInteractiveMode {
   constructor(pipe) {
-    _defineProperty(this, '_pipe', void 0);
+    _defineProperty(this, "_pipe", void 0);
 
-    _defineProperty(this, '_isActive', void 0);
+    _defineProperty(this, "_isActive", void 0);
 
-    _defineProperty(this, '_updateTestRunnerConfig', void 0);
+    _defineProperty(this, "_updateTestRunnerConfig", void 0);
 
-    _defineProperty(this, '_testAssertions', void 0);
+    _defineProperty(this, "_testAssertions", void 0);
 
-    _defineProperty(this, '_countPaths', void 0);
+    _defineProperty(this, "_countPaths", void 0);
 
-    _defineProperty(this, '_skippedNum', void 0);
+    _defineProperty(this, "_skippedNum", void 0);
 
     this._pipe = pipe;
     this._isActive = false;
@@ -105,44 +105,44 @@ class SnapshotInteractiveMode {
     const numRemaining = this._countPaths - numPass - this._skippedNum;
 
     let stats = _chalk().default.bold.dim(
-      (0, _jestUtil().pluralize)('snapshot', numRemaining) + ' remaining'
+      (0, _jestUtil().pluralize)("snapshot", numRemaining) + " remaining"
     );
 
     if (numPass) {
       stats +=
-        ', ' +
+        ", " +
         _chalk().default.bold.green(
-          (0, _jestUtil().pluralize)('snapshot', numPass) + ' updated'
+          (0, _jestUtil().pluralize)("snapshot", numPass) + " updated"
         );
     }
 
     if (this._skippedNum) {
       stats +=
-        ', ' +
+        ", " +
         _chalk().default.bold.yellow(
-          (0, _jestUtil().pluralize)('snapshot', this._skippedNum) + ' skipped'
+          (0, _jestUtil().pluralize)("snapshot", this._skippedNum) + " skipped"
         );
     }
 
     const messages = [
-      '\n' + _chalk().default.bold('Interactive Snapshot Progress'),
+      "\n" + _chalk().default.bold("Interactive Snapshot Progress"),
       ARROW + stats,
-      '\n' + _chalk().default.bold('Watch Usage'),
-      _chalk().default.dim(ARROW + 'Press ') +
-        'u' +
-        _chalk().default.dim(' to update failing snapshots for this test.'),
-      _chalk().default.dim(ARROW + 'Press ') +
-        's' +
-        _chalk().default.dim(' to skip the current test.'),
-      _chalk().default.dim(ARROW + 'Press ') +
-        'q' +
-        _chalk().default.dim(' to quit Interactive Snapshot Mode.'),
-      _chalk().default.dim(ARROW + 'Press ') +
-        'Enter' +
-        _chalk().default.dim(' to trigger a test run.')
+      "\n" + _chalk().default.bold("Watch Usage"),
+      _chalk().default.dim(ARROW + "Press ") +
+        "u" +
+        _chalk().default.dim(" to update failing snapshots for this test."),
+      _chalk().default.dim(ARROW + "Press ") +
+        "s" +
+        _chalk().default.dim(" to skip the current test."),
+      _chalk().default.dim(ARROW + "Press ") +
+        "q" +
+        _chalk().default.dim(" to quit Interactive Snapshot Mode."),
+      _chalk().default.dim(ARROW + "Press ") +
+        "Enter" +
+        _chalk().default.dim(" to trigger a test run."),
     ];
 
-    this._pipe.write(messages.filter(Boolean).join('\n') + '\n');
+    this._pipe.write(messages.filter(Boolean).join("\n") + "\n");
   }
 
   _drawUIDoneWithSkipped() {
@@ -151,38 +151,38 @@ class SnapshotInteractiveMode {
     const numPass = this._countPaths - this._testAssertions.length;
 
     let stats = _chalk().default.bold.dim(
-      (0, _jestUtil().pluralize)('snapshot', this._countPaths) + ' reviewed'
+      (0, _jestUtil().pluralize)("snapshot", this._countPaths) + " reviewed"
     );
 
     if (numPass) {
       stats +=
-        ', ' +
+        ", " +
         _chalk().default.bold.green(
-          (0, _jestUtil().pluralize)('snapshot', numPass) + ' updated'
+          (0, _jestUtil().pluralize)("snapshot", numPass) + " updated"
         );
     }
 
     if (this._skippedNum) {
       stats +=
-        ', ' +
+        ", " +
         _chalk().default.bold.yellow(
-          (0, _jestUtil().pluralize)('snapshot', this._skippedNum) + ' skipped'
+          (0, _jestUtil().pluralize)("snapshot", this._skippedNum) + " skipped"
         );
     }
 
     const messages = [
-      '\n' + _chalk().default.bold('Interactive Snapshot Result'),
+      "\n" + _chalk().default.bold("Interactive Snapshot Result"),
       ARROW + stats,
-      '\n' + _chalk().default.bold('Watch Usage'),
-      _chalk().default.dim(ARROW + 'Press ') +
-        'r' +
-        _chalk().default.dim(' to restart Interactive Snapshot Mode.'),
-      _chalk().default.dim(ARROW + 'Press ') +
-        'q' +
-        _chalk().default.dim(' to quit Interactive Snapshot Mode.')
+      "\n" + _chalk().default.bold("Watch Usage"),
+      _chalk().default.dim(ARROW + "Press ") +
+        "r" +
+        _chalk().default.dim(" to restart Interactive Snapshot Mode."),
+      _chalk().default.dim(ARROW + "Press ") +
+        "q" +
+        _chalk().default.dim(" to quit Interactive Snapshot Mode."),
     ];
 
-    this._pipe.write(messages.filter(Boolean).join('\n') + '\n');
+    this._pipe.write(messages.filter(Boolean).join("\n") + "\n");
   }
 
   _drawUIDone() {
@@ -191,27 +191,27 @@ class SnapshotInteractiveMode {
     const numPass = this._countPaths - this._testAssertions.length;
 
     let stats = _chalk().default.bold.dim(
-      (0, _jestUtil().pluralize)('snapshot', this._countPaths) + ' reviewed'
+      (0, _jestUtil().pluralize)("snapshot", this._countPaths) + " reviewed"
     );
 
     if (numPass) {
       stats +=
-        ', ' +
+        ", " +
         _chalk().default.bold.green(
-          (0, _jestUtil().pluralize)('snapshot', numPass) + ' updated'
+          (0, _jestUtil().pluralize)("snapshot", numPass) + " updated"
         );
     }
 
     const messages = [
-      '\n' + _chalk().default.bold('Interactive Snapshot Result'),
+      "\n" + _chalk().default.bold("Interactive Snapshot Result"),
       ARROW + stats,
-      '\n' + _chalk().default.bold('Watch Usage'),
-      _chalk().default.dim(ARROW + 'Press ') +
-        'Enter' +
-        _chalk().default.dim(' to return to watch mode.')
+      "\n" + _chalk().default.bold("Watch Usage"),
+      _chalk().default.dim(ARROW + "Press ") +
+        "Enter" +
+        _chalk().default.dim(" to return to watch mode."),
     ];
 
-    this._pipe.write(messages.filter(Boolean).join('\n') + '\n');
+    this._pipe.write(messages.filter(Boolean).join("\n") + "\n");
   }
 
   _drawUIOverlay() {
@@ -228,7 +228,7 @@ class SnapshotInteractiveMode {
 
   put(key) {
     switch (key) {
-      case 's':
+      case "s":
         if (this._skippedNum === this._testAssertions.length) break;
         this._skippedNum += 1; // move skipped test to the end
 
@@ -242,17 +242,17 @@ class SnapshotInteractiveMode {
 
         break;
 
-      case 'u':
+      case "u":
         this._run(true);
 
         break;
 
-      case 'q':
+      case "q":
       case _jestWatcher().KEYS.ESCAPE:
         this.abort();
         break;
 
-      case 'r':
+      case "r":
         this.restart();
         break;
 

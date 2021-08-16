@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,7 +16,7 @@ function _chalk() {
 }
 
 function _terminalLink() {
-  const data = _interopRequireDefault(require('terminal-link'));
+  const data = _interopRequireDefault(require("terminal-link"));
 
   _terminalLink = function () {
     return data;
@@ -26,7 +26,7 @@ function _terminalLink() {
 }
 
 function _jestUtil() {
-  const data = require('jest-util');
+  const data = require("jest-util");
 
   _jestUtil = function () {
     return data;
@@ -35,10 +35,10 @@ function _jestUtil() {
   return data;
 }
 
-var _utils = require('./utils');
+var _utils = require("./utils");
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -50,8 +50,8 @@ function _interopRequireDefault(obj) {
 const LONG_TEST_COLOR = _chalk().default.reset.bold.bgRed; // Explicitly reset for these messages since they can get written out in the
 // middle of error logging
 
-const FAIL_TEXT = 'FAIL';
-const PASS_TEXT = 'PASS';
+const FAIL_TEXT = "FAIL";
+const PASS_TEXT = "PASS";
 const FAIL = _chalk().default.supportsColor
   ? _chalk().default.reset.inverse.bold.red(` ${FAIL_TEXT} `)
   : FAIL_TEXT;
@@ -71,7 +71,7 @@ var _default = (result, globalConfig, projectConfig) => {
     formattedTestPath,
     `file://${testPath}`,
     {
-      fallback: () => formattedTestPath
+      fallback: () => formattedTestPath,
     }
   );
   const status =
@@ -88,18 +88,18 @@ var _default = (result, globalConfig, projectConfig) => {
   }
 
   if (result.memoryUsage) {
-    const toMB = bytes => Math.floor(bytes / 1024 / 1024);
+    const toMB = (bytes) => Math.floor(bytes / 1024 / 1024);
 
     testDetail.push(`${toMB(result.memoryUsage)} MB heap size`);
   }
 
   const projectDisplayName =
     projectConfig && projectConfig.displayName
-      ? (0, _utils.printDisplayName)(projectConfig) + ' '
-      : '';
+      ? (0, _utils.printDisplayName)(projectConfig) + " "
+      : "";
   return (
     `${status} ${projectDisplayName}${fileLink}` +
-    (testDetail.length ? ` (${testDetail.join(', ')})` : '')
+    (testDetail.length ? ` (${testDetail.join(", ")})` : "")
   );
 };
 

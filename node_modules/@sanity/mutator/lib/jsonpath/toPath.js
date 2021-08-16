@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = toPath;
 
@@ -13,53 +13,55 @@ function toPath(expr) {
 
 function toPathInner(expr, inUnion) {
   switch (expr.type) {
-    case 'attribute':
+    case "attribute":
       return expr.name;
 
-    case 'alias':
-      return expr.target === 'self' ? '@' : '$';
+    case "alias":
+      return expr.target === "self" ? "@" : "$";
 
-    case 'number':
+    case "number":
       return "".concat(expr.value);
 
-    case 'range':
-      {
-        var result = [];
+    case "range": {
+      var result = [];
 
-        if (!inUnion) {
-          result.push('[');
-        }
-
-        if (expr.start) {
-          result.push("".concat(expr.start));
-        }
-
-        result.push(':');
-
-        if (expr.end) {
-          result.push("".concat(expr.end));
-        }
-
-        if (expr.step) {
-          result.push(":".concat(expr.step));
-        }
-
-        if (!inUnion) {
-          result.push(']');
-        }
-
-        return result.join('');
+      if (!inUnion) {
+        result.push("[");
       }
 
-    case 'index':
+      if (expr.start) {
+        result.push("".concat(expr.start));
+      }
+
+      result.push(":");
+
+      if (expr.end) {
+        result.push("".concat(expr.end));
+      }
+
+      if (expr.step) {
+        result.push(":".concat(expr.step));
+      }
+
+      if (!inUnion) {
+        result.push("]");
+      }
+
+      return result.join("");
+    }
+
+    case "index":
       if (inUnion) {
         return "".concat(expr.value);
       }
 
       return "[".concat(expr.value, "]");
 
-    case 'constraint':
-      var inner = "".concat(toPathInner(expr.lhs, false), " ").concat(expr.operator, " ").concat(toPathInner(expr.rhs, false));
+    case "constraint":
+      var inner = ""
+        .concat(toPathInner(expr.lhs, false), " ")
+        .concat(expr.operator, " ")
+        .concat(toPathInner(expr.rhs, false));
 
       if (inUnion) {
         return inner;
@@ -67,37 +69,36 @@ function toPathInner(expr, inUnion) {
 
       return "[".concat(inner, "]");
 
-    case 'string':
+    case "string":
       return JSON.stringify(expr.value);
 
-    case 'path':
-      {
-        var _result = [];
-        var nodes = expr.nodes.slice();
+    case "path": {
+      var _result = [];
+      var nodes = expr.nodes.slice();
 
-        while (nodes.length > 0) {
-          var node = nodes.shift();
+      while (nodes.length > 0) {
+        var node = nodes.shift();
 
-          _result.push(toPath(node));
+        _result.push(toPath(node));
 
-          var upcoming = nodes[0];
+        var upcoming = nodes[0];
 
-          if (upcoming && toPathInner(upcoming, false)[0] !== '[') {
-            _result.push('.');
-          }
+        if (upcoming && toPathInner(upcoming, false)[0] !== "[") {
+          _result.push(".");
         }
-
-        return _result.join('');
       }
 
-    case 'union':
-      var terms = expr.nodes.map(e => toPathInner(e, true));
-      return "[".concat(terms.join(','), "]");
+      return _result.join("");
+    }
+
+    case "union":
+      var terms = expr.nodes.map((e) => toPathInner(e, true));
+      return "[".concat(terms.join(","), "]");
 
     default:
       throw new Error("Unknown node type ".concat(expr.type));
 
-    case 'recursive':
+    case "recursive":
       return "..".concat(toPathInner(expr.term, false));
   }
 }

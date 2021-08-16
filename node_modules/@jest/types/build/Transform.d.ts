@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 export declare type TransformResult = {
-    code: string;
-    originalCode: string;
-    sourceMapPath: string | null;
+  code: string;
+  originalCode: string;
+  sourceMapPath: string | null;
 };

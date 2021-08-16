@@ -10,7 +10,7 @@ export class RangeTree {
     start: number,
     end: number,
     delta: number,
-    children: RangeTree[],
+    children: RangeTree[]
   ) {
     this.start = start;
     this.end = end;
@@ -21,12 +21,19 @@ export class RangeTree {
   /**
    * @precodition `ranges` are well-formed and pre-order sorted
    */
-  static fromSortedRanges(ranges: ReadonlyArray<RangeCov>): RangeTree | undefined {
+  static fromSortedRanges(
+    ranges: ReadonlyArray<RangeCov>
+  ): RangeTree | undefined {
     let root: RangeTree | undefined;
     // Stack of parent trees and parent counts.
     const stack: [RangeTree, number][] = [];
     for (const range of ranges) {
-      const node: RangeTree = new RangeTree(range.startOffset, range.endOffset, range.count, []);
+      const node: RangeTree = new RangeTree(
+        range.startOffset,
+        range.endOffset,
+        range.count,
+        []
+      );
       if (root === undefined) {
         root = node;
         stack.push([node, range.count]);
@@ -120,7 +127,10 @@ export class RangeTree {
     }
 
     const rightLen: number = this.children.length - leftChildLen;
-    const rightChildren: RangeTree[] = this.children.splice(leftChildLen, rightLen);
+    const rightChildren: RangeTree[] = this.children.splice(
+      leftChildLen,
+      rightLen
+    );
     if (mid !== undefined) {
       rightChildren.unshift(mid);
     }
@@ -128,7 +138,7 @@ export class RangeTree {
       value,
       this.end,
       this.delta,
-      rightChildren,
+      rightChildren
     );
     this.end = value;
     return result;
@@ -146,7 +156,7 @@ export class RangeTree {
     while (stack.length > 0) {
       const [cur, parentCount]: [RangeTree, number] = stack.pop()!;
       const count: number = parentCount + cur.delta;
-      ranges.push({startOffset: cur.start, endOffset: cur.end, count});
+      ranges.push({ startOffset: cur.start, endOffset: cur.end, count });
       for (let i: number = cur.children.length - 1; i >= 0; i--) {
         stack.push([cur.children[i], count]);
       }

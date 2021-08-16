@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
@@ -17,15 +17,15 @@ var _default = function _default() {
      * @returns {Jimp} this for chaining of methods
      */
     scale: function scale(f, mode, cb) {
-      if (typeof f !== 'number') {
-        return _utils.throwError.call(this, 'f must be a number', cb);
+      if (typeof f !== "number") {
+        return _utils.throwError.call(this, "f must be a number", cb);
       }
 
       if (f < 0) {
-        return _utils.throwError.call(this, 'f must be a positive number', cb);
+        return _utils.throwError.call(this, "f must be a positive number", cb);
       }
 
-      if (typeof mode === 'function' && typeof cb === 'undefined') {
+      if (typeof mode === "function" && typeof cb === "undefined") {
         cb = mode;
         mode = null;
       }
@@ -50,16 +50,19 @@ var _default = function _default() {
      * @returns {Jimp} this for chaining of methods
      */
     scaleToFit: function scaleToFit(w, h, mode, cb) {
-      if (typeof w !== 'number' || typeof h !== 'number') {
-        return _utils.throwError.call(this, 'w and h must be numbers', cb);
+      if (typeof w !== "number" || typeof h !== "number") {
+        return _utils.throwError.call(this, "w and h must be numbers", cb);
       }
 
-      if (typeof mode === 'function' && typeof cb === 'undefined') {
+      if (typeof mode === "function" && typeof cb === "undefined") {
         cb = mode;
         mode = null;
       }
 
-      var f = w / h > this.bitmap.width / this.bitmap.height ? h / this.bitmap.height : w / this.bitmap.width;
+      var f =
+        w / h > this.bitmap.width / this.bitmap.height
+          ? h / this.bitmap.height
+          : w / this.bitmap.width;
       this.scale(f, mode);
 
       if ((0, _utils.isNodePattern)(cb)) {
@@ -67,7 +70,7 @@ var _default = function _default() {
       }
 
       return this;
-    }
+    },
   };
 };
 

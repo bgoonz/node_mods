@@ -472,9 +472,9 @@ const props = {
   // preact
   for: true,
   class: true,
-  autofocus: true
-}
+  autofocus: true,
+};
 // eslint-disable-next-line import/no-commonjs
 module.exports = `/^((${Object.keys(props).join(
-  '|'
-)})|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/`
+  "|"
+)})|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/`;

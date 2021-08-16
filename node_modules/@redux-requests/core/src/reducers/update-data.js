@@ -1,7 +1,7 @@
-import { isSuccessAction, isResponseAction } from '../actions';
+import { isSuccessAction, isResponseAction } from "../actions";
 
-const getDataUpdater = mutationConfig => {
-  if (typeof mutationConfig === 'function') {
+const getDataUpdater = (mutationConfig) => {
+  if (typeof mutationConfig === "function") {
     return mutationConfig;
   } else if (mutationConfig.updateData) {
     return mutationConfig.updateData;
@@ -18,7 +18,7 @@ export default (data, action, mutationConfig) => {
       return dataUpdater
         ? dataUpdater(
             data,
-            action.payload ? action.payload.data : action.response.data,
+            action.payload ? action.payload.data : action.response.data
           )
         : data;
     }

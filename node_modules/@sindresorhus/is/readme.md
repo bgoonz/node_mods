@@ -4,20 +4,18 @@
 
 <img src="header.gif" width="182" align="right">
 
-
 ## Install
 
 ```
 $ npm install @sindresorhus/is
 ```
 
-
 ## Usage
 
 ```js
-const is = require('@sindresorhus/is');
+const is = require("@sindresorhus/is");
 
-is('🦄');
+is("🦄");
 //=> 'string'
 
 is(new Map());
@@ -30,29 +28,32 @@ is.number(6);
 When using `is` together with TypeScript, [type guards](http://www.typescriptlang.org/docs/handbook/advanced-types.html#type-guards-and-differentiating-types) are being used to infer the correct type inside if-else statements.
 
 ```ts
-import is from '@sindresorhus/is';
+import is from "@sindresorhus/is";
 
 const padLeft = (value: string, padding: string | number) => {
-	if (is.number(padding)) {
-		// `padding` is typed as `number`
-		return Array(padding + 1).join(' ') + value;
-	}
+  if (is.number(padding)) {
+    // `padding` is typed as `number`
+    return Array(padding + 1).join(" ") + value;
+  }
 
-	if (is.string(padding)) {
-		// `padding` is typed as `string`
-		return padding + value;
-	}
+  if (is.string(padding)) {
+    // `padding` is typed as `string`
+    return padding + value;
+  }
 
-	throw new TypeError(`Expected 'padding' to be of type 'string' or 'number', got '${is(padding)}'.`);
-}
+  throw new TypeError(
+    `Expected 'padding' to be of type 'string' or 'number', got '${is(
+      padding
+    )}'.`
+  );
+};
 
-padLeft('🦄', 3);
+padLeft("🦄", 3);
 //=> '   🦄'
 
-padLeft('🦄', '🌈');
+padLeft("🦄", "🌈");
 //=> '🌈🦄'
 ```
-
 
 ## API
 
@@ -81,17 +82,25 @@ All the below methods accept a value and returns a boolean for whether the value
 #### Primitives
 
 ##### .undefined(value)
+
 ##### .null(value)
+
 ##### .string(value)
+
 ##### .number(value)
+
 ##### .boolean(value)
+
 ##### .symbol(value)
 
 #### Built-in types
 
 ##### .array(value)
+
 ##### .function(value)
+
 ##### .buffer(value)
+
 ##### .object(value)
 
 Keep in mind that [functions are objects too](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions).
@@ -103,9 +112,13 @@ Returns `true` for a string that represents a number. For example, `'42'` and `'
 Note: `'NaN'` returns `false`, but `'Infinity'` and `'-Infinity'` return `true`.
 
 ##### .regExp(value)
+
 ##### .date(value)
+
 ##### .error(value)
+
 ##### .nativePromise(value)
+
 ##### .promise(value)
 
 Returns `true` for any object with a `.then()` and `.catch()` method. Prefer this one over `.nativePromise()` as you usually want to allow userland promise implementations too.
@@ -144,26 +157,39 @@ is.boundFunction(function () {});
 ```
 
 ##### .map(value)
+
 ##### .set(value)
+
 ##### .weakMap(value)
+
 ##### .weakSet(value)
 
 #### Typed arrays
 
 ##### .int8Array(value)
+
 ##### .uint8Array(value)
+
 ##### .uint8ClampedArray(value)
+
 ##### .int16Array(value)
+
 ##### .uint16Array(value)
+
 ##### .int32Array(value)
+
 ##### .uint32Array(value)
+
 ##### .float32Array(value)
+
 ##### .float64Array(value)
 
 #### Structured data
 
 ##### .arrayBuffer(value)
+
 ##### .sharedArrayBuffer(value)
+
 ##### .dataView(value)
 
 #### Emptiness
@@ -197,11 +223,11 @@ Please note that `Object.keys` returns only own enumerable properties. Hence som
 ```js
 const object1 = {};
 
-Object.defineProperty(object1, 'property1', {
-	value: 42,
-	writable: true,
-	enumerable: false,
-	configurable: true
+Object.defineProperty(object1, "property1", {
+  value: 42,
+  writable: true,
+  enumerable: false,
+  configurable: true,
 });
 
 is.emptyObject(object1);
@@ -249,7 +275,7 @@ is.directInstanceOf(new UnicornError(), Error);
 Returns `true` if `value` is an instance of the [`URL` class](https://developer.mozilla.org/en-US/docs/Web/API/URL).
 
 ```js
-const url = new URL('https://example.com');
+const url = new URL("https://example.com");
 
 is.urlInstance(url);
 //=> true
@@ -262,7 +288,7 @@ Returns `true` if `value` is a URL string.
 Note: this only does basic checking using the [`URL` class](https://developer.mozilla.org/en-US/docs/Web/API/URL) constructor.
 
 ```js
-const url = 'https://example.com';
+const url = "https://example.com";
 
 is.url(url);
 //=> true
@@ -276,7 +302,7 @@ is.url(new URL(url));
 Returns `true` for all values that evaluate to true in a boolean context:
 
 ```js
-is.truthy('🦄');
+is.truthy("🦄");
 //=> true
 
 is.truthy(undefined);
@@ -288,7 +314,9 @@ is.truthy(undefined);
 Returns `true` if `value` is one of: `false`, `0`, `''`, `null`, `undefined`, `NaN`.
 
 ##### .nan(value)
+
 ##### .nullOrUndefined(value)
+
 ##### .primitive(value)
 
 JavaScript primitives are as follows: `null`, `undefined`, `string`, `number`, `boolean`, `symbol`.
@@ -304,7 +332,9 @@ Returns `true` if `value` is a [safe integer](https://developer.mozilla.org/en-U
 An object is plain if it's created by either `{}`, `new Object()`, or `Object.create(null)`.
 
 ##### .iterable(value)
+
 ##### .asyncIterable(value)
+
 ##### .class(value)
 
 Returns `true` for instances created by a class.
@@ -320,8 +350,8 @@ is.arrayLike(document.forms);
 //=> true
 
 function foo() {
-	is.arrayLike(arguments);
-	//=> true
+  is.arrayLike(arguments);
+  //=> true
 }
 foo();
 ```
@@ -353,9 +383,9 @@ Returns `true` if `value` is a DOM Element.
 Returns `true` if `value` is a Node.js [stream](https://nodejs.org/api/stream.html).
 
 ```js
-const fs = require('fs');
+const fs = require("fs");
 
-is.nodeStream(fs.createReadStream('unicorn.png'));
+is.nodeStream(fs.createReadStream("unicorn.png"));
 //=> true
 ```
 
@@ -364,7 +394,7 @@ is.nodeStream(fs.createReadStream('unicorn.png'));
 Returns `true` if `value` is an `Observable`.
 
 ```js
-const {Observable} = require('rxjs');
+const { Observable } = require("rxjs");
 
 is.observable(new Observable());
 //=> true
@@ -387,10 +417,10 @@ Returns `true` if `value` is an odd integer.
 Returns `true` if **any** of the input `values` returns true in the `predicate`:
 
 ```js
-is.any(is.string, {}, true, '🦄');
+is.any(is.string, {}, true, "🦄");
 //=> true
 
-is.any(is.boolean, 'unicorns', [], new Map());
+is.any(is.boolean, "unicorns", [], new Map());
 //=> false
 ```
 
@@ -402,10 +432,9 @@ Returns `true` if **all** of the input `values` returns true in the `predicate`:
 is.all(is.object, {}, new Map(), new Set());
 //=> true
 
-is.all(is.string, '🦄', [], 'unicorns');
+is.all(is.string, "🦄", [], "unicorns");
 //=> false
 ```
-
 
 ## FAQ
 
@@ -424,7 +453,6 @@ For the ones I found, pick 3 of these.
 
 The most common mistakes I noticed in these modules was using `instanceof` for type checking, forgetting that functions are objects, and omitting `symbol` as a primitive.
 
-
 ## Related
 
 - [ow](https://github.com/sindresorhus/ow) - Function argument validation for humans
@@ -438,13 +466,11 @@ The most common mistakes I noticed in these modules was using `instanceof` for t
 - [is-blob](https://github.com/sindresorhus/is-blob) - Check if a value is a Blob - File-like object of immutable, raw data
 - [has-emoji](https://github.com/sindresorhus/has-emoji) - Check whether a string has any emoji
 
-
 ## Created by
 
 - [Sindre Sorhus](https://github.com/sindresorhus)
 - [Giora Guttsait](https://github.com/gioragutt)
 - [Brandon Smith](https://github.com/brandon93s)
-
 
 ## License
 

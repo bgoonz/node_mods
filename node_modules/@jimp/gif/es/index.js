@@ -3,23 +3,25 @@
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+var _defineProperty2 = _interopRequireDefault(
+  require("@babel/runtime/helpers/defineProperty")
+);
 
 var _omggif = _interopRequireDefault(require("omggif"));
 
 var _gifwrap = require("gifwrap");
 
-var MIME_TYPE = 'image/gif';
+var MIME_TYPE = "image/gif";
 
 var _default = function _default() {
   return {
-    mime: (0, _defineProperty2["default"])({}, MIME_TYPE, ['gif']),
+    mime: (0, _defineProperty2["default"])({}, MIME_TYPE, ["gif"]),
     constants: {
-      MIME_GIF: MIME_TYPE
+      MIME_GIF: MIME_TYPE,
     },
     decoders: (0, _defineProperty2["default"])({}, MIME_TYPE, function (data) {
       var gifObj = new _omggif["default"].GifReader(data);
@@ -28,7 +30,7 @@ var _default = function _default() {
       return {
         data: gifData,
         width: gifObj.width,
-        height: gifObj.height
+        height: gifObj.height,
       };
     }),
     encoders: (0, _defineProperty2["default"])({}, MIME_TYPE, function (data) {
@@ -41,7 +43,7 @@ var _default = function _default() {
       return gifCodec.encodeGif([newFrame], {}).then(function (newGif) {
         return newGif.buffer;
       });
-    })
+    }),
   };
 };
 

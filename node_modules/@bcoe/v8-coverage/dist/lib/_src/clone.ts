@@ -42,7 +42,9 @@ export function cloneScriptCov(scriptCov: Readonly<ScriptCov>): ScriptCov {
  * @param functionCov Function coverage to clone.
  * @return Cloned function coverage.
  */
-export function cloneFunctionCov(functionCov: Readonly<FunctionCov>): FunctionCov {
+export function cloneFunctionCov(
+  functionCov: Readonly<FunctionCov>
+): FunctionCov {
   const ranges: RangeCov[] = [];
   for (const rangeCov of functionCov.ranges) {
     ranges.push(cloneRangeCov(rangeCov));

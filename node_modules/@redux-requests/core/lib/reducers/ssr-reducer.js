@@ -22,20 +22,36 @@ var _default = function _default(state, action, config) {
     config = _defaultConfig["default"];
   }
 
-  if (config.ssr === 'server' && (0, _actions.isResponseAction)(action)) {
-    return [].concat(state, [(0, _actions.getRequestActionFromResponse)(action).type + (action.meta.requestKey || '')]);
+  if (config.ssr === "server" && (0, _actions.isResponseAction)(action)) {
+    return [].concat(state, [
+      (0, _actions.getRequestActionFromResponse)(action).type +
+        (action.meta.requestKey || ""),
+    ]);
   }
 
-  if (config.ssr === 'server' && action.type === _constants.JOIN_REQUEST && action.rehydrate) {
-    return [].concat(state, [{
-      requestType: action.requestType,
-      duplicate: true
-    }]);
+  if (
+    config.ssr === "server" &&
+    action.type === _constants.JOIN_REQUEST &&
+    action.rehydrate
+  ) {
+    return [].concat(state, [
+      {
+        requestType: action.requestType,
+        duplicate: true,
+      },
+    ]);
   }
 
-  if (config.ssr === 'client' && config.isRequestAction(action) && ((_action$meta = action.meta) != null && _action$meta.ssrResponse || (_action$meta2 = action.meta) != null && _action$meta2.ssrError)) {
+  if (
+    config.ssr === "client" &&
+    config.isRequestAction(action) &&
+    (((_action$meta = action.meta) != null && _action$meta.ssrResponse) ||
+      ((_action$meta2 = action.meta) != null && _action$meta2.ssrError))
+  ) {
     var indexToRemove = state.findIndex(function (v) {
-      return (v.requestType || v) === action.type + (action.meta.requestKey || '');
+      return (
+        (v.requestType || v) === action.type + (action.meta.requestKey || "")
+      );
     });
 
     if (indexToRemove >= 0) {

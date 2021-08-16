@@ -1,8 +1,8 @@
 "use strict";
 
-var makeError = require('make-error');
+var makeError = require("make-error");
 
-var assign = require('object-assign');
+var assign = require("object-assign");
 
 function ClientError(res) {
   var props = extractErrorProps(res);
@@ -21,7 +21,7 @@ function extractErrorProps(res) {
   var props = {
     response: res,
     statusCode: res.statusCode,
-    responseBody: stringifyBody(body, res)
+    responseBody: stringifyBody(body, res),
   }; // API/Boom style errors ({statusCode, error, message})
 
   if (body.error && body.message) {
@@ -29,26 +29,28 @@ function extractErrorProps(res) {
     return props;
   } // Query/database errors ({error: {description, other, arb, props}})
 
-
   if (body.error && body.error.description) {
     props.message = body.error.description;
     props.details = body.error;
     return props;
   } // Other, more arbitrary errors
 
-
   props.message = body.error || body.message || httpErrorMessage(res);
   return props;
 }
 
 function httpErrorMessage(res) {
-  var statusMessage = res.statusMessage ? " ".concat(res.statusMessage) : '';
-  return "".concat(res.method, "-request to ").concat(res.url, " resulted in HTTP ").concat(res.statusCode).concat(statusMessage);
+  var statusMessage = res.statusMessage ? " ".concat(res.statusMessage) : "";
+  return ""
+    .concat(res.method, "-request to ")
+    .concat(res.url, " resulted in HTTP ")
+    .concat(res.statusCode)
+    .concat(statusMessage);
 }
 
 function stringifyBody(body, res) {
-  var contentType = (res.headers['content-type'] || '').toLowerCase();
-  var isJson = contentType.indexOf('application/json') !== -1;
+  var contentType = (res.headers["content-type"] || "").toLowerCase();
+  var isJson = contentType.indexOf("application/json") !== -1;
   return isJson ? JSON.stringify(body, null, 2) : body;
 }
 

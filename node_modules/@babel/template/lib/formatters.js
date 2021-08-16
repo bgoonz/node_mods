@@ -1,23 +1,28 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
-exports.program = exports.expression = exports.statement = exports.statements = exports.smart = void 0;
+exports.program =
+  exports.expression =
+  exports.statement =
+  exports.statements =
+  exports.smart =
+    void 0;
 
 var t = require("@babel/types");
 
 function makeStatementFormatter(fn) {
   return {
-    code: str => `/* @babel/template */;\n${str}`,
+    code: (str) => `/* @babel/template */;\n${str}`,
     validate: () => {},
-    unwrap: ast => {
+    unwrap: (ast) => {
       return fn(ast.program.body.slice(1));
-    }
+    },
   };
 }
 
-const smart = makeStatementFormatter(body => {
+const smart = makeStatementFormatter((body) => {
   if (body.length > 1) {
     return body;
   } else {
@@ -25,9 +30,9 @@ const smart = makeStatementFormatter(body => {
   }
 });
 exports.smart = smart;
-const statements = makeStatementFormatter(body => body);
+const statements = makeStatementFormatter((body) => body);
 exports.statements = statements;
-const statement = makeStatementFormatter(body => {
+const statement = makeStatementFormatter((body) => {
   if (body.length === 0) {
     throw new Error("Found nothing to return.");
   }
@@ -40,8 +45,8 @@ const statement = makeStatementFormatter(body => {
 });
 exports.statement = statement;
 const expression = {
-  code: str => `(\n${str}\n)`,
-  validate: ast => {
+  code: (str) => `(\n${str}\n)`,
+  validate: (ast) => {
     if (ast.program.body.length > 1) {
       throw new Error("Found multiple statements but wanted one");
     }
@@ -50,18 +55,16 @@ const expression = {
       throw new Error("Parse result included parens.");
     }
   },
-  unwrap: ({
-    program
-  }) => {
+  unwrap: ({ program }) => {
     const [stmt] = program.body;
     t.assertExpressionStatement(stmt);
     return stmt.expression;
-  }
+  },
 };
 exports.expression = expression;
 const program = {
-  code: str => str,
+  code: (str) => str,
   validate: () => {},
-  unwrap: ast => ast.program
+  unwrap: (ast) => ast.program,
 };
 exports.program = program;

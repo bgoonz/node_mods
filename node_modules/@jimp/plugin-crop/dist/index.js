@@ -3,7 +3,7 @@
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = pluginCrop;
 
@@ -22,9 +22,11 @@ function pluginCrop(event) {
    * @param {function(Error, Jimp)} cb (optional) a callback for when complete
    * @returns {Jimp} this for chaining of methods
    */
-  event('crop', function (x, y, w, h, cb) {
-    if (typeof x !== 'number' || typeof y !== 'number') return _utils.throwError.call(this, 'x and y must be numbers', cb);
-    if (typeof w !== 'number' || typeof h !== 'number') return _utils.throwError.call(this, 'w and h must be numbers', cb); // round input
+  event("crop", function (x, y, w, h, cb) {
+    if (typeof x !== "number" || typeof y !== "number")
+      return _utils.throwError.call(this, "x and y must be numbers", cb);
+    if (typeof w !== "number" || typeof h !== "number")
+      return _utils.throwError.call(this, "w and h must be numbers", cb); // round input
 
     x = Math.round(x);
     y = Math.round(y);
@@ -33,8 +35,8 @@ function pluginCrop(event) {
 
     if (x === 0 && w === this.bitmap.width) {
       // shortcut
-      var start = w * y + x << 2;
-      var end = start + h * w << 2;
+      var start = (w * y + x) << 2;
+      var end = (start + h * w) << 2;
       this.bitmap.data = this.bitmap.data.slice(start, end);
     } else {
       var bitmap = Buffer.allocUnsafe(w * h * 4);
@@ -57,7 +59,7 @@ function pluginCrop(event) {
     return this;
   });
   return {
-    "class": {
+    class: {
       /**
        * Autocrop same color borders from this image
        * @param {number} tolerance (optional): a percent value of tolerance for pixels color difference (default: 0.0002%)
@@ -83,43 +85,47 @@ function pluginCrop(event) {
         // i.e. north and south / east and west are cropped by the same value
         // parse arguments
 
-        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        for (
+          var _len = arguments.length, args = new Array(_len), _key = 0;
+          _key < _len;
+          _key++
+        ) {
           args[_key] = arguments[_key];
         }
 
         for (var a = 0, len = args.length; a < len; a++) {
-          if (typeof args[a] === 'number') {
+          if (typeof args[a] === "number") {
             // tolerance value passed
             tolerance = args[a];
           }
 
-          if (typeof args[a] === 'boolean') {
+          if (typeof args[a] === "boolean") {
             // cropOnlyFrames value passed
             cropOnlyFrames = args[a];
           }
 
-          if (typeof args[a] === 'function') {
+          if (typeof args[a] === "function") {
             // callback value passed
             cb = args[a];
           }
 
-          if ((0, _typeof2["default"])(args[a]) === 'object') {
+          if ((0, _typeof2["default"])(args[a]) === "object") {
             // config object passed
             var config = args[a];
 
-            if (typeof config.tolerance !== 'undefined') {
+            if (typeof config.tolerance !== "undefined") {
               tolerance = config.tolerance;
             }
 
-            if (typeof config.cropOnlyFrames !== 'undefined') {
+            if (typeof config.cropOnlyFrames !== "undefined") {
               cropOnlyFrames = config.cropOnlyFrames;
             }
 
-            if (typeof config.cropSymmetric !== 'undefined') {
+            if (typeof config.cropSymmetric !== "undefined") {
               cropSymmetric = config.cropSymmetric;
             }
 
-            if (typeof config.leaveBorder !== 'undefined') {
+            if (typeof config.leaveBorder !== "undefined") {
               leaveBorder = config.leaveBorder;
             }
           }
@@ -131,7 +137,6 @@ function pluginCrop(event) {
          * introduce unnecessary complexity to the algorithm.
          */
         // scan each side for same color borders
-
 
         var colorTarget = this.getPixelColor(0, 0); // top left pixel color is the target color
 
@@ -155,10 +160,8 @@ function pluginCrop(event) {
             }
           } // this row contains all pixels with the same color: increment this side pixels to crop
 
-
           northPixelsToCrop++;
         } // east side (scan columns from east to west)
-
 
         colorTarget = this.getPixelColor(w, 0);
 
@@ -174,14 +177,16 @@ function pluginCrop(event) {
             }
           } // this column contains all pixels with the same color: increment this side pixels to crop
 
-
           eastPixelsToCrop++;
         } // south side (scan rows from south to north)
 
-
         colorTarget = this.getPixelColor(0, h);
 
-        south: for (var _y2 = h - 1; _y2 >= northPixelsToCrop + minPixelsPerSide; _y2--) {
+        south: for (
+          var _y2 = h - 1;
+          _y2 >= northPixelsToCrop + minPixelsPerSide;
+          _y2--
+        ) {
           for (var _x2 = w - eastPixelsToCrop - 1; _x2 >= 0; _x2--) {
             var _colorXY2 = this.getPixelColor(_x2, _y2);
 
@@ -193,14 +198,16 @@ function pluginCrop(event) {
             }
           } // this row contains all pixels with the same color: increment this side pixels to crop
 
-
           southPixelsToCrop++;
         } // west side (scan columns from west to east)
 
-
         colorTarget = this.getPixelColor(w, h);
 
-        west: for (var _x3 = w - 1; _x3 >= 0 + eastPixelsToCrop + minPixelsPerSide; _x3--) {
+        west: for (
+          var _x3 = w - 1;
+          _x3 >= 0 + eastPixelsToCrop + minPixelsPerSide;
+          _x3--
+        ) {
           for (var _y3 = h - 1; _y3 >= 0 + northPixelsToCrop; _y3--) {
             var _colorXY3 = this.getPixelColor(_x3, _y3);
 
@@ -212,10 +219,8 @@ function pluginCrop(event) {
             }
           } // this column contains all pixels with the same color: increment this side pixels to crop
 
-
           westPixelsToCrop++;
         } // decide if a crop is needed
-
 
         var doCrop = false; // apply leaveBorder
 
@@ -233,26 +238,39 @@ function pluginCrop(event) {
           southPixelsToCrop = vertical;
         } // make sure that crops are >= 0
 
-
         westPixelsToCrop = westPixelsToCrop >= 0 ? westPixelsToCrop : 0;
         eastPixelsToCrop = eastPixelsToCrop >= 0 ? eastPixelsToCrop : 0;
         northPixelsToCrop = northPixelsToCrop >= 0 ? northPixelsToCrop : 0;
         southPixelsToCrop = southPixelsToCrop >= 0 ? southPixelsToCrop : 0; // safety checks
 
         var widthOfRemainingPixels = w - (westPixelsToCrop + eastPixelsToCrop);
-        var heightOfRemainingPixels = h - (southPixelsToCrop + northPixelsToCrop);
+        var heightOfRemainingPixels =
+          h - (southPixelsToCrop + northPixelsToCrop);
 
         if (cropOnlyFrames) {
           // crop image if all sides should be cropped
-          doCrop = eastPixelsToCrop !== 0 && northPixelsToCrop !== 0 && westPixelsToCrop !== 0 && southPixelsToCrop !== 0;
+          doCrop =
+            eastPixelsToCrop !== 0 &&
+            northPixelsToCrop !== 0 &&
+            westPixelsToCrop !== 0 &&
+            southPixelsToCrop !== 0;
         } else {
           // crop image if at least one side should be cropped
-          doCrop = eastPixelsToCrop !== 0 || northPixelsToCrop !== 0 || westPixelsToCrop !== 0 || southPixelsToCrop !== 0;
+          doCrop =
+            eastPixelsToCrop !== 0 ||
+            northPixelsToCrop !== 0 ||
+            westPixelsToCrop !== 0 ||
+            southPixelsToCrop !== 0;
         }
 
         if (doCrop) {
           // do the real crop
-          this.crop(eastPixelsToCrop, northPixelsToCrop, widthOfRemainingPixels, heightOfRemainingPixels);
+          this.crop(
+            eastPixelsToCrop,
+            northPixelsToCrop,
+            widthOfRemainingPixels,
+            heightOfRemainingPixels
+          );
         }
 
         if ((0, _utils.isNodePattern)(cb)) {
@@ -260,8 +278,8 @@ function pluginCrop(event) {
         }
 
         return this;
-      }
-    }
+      },
+    },
   };
 }
 

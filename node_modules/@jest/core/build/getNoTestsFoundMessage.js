@@ -1,30 +1,30 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = getNoTestsFoundMessage;
 
-var _getNoTestFound = _interopRequireDefault(require('./getNoTestFound'));
+var _getNoTestFound = _interopRequireDefault(require("./getNoTestFound"));
 
 var _getNoTestFoundFailed = _interopRequireDefault(
-  require('./getNoTestFoundFailed')
+  require("./getNoTestFoundFailed")
 );
 
 var _getNoTestFoundPassWithNoTests = _interopRequireDefault(
-  require('./getNoTestFoundPassWithNoTests')
+  require("./getNoTestFoundPassWithNoTests")
 );
 
 var _getNoTestFoundRelatedToChangedFiles = _interopRequireDefault(
-  require('./getNoTestFoundRelatedToChangedFiles')
+  require("./getNoTestFoundRelatedToChangedFiles")
 );
 
 var _getNoTestFoundVerbose = _interopRequireDefault(
-  require('./getNoTestFoundVerbose')
+  require("./getNoTestFoundVerbose")
 );
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**

@@ -1,14 +1,16 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = removeTypeDuplicates;
 
 var _generated = require("../../validators/generated");
 
 function getQualifiedName(node) {
-  return (0, _generated.isIdentifier)(node) ? node.name : `${node.id.name}.${getQualifiedName(node.qualification)}`;
+  return (0, _generated.isIdentifier)(node)
+    ? node.name
+    : `${node.id.name}.${getQualifiedName(node.qualification)}`;
 }
 
 function removeTypeDuplicates(nodes) {
@@ -51,7 +53,9 @@ function removeTypeDuplicates(nodes) {
 
         if (existing.typeParameters) {
           if (node.typeParameters) {
-            existing.typeParameters.params = removeTypeDuplicates(existing.typeParameters.params.concat(node.typeParameters.params));
+            existing.typeParameters.params = removeTypeDuplicates(
+              existing.typeParameters.params.concat(node.typeParameters.params)
+            );
           }
         } else {
           existing = node.typeParameters;

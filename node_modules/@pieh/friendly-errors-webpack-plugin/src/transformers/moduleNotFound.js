@@ -1,13 +1,15 @@
-'use strict';
+"use strict";
 
-const TYPE = 'module-not-found';
+const TYPE = "module-not-found";
 
-function isModuleNotFoundError (e) {
+function isModuleNotFoundError(e) {
   const webpackError = e.webpackError || {};
-  return webpackError.dependencies
-    && webpackError.dependencies.length > 0
-    && e.name === 'ModuleNotFoundError'
-    && e.message.indexOf('Module not found') === 0;
+  return (
+    webpackError.dependencies &&
+    webpackError.dependencies.length > 0 &&
+    e.name === "ModuleNotFoundError" &&
+    e.message.indexOf("Module not found") === 0
+  );
 }
 
 function transform(error) {
@@ -20,7 +22,7 @@ function transform(error) {
       type: TYPE,
       severity: 900,
       module,
-      name: 'Module not found'
+      name: "Module not found",
     });
   }
 

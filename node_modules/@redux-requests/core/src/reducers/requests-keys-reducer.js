@@ -1,4 +1,4 @@
-import defaultConfig from '../default-config';
+import defaultConfig from "../default-config";
 
 // TODO: this should be rewritten to more functional style, we need things like filter object helpers
 export default (state, action, config = defaultConfig) => {
@@ -15,7 +15,7 @@ export default (state, action, config = defaultConfig) => {
         ...requestsKeys,
         [action.type]: [
           ...requestsKeys[action.type].filter(
-            k => k !== action.meta.requestKey,
+            (k) => k !== action.meta.requestKey
           ),
           action.meta.requestKey,
         ],
@@ -35,7 +35,7 @@ export default (state, action, config = defaultConfig) => {
       if (numberOfExceedingRequests > 0) {
         const exceedingRequestsKeys = requestsKeys[action.type]
           .slice(0, numberOfExceedingRequests)
-          .filter(k => {
+          .filter((k) => {
             const exceededRequest = requestsStorage[action.type + k];
             return !exceededRequest || exceededRequest.pending === 0; // we dont want to remove pending requests
           });
@@ -44,12 +44,12 @@ export default (state, action, config = defaultConfig) => {
           requestsKeys = {
             ...requestsKeys,
             [action.type]: requestsKeys[action.type].filter(
-              k => !exceedingRequestsKeys.includes(k),
+              (k) => !exceedingRequestsKeys.includes(k)
             ),
           };
           const copiedStorage = { ...requestsStorage };
 
-          exceedingRequestsKeys.forEach(k => {
+          exceedingRequestsKeys.forEach((k) => {
             delete copiedStorage[action.type + k];
           });
 
@@ -58,7 +58,7 @@ export default (state, action, config = defaultConfig) => {
 
             const copiedCache = { ...cache };
 
-            exceedingRequestsKeys.forEach(k => {
+            exceedingRequestsKeys.forEach((k) => {
               delete copiedCache[action.type + k];
             });
 

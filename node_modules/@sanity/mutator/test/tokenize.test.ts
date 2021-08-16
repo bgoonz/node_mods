@@ -1,142 +1,142 @@
-import {test} from 'tap'
+import { test } from "tap";
 
-import tokenize from '../src/jsonpath/tokenize'
+import tokenize from "../src/jsonpath/tokenize";
 
 const cases = {
-  'a.b[7]': [
+  "a.b[7]": [
     {
-      type: 'identifier',
-      name: 'a',
+      type: "identifier",
+      name: "a",
     },
     {
-      type: 'operator',
-      symbol: '.',
+      type: "operator",
+      symbol: ".",
     },
     {
-      type: 'identifier',
-      name: 'b',
+      type: "identifier",
+      name: "b",
     },
     {
-      type: 'paren',
-      symbol: '[',
+      type: "paren",
+      symbol: "[",
     },
     {
-      type: 'number',
+      type: "number",
       value: 7,
-      raw: '7',
+      raw: "7",
     },
     {
-      type: 'paren',
-      symbol: ']',
+      type: "paren",
+      symbol: "]",
     },
   ],
-  '-1': [
+  "-1": [
     {
-      type: 'number',
+      type: "number",
       value: -1,
-      raw: '-1',
+      raw: "-1",
     },
   ],
   'some.array[@ == "snafu"]': [
     {
-      type: 'identifier',
-      name: 'some',
+      type: "identifier",
+      name: "some",
     },
     {
-      type: 'operator',
-      symbol: '.',
+      type: "operator",
+      symbol: ".",
     },
     {
-      type: 'identifier',
-      name: 'array',
+      type: "identifier",
+      name: "array",
     },
     {
-      type: 'paren',
-      symbol: '[',
+      type: "paren",
+      symbol: "[",
     },
     {
-      type: 'keyword',
-      symbol: '@',
+      type: "keyword",
+      symbol: "@",
     },
     {
-      type: 'comparator',
-      symbol: '==',
+      type: "comparator",
+      symbol: "==",
     },
     {
-      type: 'quoted',
-      value: 'snafu',
-      quote: 'double',
+      type: "quoted",
+      value: "snafu",
+      quote: "double",
     },
     {
-      type: 'paren',
-      symbol: ']',
+      type: "paren",
+      symbol: "]",
     },
   ],
   '..[key == "e7rw"]': [
     {
-      type: 'operator',
-      symbol: '..',
+      type: "operator",
+      symbol: "..",
     },
     {
-      type: 'paren',
-      symbol: '[',
+      type: "paren",
+      symbol: "[",
     },
     {
-      type: 'identifier',
-      name: 'key',
+      type: "identifier",
+      name: "key",
     },
     {
-      type: 'comparator',
-      symbol: '==',
+      type: "comparator",
+      symbol: "==",
     },
     {
-      type: 'quoted',
-      value: 'e7rw',
-      quote: 'double',
+      type: "quoted",
+      value: "e7rw",
+      quote: "double",
     },
     {
-      type: 'paren',
-      symbol: ']',
+      type: "paren",
+      symbol: "]",
     },
   ],
   '"\\"quoted\\""': [
     {
-      type: 'quoted',
+      type: "quoted",
       value: '"quoted"',
-      quote: 'double',
+      quote: "double",
     },
   ],
-  '[true, false]': [
+  "[true, false]": [
     {
-      symbol: '[',
-      type: 'paren',
+      symbol: "[",
+      type: "paren",
     },
     {
-      symbol: 'true',
-      type: 'boolean',
+      symbol: "true",
+      type: "boolean",
     },
     {
-      symbol: ',',
-      type: 'operator',
+      symbol: ",",
+      type: "operator",
     },
     {
-      symbol: 'false',
-      type: 'boolean',
+      symbol: "false",
+      type: "boolean",
     },
     {
-      symbol: ']',
-      type: 'paren',
+      symbol: "]",
+      type: "paren",
     },
   ],
-}
+};
 
-test('Tokenization of jsonpath', (t) => {
+test("Tokenization of jsonpath", (t) => {
   Object.keys(cases).forEach((path) => {
-    const expect = cases[path]
+    const expect = cases[path];
     if (!expect) {
-      console.log(`Result of tokenizing '${path}'`, tokenize(path))
+      console.log(`Result of tokenizing '${path}'`, tokenize(path));
     }
-    t.same(tokenize(path), expect, `Tokenization failed for '${path}'`)
-  })
-  t.end()
-})
+    t.same(tokenize(path), expect, `Tokenization failed for '${path}'`);
+  });
+  t.end();
+});

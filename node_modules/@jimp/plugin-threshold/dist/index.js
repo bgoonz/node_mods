@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
@@ -22,21 +22,26 @@ var _default = function _default() {
       var _this = this;
 
       var max = _ref.max,
-          _ref$replace = _ref.replace,
-          replace = _ref$replace === void 0 ? 255 : _ref$replace,
-          _ref$autoGreyscale = _ref.autoGreyscale,
-          autoGreyscale = _ref$autoGreyscale === void 0 ? true : _ref$autoGreyscale;
+        _ref$replace = _ref.replace,
+        replace = _ref$replace === void 0 ? 255 : _ref$replace,
+        _ref$autoGreyscale = _ref.autoGreyscale,
+        autoGreyscale =
+          _ref$autoGreyscale === void 0 ? true : _ref$autoGreyscale;
 
-      if (typeof max !== 'number') {
-        return _utils.throwError.call(this, 'max must be a number', cb);
+      if (typeof max !== "number") {
+        return _utils.throwError.call(this, "max must be a number", cb);
       }
 
-      if (typeof replace !== 'number') {
-        return _utils.throwError.call(this, 'replace must be a number', cb);
+      if (typeof replace !== "number") {
+        return _utils.throwError.call(this, "replace must be a number", cb);
       }
 
-      if (typeof autoGreyscale !== 'boolean') {
-        return _utils.throwError.call(this, 'autoGreyscale must be a boolean', cb);
+      if (typeof autoGreyscale !== "boolean") {
+        return _utils.throwError.call(
+          this,
+          "autoGreyscale must be a boolean",
+          cb
+        );
       }
 
       max = this.constructor.limit255(max);
@@ -46,19 +51,26 @@ var _default = function _default() {
         this.greyscale();
       }
 
-      this.scanQuiet(0, 0, this.bitmap.width, this.bitmap.height, function (x, y, idx) {
-        var grey = _this.bitmap.data[idx] < max ? _this.bitmap.data[idx] : replace;
-        _this.bitmap.data[idx] = grey;
-        _this.bitmap.data[idx + 1] = grey;
-        _this.bitmap.data[idx + 2] = grey;
-      });
+      this.scanQuiet(
+        0,
+        0,
+        this.bitmap.width,
+        this.bitmap.height,
+        function (x, y, idx) {
+          var grey =
+            _this.bitmap.data[idx] < max ? _this.bitmap.data[idx] : replace;
+          _this.bitmap.data[idx] = grey;
+          _this.bitmap.data[idx + 1] = grey;
+          _this.bitmap.data[idx + 2] = grey;
+        }
+      );
 
       if ((0, _utils.isNodePattern)(cb)) {
         cb.call(this, null, this);
       }
 
       return this;
-    }
+    },
   };
 };
 

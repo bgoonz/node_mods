@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
 module.exports = exports = handle_gyp_opts;
 
-const versioning = require('./versioning.js');
-const napi = require('./napi.js');
+const versioning = require("./versioning.js");
+const napi = require("./napi.js");
 
 /*
 
@@ -41,31 +41,37 @@ gyp.opts.argv == { remain: [ 'build' ],
 // select set of node-pre-gyp versioning info
 // to share with node-gyp
 const share_with_node_gyp = [
-  'module',
-  'module_name',
-  'module_path',
-  'napi_version',
-  'node_abi_napi',
-  'napi_build_version',
-  'node_napi_label'
+  "module",
+  "module_name",
+  "module_path",
+  "napi_version",
+  "node_abi_napi",
+  "napi_build_version",
+  "node_napi_label",
 ];
 
 function handle_gyp_opts(gyp, argv, callback) {
-
   // Collect node-pre-gyp specific variables to pass to node-gyp
   const node_pre_gyp_options = [];
   // generate custom node-pre-gyp versioning info
-  const napi_build_version = napi.get_napi_build_version_from_command_args(argv);
-  const opts = versioning.evaluate(gyp.package_json, gyp.opts, napi_build_version);
+  const napi_build_version =
+    napi.get_napi_build_version_from_command_args(argv);
+  const opts = versioning.evaluate(
+    gyp.package_json,
+    gyp.opts,
+    napi_build_version
+  );
   share_with_node_gyp.forEach((key) => {
     const val = opts[key];
     if (val) {
-      node_pre_gyp_options.push('--' + key + '=' + val);
-    } else if (key === 'napi_build_version') {
-      node_pre_gyp_options.push('--' + key + '=0');
+      node_pre_gyp_options.push("--" + key + "=" + val);
+    } else if (key === "napi_build_version") {
+      node_pre_gyp_options.push("--" + key + "=0");
     } else {
-      if (key !== 'napi_version' && key !== 'node_abi_napi')
-        return callback(new Error('Option ' + key + ' required but not found by node-pre-gyp'));
+      if (key !== "napi_version" && key !== "node_abi_napi")
+        return callback(
+          new Error("Option " + key + " required but not found by node-pre-gyp")
+        );
     }
   });
 
@@ -76,7 +82,7 @@ function handle_gyp_opts(gyp, argv, callback) {
     if (double_hyphen_found) {
       unparsed_options.push(opt);
     }
-    if (opt === '--') {
+    if (opt === "--") {
       double_hyphen_found = true;
     }
   });
@@ -86,17 +92,24 @@ function handle_gyp_opts(gyp, argv, callback) {
   const cooked = gyp.opts.argv.cooked;
   const node_gyp_options = [];
   cooked.forEach((value) => {
-    if (value.length > 2 && value.slice(0, 2) === '--') {
+    if (value.length > 2 && value.slice(0, 2) === "--") {
       const key = value.slice(2);
       const val = cooked[cooked.indexOf(value) + 1];
-      if (val && val.indexOf('--') === -1) { // handle '--foo=bar' or ['--foo','bar']
-        node_gyp_options.push('--' + key + '=' + val);
-      } else { // pass through --foo
+      if (val && val.indexOf("--") === -1) {
+        // handle '--foo=bar' or ['--foo','bar']
+        node_gyp_options.push("--" + key + "=" + val);
+      } else {
+        // pass through --foo
         node_gyp_options.push(value);
       }
     }
   });
 
-  const result = { 'opts': opts, 'gyp': node_gyp_options, 'pre': node_pre_gyp_options, 'unparsed': unparsed_options };
+  const result = {
+    opts: opts,
+    gyp: node_gyp_options,
+    pre: node_pre_gyp_options,
+    unparsed: unparsed_options,
+  };
   return callback(null, result);
 }

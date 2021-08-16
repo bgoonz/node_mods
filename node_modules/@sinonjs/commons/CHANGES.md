@@ -4,13 +4,13 @@
 
 - [`6af2d0c`](https://github.com/sinonjs/commons/commit/6af2d0cf33e9fd1e4aaef5308fd16a9cd78a5782)
   Bump y18n from 4.0.0 to 4.0.1 (dependabot[bot])
-    >
-    > Bumps [y18n](https://github.com/yargs/y18n) from 4.0.0 to 4.0.1.
-    > - [Release notes](https://github.com/yargs/y18n/releases)
-    > - [Changelog](https://github.com/yargs/y18n/blob/master/CHANGELOG.md)
-    > - [Commits](https://github.com/yargs/y18n/commits)
-    >
-    > Signed-off-by: dependabot[bot] <support@github.com>
+  > Bumps [y18n](https://github.com/yargs/y18n) from 4.0.0 to 4.0.1.
+  >
+  > - [Release notes](https://github.com/yargs/y18n/releases)
+  > - [Changelog](https://github.com/yargs/y18n/blob/master/CHANGELOG.md)
+  > - [Commits](https://github.com/yargs/y18n/commits)
+  >
+  > Signed-off-by: dependabot[bot] <support@github.com>
 
 _Released on 2021-04-08._
 
@@ -18,10 +18,8 @@ _Released on 2021-04-08._
 
 - [`6b7a796`](https://github.com/sinonjs/commons/commit/6b7a796ffc088b43dc283cc4477a7d641720dc96)
   Add .d.ts files to package (Morgan Roderick)
-    >
-    > In order to improve the experience of TypeScript users, we are compiling
-    > `.d.ts` files from the JSDoc and distributing them with the package
-    >
+  > In order to improve the experience of TypeScript users, we are compiling
+  > `.d.ts` files from the JSDoc and distributing them with the package
 
 _Released on 2021-01-13._
 
@@ -50,8 +48,6 @@ _Released on 2020-04-08._
 
 - [`0486d25`](https://github.com/sinonjs/commons/commit/0486d250ecec9b5f9aa2210357767e413f4162d3)
   Upgrade eslint-config-sinon, add eslint-plugin-jsdoc (Morgan Roderick)
-    >
-    > This adds linting of jsdoc
-    >
+  > This adds linting of jsdoc
 
 _Released on 2020-02-19._

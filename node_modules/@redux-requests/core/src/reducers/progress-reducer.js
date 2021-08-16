@@ -1,4 +1,4 @@
-import { SET_DOWNLOAD_PROGRESS, SET_UPLOAD_PROGRESS } from '../constants';
+import { SET_DOWNLOAD_PROGRESS, SET_UPLOAD_PROGRESS } from "../constants";
 
 export default (state, action, config) => {
   if (action.type === SET_DOWNLOAD_PROGRESS) {
@@ -26,7 +26,7 @@ export default (state, action, config) => {
       ...state,
       downloadProgress: {
         ...state.downloadProgress,
-        [action.type + (action.meta?.requestKey || '')]: 0,
+        [action.type + (action.meta?.requestKey || "")]: 0,
       },
     };
   }
@@ -36,7 +36,7 @@ export default (state, action, config) => {
       ...state,
       uploadProgress: {
         ...state.uploadProgress,
-        [action.type + (action.meta?.requestKey || '')]: 0,
+        [action.type + (action.meta?.requestKey || "")]: 0,
       },
     };
   }

@@ -6,7 +6,7 @@
 "use strict";
 
 module.exports = {
-    settings: {
-        "eslint:recommended": true
-    }
+  settings: {
+    "eslint:recommended": true,
+  },
 };

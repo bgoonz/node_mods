@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.VariableDeclarator = VariableDeclarator;
 exports.TypeCastExpression = TypeCastExpression;
@@ -23,14 +23,19 @@ exports.RegExpLiteral = RegExpLiteral;
 exports.ObjectExpression = ObjectExpression;
 exports.ArrayExpression = ArrayExpression;
 exports.RestElement = RestElement;
-exports.ClassDeclaration = exports.ClassExpression = exports.FunctionDeclaration = exports.ArrowFunctionExpression = exports.FunctionExpression = Func;
+exports.ClassDeclaration =
+  exports.ClassExpression =
+  exports.FunctionDeclaration =
+  exports.ArrowFunctionExpression =
+  exports.FunctionExpression =
+    Func;
 exports.CallExpression = CallExpression;
 exports.TaggedTemplateExpression = TaggedTemplateExpression;
 Object.defineProperty(exports, "Identifier", {
   enumerable: true,
   get: function () {
     return _infererReference.default;
-  }
+  },
 });
 
 var t = require("@babel/types");
@@ -46,9 +51,13 @@ function VariableDeclarator() {
   let type = init.getTypeAnnotation();
 
   if (((_type = type) == null ? void 0 : _type.type) === "AnyTypeAnnotation") {
-    if (init.isCallExpression() && init.get("callee").isIdentifier({
-      name: "Array"
-    }) && !init.scope.hasBinding("Array", true)) {
+    if (
+      init.isCallExpression() &&
+      init.get("callee").isIdentifier({
+        name: "Array",
+      }) &&
+      !init.scope.hasBinding("Array", true)
+    ) {
       type = ArrayExpression();
     }
   }
@@ -103,12 +112,18 @@ function BinaryExpression(node) {
       return t.stringTypeAnnotation();
     }
 
-    return t.unionTypeAnnotation([t.stringTypeAnnotation(), t.numberTypeAnnotation()]);
+    return t.unionTypeAnnotation([
+      t.stringTypeAnnotation(),
+      t.numberTypeAnnotation(),
+    ]);
   }
 }
 
 function LogicalExpression() {
-  const argumentTypes = [this.get("left").getTypeAnnotation(), this.get("right").getTypeAnnotation()];
+  const argumentTypes = [
+    this.get("left").getTypeAnnotation(),
+    this.get("right").getTypeAnnotation(),
+  ];
 
   if (t.isTSTypeAnnotation(argumentTypes[0]) && t.createTSUnionType) {
     return t.createTSUnionType(argumentTypes);
@@ -122,7 +137,10 @@ function LogicalExpression() {
 }
 
 function ConditionalExpression() {
-  const argumentTypes = [this.get("consequent").getTypeAnnotation(), this.get("alternate").getTypeAnnotation()];
+  const argumentTypes = [
+    this.get("consequent").getTypeAnnotation(),
+    this.get("alternate").getTypeAnnotation(),
+  ];
 
   if (t.isTSTypeAnnotation(argumentTypes[0]) && t.createTSUnionType) {
     return t.createTSUnionType(argumentTypes);
@@ -199,16 +217,16 @@ const isObjectValues = t.buildMatchMemberExpression("Object.values");
 const isObjectEntries = t.buildMatchMemberExpression("Object.entries");
 
 function CallExpression() {
-  const {
-    callee
-  } = this.node;
+  const { callee } = this.node;
 
   if (isObjectKeys(callee)) {
     return t.arrayTypeAnnotation(t.stringTypeAnnotation());
   } else if (isArrayFrom(callee) || isObjectValues(callee)) {
     return t.arrayTypeAnnotation(t.anyTypeAnnotation());
   } else if (isObjectEntries(callee)) {
-    return t.arrayTypeAnnotation(t.tupleTypeAnnotation([t.stringTypeAnnotation(), t.anyTypeAnnotation()]));
+    return t.arrayTypeAnnotation(
+      t.tupleTypeAnnotation([t.stringTypeAnnotation(), t.anyTypeAnnotation()])
+    );
   }
 
   return resolveCall(this.get("callee"));
@@ -231,7 +249,8 @@ function resolveCall(callee) {
     } else {
       if (callee.node.returnType) {
         return callee.node.returnType;
-      } else {}
+      } else {
+      }
     }
   }
 }

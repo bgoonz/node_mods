@@ -5,7 +5,9 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 exports.__esModule = true;
 exports["default"] = void 0;
 
-var _extends3 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+var _extends3 = _interopRequireDefault(
+  require("@babel/runtime/helpers/extends")
+);
 
 var _constants = require("../constants");
 
@@ -16,16 +18,20 @@ var getNewCacheTimeout = function getNewCacheTimeout(cache) {
 };
 
 var getRequestKey = function getRequestKey(action) {
-  return action.type + (action.meta.requestKey || '');
+  return action.type + (action.meta.requestKey || "");
 };
 
 var getRequestTypeString = function getRequestTypeString(requestType) {
-  return typeof requestType === 'function' ? requestType.toString() : requestType;
+  return typeof requestType === "function"
+    ? requestType.toString()
+    : requestType;
 };
 
 var getRequestKeys = function getRequestKeys(requests) {
   return requests.map(function (v) {
-    return typeof v === 'object' ? getRequestTypeString(v.requestType) + v.requestKey : getRequestTypeString(v);
+    return typeof v === "object"
+      ? getRequestTypeString(v.requestType) + v.requestKey
+      : getRequestTypeString(v);
   });
 };
 
@@ -42,14 +48,25 @@ var _default = function _default(state, action) {
     return state;
   }
 
-  if ((0, _actions.isSuccessAction)(action) && action.meta.cache && !action.meta.cacheResponse && !action.meta.ssrResponse) {
+  if (
+    (0, _actions.isSuccessAction)(action) &&
+    action.meta.cache &&
+    !action.meta.cacheResponse &&
+    !action.meta.ssrResponse
+  ) {
     var _extends2;
 
     var requestAction = (0, _actions.getRequestActionFromResponse)(action);
-    return (0, _extends3["default"])({}, state, (_extends2 = {}, _extends2[getRequestKey(requestAction)] = {
-      timeout: getNewCacheTimeout(action.meta.cache),
-      cacheKey: action.meta.cacheKey
-    }, _extends2));
+    return (0, _extends3["default"])(
+      {},
+      state,
+      ((_extends2 = {}),
+      (_extends2[getRequestKey(requestAction)] = {
+        timeout: getNewCacheTimeout(action.meta.cache),
+        cacheKey: action.meta.cacheKey,
+      }),
+      _extends2)
+    );
   }
 
   return state;

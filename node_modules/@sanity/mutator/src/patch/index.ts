@@ -1,4 +1,4 @@
-import Patcher from './Patcher'
-import ImmutableAccessor from './ImmutableAccessor'
+import Patcher from "./Patcher";
+import ImmutableAccessor from "./ImmutableAccessor";
 
-export {Patcher, ImmutableAccessor}
+export { Patcher, ImmutableAccessor };

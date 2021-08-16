@@ -16,8 +16,7 @@ made in order to use the plugin with gatsby-v2.
 
 # Getting Started
 
-Install the plugin via `npm install --save
-@gatsby-contrib/gatsby-plugin-elasticlunr-search`.
+Install the plugin via `npm install --save @gatsby-contrib/gatsby-plugin-elasticlunr-search`.
 
 See the [example
 site](https://gatsby-contrib.github.io/gatsby-plugin-elasticlunr-search/)
@@ -44,9 +43,9 @@ module.exports = {
         resolvers: {
           // For any node of type MarkdownRemark, list how to resolve the fields` values
           MarkdownRemark: {
-            title: node => node.frontmatter.title,
-            tags: node => node.frontmatter.tags,
-            path: node => node.frontmatter.path,
+            title: (node) => node.frontmatter.title,
+            tags: (node) => node.frontmatter.tags,
+            path: (node) => node.frontmatter.path,
           },
         },
         // Optional filter to limit indexed nodes
@@ -54,7 +53,7 @@ module.exports = {
       },
     },
   ],
-}
+};
 ```
 
 ## Consuming in Your Site
@@ -78,10 +77,10 @@ it as props to the `Search` component.
 `components/header.js`
 
 ```javascript
-import React from "react"
-import { StaticQuery, graphql } from "gatsby"
+import React from "react";
+import { StaticQuery, graphql } from "gatsby";
 
-import Search from "./search"
+import Search from "./search";
 
 const Header = () => (
   <StaticQuery
@@ -92,16 +91,16 @@ const Header = () => (
         }
       }
     `}
-    render={data => (
+    render={(data) => (
       <header>
         ... header stuff...
         <Search searchIndex={data.siteSearchIndex.index} />
       </header>
     )}
   />
-)
+);
 
-export default Header
+export default Header;
 ```
 
 And then use the `searchIndex` inside your `Search` component.
@@ -109,18 +108,18 @@ And then use the `searchIndex` inside your `Search` component.
 `components/search.js`
 
 ```javascript
-import React, { Component } from "react"
-import { Index } from "elasticlunr"
-import { Link } from "gatsby"
+import React, { Component } from "react";
+import { Index } from "elasticlunr";
+import { Link } from "gatsby";
 
 // Search component
 export default class Search extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       query: ``,
       results: [],
-    }
+    };
   }
 
   render() {
@@ -128,7 +127,7 @@ export default class Search extends Component {
       <div>
         <input type="text" value={this.state.query} onChange={this.search} />
         <ul>
-          {this.state.results.map(page => (
+          {this.state.results.map((page) => (
             <li key={page.id}>
               <Link to={"/" + page.path}>{page.title}</Link>
               {": " + page.tags.join(`,`)}
@@ -136,17 +135,17 @@ export default class Search extends Component {
           ))}
         </ul>
       </div>
-    )
+    );
   }
   getOrCreateIndex = () =>
     this.index
       ? this.index
       : // Create an elastic lunr index and hydrate with graphql query results
-        Index.load(this.props.searchIndex)
+        Index.load(this.props.searchIndex);
 
-  search = evt => {
-    const query = evt.target.value
-    this.index = this.getOrCreateIndex()
+  search = (evt) => {
+    const query = evt.target.value;
+    this.index = this.getOrCreateIndex();
     this.setState({
       query,
       // Query the index with search string to get an [] of IDs
@@ -154,8 +153,8 @@ export default class Search extends Component {
         .search(query, {})
         // Map over each ID and return the full document
         .map(({ ref }) => this.index.documentStore.getDoc(ref)),
-    })
-  }
+    });
+  };
 }
 ```
 
@@ -165,7 +164,7 @@ If you want your search to include partial matches, for example if you had the
 following data:
 
 ```javascript
-sku: ["ab21345", "ab98765", "abcdef12"]
+sku: ["ab21345", "ab98765", "abcdef12"];
 ```
 
 And wanted a search for "**_ab_**" to return all of those data, then you can
@@ -176,9 +175,9 @@ Taking the above example implementation, adapt the `search` function in the
 `Search` component to the following:
 
 ```javascript
-search = evt => {
-  const query = evt.target.value
-  this.index = this.getOrCreateIndex()
+search = (evt) => {
+  const query = evt.target.value;
+  this.index = this.getOrCreateIndex();
   this.setState({
     query,
     // Query the index with search string to get an [] of IDs
@@ -186,8 +185,8 @@ search = evt => {
       .search(query, { expand: true }) // Accept partial matches
       // Map over each ID and return the full document
       .map(({ ref }) => this.index.documentStore.getDoc(ref)),
-  })
-}
+  });
+};
 ```
 
 ## Optimize handling of data models with nested nodes

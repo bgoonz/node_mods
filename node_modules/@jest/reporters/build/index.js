@@ -1,64 +1,64 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
-Object.defineProperty(exports, 'BaseReporter', {
+Object.defineProperty(exports, "BaseReporter", {
   enumerable: true,
   get: function () {
     return _BaseReporter.default;
-  }
+  },
 });
-Object.defineProperty(exports, 'CoverageReporter', {
+Object.defineProperty(exports, "CoverageReporter", {
   enumerable: true,
   get: function () {
     return _CoverageReporter.default;
-  }
+  },
 });
-Object.defineProperty(exports, 'DefaultReporter', {
+Object.defineProperty(exports, "DefaultReporter", {
   enumerable: true,
   get: function () {
     return _DefaultReporter.default;
-  }
+  },
 });
-Object.defineProperty(exports, 'NotifyReporter', {
+Object.defineProperty(exports, "NotifyReporter", {
   enumerable: true,
   get: function () {
     return _NotifyReporter.default;
-  }
+  },
 });
-Object.defineProperty(exports, 'SummaryReporter', {
+Object.defineProperty(exports, "SummaryReporter", {
   enumerable: true,
   get: function () {
     return _SummaryReporter.default;
-  }
+  },
 });
-Object.defineProperty(exports, 'VerboseReporter', {
+Object.defineProperty(exports, "VerboseReporter", {
   enumerable: true,
   get: function () {
     return _VerboseReporter.default;
-  }
+  },
 });
 exports.utils = void 0;
 
-var _getResultHeader = _interopRequireDefault(require('./getResultHeader'));
+var _getResultHeader = _interopRequireDefault(require("./getResultHeader"));
 
-var _utils = require('./utils');
+var _utils = require("./utils");
 
-var _BaseReporter = _interopRequireDefault(require('./BaseReporter'));
+var _BaseReporter = _interopRequireDefault(require("./BaseReporter"));
 
-var _CoverageReporter = _interopRequireDefault(require('./CoverageReporter'));
+var _CoverageReporter = _interopRequireDefault(require("./CoverageReporter"));
 
-var _DefaultReporter = _interopRequireDefault(require('./DefaultReporter'));
+var _DefaultReporter = _interopRequireDefault(require("./DefaultReporter"));
 
-var _NotifyReporter = _interopRequireDefault(require('./NotifyReporter'));
+var _NotifyReporter = _interopRequireDefault(require("./NotifyReporter"));
 
-var _SummaryReporter = _interopRequireDefault(require('./SummaryReporter'));
+var _SummaryReporter = _interopRequireDefault(require("./SummaryReporter"));
 
-var _VerboseReporter = _interopRequireDefault(require('./VerboseReporter'));
+var _VerboseReporter = _interopRequireDefault(require("./VerboseReporter"));
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -72,6 +72,6 @@ const utils = {
   getResultHeader: _getResultHeader.default,
   printDisplayName: _utils.printDisplayName,
   relativePath: _utils.relativePath,
-  trimAndFormatPath: _utils.trimAndFormatPath
+  trimAndFormatPath: _utils.trimAndFormatPath,
 };
 exports.utils = utils;

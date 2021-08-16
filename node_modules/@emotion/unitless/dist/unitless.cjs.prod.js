@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: !0
+  value: !0,
 });
 
 var unitlessKeys = {
@@ -49,7 +49,7 @@ var unitlessKeys = {
   strokeDashoffset: 1,
   strokeMiterlimit: 1,
   strokeOpacity: 1,
-  strokeWidth: 1
+  strokeWidth: 1,
 };
 
 exports.default = unitlessKeys;

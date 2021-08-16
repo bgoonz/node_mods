@@ -17,7 +17,7 @@ const require = createRequire(import.meta.url);
       expect(output).toBe(
         "var getMessage = function getMessage() {\n" +
           '  return "Hello World";\n' +
-          "};",
+          "};"
       );
     });
     it("handles the es2015-loose preset", () => {
@@ -72,10 +72,10 @@ const require = createRequire(import.meta.url);
         "const someDiv = <div>{getMessage()}</div>",
         {
           presets: [["react", { runtime: "classic" }]],
-        },
+        }
       ).code;
       expect(output).toBe(
-        'const someDiv = /*#__PURE__*/React.createElement("div", null, getMessage());',
+        'const someDiv = /*#__PURE__*/React.createElement("div", null, getMessage());'
       );
     });
 
@@ -94,7 +94,7 @@ const require = createRequire(import.meta.url);
       expect(output).toBe(
         "const getMessage = function () {\n" +
           '  return "Hello World";\n' +
-          "};",
+          "};"
       );
     });
 
@@ -107,13 +107,13 @@ const require = createRequire(import.meta.url);
 
     it("throws on invalid preset name", () => {
       expect(() =>
-        Babel.transform("var foo", { presets: ["lolfail"] }),
+        Babel.transform("var foo", { presets: ["lolfail"] })
       ).toThrow(/Invalid preset specified in Babel options: "lolfail"/);
     });
 
     it("throws on invalid plugin name", () => {
       expect(() =>
-        Babel.transform("var foo", { plugins: ["lolfail"] }),
+        Babel.transform("var foo", { plugins: ["lolfail"] })
       ).toThrow(/Invalid plugin specified in Babel options: "lolfail"/);
     });
 
@@ -167,7 +167,7 @@ const require = createRequire(import.meta.url);
           presets: [["env", { targets: { browsers: "ie 6" } }]],
         }).code;
         expect(output).toBe(
-          "function Foo() {\n  this instanceof Foo ? this.constructor : void 0;\n}",
+          "function Foo() {\n  this instanceof Foo ? this.constructor : void 0;\n}"
         );
       });
 
@@ -210,7 +210,7 @@ const require = createRequire(import.meta.url);
         Babel.registerPlugin("lolizer", lolizer);
         const output = Babel.transform(
           "function helloWorld() { alert(hello); }",
-          { plugins: ["lolizer"] },
+          { plugins: ["lolizer"] }
         );
         expect(output.code).toBe(`function LOL() {
   LOL(LOL);
@@ -221,7 +221,7 @@ const require = createRequire(import.meta.url);
         Babel.registerPreset("lulz", { plugins: [lolizer] });
         const output = Babel.transform(
           "function helloWorld() { alert(hello); }",
-          { presets: ["lulz"] },
+          { presets: ["lulz"] }
         );
         expect(output.code).toBe(`function LOL() {
   LOL(LOL);
@@ -232,30 +232,30 @@ const require = createRequire(import.meta.url);
     describe("regressions", () => {
       it("#11534 - supports quantifiers in unicode regexps", () => {
         expect(() =>
-          Babel.transform("/a*/u", { presets: ["es2015"] }),
+          Babel.transform("/a*/u", { presets: ["es2015"] })
         ).not.toThrow();
       });
       it("#11628 - supports stage-0 passing importAssertionsVersion to stage-1", () => {
         expect(() =>
           Babel.transform("const getMessage = () => 'Hello World'", {
             presets: [["stage-0", { decoratorsBeforeExport: false }]],
-          }),
+          })
         ).not.toThrow();
       });
       it("#11897 - [...map.keys()] in Babel source should be transformed correctly", () => {
         expect(() =>
           Babel.transform("for (let el of []) { s => el }", {
             plugins: ["transform-block-scoping"],
-          }),
+          })
         ).not.toThrow();
       });
       it("#12815 - unicode property letter short alias should be transformed", () => {
         expect(() =>
           Babel.transform("/\\p{L}/u", {
             plugins: ["proposal-unicode-property-regex"],
-          }),
+          })
         ).not.toThrow();
       });
     });
-  },
+  }
 );

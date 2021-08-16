@@ -4,7 +4,7 @@ export var mapRequest = function mapRequest(request, callback) {
 export var mapObject = function mapObject(obj, callback) {
   return Object.entries(obj).reduce(function (prev, _ref) {
     var k = _ref[0],
-        v = _ref[1];
+      v = _ref[1];
     var newValue = callback(k, v);
 
     if (newValue === undefined) {

@@ -1,4 +1,4 @@
-import { IExecutableSchemaDefinition } from './types';
+import { IExecutableSchemaDefinition } from "./types";
 /**
  * Builds a schema from the provided type definitions and resolvers.
  *
@@ -43,4 +43,18 @@ import { IExecutableSchemaDefinition } from './types';
  * })
  * ```
  */
-export declare function makeExecutableSchema<TContext = any>({ typeDefs, resolvers, logger, allowUndefinedInResolve, resolverValidationOptions, directiveResolvers, schemaDirectives, schemaTransforms: userProvidedSchemaTransforms, parseOptions, inheritResolversFromInterfaces, pruningOptions, updateResolversInPlace, noExtensionExtraction, }: IExecutableSchemaDefinition<TContext>): import("graphql").GraphQLSchema;
+export declare function makeExecutableSchema<TContext = any>({
+  typeDefs,
+  resolvers,
+  logger,
+  allowUndefinedInResolve,
+  resolverValidationOptions,
+  directiveResolvers,
+  schemaDirectives,
+  schemaTransforms: userProvidedSchemaTransforms,
+  parseOptions,
+  inheritResolversFromInterfaces,
+  pruningOptions,
+  updateResolversInPlace,
+  noExtensionExtraction,
+}: IExecutableSchemaDefinition<TContext>): import("graphql").GraphQLSchema;

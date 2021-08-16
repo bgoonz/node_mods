@@ -5,10 +5,12 @@ function _objectSpread(target) {
     var source = arguments[i] != null ? Object(arguments[i]) : {};
     var ownKeys = Object.keys(source);
 
-    if (typeof Object.getOwnPropertySymbols === 'function') {
-      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-      }));
+    if (typeof Object.getOwnPropertySymbols === "function") {
+      ownKeys = ownKeys.concat(
+        Object.getOwnPropertySymbols(source).filter(function (sym) {
+          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+        })
+      );
     }
 
     ownKeys.forEach(function (key) {
@@ -20,4 +22,5 @@ function _objectSpread(target) {
 }
 
 module.exports = _objectSpread;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

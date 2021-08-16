@@ -17,9 +17,9 @@ import {
   OPEN_WEBSOCKET,
   CLOSE_WEBSOCKET,
   STOP_SUBSCRIPTIONS,
-} from './constants';
+} from "./constants";
 
-const getActionWithSuffix = suffix => actionType => actionType + suffix;
+const getActionWithSuffix = (suffix) => (actionType) => actionType + suffix;
 
 export const success = getActionWithSuffix(SUCCESS_SUFFIX);
 
@@ -27,7 +27,7 @@ export const error = getActionWithSuffix(ERROR_SUFFIX);
 
 export const abort = getActionWithSuffix(ABORT_SUFFIX);
 
-const isFSA = action => !!action.payload;
+const isFSA = (action) => !!action.payload;
 
 export const createSuccessAction = (action, response) => ({
   type: success(action.type),
@@ -54,7 +54,7 @@ export const createErrorAction = (action, errorData) => ({
   },
 });
 
-export const createAbortAction = action => ({
+export const createAbortAction = (action) => ({
   type: abort(action.type),
   meta: {
     ...action.meta,
@@ -62,14 +62,14 @@ export const createAbortAction = action => ({
   },
 });
 
-export const getActionPayload = action =>
+export const getActionPayload = (action) =>
   action.payload === undefined ? action : action.payload;
 
 // eslint-disable-next-line import/no-unused-modules
-export const getResponseFromSuccessAction = action =>
+export const getResponseFromSuccessAction = (action) =>
   action.payload ? action.payload : action.response;
 
-export const isRequestAction = action => {
+export const isRequestAction = (action) => {
   const actionPayload = getActionPayload(action);
 
   return (
@@ -87,25 +87,26 @@ export const isRequestAction = action => {
   );
 };
 
-export const isResponseAction = action => !!action.meta?.requestAction;
+export const isResponseAction = (action) => !!action.meta?.requestAction;
 
-export const getRequestActionFromResponse = action => action.meta.requestAction;
+export const getRequestActionFromResponse = (action) =>
+  action.meta.requestAction;
 
-export const isSuccessAction = action =>
+export const isSuccessAction = (action) =>
   isResponseAction(action) && action.type.endsWith(SUCCESS_SUFFIX);
 
-export const isErrorAction = action =>
+export const isErrorAction = (action) =>
   isResponseAction(action) && action.type.endsWith(ERROR_SUFFIX);
 
-export const isAbortAction = action =>
+export const isAbortAction = (action) =>
   isResponseAction(action) && action.type.endsWith(ABORT_SUFFIX);
 
-const isRequestQuery = request =>
+const isRequestQuery = (request) =>
   (!request.query &&
-    (!request.method || request.method.toLowerCase() === 'get')) ||
-  (request.query && !request.query.trim().startsWith('mutation'));
+    (!request.method || request.method.toLowerCase() === "get")) ||
+  (request.query && !request.query.trim().startsWith("mutation"));
 
-export const isRequestActionQuery = action => {
+export const isRequestActionQuery = (action) => {
   const { request } = getActionPayload(action);
 
   if (action.meta?.asMutation !== undefined) {
@@ -125,7 +126,7 @@ export const clearRequestsCache = (requests = null) => ({
 export const resetRequests = (
   requests = null,
   abortPending = true,
-  resetCached = true,
+  resetCached = true
 ) => ({
   type: RESET_REQUESTS,
   requests,
@@ -155,12 +156,12 @@ export const setUploadProgress = (requestType, progress) => ({
   progress,
 });
 
-export const addWatcher = requestType => ({
+export const addWatcher = (requestType) => ({
   type: ADD_WATCHER,
   requestType,
 });
 
-export const removeWatcher = requestType => ({
+export const removeWatcher = (requestType) => ({
   type: REMOVE_WATCHER,
   requestType,
 });
@@ -173,7 +174,7 @@ export const joinRequest = (requestType, rehydrate = false) => ({
 
 export const websocketOpened = () => ({ type: WEBSOCKET_OPENED });
 
-export const websocketClosed = code => ({ type: WEBSOCKET_CLOSED, code });
+export const websocketClosed = (code) => ({ type: WEBSOCKET_CLOSED, code });
 
 export const getWebsocket = () => ({ type: GET_WEBSOCKET });
 

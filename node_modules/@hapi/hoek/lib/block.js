@@ -1,12 +1,9 @@
-'use strict';
+"use strict";
 
-const Ignore = require('./ignore');
-
+const Ignore = require("./ignore");
 
 const internals = {};
 
-
 module.exports = function () {
-
-    return new Promise(Ignore);
+  return new Promise(Ignore);
 };

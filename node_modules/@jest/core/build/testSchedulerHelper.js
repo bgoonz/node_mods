@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.shouldRunInBand = shouldRunInBand;
 
@@ -16,7 +16,7 @@ const SLOW_TEST_TIME = 1000;
 function shouldRunInBand(
   tests,
   timings,
-  {detectOpenHandles, maxWorkers, watch, watchAll}
+  { detectOpenHandles, maxWorkers, watch, watchAll }
 ) {
   // detectOpenHandles makes no sense without runInBand, because it cannot detect leaks in workers
   if (detectOpenHandles) {
@@ -35,7 +35,7 @@ function shouldRunInBand(
    */
 
   const isWatchMode = watch || watchAll;
-  const areFastTests = timings.every(timing => timing < SLOW_TEST_TIME);
+  const areFastTests = timings.every((timing) => timing < SLOW_TEST_TIME);
   const oneWorkerOrLess = maxWorkers <= 1;
   const oneTestOrLess = tests.length <= 1;
 

@@ -1,7 +1,7 @@
-import { ADD_WATCHER, REMOVE_WATCHER } from '../constants';
+import { ADD_WATCHER, REMOVE_WATCHER } from "../constants";
 
 export default (state, action, config) => {
-  if (config.ssr === 'server') {
+  if (config.ssr === "server") {
     return state;
   }
 

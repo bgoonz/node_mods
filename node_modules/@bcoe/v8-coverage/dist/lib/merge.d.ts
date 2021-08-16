@@ -10,7 +10,9 @@ import { FunctionCov, ProcessCov, ScriptCov } from "./types";
  * @param processCovs Process coverages to merge.
  * @return Merged process coverage.
  */
-export declare function mergeProcessCovs(processCovs: ReadonlyArray<ProcessCov>): ProcessCov;
+export declare function mergeProcessCovs(
+  processCovs: ReadonlyArray<ProcessCov>
+): ProcessCov;
 /**
  * Merges a list of matching script coverages.
  *
@@ -23,7 +25,9 @@ export declare function mergeProcessCovs(processCovs: ReadonlyArray<ProcessCov>)
  * @param scriptCovs Process coverages to merge.
  * @return Merged script coverage, or `undefined` if the input list was empty.
  */
-export declare function mergeScriptCovs(scriptCovs: ReadonlyArray<ScriptCov>): ScriptCov | undefined;
+export declare function mergeScriptCovs(
+  scriptCovs: ReadonlyArray<ScriptCov>
+): ScriptCov | undefined;
 /**
  * Merges a list of matching function coverages.
  *
@@ -36,4 +40,6 @@ export declare function mergeScriptCovs(scriptCovs: ReadonlyArray<ScriptCov>): S
  * @param funcCovs Function coverages to merge.
  * @return Merged function coverage, or `undefined` if the input list was empty.
  */
-export declare function mergeFunctionCovs(funcCovs: ReadonlyArray<FunctionCov>): FunctionCov | undefined;
+export declare function mergeFunctionCovs(
+  funcCovs: ReadonlyArray<FunctionCov>
+): FunctionCov | undefined;

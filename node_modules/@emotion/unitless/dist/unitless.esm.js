@@ -44,7 +44,7 @@ var unitlessKeys = {
   strokeDashoffset: 1,
   strokeMiterlimit: 1,
   strokeOpacity: 1,
-  strokeWidth: 1
+  strokeWidth: 1,
 };
 
 export default unitlessKeys;

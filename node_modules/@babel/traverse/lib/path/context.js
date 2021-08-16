@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.call = call;
 exports._call = _call;
@@ -53,7 +53,12 @@ function _call(fns) {
     const ret = fn.call(this.state, this, this.state);
 
     if (ret && typeof ret === "object" && typeof ret.then === "function") {
-      throw new Error(`You appear to be using a plugin with an async traversal visitor, ` + `which your current version of Babel does not support. ` + `If you're using a published plugin, you may need to upgrade ` + `your @babel/core version.`);
+      throw new Error(
+        `You appear to be using a plugin with an async traversal visitor, ` +
+          `which your current version of Babel does not support. ` +
+          `If you're using a published plugin, you may need to upgrade ` +
+          `your @babel/core version.`
+      );
     }
 
     if (ret) {
@@ -70,7 +75,10 @@ function _call(fns) {
 function isDenylisted() {
   var _this$opts$denylist;
 
-  const denylist = (_this$opts$denylist = this.opts.denylist) != null ? _this$opts$denylist : this.opts.blacklist;
+  const denylist =
+    (_this$opts$denylist = this.opts.denylist) != null
+      ? _this$opts$denylist
+      : this.opts.blacklist;
   return denylist && denylist.indexOf(this.node.type) > -1;
 }
 
@@ -94,7 +102,14 @@ function visit() {
 
   this.debug("Recursing into...");
 
-  _index.default.node(this.node, this.opts, this.scope, this.state, this, this.skipKeys);
+  _index.default.node(
+    this.node,
+    this.opts,
+    this.scope,
+    this.state,
+    this,
+    this.skipKeys
+  );
 
   this.call("exit");
   return this.shouldStop;
@@ -194,7 +209,11 @@ function _resyncList() {
 }
 
 function _resyncRemoved() {
-  if (this.key == null || !this.container || this.container[this.key] !== this.node) {
+  if (
+    this.key == null ||
+    !this.container ||
+    this.container[this.key] !== this.node
+  ) {
     this._markRemoved();
   }
 }
@@ -231,7 +250,6 @@ function setKey(key) {
 
 function requeue(pathToQueue = this) {
   if (pathToQueue.removed) return;
-  ;
   const contexts = this.contexts;
 
   for (const context of contexts) {

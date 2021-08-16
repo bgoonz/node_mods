@@ -1,11 +1,23 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 
 // A default implementation of a probe for vanilla JS _values
 class PlainProbe {
@@ -20,16 +32,16 @@ class PlainProbe {
 
   containerType() {
     if (Array.isArray(this._value)) {
-      return 'array';
-    } else if (this._value !== null && typeof this._value === 'object') {
-      return 'object';
+      return "array";
+    } else if (this._value !== null && typeof this._value === "object") {
+      return "object";
     }
 
-    return 'primitive';
+    return "primitive";
   }
 
   length() {
-    if (this.containerType() !== 'array') {
+    if (this.containerType() !== "array") {
       throw new Error("Won't return length of non-indexable _value");
     }
 
@@ -37,7 +49,7 @@ class PlainProbe {
   }
 
   getIndex(i) {
-    if (this.containerType() !== 'array') {
+    if (this.containerType() !== "array") {
       return false;
     }
 
@@ -49,7 +61,7 @@ class PlainProbe {
   }
 
   hasAttribute(key) {
-    if (this.containerType() !== 'object') {
+    if (this.containerType() !== "object") {
       return false;
     }
 
@@ -57,7 +69,7 @@ class PlainProbe {
   }
 
   attributeKeys() {
-    if (this.containerType() !== 'object') {
+    if (this.containerType() !== "object") {
       return [];
     }
 
@@ -65,8 +77,8 @@ class PlainProbe {
   }
 
   getAttribute(key) {
-    if (this.containerType() !== 'object') {
-      throw new Error('getAttribute only applies to plain objects');
+    if (this.containerType() !== "object") {
+      throw new Error("getAttribute only applies to plain objects");
     }
 
     if (!this.hasAttribute(key)) {
@@ -79,7 +91,6 @@ class PlainProbe {
   get() {
     return this._value;
   }
-
 }
 
 exports.default = PlainProbe;

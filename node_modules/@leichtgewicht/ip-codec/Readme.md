@@ -30,31 +30,31 @@ try {
 By default the library will work with Uint8Array's but you can bring your own buffer:
 
 ```js
-const buf = Buffer.alloc(4)
-encode('127.0.0.1', buf)
+const buf = Buffer.alloc(4);
+encode("127.0.0.1", buf);
 ```
 
 It is also possible to de-encode at a location inside a given buffer
 
 ```js
-const buf = Buffer.alloc(10)
-encode('127.0.0.1', buf, 4)
+const buf = Buffer.alloc(10);
+encode("127.0.0.1", buf, 4);
 ```
 
 Allocation of a buffer may be difficult if you don't know what type the buffer:
 you can pass in a generator to allocate it for you:
 
 ```js
-encode('127.0.0.1', Buffer.alloc)
+encode("127.0.0.1", Buffer.alloc);
 ```
 
 You can also de/encode ipv4 or ipv6 specifically:
 
 ```js
-const { v4, v6 } = require('@leichtgewicht/ip-codec')
+const { v4, v6 } = require("@leichtgewicht/ip-codec");
 
-v4.decode(v4.encode('127.0.0.1'))
-v6.decode(v6.encode('::'))
+v4.decode(v4.encode("127.0.0.1"));
+v6.decode(v6.encode("::"));
 ```
 
 ## History

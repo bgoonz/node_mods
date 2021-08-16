@@ -1,11 +1,23 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.default = void 0;
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 
 class SetPatch {
   constructor(id, path, value) {
@@ -22,11 +34,11 @@ class SetPatch {
 
   apply(targets, accessor) {
     var result = accessor;
-    targets.forEach(target => {
+    targets.forEach((target) => {
       if (target.isSelfReference()) {
         result = result.set(this.value);
       } else if (target.isIndexReference()) {
-        target.toIndicies(accessor).forEach(i => {
+        target.toIndicies(accessor).forEach((i) => {
           result = result.setIndex(i, this.value);
         });
       } else if (target.isAttributeReference()) {
@@ -37,7 +49,6 @@ class SetPatch {
     });
     return result;
   }
-
 }
 
 exports.default = SetPatch;

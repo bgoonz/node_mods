@@ -1,17 +1,17 @@
-import { RESET_REQUESTS } from '../constants';
-import { mapObject } from '../helpers';
+import { RESET_REQUESTS } from "../constants";
+import { mapObject } from "../helpers";
 
-const getRequestTypeString = requestType =>
-  typeof requestType === 'function' ? requestType.toString() : requestType;
+const getRequestTypeString = (requestType) =>
+  typeof requestType === "function" ? requestType.toString() : requestType;
 
-const getKeys = requests =>
-  requests.map(v =>
-    typeof v === 'object'
-      ? getRequestTypeString(v.requestType) + (v.requestKey || '')
-      : getRequestTypeString(v),
+const getKeys = (requests) =>
+  requests.map((v) =>
+    typeof v === "object"
+      ? getRequestTypeString(v.requestType) + (v.requestKey || "")
+      : getRequestTypeString(v)
   );
 
-const resetQuery = query =>
+const resetQuery = (query) =>
   query.pending === 0
     ? undefined
     : {
@@ -22,7 +22,7 @@ const resetQuery = query =>
         usedKeys: query.normalized ? {} : null,
       };
 
-const resetMutation = mutation =>
+const resetMutation = (mutation) =>
   mutation.pending === 0
     ? undefined
     : {
@@ -60,7 +60,7 @@ export default (state, action) => {
   });
 
   mutations = mapObject(mutations, (k, v) =>
-    clearAll || keys.includes(k) ? resetMutation(v) : v,
+    clearAll || keys.includes(k) ? resetMutation(v) : v
   );
 
   cache =
@@ -84,13 +84,13 @@ export default (state, action) => {
   downloadProgress = clearAll
     ? {}
     : mapObject(downloadProgress, (k, v) =>
-        clearAll || keys.includes(k) ? resetMutation(v) : v,
+        clearAll || keys.includes(k) ? resetMutation(v) : v
       );
 
   uploadProgress = clearAll
     ? {}
     : mapObject(uploadProgress, (k, v) =>
-        clearAll || keys.includes(k) ? resetMutation(v) : v,
+        clearAll || keys.includes(k) ? resetMutation(v) : v
       );
 
   return { queries, mutations, cache, downloadProgress, uploadProgress };

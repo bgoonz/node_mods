@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = void 0;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -16,7 +16,7 @@ function _chalk() {
 }
 
 function _jestChangedFiles() {
-  const data = require('jest-changed-files');
+  const data = require("jest-changed-files");
 
   _jestChangedFiles = function () {
     return data;
@@ -26,7 +26,7 @@ function _jestChangedFiles() {
 }
 
 function _jestMessageUtil() {
-  const data = require('jest-message-util');
+  const data = require("jest-message-util");
 
   _jestMessageUtil = function () {
     return data;
@@ -36,7 +36,7 @@ function _jestMessageUtil() {
 }
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -59,15 +59,15 @@ var _default = (globalConfig, configs) => {
       {
         changedSince: globalConfig.changedSince,
         lastCommit: globalConfig.lastCommit,
-        withAncestor: globalConfig.changedFilesWithAncestor
+        withAncestor: globalConfig.changedFilesWithAncestor,
       }
-    ).catch(e => {
+    ).catch((e) => {
       const message = (0, _jestMessageUtil().formatExecError)(e, configs[0], {
-        noStackTrace: true
+        noStackTrace: true,
       })
-        .split('\n')
-        .filter(line => !line.includes('Command failed:'))
-        .join('\n');
+        .split("\n")
+        .filter((line) => !line.includes("Command failed:"))
+        .join("\n");
       console.error(_chalk().default.red(`\n\n${message}`));
       process.exit(1);
     });

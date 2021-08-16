@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true,
 });
 exports.default = getNoTestFound;
 
 function _chalk() {
-  const data = _interopRequireDefault(require('chalk'));
+  const data = _interopRequireDefault(require("chalk"));
 
   _chalk = function () {
     return data;
@@ -15,10 +15,10 @@ function _chalk() {
   return data;
 }
 
-var _pluralize = _interopRequireDefault(require('./pluralize'));
+var _pluralize = _interopRequireDefault(require("./pluralize"));
 
 function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {default: obj};
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /**
@@ -36,8 +36,8 @@ function getNoTestFound(testRunData, globalConfig) {
 
   if (globalConfig.runTestsByPath) {
     dataMessage = `Files: ${globalConfig.nonFlagArgs
-      .map(p => `"${p}"`)
-      .join(', ')}`;
+      .map((p) => `"${p}"`)
+      .join(", ")}`;
   } else {
     dataMessage = `Pattern: ${_chalk().default.yellow(
       globalConfig.testPathPattern
@@ -45,19 +45,19 @@ function getNoTestFound(testRunData, globalConfig) {
   }
 
   return (
-    _chalk().default.bold('No tests found, exiting with code 1') +
-    '\n' +
-    'Run with `--passWithNoTests` to exit with code 0' +
-    '\n' +
+    _chalk().default.bold("No tests found, exiting with code 1") +
+    "\n" +
+    "Run with `--passWithNoTests` to exit with code 0" +
+    "\n" +
     `In ${_chalk().default.bold(globalConfig.rootDir)}` +
-    '\n' +
-    `  ${(0, _pluralize.default)('file', testFiles, 's')} checked across ${(0,
+    "\n" +
+    `  ${(0, _pluralize.default)("file", testFiles, "s")} checked across ${(0,
     _pluralize.default)(
-      'project',
+      "project",
       testRunData.length,
-      's'
+      "s"
     )}. Run with \`--verbose\` for more details.` +
-    '\n' +
+    "\n" +
     dataMessage
   );
 }

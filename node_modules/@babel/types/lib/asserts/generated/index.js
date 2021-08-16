@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.assertArrayExpression = assertArrayExpression;
 exports.assertAssignmentExpression = assertAssignmentExpression;
@@ -185,13 +185,15 @@ exports.assertModuleExpression = assertModuleExpression;
 exports.assertTopicReference = assertTopicReference;
 exports.assertPipelineTopicExpression = assertPipelineTopicExpression;
 exports.assertPipelineBareFunction = assertPipelineBareFunction;
-exports.assertPipelinePrimaryTopicReference = assertPipelinePrimaryTopicReference;
+exports.assertPipelinePrimaryTopicReference =
+  assertPipelinePrimaryTopicReference;
 exports.assertTSParameterProperty = assertTSParameterProperty;
 exports.assertTSDeclareFunction = assertTSDeclareFunction;
 exports.assertTSDeclareMethod = assertTSDeclareMethod;
 exports.assertTSQualifiedName = assertTSQualifiedName;
 exports.assertTSCallSignatureDeclaration = assertTSCallSignatureDeclaration;
-exports.assertTSConstructSignatureDeclaration = assertTSConstructSignatureDeclaration;
+exports.assertTSConstructSignatureDeclaration =
+  assertTSConstructSignatureDeclaration;
 exports.assertTSPropertySignature = assertTSPropertySignature;
 exports.assertTSMethodSignature = assertTSMethodSignature;
 exports.assertTSIndexSignature = assertTSIndexSignature;
@@ -229,7 +231,8 @@ exports.assertTSTypeOperator = assertTSTypeOperator;
 exports.assertTSIndexedAccessType = assertTSIndexedAccessType;
 exports.assertTSMappedType = assertTSMappedType;
 exports.assertTSLiteralType = assertTSLiteralType;
-exports.assertTSExpressionWithTypeArguments = assertTSExpressionWithTypeArguments;
+exports.assertTSExpressionWithTypeArguments =
+  assertTSExpressionWithTypeArguments;
 exports.assertTSInterfaceDeclaration = assertTSInterfaceDeclaration;
 exports.assertTSInterfaceBody = assertTSInterfaceBody;
 exports.assertTSTypeAliasDeclaration = assertTSTypeAliasDeclaration;
@@ -303,7 +306,10 @@ var _is = require("../../validators/is");
 
 function assert(type, node, opts) {
   if (!(0, _is.default)(type, node, opts)) {
-    throw new Error(`Expected type "${type}" with option ${JSON.stringify(opts)}, ` + `but instead got "${node.type}".`);
+    throw new Error(
+      `Expected type "${type}" with option ${JSON.stringify(opts)}, ` +
+        `but instead got "${node.type}".`
+    );
   }
 }
 
@@ -1472,7 +1478,9 @@ function assertTSBaseType(node, opts) {
 }
 
 function assertNumberLiteral(node, opts) {
-  console.trace("The node type NumberLiteral has been renamed to NumericLiteral");
+  console.trace(
+    "The node type NumberLiteral has been renamed to NumericLiteral"
+  );
   assert("NumberLiteral", node, opts);
 }
 
@@ -1487,6 +1495,8 @@ function assertRestProperty(node, opts) {
 }
 
 function assertSpreadProperty(node, opts) {
-  console.trace("The node type SpreadProperty has been renamed to SpreadElement");
+  console.trace(
+    "The node type SpreadProperty has been renamed to SpreadElement"
+  );
   assert("SpreadProperty", node, opts);
 }

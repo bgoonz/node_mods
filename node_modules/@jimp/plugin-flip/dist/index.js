@@ -1,7 +1,7 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports["default"] = void 0;
 
@@ -15,18 +15,29 @@ var _utils = require("@jimp/utils");
  * @returns {Jimp} this for chaining of methods
  */
 function flipFn(horizontal, vertical, cb) {
-  if (typeof horizontal !== 'boolean' || typeof vertical !== 'boolean') return _utils.throwError.call(this, 'horizontal and vertical must be Booleans', cb);
+  if (typeof horizontal !== "boolean" || typeof vertical !== "boolean")
+    return _utils.throwError.call(
+      this,
+      "horizontal and vertical must be Booleans",
+      cb
+    );
   var bitmap = Buffer.alloc(this.bitmap.data.length);
-  this.scanQuiet(0, 0, this.bitmap.width, this.bitmap.height, function (x, y, idx) {
-    var _x = horizontal ? this.bitmap.width - 1 - x : x;
+  this.scanQuiet(
+    0,
+    0,
+    this.bitmap.width,
+    this.bitmap.height,
+    function (x, y, idx) {
+      var _x = horizontal ? this.bitmap.width - 1 - x : x;
 
-    var _y = vertical ? this.bitmap.height - 1 - y : y;
+      var _y = vertical ? this.bitmap.height - 1 - y : y;
 
-    var _idx = this.bitmap.width * _y + _x << 2;
+      var _idx = (this.bitmap.width * _y + _x) << 2;
 
-    var data = this.bitmap.data.readUInt32BE(idx);
-    bitmap.writeUInt32BE(data, _idx);
-  });
+      var data = this.bitmap.data.readUInt32BE(idx);
+      bitmap.writeUInt32BE(data, _idx);
+    }
+  );
   this.bitmap.data = Buffer.from(bitmap);
 
   if ((0, _utils.isNodePattern)(cb)) {
@@ -39,7 +50,7 @@ function flipFn(horizontal, vertical, cb) {
 var _default = function _default() {
   return {
     flip: flipFn,
-    mirror: flipFn
+    mirror: flipFn,
   };
 };
 

@@ -22,4 +22,5 @@ function _defineEnumerableProperties(obj, descs) {
 }
 
 module.exports = _defineEnumerableProperties;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
+(module.exports["default"] = module.exports),
+  (module.exports.__esModule = true);

@@ -1,27 +1,38 @@
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+  value: true,
 });
 exports.merge = merge;
 exports.validate = validate;
 exports.normalizeReplacements = normalizeReplacements;
 
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+  return target;
+}
 
 function merge(a, b) {
   const {
     placeholderWhitelist = a.placeholderWhitelist,
     placeholderPattern = a.placeholderPattern,
     preserveComments = a.preserveComments,
-    syntacticPlaceholders = a.syntacticPlaceholders
+    syntacticPlaceholders = a.syntacticPlaceholders,
   } = b;
   return {
     parser: Object.assign({}, a.parser, b.parser),
     placeholderWhitelist,
     placeholderPattern,
     preserveComments,
-    syntacticPlaceholders
+    syntacticPlaceholders,
   };
 }
 
@@ -31,40 +42,68 @@ function validate(opts) {
   }
 
   const _ref = opts || {},
-        {
-    placeholderWhitelist,
-    placeholderPattern,
-    preserveComments,
-    syntacticPlaceholders
-  } = _ref,
-        parser = _objectWithoutPropertiesLoose(_ref, ["placeholderWhitelist", "placeholderPattern", "preserveComments", "syntacticPlaceholders"]);
+    {
+      placeholderWhitelist,
+      placeholderPattern,
+      preserveComments,
+      syntacticPlaceholders,
+    } = _ref,
+    parser = _objectWithoutPropertiesLoose(_ref, [
+      "placeholderWhitelist",
+      "placeholderPattern",
+      "preserveComments",
+      "syntacticPlaceholders",
+    ]);
 
   if (placeholderWhitelist != null && !(placeholderWhitelist instanceof Set)) {
-    throw new Error("'.placeholderWhitelist' must be a Set, null, or undefined");
+    throw new Error(
+      "'.placeholderWhitelist' must be a Set, null, or undefined"
+    );
   }
 
-  if (placeholderPattern != null && !(placeholderPattern instanceof RegExp) && placeholderPattern !== false) {
-    throw new Error("'.placeholderPattern' must be a RegExp, false, null, or undefined");
+  if (
+    placeholderPattern != null &&
+    !(placeholderPattern instanceof RegExp) &&
+    placeholderPattern !== false
+  ) {
+    throw new Error(
+      "'.placeholderPattern' must be a RegExp, false, null, or undefined"
+    );
   }
 
   if (preserveComments != null && typeof preserveComments !== "boolean") {
-    throw new Error("'.preserveComments' must be a boolean, null, or undefined");
+    throw new Error(
+      "'.preserveComments' must be a boolean, null, or undefined"
+    );
   }
 
-  if (syntacticPlaceholders != null && typeof syntacticPlaceholders !== "boolean") {
-    throw new Error("'.syntacticPlaceholders' must be a boolean, null, or undefined");
+  if (
+    syntacticPlaceholders != null &&
+    typeof syntacticPlaceholders !== "boolean"
+  ) {
+    throw new Error(
+      "'.syntacticPlaceholders' must be a boolean, null, or undefined"
+    );
   }
 
-  if (syntacticPlaceholders === true && (placeholderWhitelist != null || placeholderPattern != null)) {
-    throw new Error("'.placeholderWhitelist' and '.placeholderPattern' aren't compatible" + " with '.syntacticPlaceholders: true'");
+  if (
+    syntacticPlaceholders === true &&
+    (placeholderWhitelist != null || placeholderPattern != null)
+  ) {
+    throw new Error(
+      "'.placeholderWhitelist' and '.placeholderPattern' aren't compatible" +
+        " with '.syntacticPlaceholders: true'"
+    );
   }
 
   return {
     parser,
     placeholderWhitelist: placeholderWhitelist || undefined,
-    placeholderPattern: placeholderPattern == null ? undefined : placeholderPattern,
+    placeholderPattern:
+      placeholderPattern == null ? undefined : placeholderPattern,
     preserveComments: preserveComments == null ? undefined : preserveComments,
-    syntacticPlaceholders: syntacticPlaceholders == null ? undefined : syntacticPlaceholders
+    syntacticPlaceholders:
+      syntacticPlaceholders == null ? undefined : syntacticPlaceholders,
   };
 }
 
@@ -78,5 +117,7 @@ function normalizeReplacements(replacements) {
     return replacements || undefined;
   }
 
-  throw new Error("Template replacements must be an array, object, null, or undefined");
+  throw new Error(
+    "Template replacements must be an array, object, null, or undefined"
+  );
 }

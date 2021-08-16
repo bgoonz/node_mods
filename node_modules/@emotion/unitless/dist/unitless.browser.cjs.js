@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', { value: true });
+Object.defineProperty(exports, "__esModule", { value: true });
 
 var unitlessKeys = {
   animationIterationCount: 1,
@@ -48,7 +48,7 @@ var unitlessKeys = {
   strokeDashoffset: 1,
   strokeMiterlimit: 1,
   strokeOpacity: 1,
-  strokeWidth: 1
+  strokeWidth: 1,
 };
 
 exports.default = unitlessKeys;
