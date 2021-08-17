@@ -220,7 +220,7 @@
     "stylelint-config-twbs-bootstrap": "2.2.3",
     "tape": "5.3.1",
     "typescript": "4.3.5",
-    "vnu-jar": "21.4.9",
+    "vnu-jar": "21.6.11",
     "vows": "*"
   }
 }
