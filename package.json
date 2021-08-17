@@ -204,7 +204,7 @@
     "karma-mocha-reporter": "2.2.5",
     "linkinator": "2.14.0",
     "lockfile-lint": "4.6.2",
-    "mocha": "8.3.2",
+    "mocha": "8.4.0",
     "nock": "13.1.1",
     "node-fetch": "2.6.1",
     "proxyquire": "2.1.3",
