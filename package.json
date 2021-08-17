@@ -128,7 +128,7 @@
     "metalsmith-prism": "^3.1.1",
     "metalsmith-yearly-pagination": "^4.0.2",
     "minimist": "^1.2.5",
-    "mkdirp": "~0.5",
+    "mkdirp": "~1.0.0",
     "mock-rest-server": "^1.2.0",
     "moleculer": "^0.14.13",
     "moment": "^2.29.1",
