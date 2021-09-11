@@ -1,0 +1,79 @@
+{
+  "_from": "gatsby-source-shopify@^5.3.0",
+  "_id": "gatsby-source-shopify@5.3.0",
+  "_inBundle": false,
+  "_integrity": "sha512-ks+xF5rdakgj2gf8uDsCni2WdIYR1sjZNPsuIknL6ViZb7pXv0Peajvxy4z1Z8JeCL7FLA7wcz3KyBlVoZz+gA==",
+  "_location": "/gatsby-source-shopify",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "gatsby-source-shopify@^5.3.0",
+    "name": "gatsby-source-shopify",
+    "escapedName": "gatsby-source-shopify",
+    "rawSpec": "^5.3.0",
+    "saveSpec": null,
+    "fetchSpec": "^5.3.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/gatsby-source-shopify/-/gatsby-source-shopify-5.3.0.tgz",
+  "_shasum": "d828a57ab2dc944bd4423673f9be6070456345d1",
+  "_spec": "gatsby-source-shopify@^5.3.0",
+  "_where": "/workspace/node_mods",
+  "author": {
+    "name": "Sam Slotsky",
+    "email": "sam.slotsky@gatsbyjs.com"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "gatsby-core-utils": "^2.11.0",
+    "gatsby-source-filesystem": "^3.11.0",
+    "node-fetch": "^2.6.1",
+    "sharp": "^0.28.3",
+    "shift-left": "^0.1.5"
+  },
+  "deprecated": false,
+  "description": "Gatsby source plugin for building websites using Shopify as a data source.",
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/node": "^14.17.4",
+    "@types/node-fetch": "^2.5.10",
+    "@types/sharp": "^0.28.3",
+    "cross-env": "^7.0.3",
+    "gatsby-plugin-image": "^1.11.0",
+    "msw": "^0.30.1",
+    "prettier": "^2.3.2",
+    "prettier-check": "^2.0.0",
+    "tsc-watch": "^4.4.0",
+    "typescript": "^4.3.5"
+  },
+  "gitHead": "115e63196bb09f09446e7b57123e1178d81a7f40",
+  "homepage": "https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-shopify#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "gatsby-source-shopify",
+    "shopify"
+  ],
+  "license": "MIT",
+  "name": "gatsby-source-shopify",
+  "peerDependencies": {
+    "gatsby-plugin-image": "^1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gatsbyjs/gatsby.git",
+    "directory": "packages/gatsby-source-shopify"
+  },
+  "scripts": {
+    "build": "tsc --outDir .",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "watch": "tsc-watch --outDir ."
+  },
+  "version": "5.3.0"
+}

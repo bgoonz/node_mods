@@ -1,0 +1,74 @@
+{
+  "_from": "github:nullivex/node-github",
+  "_id": "github@0.2.4",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/github",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "github@github:nullivex/node-github",
+    "name": "github",
+    "escapedName": "github",
+    "rawSpec": "github:nullivex/node-github",
+    "saveSpec": "github:nullivex/node-github",
+    "fetchSpec": null,
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "github:nullivex/node-github#d11c575df67a226837e147aca13279eddc070015",
+  "_spec": "github@github:nullivex/node-github",
+  "_where": "/workspace/node_mods",
+  "author": {
+    "name": "Mike de Boer",
+    "email": "info@mikedeboer.nl"
+  },
+  "bugs": {
+    "url": "https://github.com/mikedeboer/node-github/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "Mike de Boer",
+      "email": "info@mikedeboer.nl"
+    },
+    {
+      "name": "Fabian Jakobs",
+      "email": "fabian@c9.io"
+    }
+  ],
+  "dependencies": {
+    "mime": "^1.2.11"
+  },
+  "deprecated": false,
+  "description": "NodeJS wrapper for the GitHub API",
+  "devDependencies": {
+    "async": "^0.9.0",
+    "mocha": "~1.13.0",
+    "oauth": "~0.9.7",
+    "optimist": "~0.6.0"
+  },
+  "engine": {
+    "node": ">=0.4.0"
+  },
+  "homepage": "http://github.com/mikedeboer/node-github",
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "The MIT License",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "main": ".",
+  "name": "github",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mikedeboer/node-github.git"
+  },
+  "scripts": {
+    "test": "node ./test/all.js"
+  },
+  "version": "0.2.4"
+}

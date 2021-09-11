@@ -1,0 +1,68 @@
+{
+  "_args": [
+    [
+      "@types/url-parse@1.4.4",
+      "/workspace/node_mods"
+    ]
+  ],
+  "_from": "@types/url-parse@1.4.4",
+  "_id": "@types/url-parse@1.4.4",
+  "_inBundle": false,
+  "_integrity": "sha512-KtQLad12+4T/NfSxpoDhmr22+fig3T7/08QCgmutYA6QSznSRmEtuL95GrhVV40/0otTEdFc+etRcCTqhh1q5Q==",
+  "_location": "/@types/url-parse",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@types/url-parse@1.4.4",
+    "name": "@types/url-parse",
+    "escapedName": "@types%2furl-parse",
+    "scope": "@types",
+    "rawSpec": "1.4.4",
+    "saveSpec": null,
+    "fetchSpec": "1.4.4"
+  },
+  "_requiredBy": [
+    "/gatsby-source-sanity"
+  ],
+  "_resolved": "https://registry.npmjs.org/@types/url-parse/-/url-parse-1.4.4.tgz",
+  "_spec": "1.4.4",
+  "_where": "/workspace/node_mods",
+  "bugs": {
+    "url": "https://github.com/DefinitelyTyped/DefinitelyTyped/issues"
+  },
+  "contributors": [
+    {
+      "name": "Pavlo Chernenko",
+      "url": "https://github.com/ChernenkoPaul"
+    },
+    {
+      "name": "Hari Sivaramakrishnan",
+      "url": "https://github.com/harisiva"
+    },
+    {
+      "name": "Dmitry Dushkin",
+      "url": "https://github.com/DimitryDushkin"
+    },
+    {
+      "name": "David Golightly",
+      "url": "https://github.com/davidgoli"
+    }
+  ],
+  "dependencies": {},
+  "description": "TypeScript definitions for url-parse",
+  "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/url-parse",
+  "license": "MIT",
+  "main": "",
+  "name": "@types/url-parse",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "directory": "types/url-parse"
+  },
+  "scripts": {},
+  "typeScriptVersion": "3.6",
+  "types": "index.d.ts",
+  "typesPublisherContentHash": "5b41461ceb4a46b6bb3fedd8134e3d720a3d53e91f63ec0eeca32ad081543c36",
+  "version": "1.4.4"
+}

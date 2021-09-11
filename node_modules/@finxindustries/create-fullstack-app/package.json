@@ -1,0 +1,75 @@
+{
+  "_from": "@finxindustries/create-fullstack-app@^0.2.2",
+  "_id": "@finxindustries/create-fullstack-app@0.2.2",
+  "_inBundle": false,
+  "_integrity": "sha512-NyzTECC4Hjm3H9ZMoRrklrpaShKncQh6Hyf54OcPWUDWRwc9UHcqvZFiXrRNyR7ew6himKiQHmrd2/gTWojL0w==",
+  "_location": "/@finxindustries/create-fullstack-app",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@finxindustries/create-fullstack-app@^0.2.2",
+    "name": "@finxindustries/create-fullstack-app",
+    "escapedName": "@finxindustries%2fcreate-fullstack-app",
+    "scope": "@finxindustries",
+    "rawSpec": "^0.2.2",
+    "saveSpec": null,
+    "fetchSpec": "^0.2.2"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@finxindustries/create-fullstack-app/-/create-fullstack-app-0.2.2.tgz",
+  "_shasum": "3e8855c5620f10612d43461c95c539909da5a92f",
+  "_spec": "@finxindustries/create-fullstack-app@^0.2.2",
+  "_where": "/workspace/node_mods",
+  "author": "",
+  "bin": {
+    "cfa": "index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/finxindustries/create-fullstack-app/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "command-exists": "^1.2.9",
+    "path": "^0.12.7",
+    "prompt-sync": "^4.2.0",
+    "replace-in-file": "^6.1.0"
+  },
+  "deprecated": false,
+  "description": "Generate a fullstack app using GRPC, .NET Core 3.1, Node.js, Docker, Flutter and/or React.",
+  "homepage": "https://github.com/finxindustries/create-fullstack-app#readme",
+  "keywords": [
+    "fullstack",
+    "react",
+    "nextjs",
+    "netcore",
+    "dart",
+    "typescript",
+    "mysql",
+    "flutter",
+    "frontend",
+    "backend",
+    "client",
+    "server",
+    "grpc",
+    "microservices",
+    "docker",
+    "kubernetes",
+    "create-react-app",
+    "create-next-app"
+  ],
+  "license": " GPL-3.0",
+  "main": "index.js",
+  "name": "@finxindustries/create-fullstack-app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/finxindustries/create-fullstack-app.git"
+  },
+  "scripts": {
+    "test": "echo \"No test specified\""
+  },
+  "version": "0.2.2"
+}
