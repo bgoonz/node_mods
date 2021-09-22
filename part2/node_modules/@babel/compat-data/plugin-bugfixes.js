@@ -1,1 +1,1 @@
-module.exports = require("./data/plugin-bugfixes.json");
+export default require("./data/plugin-bugfixes.json");

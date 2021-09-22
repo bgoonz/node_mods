@@ -1,1 +1,1 @@
-module.exports = require("./data/native-modules.json");
+export default require("./data/native-modules.json");

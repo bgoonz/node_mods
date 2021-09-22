@@ -114,6 +114,7 @@
     "jstransformer-handlebars": "^1.1.0",
     "junk": "^4.0.0",
     "kgcat": "^1.1.1",
+    "lebab": "^3.1.1",
     "list-dir": "^1.2.0",
     "listr": "^0.14.3",
     "live-server": "^1.2.1",
